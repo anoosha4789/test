@@ -1,0 +1,144 @@
+@import 'base.scss';
+
+// Inforce Monitoring Page
+@mixin gw-inforce-gauge-text {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.25px;
+}
+
+@mixin gw-inforce-gauge-label {
+    font-family: Noto Sans;
+    letter-spacing: 0.1px;
+    font-style: normal;
+    font-weight: normal;
+    position: relative;
+}
+
+
+.gw-inforce-monitoring-subtitle-2 {
+    color: $gw-primary-color-900 !important;
+}
+
+.gw-inforce-monitoring-card {
+    margin: 0px;
+    padding: 0px;
+    border: 1px solid $gw-tertiary-color-200;
+    box-sizing: border-box;
+    border-radius: 6px;
+    .gw-inforce-monitoring-card-header {
+
+        .gw-inforce-monitoring-title {
+            font-size: 14px;
+            margin: 0px;
+            line-height: 20px;
+            padding: 10px;
+        }
+    }
+
+    .gw-inforce-monitoring-card-content {
+        height: calc(100% - 54px);
+    }
+}
+
+.gw-inforce-panel-gauge-card, .gw-inforce-panel-output-card {
+    padding: 0px;
+}
+
+.gw-inforce-gauge-title {
+    @include gw-inforce-gauge-text();
+    position: relative;
+    text-align: center;
+}
+
+
+.gw-inforce-gauge {
+    flex: 0 1 auto;
+}
+
+.gw-inforce-gauge-unit, 
+.gw-inforce-gauge-min-label, 
+.gw-inforce-gauge-max-label {
+    color: $gw-secondary-color-600;
+}
+
+// Panel Gauges
+.gw-inforce-panel-gauge-container {
+    @include gw-inforce-gauge-text();
+    font-size: 14px;
+    position: relative;
+    top: 8px;
+
+    .gw-inforce-gauge-min-label {
+        font-size: 10px;
+        left: -12px;
+    }
+
+    .gw-inforce-gauge-max-label {
+        font-size: 10px;
+        right: -12px;
+    }
+}
+
+.gw-inforce-gauge-value {
+    @include gw-inforce-gauge-text();
+    position: relative;
+    top: 2px
+}
+
+.gw-inforce-gauge-unit {
+    @include gw-inforce-gauge-label();
+    font-size: 12px;
+    line-height: 18px;
+    top: -4px
+}
+
+.gw-inforce-gauge-min-label,
+.gw-inforce-gauge-max-label {
+    @include gw-inforce-gauge-label();
+    font-size: 8px;
+    flex: 1;
+}
+
+.gw-inforce-gauge-min-label {
+    left: -5px;
+}
+
+.gw-inforce-gauge-max-label {
+    right: -5px;
+}
+
+// Inforce Valve Position Mat Expansion Panel
+
+.gw-inforce-monitoring-zone-title {
+    color: $gw-text-white;
+    background: $gw-secondary-color-800;
+}
+
+.gw-inforce-monitoring-zone-row {
+    background: $gw-secondary-color-100;
+}
+
+.gw-inforce-gauge-title , .gw-inforce-panel-gauge-container {
+    color: $gw-tertiary-color-1000;
+}
+
+.gw-inforce-gauge-value {
+    color: $gw-tertiary-color-1000;
+}
+
+// Mobile view
+.gw-inforce-monitoring-row:nth-child(even) {
+    background-color: $gw-secondary-color-200;
+}
+
+
+.gw-target-valve-position {
+    color: $gw-primary-color-500;
+    .mat-select-value-text {
+        color: $gw-primary-color-500;
+    }
+}
