@@ -1,0 +1,56 @@
+<section>
+    <form [formGroup]="panelLoginForm" #userAccountForm="ngForm" class="addEditUserForm" autocomplete="off" >
+
+      <div class="row p-l-20 p-r-30 p-b-6">
+        <div class="col-lg-4 col-md-12 col-sm-12 p-t-10">
+            <span class="gw-form-label">Username</span>
+        </div>
+          <div class="col-lg-6 col-md-12 col-sm-12">
+            <mat-form-field class="mat-input-small" appearance="fill">
+                <input id="UserName" matInput class="gw-form-label form-baseline" name="UserName" formControlName="Name" [(ngModel)]="userAccount.Name" 
+                  (blur)="validateUserName()" (input)="validateUserName()">
+                <!-- <div *ngIf="Name.touched && Name.invalid && validationMssg == null" class="mat-caption mat-error">Please enter a valid value for 'User Name'.</div>
+                <div *ngIf="validationMssg != null" class="mat-caption mat-error">{{validationMssg}}</div> -->
+                <mat-hint *ngIf="validationMssg != null" align="start" class="mat-error">
+                  {{validationMssg}}
+                </mat-hint>
+            </mat-form-field>
+          </div>
+      </div>
+
+      <div class="row p-l-20 p-r-30 p-b-6">
+        <div class="col-lg-4 col-md-12 col-sm-12 p-t-10">
+            <span class="gw-form-label">Password</span>
+        </div>
+          <div class="col-lg-6 col-md-12 col-sm-12">
+            <mat-form-field class="mat-input-small" appearance="fill">
+                <input id="Password" matInput [type]="hide ? 'password' : 'text'" class="gw-form-label form-baseline" name="Password" formControlName="Password" [(ngModel)]="userAccount.Password">
+                <mat-icon matSuffix (click)="hide = !hide" class="gw-user-dialog-icon">
+                  {{hide ? 'visibility_off' : 'visibility'}}
+                </mat-icon>
+                <mat-hint *ngIf="Password.touched && Password.invalid" align="start" class="mat-error">
+                  {{pwdErrorMsg}}
+                </mat-hint>
+            </mat-form-field>
+          </div>
+      </div>
+
+      <div class="row p-l-20 p-r-30">
+        <div class="col-lg-4 col-md-12 col-sm-12 p-t-10">
+            <span class="gw-form-label">Access Level</span>
+        </div>
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <mat-form-field class="mat-select-small" appearance="fill">
+                <mat-select id="AccessLevel" class="gw-form-label form-baseline" formControlName="AccessLevel" [(ngModel)]="userAccount.AccessLevel">
+                  <mat-option *ngFor="let role of arrUserRoles | slice:1" [value]="role">{{userRoles[role]}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+     </div>
+    </form>
+    <!-- <mat-divider></mat-divider> -->
+    <div mat-dialog-actions>
+      <button mat-button class="mat-button-tertiary-sm" (click)="OnCancel()">Cancel</button>
+      <button mat-button class="mat-button-primary-sm mat-dialog-actions__agree" (click)="OnOk()">{{ modalEditMode ? 'Save' : 'Add'}}</button>
+    </div>
+</section>

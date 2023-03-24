@@ -1,0 +1,16 @@
+.addEditUserForm {
+    padding: 24px;
+
+    igx-input-group + igx-input-group {
+        margin-top: 24px;
+    }
+}
+
+.user_acc_input { width: 250px; }
+
+.gw-user-dialog-icon {
+    margin-left: -25px;
+    display: inline-flex;
+    align-items: center;
+    transform: translateY(20%);
+}

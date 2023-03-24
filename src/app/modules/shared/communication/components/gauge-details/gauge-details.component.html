@@ -1,0 +1,256 @@
+<section>
+   
+    <div class="gaugeDetailsForm px-4 pt-2">
+        <form [formGroup]="gaugeDetailsForm" #gaugeInfoForm="ngForm" autocomplete="off">
+           <!--Tool Details-->
+            <div class="row pb-2 m-l-0">
+                <mat-label class="mat-subtitle-2">Tool Details</mat-label>
+            </div>
+
+            <div class="row p-l-30 p-r-30">
+                <div class="col-md-4 col-sm-12 pt-2">
+                    <span class="gw-form-label">Tool Type</span>
+                </div>
+                <div class="col-md-8 col-sm-12 p-t-4">
+                    <mat-form-field class="gw-tool-formfield mat-select-small" appearance="fill">
+                        <mat-select id="GaugeType" class="gw-form-label form-baseline" formControlName="GaugeType"
+                            [(ngModel)]="selectedGaugeIndex" (selectionChange)="gaugeTypeChange($event)">
+                            <mat-option *ngFor="let toolType of toolTypes; let inx = index" [value]="inx">
+                                {{toolType.TypeName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-l-30 p-r-30">
+                <div class="col-md-4 col-sm-12 pt-2">
+                    <span class="gw-form-label">Tool Address</span>
+                </div>
+                <div class="col-md-8 col-sm-12 p-t-4">
+                    <mat-form-field class="gw-tool-formfield mat-select-small" appearance="fill">
+                        <mat-select id="ToolAddress" class="gw-form-label form-baseline" formControlName="ToolAddress"
+                            [(ngModel)]="selectedGauge.ToolAddress" (selectionChange)="toolAddressChange($event)">
+                            <mat-option *ngFor="let address of remainingToolAddress" [value]="address">{{address}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-l-30 p-r-30">
+                <div class="col-md-4 col-sm-12 pt-2">
+                    <span class="gw-form-label">Tool Name</span>
+                </div>
+                <div class="col-md-8 col-sm-12 p-t-4">
+                    <mat-form-field class="gw-tool-formfield mat-input-small" appearance="fill">
+                        <input id="Description" matInput class="gw-form-label form-baseline" name="Description"
+                            formControlName="Description" [(ngModel)]="selectedGauge.Description"
+                            [matTooltip]="selectedGauge?.Description" matTooltipPosition="below"
+                            matTooltipClass="gw-mat-tooltip" [matTooltipDisabled]="selectedGauge?.Description?.length > 24 ? 'false': 'true' "
+                            (input)="validateTool($event)" (blur)="validateTool($event)">
+                        <mat-hint *ngIf="validateDescription" align="start" class="mat-error gw-tool-mat-hint">
+                            {{validateDescription}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!--Tool Connection-->
+            <div class="row pb-2 m-l-0">
+                <mat-label class="mat-subtitle-2">Well Connection</mat-label>
+            </div>
+            <ng-container>
+                <div class="row p-l-30 p-r-30">
+                    <div class="col-md-4 pt-2">
+                        <span class="gw-form-label">Well</span>
+                    </div>
+                    <div class="col-md-8 col-sm-12 p-t-4">
+                        <mat-form-field class="gw-tool-formfield mat-select-small" appearance="fill">
+                            <mat-select class="gw-form-label form-baseline" 
+                                [(value)]="selToolConnection.WellName" [disabled]="!wellDropdownVisibility" 
+                                (selectionChange)="onWellSelChange($event)"
+                                [matTooltip]="selToolConnection?.WellName" matTooltipPosition="below"
+                                matTooltipClass="gw-mat-tooltip" 
+                                [matTooltipDisabled]="selToolConnection?.WellName?.length > 30 ? 'false': 'true' ">
+                                <mat-option *ngFor="let well of wells" [value]="well.WellName"
+                                    [matTooltip]="well?.WellName" matTooltipPosition="below"
+                                    matTooltipClass="gw-mat-option-tooltip" [matTooltipDisabled]="well?.WellName?.length > 30 ? 'false': 'true' ">
+                                    {{well.WellName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+               
+                <ng-container *ngIf="showZones">
+                    <div class="row p-l-30 p-r-30">
+                        <div class="col-md-4 pt-2">
+                            <span class="gw-form-label">{{zoneLabel}}</span>
+                        </div>
+                        <div class="col-md-8 col-sm-12 p-t-4">
+                            <mat-form-field class="gw-tool-formfield mat-select-small" appearance="fill">
+                                <mat-select class="gw-form-label form-baseline" panelClass="gw-tool-select"
+                                    [(value)]="selToolConnection.ZoneName" [disabled]="!zoneDropdownVisibility"
+                                    formControlName="ZoneName" (selectionChange)="onZoneSelChange($event)"
+                                    [matTooltip]="selToolConnection?.ZoneName" matTooltipPosition="below"
+                                    matTooltipClass="gw-mat-tooltip"
+                                    [matTooltipDisabled]="selToolConnection?.ZoneName?.length > 30 ? 'false': 'true' ">
+                                    <mat-option *ngFor="let zone of zones" [value]="zone.ZoneName" [matTooltip]="zone?.ZoneName"
+                                        matTooltipPosition="below" matTooltipClass="gw-mat-tooltip"
+                                        [matTooltipDisabled]="zone?.ZoneName?.length > 30 ? 'false': 'true' ">
+                                        {{zone.ZoneName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!IsInCHARGETool && showZones">
+                    <div class="row p-l-30 p-r-30">
+                        <div class="col-md-4 pt-2">
+                            <span class="gw-form-label">Porting</span>
+                        </div>
+                        <div class="col-md-8 col-sm-12 p-t-4">
+                            <mat-form-field class="gw-tool-formfield mat-select-small" appearance="fill">
+                                <mat-select class="gw-form-label form-baseline" formControlName="Porting"
+                                    [(value)]="selToolConnection.Porting" (selectionChange)="onPortingSelChange($event)">
+                                    <mat-option *ngFor="let porting of portingList" [value]="porting.ConnectPorting">{{porting.ConnectPorting}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+
+             <!--Tool Calibration-->
+            <div class="row pb-2 m-l-0">
+                <mat-label class="mat-subtitle-2">Tool Calibration</mat-label>
+            </div>
+
+            <div class="row p-l-30 p-r-30">
+                <div class="col-md-4 col-sm-12 pt-2">
+                    <span class="gw-form-label">Transducer Serial Number</span>
+                </div>
+                <div class="col-md-8 col-sm-12 p-t-4">
+                    <mat-form-field class="mat-input-small gw-tool-formfield" appearance="fill">
+                        <input id="SerialNumber" matInput class="gw-form-label form-baseline" name="SerialNumber"
+                            formControlName="SerialNumber" [(ngModel)]="selectedGauge.SerialNumber"
+                            (input)="validateTool($event)" (focusout)="validateTool($event)">
+                        <mat-hint *ngIf="ToolSerialNumber.touched && ToolSerialNumber.invalid || validateTransducerSerialNumber" align="start" class="mat-error gw-tool-mat-hint">
+                            {{validateTransducerSerialNumber}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <!--InCHARGE Valve Open-->
+            <ng-container *ngIf="selectedGauge.GaugeType === this.InChargeToolTypeId">
+                <div  class="row p-l-30 p-r-30">
+                    <div class="col-md-4 pt-2">
+                        <span class="gw-form-label">Valve Initial Open %</span>
+                    </div>
+                    <div class="col-md-8 p-t-6">
+                        <mat-form-field class="mat-input-small gw-tool-formfield" appearance="fill">
+                            <input id="ValveOpenPercentage" name="ValveOpenPercentage" [(value)]="valveOpenPercentage" 
+                                formControlName="ValveOpenPercentage" matInput class="gw-form-label form-baseline" 
+                                (input)="validateTool($event)" (blur)="validateTool($event)" gw-number-input>
+                        <mat-hint *ngIf="valveOpenPercentageMsg" align="start" class="mat-error gw-tool-mat-hint">
+                            {{valveOpenPercentageMsg}}
+                        </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </ng-container>
+
+        </form>
+
+         <!--InCHARGE-->
+         <ng-container *ngIf="selectedGauge.GaugeType === this.InChargeToolTypeId">
+         
+            <div class="row p-l-30 p-r-30">
+                <div class="col-md-4 pt-2">
+                    <span class="gw-form-label">Calibration File</span>
+                </div>
+                <div class="col-md-8 p-t-4 pb-2">
+                    <mat-form-field class="mat-input-small gw-tool-formfield" appearance="fill">
+                        <input id="inchargeCalibrationFile" name="inchargeCalibrationFile" matInput
+                            class="gw-form-label form-baseline" [(value)]="importInchargeCalpath" [readonly]="true"
+                            (click)="browseFileDialog('incharge')"
+                            [matTooltip]="importInchargeCalpath" matTooltipPosition="below"
+                            matTooltipClass="gw-mat-tooltip" 
+                            [matTooltipDisabled]="importInchargeCalpath?.length > 44 ? 'false': 'true'">
+                        <input type="file" id="selectFileJSON" name="selectFileJSON" multiple="false" accept=".json"
+                            class="gw-input-hidden" (change)="inchargeCalfileChangeEvent($event)" />
+                        <mat-hint *ngIf="inchargeCalMsg != null" align="start" class="mat-error gw-tool-mat-hint">
+                            {{inchargeCalMsg}}
+                        </mat-hint>
+                    </mat-form-field>
+                    <button id="btnCRT" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog('incharge')">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+
+        <!--SureSENS-->
+        <ng-container *ngIf="selectedGauge.GaugeType != this.InChargeToolTypeId">
+
+            <div class="row p-l-30 p-r-30">
+                <div class="col-md-4 col-sm-12 pt-2">
+                    <span class="gw-form-label">CRF Calibration File</span>
+                </div>
+                <div class="col-md-8 col-sm-12 p-t-4">
+                    <mat-form-field class="mat-input-small gw-tool-formfield" appearance="fill">
+                        <input id="PressureCalibrationFile" name="PressureCalibrationFile" matInput
+                            class="gw-form-label form-baseline" [(ngModel)]="importPressureCalpath" [readonly]="true"
+                            (click)="browseFileDialog('pressure')"
+                            [matTooltip]="importPressureCalpath" matTooltipPosition="below"
+                            matTooltipClass="gw-mat-tooltip" 
+                            [matTooltipDisabled]="importPressureCalpath?.length > 40 ? 'false': 'true'">
+                        <input type="file" id="selectFileCRF" name="selectFileCRF" multiple="false" accept=".crf"
+                            class="gw-input-hidden" (change)="pressureCalfileChangeEvent($event)" />
+                        <mat-hint *ngIf="validateToolPressureCalibrationMessage != null" align="start" class="mat-error gw-tool-mat-hint">
+                            {{validateToolPressureCalibrationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                    <button id="btnCRF" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog('pressure')">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        
+            <div class="row p-l-30 p-r-30">
+                <div class="col-md-4 col-sm-12 pt-2">
+                    <span class="gw-form-label">CRT Calibration File</span>
+                </div>
+                <div class="col-md-8 col-sm-12 p-t-4 pb-2">
+                    <mat-form-field class="mat-input-small gw-tool-formfield" appearance="fill">
+                        <input id="TemperatureCalibrationFile" name="TemperatureCalibrationFile" matInput
+                            class="gw-form-label form-baseline" [(ngModel)]="importTemperatureCalpath" [readonly]="true"
+                            (click)="browseFileDialog('temperature')"
+                            [matTooltip]="importTemperatureCalpath" matTooltipPosition="below"
+                            matTooltipClass="gw-mat-tooltip" 
+                            [matTooltipDisabled]="importTemperatureCalpath?.length > 40 ? 'false': 'true'">
+                        <input type="file" id="selectFileCRT" name="selectFileCRT" multiple="false" accept=".crt"
+                            class="gw-input-hidden" (change)="temperatureCalfileChangeEvent($event)" />
+                        <mat-hint *ngIf="validateToolTemperatureCalibrationMessage != null" align="start" class="mat-error gw-tool-mat-hint">
+                            {{validateToolTemperatureCalibrationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                    <button id="btnCRT" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog('temperature')">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <!-- <mat-divider></mat-divider> -->
+    <div mat-dialog-actions class="d-flex justify-content-end gw-mat-dialog-actions gw-adv-mat-dialog-actions">
+        <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnCancel()">Cancel</button>
+        <button type="submit" mat-button class="mat-button-primary-sm" [disabled]=" modalEditMode ? !gaugeDetailsForm.valid || !gaugeDetailsForm.dirty : !isToolValidEvent || (showZones && isPortingEmpty)"
+            (click)="OnOk()">{{modalEditMode ? 'Apply': 'Add'}}</button>
+    </div>
+</section>

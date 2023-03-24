@@ -1,0 +1,86 @@
+<mat-card class="m-2 gw-config-container" cdkTrapFocus>
+
+    <mat-card-content id="gw-mat-card-content">
+
+        <mat-tab-group [selectedIndex]="0" class="gw-tab-group">
+
+            <mat-tab label="Clock Settings">
+
+                    <h6 class="p-2">
+                        <span class="mat-subtitle-2">Browser Clock</span>
+                    </h6>
+
+                    <div class="mx-3">
+
+                        <div class="row">
+                            <div class="pr-3 py-2 pl-4 col-sm-3 ">
+                                <mat-label class="gw-form-label ">Browser Time</mat-label>
+                            </div>
+                            <div class="px-3 py-2  col-sm-9">
+                                <mat-label class="gw-form-label font-weight-normal ">{{ browserClockTime | date: 'HH:mm:ss' }}</mat-label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="px-3 py-2 pl-4  col-sm-3 ">
+                                <mat-label class="gw-form-label ">Browser Date</mat-label>
+                            </div>
+                            <div class="px-3 py-2  col-sm-9">
+                                <mat-label class="gw-form-label font-weight-normal ">{{ browserClockTime | date: 'MMM d y' }}</mat-label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="px-3 py-2 pl-4  col-sm-3 ">
+                                <mat-label class="gw-form-label ">Browser Time Zone</mat-label>
+                            </div>
+                            <div class="px-3 py-2  col-sm-9">
+                                <mat-label class="gw-form-label font-weight-normal ">{{browserTimezone}}</mat-label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h6 class="p-2 mt-3">
+                        <span class="mat-subtitle-2">System Clock</span>
+                    </h6>
+
+                    <div class="mx-3">
+                        <div class="row">
+                            <div class="px-3 py-2 pl-4  col-sm-3 ">
+                                <mat-label class="gw-form-label ">System Time</mat-label>
+                            </div>
+                            <div class="px-3 py-2  col-sm-9">
+                                <mat-label class="gw-form-label font-weight-normal ">{{ systemClockTime | date: 'HH:mm:ss' }}</mat-label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="px-3 py-2 pl-4  col-sm-3 ">
+                                <mat-label class="gw-form-label ">System Date</mat-label>
+                            </div>
+                            <div class="px-3 py-2  col-sm-9">
+                                <mat-label class="gw-form-label font-weight-normal ">{{ systemClockTime | date: 'MMM d y' }}</mat-label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="px-3 py-2 pl-4  col-sm-3 ">
+                                <mat-label class="gw-form-label ">System Time Zone</mat-label>
+                            </div>
+                            <div class="px-3 py-2  col-sm-9">
+                                <mat-label class="gw-form-label font-weight-normal ">{{systemTimezone}}</mat-label>
+                            </div>
+                        </div>
+
+                    </div>
+
+            </mat-tab>
+
+        </mat-tab-group>
+    </mat-card-content>
+
+    <mat-card-actions>
+        <mat-divider></mat-divider>
+        <div class="d-flex justify-content-end gw-mt-12">
+            <button type="submit" mat-button class="mat-button-primary-sm mr-0" (click)="syncTimezone()">Sync</button>
+        </div>
+    </mat-card-actions>
+
+</mat-card>

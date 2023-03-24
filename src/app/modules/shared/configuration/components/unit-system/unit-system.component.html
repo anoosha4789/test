@@ -1,0 +1,47 @@
+<section class="m-2" *ngIf="unitSystem">
+  <div class="container-fluid">
+    <div class="row p-b-18">
+      <span class="mat-subtitle-2">Panel Units</span>
+    </div>
+  </div>
+  <div class="container-fluid d-flex flex-wrap">
+    <div id="unit-{{idx}}" class="col-sm-12 col-md-6 pr-0 gw-unit-system-row"
+      *ngFor="let unit of unitSystem.UnitQuantities; let idx=index">
+
+      <!--Unit Label-->
+      <div class="col gw-unit-system-form-label px-2">
+        <mat-label class="gw-form-label">{{unit.UnitQuantityDisplayLabel}}</mat-label>
+      </div>
+
+      <ng-container *ngIf="unit.SupportedUnitSymbols.length > 1 && unit.ShowSupportedUnitSymbols != false; then gwSelect; else gwTextBox"></ng-container>
+
+      <!--Unit Text -->
+      <ng-template #gwTextBox>
+        <div class="col mat-form-field-wrapper px-2">
+          <mat-label class="mat-body-2">{{unit.SelectedUnitSymbol}} </mat-label>
+        </div>
+      </ng-template>
+
+      <!--Unit Dropdown -->
+      <ng-template #gwSelect>
+        <div class="col px-2">
+          <mat-form-field class="mat-select-small gw-unit-system-select" appearance="fill">
+            <mat-select id="{{unit.UnitQuantityDisplayLabel}}"
+              (selectionChange)="onDropdownChange(unit.UnitQuantityName, $event.value)"
+              [value]="unit.SelectedUnitSymbol">
+              <mat-option *ngFor="let unitsymbol of unit.SupportedUnitSymbols" [value]="unitsymbol.Key">{{unitsymbol.Value}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </ng-template>
+
+    </div>
+
+  </div>
+
+  <!-- <div class="row justify-content-end bd-highlight">
+  <button mat-button class="mat-button-text-sm" (click)="goToPrev()">Back</button>
+  <button mat-button class="mat-button-primary-sm" (click)="submit()">Next</button>
+</div> -->
+
+</section>

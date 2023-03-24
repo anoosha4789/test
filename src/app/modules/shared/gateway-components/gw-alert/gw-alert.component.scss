@@ -1,0 +1,20 @@
+
+.gw-alert {
+    
+    font-size: 12px;
+    line-height: 16px;
+    font-family: "Noto Sans";
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    font-weight: 400;
+    letter-spacing: 0.25px;
+
+    .gw-alert-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        transform: rotate(1deg);
+    }
+}
+

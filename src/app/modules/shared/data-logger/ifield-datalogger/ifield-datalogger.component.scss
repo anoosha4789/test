@@ -1,0 +1,110 @@
+@import 'base.scss';
+
+.mat-tab-group.mat-tab-group {
+    height: calc(100% - 10px);
+  }
+  
+  .mat-tab-body-wrapper {
+      height: 100% !important;
+  }
+  
+  .gw-tab-group .mat-tab-header {
+      margin-left: -20px;
+      margin-right: -20px;
+  }
+  
+  .mat-card.mat-focus-indicator {
+      padding-top: 0px;
+  }
+  
+  
+
+.gw-maptemplate-grid-height {
+    margin-bottom: 0px !important;
+    height: calc(100vh - 315px);
+}
+
+.button-toggle {
+    width: 100px;
+    border: 1px solid;
+}
+
+.button-toggle-inner {
+    border-radius: 0;
+}
+
+.button-toggle-outer-left {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.button-toggle-outer-right {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.mat-button-toggle-checked {
+    border-top: 1px;
+    border-bottom: 1px;
+}
+
+.table-type-toggle-group {
+    .mat-button-toggle-group-appearance-standard .mat-button-toggle + .mat-button-toggle.mat-button-toggle-checked,
+    .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+        background-color: $gw-primary-color-500;
+        color: $gw-text-white;
+    }
+}
+
+.mat-delete-icon {
+    margin-left: -15px;
+}
+
+
+.gw-map-icon-wrapper{
+    width: 25px !important;
+    height: 25px !important;
+    min-width: 25px;
+    line-height: 0;
+}
+.gw-map-options-wrapper{
+    max-height: 130px;
+    overflow: auto;
+}   
+.gw-maptemplate-row {
+    @media (min-width: 1533px) and (-webkit-min-device-pixel-ratio: 1) {
+       // flex: 0 0 10%;
+        max-width: 10%;
+    }
+
+    @media (max-width: 1532px) and (-webkit-min-device-pixel-ratio: 1) {
+       // flex: 0 0 15%;
+        max-width: 15%;
+    }
+
+    @media (max-width: 1307px) and (-webkit-min-device-pixel-ratio: 1) {
+       // flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+.gw-maptemplate-left-row {
+    font-size: 14px;
+    @media (min-width: 1533px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+
+    @media (max-width: 1532px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    @media (max-width: 1307px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+    .mat-form-field-appearance-fill {
+        padding-top: 0;
+    }
+}

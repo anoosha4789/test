@@ -1,0 +1,83 @@
+<section class="pt-3 pb-1 px-3 gw-logger-dialog-container">
+    <form [formGroup]="loggerForm" autocomplete="off">
+        <div class="col gw-unit-system-row">
+            <div class="row">
+                <div class="col-3 gw-unit-system-form-label px-2 pt-2">
+                    <mat-label class="gw-form-label">Name</mat-label>
+                </div>
+                <div class="col-9 pr-0">
+                    <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                        <input id="Name" formControlName="Name" type="text" matInput class="mat-body-2 form-baseline"
+                            name="Name" (input)="validateForm($event)" (blur)="validateForm($event)"
+                            [(ngModel)]="dataLoggerData.Name">
+                        <mat-hint *ngIf="nameValidationMessage" align="start" class="mat-error">
+                            {{nameValidationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col gw-unit-system-row pt-2 pb-4">
+            <div class="row">
+                <div class="col-3 gw-unit-system-form-label px-2">
+                    <mat-label class="gw-form-label">Logger Format</mat-label>
+                </div>
+                <div class="col-9 pr-0">
+                    <mat-radio-group class="gw-sureflo-radio-group" [(ngModel)]="dataLoggerData.DataLoggerType"
+                        id="DataLoggerType" formControlName="DataLoggerType" (change)="loggerTypeChange($event)" [disabled]="isNoToolConnections">
+                        <mat-radio-button *ngFor="let loggerType of loggerTypes" class="px-2 gw-form-label"
+                            color="primary" [value]="loggerType.Key">
+                            {{loggerType.Value}}
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </div>
+        <div class="col gw-unit-system-row" *ngIf="isIFieldLoggerType">
+            <div class="row">
+                <div class="col-3 gw-unit-system-form-label px-2 pt-3">
+                    <mat-label class="gw-form-label">Well</mat-label>
+                </div>
+                <div class="col-9 pr-0">
+                    <mat-form-field class="mat-select-small w-100" appearance="fill">
+                        <mat-select class="gw-form-label form-baseline" (selectionChange)="onWellSelChange($event)"
+                            [(ngModel)]="dataLoggerData.WellId" id="WellId" formControlName="WellId"
+                            [matTooltip]="selectedWellName" matTooltipPosition="below" matTooltipClass="gw-mat-tooltip"
+                            [matTooltipDisabled]="selectedWellName?.length > 30 ? 'false': 'true' "
+                            (input)="validateForm($event)" (blur)="validateForm($event)">
+                            <mat-option *ngFor="let toolConnection of toolConnections" [value]="toolConnection.WellId" [matTooltip]="toolConnection?.WellName"
+                                matTooltipPosition="below" matTooltipClass="gw-mat-option-tooltip"
+                                [matTooltipDisabled]="toolConnection?.WellName?.length > 30 ? 'false': 'true' ">
+                                {{toolConnection.WellName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col gw-unit-system-row" *ngIf="!isIFieldLoggerType">
+            <div class="row">
+                <div class="col-3 gw-unit-system-form-label px-2 pt-3">
+                    <mat-label class="gw-form-label">Logging Rate (s)</mat-label>
+                </div>
+                <div class="col-9 pr-0">
+                    <mat-form-field class="mat-select-small w-100" appearance="fill">
+                        <mat-select class="gw-form-label form-baseline" (selectionChange)="onScanRateChange($event)"
+                            [(ngModel)]="dataLoggerData.ScanRate" id="ScanRate" formControlName="ScanRate"
+                            (input)="validateForm($event)" (blur)="validateForm($event)">
+                            <mat-option *ngFor="let scanRate of scanRates" [value]="scanRate">
+                                {{scanRate}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-3" (click)="OnCancel()">Cancel</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnSubmit()"
+        [disabled]="!loggerForm.valid || !isFormValid">Add</button>
+</div>

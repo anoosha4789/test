@@ -1,0 +1,71 @@
+.mat-tab-group.mat-tab-group {
+  height: calc(100% - 10px);
+}
+
+.mat-tab-body-wrapper {
+    height: 100% !important;
+}
+
+.mat-card.mat-focus-indicator {
+    padding-top: 0px;
+}
+
+.mat-form-field {
+    padding: 0 0.6rem 0 0;
+}
+
+.mat-tab-body-content{
+    overflow: hidden !important;
+}
+
+.form-overflow{
+    overflow: auto;
+    position: relative;
+    height: 97%;
+}
+.gw-network-container{
+    width: 98%; 
+}
+
+
+.gw-network-setting-container {
+    height    : 440px;
+    max-height    : 440px;
+    overflow-x: hidden;
+    @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
+        height    : 600px;
+        max-height    : 600px;
+    }
+}
+
+.gw-network-table-header {
+    width      : 180px;
+    font-weight: 600;
+    font-size  : 0.875rem;
+}
+
+.gw-network-input {
+    width: 50px;
+}
+
+.gw-warning-icon {
+    font-size     : 18px;
+    vertical-align: middle;
+}
+
+
+.gw-warning-block>span {
+    display       : inline-flex;
+    margin-top    : 0.5rem;
+    vertical-align: middle;
+}
+
+.gw-network-setting-action {
+    height: 36px;
+}
+
+.gw-network-settings-mat-hint{
+    margin-top: -20px;
+    margin-bottom: 0px;
+    font-size: 10.5px;
+}

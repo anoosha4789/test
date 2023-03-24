@@ -1,0 +1,72 @@
+<section class="m-2">
+    <div class="container-fluid">
+        <form [formGroup]="errorHandlingSettingsForm" #errorHandlingForm="ngForm" autocomplete="off">
+            <div class="row p-b-18">
+                <span class="mat-subtitle-2">Communication Error Settings</span>
+            </div>
+        
+            <div class="container-fluid">
+                <div class="row p-b-16">
+                    <div class="px-3 gw-general-setting-form-label">
+                        <span class="gw-form-label">{{getInputLabel('BadDataValue')}}</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-input-small" appearance="fill">
+                            <input id="BadDataValue" name="BadDataValue" type="number"
+                                matInput class="mat-body-2 form-baseline" (blur)="Validate($event)" (input)="Validate($event)" 
+                                formControlName="BadDataValue" [(ngModel)]="errorHandlingSettings.BadDataValue">
+                            <mat-hint *ngIf="getError('BadDataValue')" align="start" class="mat-error">
+                                {{getError('BadDataValue')}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row p-b-16">
+                    <div class="px-3 gw-general-setting-form-label">
+                        <span class="gw-form-label">{{getInputLabel('BadDataValueInteger')}}</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-input-small" appearance="fill">
+                            <input id="BadDataValueInteger" name="BadDataValueInteger" type="number"
+                                matInput class="mat-body-2 form-baseline" (blur)="Validate($event)" (input)="Validate($event)"
+                                formControlName="BadDataValueInteger" [(ngModel)]="errorHandlingSettings.BadDataValueInteger">
+                            <mat-hint *ngIf="getError('BadDataValueInteger')" align="start" class="mat-error">
+                                {{getError('BadDataValueInteger')}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row p-b-16">
+                    <div class="px-3 gw-general-setting-form-label">
+                        <span class="gw-form-label">{{getInputLabel('BadDataValueUnsignedInteger')}}</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-input-small" appearance="fill">
+                            <input id="BadDataValueUnsignedInteger" name="BadDataValueUnsignedInteger" type="number"
+                                matInput class="mat-body-2 form-baseline" (blur)="Validate($event)" (input)="Validate($event)" 
+                                formControlName="BadDataValueUnsignedInteger" [(ngModel)]="errorHandlingSettings.BadDataValueUnsignedInteger">
+                            <mat-hint *ngIf="getError('BadDataValueUnsignedInteger')" align="start" class="mat-error">
+                                    {{getError('BadDataValueUnsignedInteger')}}
+                                </mat-hint>
+                            </mat-form-field>
+                    </div>
+                </div>
+                <div class="row p-b-16">
+                    <div class="px-3 gw-general-setting-form-label">
+                        <span class="gw-form-label">{{getInputLabel('BadDataTimeout')}}</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-input-small" appearance="fill">
+                            <input id="BadDataTimeout" name="BadDataTimeout" type="number" 
+                                matInput class="mat-body-2 form-baseline" (blur)="Validate($event)" (input)="Validate($event)"
+                                formControlName="BadDataTimeout" [(ngModel)]="errorHandlingSettings.BadDataTimeout">
+                            <mat-hint *ngIf="getError('BadDataTimeout')" align="start" class="mat-error">
+                                {{getError('BadDataTimeout')}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

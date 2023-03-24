@@ -1,0 +1,175 @@
+<section>
+    <div class="px-3 py-2">
+        <div class="container gw-save-header mat-subtitle-2 py-1">
+            <div class="row">
+                <div class="col-3"><span class="gw-save-th">Page Name</span></div>
+                <div class="col-3"><span class="gw-save-th">Parameter Name</span></div>
+                <div class="col-3"><span class="gw-save-th">Original Value</span></div>
+                <div class="col-3"><span class="gw-save-th">Modified Value</span></div>
+            </div>
+        </div>
+        <div class="container gw-save-dialog">
+
+            <div *ngIf="panelSettingChanges && panelSettingChanges.length > 0" class="row gw-save-title">
+                <span class="mat-subtitle-2">General Settings</span>
+            </div>
+            <!-- Panel Settings -->
+            <div class="row gw-save-row" *ngFor="let panelSetting of panelSettingChanges">
+                <div class="col-3">
+                    <span class="gw-save-body-label gw-save-pagename">{{panelSetting.page}}</span>
+                </div>
+                <div class="col-3"><span class="gw-save-body-label">{{panelSetting.fieldName}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{panelSetting.originalValue}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{panelSetting.newValue}}</span></div>
+            </div>
+            <!-- Error Handling Settings -->
+            <div class="row gw-save-row" *ngFor="let errorSetting of errorHandlingChanges">
+                <div class="col-3">
+                    <span class="gw-save-body-label gw-save-pagename">{{errorSetting.page}}</span>
+                </div>
+                <div class="col-3"><span class="gw-save-body-label">{{errorSetting.fieldName}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{errorSetting.originalValue}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{errorSetting.newValue}}</span></div>
+            </div>
+            <!-- Unit System -->
+            <div class="row gw-save-row" *ngFor="let unit of unitSystemChanges">
+                <div class="col-3">
+                    <span class="gw-save-body-label gw-save-pagename">{{unit.page}}</span>
+                </div>
+                <div class="col-3"><span class="gw-save-body-label">{{unit.fieldName}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{unit.originalValue}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{unit.newValue}}</span></div>
+            </div>
+
+            <!-- eFCV Position Settings -->
+            <div class="row gw-save-row" *ngFor="let eFCVPositionSetting of eFCVPositionsChanges">
+                <div class="col-3">
+                    <span class="gw-save-body-label gw-save-pagename">{{eFCVPositionSetting.page}}</span>
+                </div>
+                <div class="col-3"><span class="gw-save-body-label">{{eFCVPositionSetting.fieldName}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{eFCVPositionSetting.originalValue}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{eFCVPositionSetting.newValue}}</span></div>
+            </div>
+
+            <!-- Shift Defaults -->
+            <div class="row gw-save-row" *ngFor="let shiftDefault of shiftDefaultChanges">
+                <div class="col-3">
+                    <span class="gw-save-body-label gw-save-pagename"
+                        [ngClass]="{'gw-save-sub-title': shiftDefault.subHeader}">
+                        {{shiftDefault.page}}
+                    </span>
+                </div>
+                <div class="col-3"><span class="gw-save-body-label">{{shiftDefault.fieldName}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{shiftDefault.originalValue}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{shiftDefault.newValue}}</span></div>
+            </div>
+
+            <!-- Alarms and Limits -->
+            <div class="row gw-save-row" *ngFor="let alarmAndLimit of alarmsAndLimitsChanges">
+                <div class="col-3">
+                    <span class="gw-save-body-label gw-save-pagename">{{alarmAndLimit.page}}</span>
+                </div>
+                <div class="col-3"><span class="gw-save-body-label">{{alarmAndLimit.fieldName}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{alarmAndLimit.originalValue}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{alarmAndLimit.newValue}}</span></div>
+            </div>
+
+            <!-- Panel Defaults -->
+            <div class="row gw-save-row" *ngFor="let panelDefault of panelDefaultChanges">
+                <div class="col-3">
+                    <span class="gw-save-body-label gw-save-pagename">{{panelDefault.page}}</span>
+                </div>
+                <div class="col-3"><span class="gw-save-body-label">{{panelDefault.fieldName}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{panelDefault.originalValue}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{panelDefault.newValue}}</span></div>
+            </div>
+
+            <!-- SIE -->
+            <div *ngIf="sieChanges && sieChanges.length > 0" class="row gw-save-title">
+                <span class="mat-subtitle-2">SIUs</span>
+            </div>
+            <div class="row gw-save-row" *ngFor="let sie of sieChanges">
+                <div class="col-3">
+                    <span class="gw-save-body-label gw-save-pagename">{{sie.page}}</span>
+                </div>
+                <div class="col-3"><span class="gw-save-body-label">{{sie.fieldName}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{sie.originalValue}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{sie.newValue}}</span></div>
+            </div>
+
+            <!-- Well -->
+            <div *ngIf="wellChanges && wellChanges.length > 0" class="row gw-save-title">
+                <span class="mat-subtitle-2">Wells</span>
+            </div>
+            <div class="row gw-save-row" *ngFor="let well of wellChanges">
+                <div class="col-3">
+                    <span class="gw-save-body-label gw-save-pagename"
+                        [ngClass]="{'gw-save-sub-title': well.subHeader}">{{well.page}}</span>
+                </div>
+                <div class="col-3"><span class="gw-save-body-label">{{well.fieldName}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{well.originalValue}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{well.newValue}}</span></div>
+            </div>
+
+            <!-- FlowMeter -->
+            <div *ngIf="surefloChanges && surefloChanges.length > 0" class="row gw-save-title">
+                <span class="mat-subtitle-2">SureFLO FlowMeter</span>
+            </div>
+            <div class="row gw-save-row" *ngFor="let floMeter of surefloChanges">
+                <div class="col-3">
+                    <span class="gw-save-body-label gw-save-pagename">{{floMeter.page}}</span>
+                </div>
+                <div class="col-3"><span class="gw-save-body-label">{{floMeter.fieldName}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{floMeter.originalValue}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{floMeter.newValue}}</span></div>
+            </div>
+
+            <!-- Data Sources -->
+            <div *ngIf="devicesChanges && devicesChanges.length > 0" class="row gw-save-title">
+                <span class="mat-subtitle-2">Data Sources</span>
+            </div>
+            <div class="row gw-save-row" *ngFor="let device of devicesChanges">
+                <div class="col-3">
+                    <span class="gw-save-body-label gw-save-pagename">{{device.page}}</span>
+                </div>
+                <div class="col-3"><span class="gw-save-body-label">{{device.fieldName}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{device.originalValue}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{device.newValue}}</span></div>
+            </div>
+
+            <!-- Data Publishing -->
+            <div *ngIf="publishingChanges && publishingChanges.length > 0" class="row gw-save-title">
+                <span class="mat-subtitle-2">Realtime Data</span>
+            </div>
+            <div class="row gw-save-row" *ngFor="let publishing of publishingChanges">
+                <div class="col-3">
+                    <span class="gw-save-body-label gw-save-pagename">{{publishing.page}}</span>
+                </div>
+                <div class="col-3"><span class="gw-save-body-label">{{publishing.fieldName}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{publishing.originalValue}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{publishing.newValue}}</span></div>
+            </div>
+
+            <!-- Data Logger -->
+            <div *ngIf="dataLoggerChanges && dataLoggerChanges.length > 0" class="row gw-save-title">
+                <span class="mat-subtitle-2">Data Loggers</span>
+            </div>
+            <div class="row gw-save-row" *ngFor="let dataLogger of dataLoggerChanges">
+                <div class="col-3">
+                    <span class="gw-save-body-label gw-save-pagename">{{dataLogger.page}}</span>
+                </div>
+                <div class="col-3"><span class="gw-save-body-label">{{dataLogger.fieldName}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{dataLogger.originalValue}}</span></div>
+                <div class="col-3"><span class="gw-save-body-label">{{dataLogger.newValue}}</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <mat-divider></mat-divider> -->
+    <div mat-dialog-actions class="d-flex justify-content-end">
+        <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnClose()">Close</button>
+        <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnCancel()">Cancel
+            Changes</button>
+        <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnOk()">Save</button>
+    </div>
+</section>

@@ -1,0 +1,72 @@
+@import 'base.scss';
+
+.gw-logger-data-point-dialog-container {
+    // height: 95%;
+    background: $white;
+
+    .gw-logger-data-points-wrapper {
+        // height: 100%;
+        // overflow: auto;
+
+    }
+}
+
+.body-label-value {
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: $gw-label-primary-color;
+    letter-spacing: 0.25px;
+}
+
+.gw-customMap-btn {
+    width: 95px;
+}
+
+.gw-addtoMap-btn {
+    position: absolute;
+    bottom: 2px;
+    width: 92%;
+    border-radius: 0px;
+
+    @media (max-width: 1170px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 90%;
+    }
+}
+
+.gw-customMap-divider {
+    border-left: 1px solid $gw-secondary-color-400;
+    padding-bottom: 10px;
+}
+
+.gw_customMap-hiddenField {
+    height: 0px;
+    width: 0px;
+}
+
+.gw-datapoint-wrapper {
+    margin-top: -15px;
+}
+
+.gw-tree-view-scrollbar {
+    height: 100%;
+
+    @media (max-height: 870px) and (-webkit-min-device-pixel-ratio: 1) {
+        height: 92%;
+    }
+
+    @media (min-height: 871px) and (-webkit-min-device-pixel-ratio: 1) {
+        height: 95%;
+    }
+}
+
+.gw-tree-view-scrollbar-full {
+    height: 100%;
+
+    @media (max-height: 870px) and (-webkit-min-device-pixel-ratio: 1) {
+        height: 98%;
+    }
+
+    @media (min-height: 871px) and (-webkit-min-device-pixel-ratio: 1) {
+        height: 100%;
+    }
+}

@@ -1,0 +1,49 @@
+@import 'base.scss';
+
+.gw-save-header {
+    background-color: $gw-primary-color-700; 
+    border: 1px solid $gw-secondary-color-300;
+    border-bottom: none;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.gw-save-dialog {
+    max-height: calc(100vh - 250px);
+    overflow: auto;
+    background-color: $gw-secondary-color-050; 
+    border: 1px solid $gw-secondary-color-500; 
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.gw-save-title {
+    background-color: $gw-secondary-color-300;
+    height: 30px;
+    align-content: center;
+    padding-left: 5px;
+}
+
+.gw-save-row {
+    border-bottom: 1px solid $gw-secondary-color-300;
+    word-wrap: break-word;
+}
+
+.gw-save-pagename {
+    font-weight: bold !important;
+}
+
+.gw-save-sub-title {
+    padding-left: 15px;
+}
+
+.gw-save-th {
+    color: $gw-text-white;
+    font-weight: 600;
+    font-size: 14px;
+    height: 32px;
+}
+
+.gw-save-body-label {
+    @include body(2, 1);
+    font-size: 0.8125rem;
+}

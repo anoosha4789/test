@@ -1,0 +1,82 @@
+<mat-card class="m-2 gw-config-container" cdkTrapFocus *ngIf="dataSource">
+    <mat-card-content id="gw-mat-card-content">
+        <mat-tab-group animationDuration="0ms" [(selectedIndex)]="selectedTabIndex"
+            (selectedTabChange)="onTabChanged($event);" class="gw-tab-group">
+            <!-- Data Source-->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <label class="gw-mat-tab-label" matTooltip="{{channelName}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-tooltip"
+                        [matTooltipDisabled]="channelName.length > 20 ? 'false': 'true' ">
+                        {{channelName | gwTruncate:20}}
+                    </label>
+                </ng-template>
+                <ng-template matTabContent>
+                    <!-- <div class="gw-mat-tab-content-box"> -->
+                    <!--    <gw-serialPort-channel [channel]="dataSource.Channel" [isDirty]="dataSource.IsDirty"
+                        (isFormValidEvent)="isFormValidEvent($event)"
+                        (channelFormInvalidEvent)="channelFormInvalidEvent($event)"
+                        (channelChangedEvent)="haschannelChangedEvent($event)" *ngIf="!isSureSENSPanel">
+                    </gw-serialPort-channel> -->
+
+                    <gw-multiProtocol-channel [channel]="dataSource.Channel" [isDirty]="dataSource.IsDirty"
+                        (isFormValidEvent)="isFormValidEvent($event)"
+                        (channelFormInvalidEvent)="channelFormInvalidEvent($event)"
+                        (channelChangedEvent)="haschannelChangedEvent($event)"
+                        (channelUpdatedEvent)="haschannelUpdatedEvent($event)">
+                    </gw-multiProtocol-channel>
+                    <!-- </div> -->
+                </ng-template>
+            </mat-tab>
+
+            <!-- Cards -->
+            <mat-tab *ngFor="let card of dataSource.Cards, let i = index">
+                <ng-template mat-tab-label>
+                    <label class="gw-mat-tab-label" matTooltip="{{card.currentCardName}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-tooltip"
+                        [matTooltipDisabled]="card.currentCardName.length > 25 ? 'false': 'true' ">
+                        {{card.currentCardName | gwTruncate:25}}
+                    </label>
+                </ng-template>
+                <ng-template matTabContent>
+                    <!-- <div class="gw-mat-tab-content-box"> -->
+                    <gw-card [card]="card" [channel]="dataSource.Channel" [isDirty]="dataSource.IsDirty"
+                        (isFormValidEvent)="isFormValidEvent($event)"
+                        (cardFormInvalidEvent)="cardFormInvalidEvent($event)"
+                        (hasCardsChangedEvent)="hasCardsChangedEvent($event)"></gw-card>
+                    <!-- </div> -->
+                </ng-template>
+            </mat-tab>
+
+            <!--Add New Card-->
+            <mat-tab label="{{tablblAddCard}}" [disabled]="hasChannelErrors" *ngIf="!hasCardsLimitReached">
+                <!-- <div class="gw-mat-tab-content-box"> -->
+                <gw-card *ngIf="newCard" [card]="newCard" [channel]="dataSource.Channel"
+                    (isFormValidEvent)="isFormValidEvent($event)" (hasCardsChangedEvent)="hasCardsChangedEvent($event)">
+                </gw-card>
+                <!-- </div> -->
+            </mat-tab>
+
+
+        </mat-tab-group>
+    </mat-card-content>
+    <mat-card-actions>
+        <mat-divider></mat-divider>
+        <div class="d-flex justify-content-between gw-mt-12 gw-card-actions">
+            <div>
+                <button *ngIf="bShowDeleteButton" mat-button class="mat-button-tertiary-sm__icon gw-tertiary-delete-btn"
+                    (click)="onDeleteBtnClicked()" [disabled]="bDisableDelete">
+                    <mat-icon class="mat-icon-left mat-icon--sml">delete</mat-icon>Delete
+                </button>
+            </div>
+            <div class="d-flex">
+                <button *ngIf="bShowBackButton || selectedTabIndex != 0" mat-button class="mat-button-tertiary-sm"
+                    (click)="onBackBtnClick()">Back</button>
+                <button type="submit" [disabled]="!isFormValid" mat-button class="mat-button-primary-sm mr-0"
+                    (click)="newCard != null ? onCreateCard() : onNextOrDoneClick()">
+                    {{btnNextText}}
+                </button>
+            </div>
+        </div>
+    </mat-card-actions>
+</mat-card>

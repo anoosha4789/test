@@ -1,0 +1,42 @@
+<div id = "tool-chart">
+    <div>
+        <span>Chart Type:</span>
+        <select [(ngModel)]="chartType">
+            <option>Auto</option>
+            <option>Area</option>
+            <option>Line</option>
+            <option>Column</option>
+            <option>Point</option>
+            <option>Spline</option>
+            <option>SplineArea</option>
+            <option>StepArea</option>
+            <option>StepLine</option>
+            <option>Waterfall</option>
+        </select>
+        <button type="button" class="gw-float-right" color="primary" (click)="changeZoom(true)">+</button>
+        <button type="button" class="gw-float-right" color="primary" (click)="changeZoom(false)">-</button>
+    </div>
+
+    <div class="options">
+        <span class="legendTitle">Legend: </span>
+        <div class="legendInline">
+            <igx-legend #legend orientation="Horizontal"></igx-legend>
+        </div>
+    </div>
+
+    <igx-category-chart id="infraLineChart" width="100%" isHorizontalZoomEnabled="true" isVerticalZoomEnabled="false"
+        [dataSource]="infragistics_data" [legend]="legend"
+        xAxisTitle="Time"
+        xAxisLabelTextStyle="12pt Arial bold"
+        xAxisInterval="25"
+        xAxisMajorStroke="lightgray"
+        xAxisLabelAngle="300"
+        yAxisLabelTextStyle="12pt Arial bold"
+        yAxisTickLength="20"
+        thickness="2"
+        [chartType]="chartType"
+        #infrgChart>
+    </igx-category-chart>
+
+    <igx-zoom-slider width="100%" height="50px" #zoomSlider name="zoomSlider"></igx-zoom-slider>
+</div>

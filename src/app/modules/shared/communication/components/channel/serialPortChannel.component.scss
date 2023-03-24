@@ -1,0 +1,71 @@
+@import 'base.scss';
+
+.deleteButton {
+    margin-bottom: -20px;
+    float: right;
+}
+
+.mat-form-field-appearance-fill { padding: 0;}
+
+.gw-data-source-row-big {
+    @media screen and (min-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 90%;
+        max-width: 90%;
+    }
+}
+
+.gw-data-source-row-left {
+    @media (min-width: 970px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 45%;
+        max-width: 45%;
+    }
+
+    @media (min-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 47%;
+        max-width: 47%;
+    }
+
+    @media (min-width: 1042px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 45%;
+        max-width: 45%;
+    }
+
+    @media (min-width: 1308px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 35%;
+        max-width: 35%;
+    }
+}
+
+.gw-data-source-row-right {
+    @media (min-width: 970px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    @media (min-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 53%;
+        max-width: 53%;
+    }
+
+    @media (min-width: 1042px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 55%;
+        max-width: 55%;
+    }
+}
+
+.mat-form-field-width {
+    @media (min-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 180px;
+    }
+}
+
+.w-130{
+    width: 130px;
+    @include mq-md() {
+        width: 180px;
+    }
+
+    @include mq-sm() {
+        width: 180px;
+    }
+}

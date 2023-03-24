@@ -1,0 +1,106 @@
+<section class="m-2">
+    <div class="container-fluid">
+        <form [formGroup]="panelConfigForm" #generalSettingsForm="ngForm" autocomplete="off">
+            <div class="row p-b-18">
+                <span class="mat-subtitle-2">Panel Information</span>
+            </div>
+            <!-- Panel Type -->
+            <div class="container-fluid">
+                <div class="row p-b-10">
+                    <div class="px-3 gw-general-setting-form-label">
+                        <span class="gw-form-label">Panel Type</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-select-small" appearance="fill">
+                            <mat-select id="gw-panel-type-dropdown" class="mat-body-2 form-baseline" [disabled]="true"
+                                formControlName="PanelTypeId" [(ngModel)]="panelConfiguration.PanelTypeId"
+                                >
+                                <mat-option *ngFor="let panel of panelTypes" [value]="panel.Id">{{panel.TypeName}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                 <!-- Serial Number -->
+                <div class="row p-b-10">
+                    <div class="gw-general-setting-form-label px-3">
+                        <span class="gw-form-label">Serial Number</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-input-small" appearance="fill">
+                            <input id="SerialNumber" matInput class="mat-body-2 form-baseline" 
+                                (focusout)="validate($event)" (input)="validate($event)"
+                                [matTooltip]="panelConfiguration?.SerialNumber" matTooltipPosition="below"
+                                matTooltipClass="gw-mat-tooltip"
+                                [matTooltipDisabled]="panelConfiguration?.SerialNumber?.length > 20 ? 'false': 'true' "
+                                formControlName="SerialNumber" [(ngModel)]="panelConfiguration.SerialNumber" name="SerialNumber">
+                            <mat-hint *ngIf="getError('SerialNumber')" align="start" class="mat-error">
+                                {{getError('SerialNumber')}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- Hydraulic Outputs -->
+                <div *ngIf="hydraulicSecVisibility" class="row p-b-10">
+                    <div class="gw-general-setting-form-label px-3">
+                        <span class="gw-form-label">Hydraulic Outputs</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-select-small" appearance="fill">
+                            <mat-select class="mat-body-2 form-baseline" [disabled]="isConfigSaved"
+                                name="HydraulicOutputs" formControlName="HydraulicOutputs"
+                                [(ngModel)]="panelConfiguration.HydraulicOutputs">
+                                <mat-option *ngFor="let item of hydraulicOptions; let i = index;" [value]="item">{{item}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Settings-->
+            <div class="row p-b-18">
+                <span class="mat-subtitle-2">Location Settings</span>
+            </div>
+            <div class="container-fluid">
+                <div class="row p-b-10">
+                    <div class="gw-general-setting-form-label px-3">
+                        <span class="gw-form-label">Customer Name</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-input-small" appearance="fill">
+                            <input id="CustomerName" matInput class="mat-body-2 form-baseline" 
+                                (focusout)="validate($event)" (input)="validate($event)"
+                                [matTooltip]="panelConfiguration?.CustomerName" matTooltipPosition="below"
+                                matTooltipClass="gw-mat-tooltip"
+                                [matTooltipDisabled]="panelConfiguration?.CustomerName?.length > 20 ? 'false': 'true' "
+                                [(ngModel)]="panelConfiguration.CustomerName" name="CustomerName" formControlName="CustomerName">
+                            <mat-hint *ngIf="getError('CustomerName')" align="start" class="mat-error">
+                                {{getError('CustomerName')}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                 <!-- Field Name -->
+                <div class="row p-b-10">
+                    <div class="gw-general-setting-form-label px-3">
+                        <span class="gw-form-label">Field Name</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-input-small" appearance="fill">
+                            <input id="FieldName" matInput class="mat-body-2 form-baseline" 
+                                (focusout)="validate($event)" (input)="validate($event)"
+                                [matTooltip]="panelConfiguration?.FieldName" matTooltipPosition="below"
+                                matTooltipClass="gw-mat-tooltip"
+                                [matTooltipDisabled]="panelConfiguration?.FieldName?.length > 20 ? 'false': 'true' "
+                                [(ngModel)]="panelConfiguration.FieldName" name="FieldName" formControlName="FieldName">
+                            <mat-hint *ngIf="getError('FieldName')" align="start" class="mat-error">
+                                {{getError('FieldName')}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</section>
+

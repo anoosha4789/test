@@ -1,0 +1,211 @@
+<div id = "toolChart" #toolChart>
+    <igx-zoom-slider [ngClass]="hasDataSeries ? 'zoomExtent' : 'zoomExtent_NoData'"
+        width="100%" height="25px" barExtent=0.5
+        lowerShadeBrush="white" higherShadeBrush="white"
+        lowerThumbStrokeThickness="10" higherThumbStrokeThickness="10"
+        lowerThumbRidgesBrush="black" higherThumbRidgesBrush="black"
+        #zoomSlider name="zoomSlider">
+    </igx-zoom-slider>
+
+    <!-- <div *ngIf="isZoomed" class="zoomButton">
+        <button title="Show All" (click)="zoomOutAll()">
+            <i class="fa fa-search-minus"></i>
+        </button>
+    </div> -->
+    
+    <igx-data-chart #infrgChart id="gw-multiline-chart" width="100%" [ngStyle]="{'height': 'calc(100vh - ' + chartHeight + 'px)'}"
+        chartTitle="{{chartTitle}}"
+        [dataSource]="infragistics_data"
+        isHorizontalZoomEnabled="true"
+        isVerticalZoomEnabled="false">
+
+        <igx-time-x-axis #xAxisTime 
+            dateTimeMemberPath="label" interval="50"  
+            title="Time" titleTextStyle = "12px Noto Sans" titleTextColor="black" majorStroke="lightgray" minorStroke="lightgray"
+            labelLocation="OutsideBottom"  labelTextStyle = "12px Noto Sans" labelTextColor = "black">
+        </igx-time-x-axis><!--labelAngle="300"-->
+    </igx-data-chart>
+
+    <div *ngIf="hasDataSeries == false" class="noData-container">  
+        <span class="body-label-value lab">No data points have been selected for trending.</span>
+    </div>
+
+    <div *ngIf="hasDataSeries" class="row options legend mx-0">
+        <div class="d-flex flex-wrap col legend-container">
+            <!-- <span class="mat-body-2">Legend: </span> -->
+            <label class="legend-title" *ngFor="let legend of arrSeriesMappings, let i = index">
+                <mat-checkbox *ngIf="!chartOptions.hideCheckbox" class="legend-checkbox" color="primary" [checked]="legend.checked" (change)="onToggle($event, i)"></mat-checkbox>
+                <span class="dot" [ngStyle]="{'background-color': legend.brush}"></span>
+                <span *ngIf="legend.isFixed" class="mat-body-2 legend-labels" matTooltip="{{legend.label}}"  matTooltipPosition="below" matTooltipClass="gw-dashboard-icon-tooltip" >{{legend.label  | gwTruncate :43}}</span>
+                <select *ngIf="!legend.isFixed" [(ngModel)]="legend.label" (change)="onLegendChange(i, legend.label)">
+                    <option *ngFor="let c of chartOptions.selectSeries">{{c.label}}</option>
+                </select>
+            </label>
+        </div>
+        
+        <div class="gw-width-65 p-l-2 p-r-2">
+            <!-- <div *ngIf="!isMobileView"> -->
+                <!-- <button title="Settings"><i class="fa fa-pencil" data-target="#chartSettingsPopUp" data-toggle="modal" aria-hidden="true"></i></button> -->
+                <button *ngIf="!isMobileView" mat-icon-button class="gw-chart-icon-btn gw-float-right" title="Settings" [satPopoverAnchor]="p"  (click)="displayChartSettingsOptions === 'allCharts' ? chartSettingsPopUp.open() : p.toggle()">
+                    <mat-icon>pending</mat-icon>   <!--more_vert-->
+                    <sat-popover #p horizontalAlign="after" hasBackdrop>
+                        <div class="tooltip-wrapper">
+                            <div>
+                                <a matTooltip="Chart Settings"  matTooltipPosition="below" matTooltipClass="gw-dashboard-icon-tooltip" href="javascript:void(0);" (click)="chartSettingsPopUp.open()" class="gw-icon-btn gw-float-left">
+                                    <mat-icon>edit</mat-icon>
+                                </a>
+                                <a (click)="chartSettingsPopUp.open()" href="javascript:void(0);"  class="gw-action-link">
+                                    <mat-label class="mat-subtitle  pl-2">Chart Settings </mat-label>
+                                </a>
+                        </div>
+                        <div>
+                                <a matTooltip="Configure Data Points" matTooltipPosition="below" matTooltipClass="gw-dashboard-icon-tooltip" href="javascript:void(0);"  (blur)="p.toggle()" (click)="showEditDataPointDialog()" class="gw-icon-btn gw-float-left">
+                                    <mat-icon>edit</mat-icon>
+                                </a>
+                                <a  href="javascript:void(0);"  (blur)="p.toggle()" (click)="showEditDataPointDialog()" class="gw-action-link">
+                                    <mat-label class="mat-subtitle  pl-2">Configure Data Points</mat-label>
+                                </a>
+                        </div>
+                        <div *ngIf="displayChartSettingsOptions !== 'historian'">
+                            <a matTooltip="Delete" matTooltipPosition="below" (click)="deleteChart()" matTooltipClass="gw-dashboard-icon-tooltip" href="javascript:void(0);"  (blur)="p.toggle()"  class="gw-icon-btn gw-float-left">
+                                <mat-icon>delete</mat-icon>
+                            </a>
+                            <a  href="javascript:void(0);" (click)="deleteChart()" (blur)="p.toggle()" class="gw-action-link">
+                                <mat-label class="mat-subtitle  pl-2">Delete</mat-label>
+                            </a>
+                        </div>
+                        </div>
+                      </sat-popover>
+
+                </button>
+                <!-- <button *ngIf="isSidebarClicked == false" title="Legends"><i class="fa fa-pencil" (click)="openSideNav()"></i></button> -->
+            <!-- </div> -->
+            <!-- <div *ngIf="isZoomed"> -->
+                <button mat-icon-button class="gw-chart-icon-btn gw-float-right" title="Snapshot" (click)="snapshotChart()">
+                    <mat-icon>photo_camera</mat-icon>
+                </button>
+                <button *ngIf="isZoomed" mat-icon-button class="gw-chart-icon-btn gw-float-right" title="Show All" (click)="zoomOutAll()">
+                    <mat-icon>remove_circle</mat-icon>
+                </button>
+                
+            <!-- </div> -->
+        </div>
+    </div>
+
+    <ng-template let-series="series" let-item="item" #valueTooltip>
+        <div>
+            <span class="mat-body-2">Date: {{item.label | date: 'MMM d y hh:mm:ss a'}}<br/></span>
+            <span class="mat-body-2" [style.color]="series.actualBrush">{{series.title}}: {{getSeriesValue(series.title, item)}}<br/></span>
+        </div>
+    </ng-template>
+</div>
+
+
+<div #tooltipRef="tooltip" igxTooltip class="gw-grid-tooltip">
+    <ng-container *ngIf="tooltipRef.context">
+        {{tooltipRef.context}}
+    </ng-container>
+</div>
+
+<!-- <div id="chartSettingsPopUp" role="dialog" class="modal fade" data-backdrop="static" data-keyboard="false" #chartSettingsPopUp> -->
+<igx-dialog #chartSettingsPopUp (onClose)="cancelChartSettings()">
+    <div class="dialog-width">
+        <div class="mat-dialog-header">
+            <div mat-dialog-title class="mat-subtitle-1">Chart Settings</div>
+        </div>
+
+        <!-- <header class="m-3" mat-dialog-title>
+            <p class="mat-subtitle-1 m-0">Chart Settings</p>
+        </header> -->
+
+        <!-- <mat-divider></mat-divider> -->
+
+        <div class="row mx-0 pb-3 p-t-6 p-l-6">
+            <div class="container p-t-6">
+                <div class="row p-l-16 p-b-10">
+                    <mat-label class="mat-subtitle-2">Legend</mat-label>
+                </div>
+    
+                <div class="row p-l-20" *ngFor="let series of seriesLegendMap | keyvalue, let inx = index">
+                    <div class="col-lg-12 p-b-2" *ngFor="let legend of series.value">
+                        <input [(colorPicker)]="legend.updateBrush" [style.background]="legend.updateBrush"
+                            class="gw-legend-input"/>
+                        <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=legend.label" class="gw-chart-setting-form-label">{{legend.label | gwTruncate:35}}</span>
+                    </div>
+                </div>
+    
+    
+                <div class="row p-l-16 p-t-26">
+                    <mat-label class="mat-subtitle-2">Custom Limits for Y Axis</mat-label>
+                </div>
+
+                <div class="row p-l-30 p-t-10">
+                    <div class="p-l-10 mat-form-label-width"></div>
+                    <div class="p-l-5 mat-form-field-width">
+                        <span class="gw-chart-setting-form-label form-baseline p-l-16">Min</span>
+                    </div>
+                    <div class="p-l-5 mat-form-field-width gw-float-left">
+                        <span class="gw-chart-setting-form-label form-baseline p-l-16">Max</span>
+                    </div>
+                </div>
+
+                <div class="d-flex gw-chart-row" *ngFor="let yAxis of chartOptions.yAxes, let i = index">
+                    <div class="p-l-10 mat-form-label-width">
+                        <span class="gw-chart-setting-form-label">{{yAxis.label}}</span>
+                    </div>
+                    <div class="">
+                        <mat-form-field class="mat-input-small mat-form-field-width" appearance="fill">
+                            <input id="yAxisMin" matInput type="tel" gw-number-input class="gw-chart-setting-form-label form-baseline" name="yAxisMin" [(ngModel)]="yAxis.Min" >
+                        </mat-form-field>
+                    </div>
+                    <div class="">
+                        <mat-form-field class="mat-input-small mat-form-field-width" appearance="fill">
+                            <input id="yAxisMax" matInput type="tel" gw-number-input class="gw-chart-setting-form-label form-baseline" name="yAxisMax" [(ngModel)]="yAxis.Max" >
+                        </mat-form-field>
+                    </div>
+                    <div class="">
+                        <button mat-button class="mat-button-sm mat-button-tertiary-sm__icon-only gw-icon-btn m-t-5" (click)="onMinMaxClear(i)">
+                            <mat-icon class="mat-icon--sml">delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- <mat-divider></mat-divider> -->
+
+        <div mat-dialog-actions class="d-flex justify-content-between gw-adv-mat-dialog-actions">
+            <div>
+                <button *ngIf="showResetBtn" mat-button class="mat-button-primary-sm" (click)="resetChartPopUp.open()">Reset</button>
+            </div>
+            <div>
+                <button type="button" mat-button id="btnSet" class="mat-button-primary-sm action-btn-right" (click)="setSeriesBrush()">Set</button>
+                <button type="button" mat-button id="btnCancel" class="mat-button-tertiary-sm action-btn-right m-r-10" (click)="chartSettingsPopUp.close()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</igx-dialog>
+
+<igx-dialog #resetChartPopUp>
+    <div class="dialog-width">
+        <div class="mat-dialog-header">
+            <div mat-dialog-title class="mat-subtitle-1">Reset Chart Settings</div>
+        </div>
+
+        <div class="row mx-0 pb-3 p-t-6 p-l-6">
+            <div class="container mat-body-2 p-t-6">
+                Reset Chart Settings will clear settings for all charts of similar type.
+                <br>
+                <br>
+                Do you want to proceed?
+            </div>
+        </div>
+
+
+        <div mat-dialog-actions class="d-flex gw-adv-mat-dialog-actions">
+            <button type="button" mat-button id="btnCancel" class="mat-button-tertiary-sm action-btn-right m-r-10" (click)="resetChartPopUp.close()">No</button>
+            <button type="button" mat-button id="btnSet" class="mat-button-primary-sm action-btn-right" (click)="clearChartSettings()">Yes</button>
+        </div>
+    </div>
+</igx-dialog>

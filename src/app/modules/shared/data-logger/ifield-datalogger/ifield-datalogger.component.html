@@ -1,0 +1,108 @@
+<mat-card class="m-2 gw-config-container" cdkTrapFocus *ngIf="isConfigSaved && !isImportConfig">
+
+    <mat-card-content id="gw-mat-card-content">
+
+        <mat-tab-group animationDuration="0ms" class="gw-tab-group">
+
+            <mat-tab label={{dataLoggerData?.Name}}>
+                <div class="d-flex flex-wrap">
+                    <div class="px-2">
+                        <span class="mat-subtitle-2">Logger Format:</span>
+                    </div>
+                    <div class="col-sm-12 col-md-2 gw-maptemplate-left-row px-0">
+                        {{loggerTypeName}}
+                    </div>
+                    <div class="px-2" *ngIf="isIFieldLoggerType">
+                        <span class="mat-subtitle-2">Well:</span> 
+                    </div>
+                    <span *ngIf="isIFieldLoggerType && isNewDataLogger" class="col-sm-12 col-md-3 gw-maptemplate-left-row px-0">
+                            {{loggerWellName}}
+                    </span>
+
+                    <div class="col gw-unit-system-row" *ngIf="isIFieldLoggerType && !isNewDataLogger">
+                        <mat-form-field class="mat-select-small w-60" *ngIf="dataLoggerData">
+                            <mat-select  class="gw-form-label form-baseline" (selectionChange)="onWellSelChange($event)"  
+                            [(ngModel)]="dataLoggerData.WellId"  id="WellId">
+                                <mat-option *ngFor="let toolConnection of toolConnections" [value]="toolConnection.WellId" [matTooltip]="toolConnection?.WellName"
+                                matTooltipPosition="below" matTooltipClass="gw-mat-option-tooltip"
+                                [matTooltipDisabled]="toolConnection?.WellName?.length > 30 ? 'false': 'true' ">
+                                {{toolConnection.WellName}}
+                            </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+
+                    <div *ngIf="!isIFieldLoggerType" class="px-2">
+                        <mat-label class="mat-subtitle-2">Logging Rate (s):</mat-label>
+                    </div>
+                    <span *ngIf="!isIFieldLoggerType" class="col-sm-12 col-md-2 px-0">
+                          {{dataLoggerData?.ScanRate}}
+                    </span>
+
+                    <div class="col d-flex justify-content-end px-0 mr-2">
+                        <button mat-button class="mat-button-tertiary-sm gw-map-icon-wrapper p-0" [hidden]="isIFieldLoggerType" (click)="showLoggerDataPointDialog( {dataLogger: dataLoggerData} )" [disabled]="isImportConfig">
+                            <mat-icon class="mat-icon--sml">edit</mat-icon>
+                        </button>
+                        <button mat-button class="mat-button-tertiary-sm gw-map-icon-wrapper p-0 ml-2"  (click)="deleteDataLoggerClick()">
+                            <mat-icon class="mat-icon--sml">delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div class="m-2 gw-maptemplate-grid-height">
+
+                    <div #tooltipRef="tooltip" igxTooltip class="gw-grid-tooltip">
+                        <ng-container *ngIf="tooltipRef.context">
+                          {{tooltipRef.context.value}}
+                        </ng-container>
+                    </div>
+                
+                    <igx-grid igxPreventDocumentScroll #gridModbusDataPoints [data]="accessDataPoints" [emptyGridMessage]="'No Tools are configured.'" [primaryKey]="'Description'" 
+                        width="100%" resizable="true" [columnHiding]="true">
+                        <igx-column [headerClasses]="'mat-header-cell'" field="Description" header="Description" [dataType]="'string'">
+                            <ng-template igxCell let-cell="cell">
+                                <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50" class="gw-grid-row-tooltip">
+                                    {{cell.value}}
+                                </span>
+                            </ng-template>
+                        </igx-column>
+                        <igx-column [headerClasses]="'mat-header-cell'" field="Units" header="Units" [dataType]="'string'" width="12%">
+                        </igx-column>
+                    </igx-grid>
+                </div>
+            </mat-tab>
+
+        </mat-tab-group>
+    </mat-card-content>
+
+    <mat-card-actions>
+        <mat-divider></mat-divider>
+        <div class="d-flex justify-content-end gw-mt-12 gw-card-actions">
+            <div class="d-flex">
+                <button *ngIf="bShowBackButton || selectedTabIndex != 0" mat-button class="mat-button-tertiary-sm"
+                    (click)="onBackBtnClick()">Back</button>
+                <button type="submit" mat-button class="mat-button-primary-sm mr-0"
+                    (click)="saveDataPubBtnClick()">{{actionBtnTxt}}</button>
+            </div>
+        </div>
+    </mat-card-actions>
+
+</mat-card>
+<mat-card class="m-2 gw-config-container" cdkTrapFocus *ngIf="isImportConfig || !isConfigSaved">
+    <mat-card-content id="gw-mat-card-content">
+        <mat-tab-group animationDuration="0ms" class="gw-tab-group">
+
+            <mat-tab label="New Data Logger">
+                <ng-template matTabContent>
+                    <div class="mat-subtitle-2 mt-1 mb-4">
+                        Data Logger
+                        <span class="gw-info-icon pl-2">
+                            <mat-icon>info</mat-icon>
+                        </span>
+                    </div>
+                    <p class="mat-body-2">A valid configuration must be saved before creating a new Data Logger.</p>
+                </ng-template>
+            </mat-tab>
+
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>

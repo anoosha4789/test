@@ -1,0 +1,59 @@
+<div class="row m-r-0 m-l-0 gw-logger-data-point-dialog-container">
+    <input id="MapFocus" matInput class="gw_customMap-hiddenField" #MapFocus>
+    <!--Hidden field added to retain focus on close of a dialog-->
+    <div class="col-lg-4 p-r-0 p-l-20 p-t-6 gw-logger-data-points-wrapper">
+        <div *ngIf="bNoDataPointsAvalbale" class="body-label-value p-x-6">No data points available.</div>
+        <cdk-virtual-scroll-viewport
+            [ngClass]="selectedTreeNodes.length != 0 ? 'gw-tree-view-scrollbar' : 'gw-tree-view-scrollbar-full'"
+            class="gw-dynamic-card-scrollbar gw-checked-treeview-scroll-viewport" itemSize="40">
+            <gateway-checked-treeview [treeNodes]="dataLoggerNode" [existingDataPoints]="existingDataPoints"
+                [clearNodes]="clearSelectedNodes" (selectedTreeNodes)="dataPointsSelected($event)">
+            </gateway-checked-treeview>
+        </cdk-virtual-scroll-viewport>
+        <button *ngIf="selectedTreeNodes.length != 0" type="submit" mat-button
+            class="mat-button-primary-sm gw-addtoMap-btn m-r-10" (click)="OnAddDataPoints()">
+            Add <mat-icon class="mat-icon-left gw-addtoMap-icon mat-icon">input</mat-icon>
+        </button>
+    </div>
+    <div class="col-lg-8 p-l-6 p-t-0 gw-customMap-divider">
+        <div class="d-flex flex-wrap">
+            <div class="col gw-unit-system-row">
+                <div class="row">
+                    <span class="pl-2 pt-3 pr-0">
+                        <mat-label class="gw-form-label mat-subtitle-2">Logging Format:</mat-label>
+                    </span>
+                    <div class="col-4 pr-0 pt-3 pl-0">
+                        <span class="mat-body-2 pl-2">{{currentLoggerType}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col gw-unit-system-row">
+                <div class="row">
+                    <span class="p1-2 pt-3 pr-0">
+                        <mat-label class="gw-form-label mat-subtitle-2">Logging Rate (s):</mat-label>
+                    </span>
+                    <div class="col-4 pr-0 pl-0">
+                        <mat-form-field class="mat-select-small w-100" appearance="fill">
+                            <mat-select class="gw-form-label form-baseline" (selectionChange)="onScanRateChange($event)"
+                                [(ngModel)]="currentDataLogger.ScanRate" id="ScanRate">
+                                <mat-option *ngFor="let scanRate of scanRates" [value]="scanRate">
+                                    {{scanRate}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="gw-datapoint-wrapper">
+            <gw-logger-modbus-template-points [selectedDataPoints]="currentDataLogger.customDataLoggerDataPoints"
+                (dataPointDeletedEvent)="onDataPointDeleted($event)"></gw-logger-modbus-template-points>
+        </div>
+    </div>
+
+</div>
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-3" (click)="OnCancel()">Close</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnSubmit()"
+        [disabled]="!hasChanges">Save</button>
+</div>

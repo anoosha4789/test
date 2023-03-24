@@ -1,0 +1,180 @@
+@import 'base.scss';
+
+.deleteButton {
+    margin-bottom: -20px;
+    float: right;
+}
+
+.cardText {
+    text-align: center;
+    
+    @media (min-width: 1533px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 60%;
+    }
+
+    @media (max-width: 1532px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 52%;
+    }
+
+    @media (max-width: 1307px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 28%;
+    }
+}
+
+.mat-form-field-appearance-fill { padding: 0;}
+
+.gw-card-row {
+    @media (min-width: 1533px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    @media (max-width: 1532px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+
+    @media (max-width: 1307px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 32%;
+        max-width: 32%;
+    }
+}
+
+.gw-card-row-cardname {
+    @media (min-width: 1533px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    @media (max-width: 1532px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+
+    @media (max-width: 1307px) and (-webkit-min-device-pixel-ratio: 1) {
+        margin-left: -10px;
+        flex: 0 0 37%;
+        max-width: 37%;
+    }
+}
+
+.gw-card-form-label {
+    width: 100px;
+    float: left;
+
+    @include mq-md() {
+        width: 100%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-card-form-label-sml {
+    width: 92px;
+    float: left;
+
+    @include mq-md() {
+        width: 100%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-card-input-field {
+    @media (min-width: 1533px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 182px;
+    }
+
+    @media (max-width: 1532px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 152px;
+    }
+
+    @media (max-width: 1307px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 102px;
+    }
+}
+
+.gw-card-cardName-field {
+    @media (min-width: 1533px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 180px;
+    }
+
+    @media (max-width: 1532px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 150px;
+    }
+
+    @media (max-width: 1307px) and (-webkit-min-device-pixel-ratio: 1) {
+        margin-left: -5px;
+        width: 150px;
+    }
+}
+
+.gw-card-address-field {
+    @media (min-width: 1308px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 82px;
+    }
+
+    @media (max-width: 1307px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 52px;
+    }
+}
+
+.card-address-btn {
+    min-width: 28px !important;
+}
+
+:host ::ng-deep .mat-select-value-text {
+    font-size: .875rem !important;
+}
+
+// overwrite the checkbox label
+::ng-deep .mat-checkbox-label {
+  @include body (2,2);
+  color: $gw-label-primary-color;
+}
+
+
+.gw-gauge-grid {
+    height: calc(100vh - 412px);
+}
+
+
+.gw-card-address-btn {
+    line-height: 29.6px !important;
+    height: 100% !important;
+}
+
+.gw-card-address-input .mat-form-field-infix {
+    padding: 0px !important;
+}
+
+.gw_gaugeType_label {
+    @include body (2,2);
+  color: $gw-label-primary-color;
+}
+
+//GATE-1748 Starts
+// ::ng-deep .mat-form-field-infix {
+//     display: flex;
+// }
+
+@media (min-width: 768px){
+    .col-md-6 {
+        -webkit-box-flex: 0;
+        flex: 0 0 30%;
+        max-width: 50%;
+    }
+}
+//GATE-1748 Ends
+
+.mat-icon-address--sml {
+    height: 15px!important;
+    padding-top: 2px;
+    width: 18px;
+    font-size: 17px;
+    vertical-align: text-top;
+}

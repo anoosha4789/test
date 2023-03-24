@@ -1,0 +1,148 @@
+<section>
+    <form *ngIf="card" [formGroup]="cardForm" #cardInfoForm="ngForm" autocomplete="off">
+        <div class="d-flex flex-wrap pt-3">
+            <div class="col-sm-12 col-md-4 gw-card-row px-0">
+                <div class="col gw-card-form-label-sml p-l-10 p-t-4">
+                    <span class="gw-form-label">Card Type</span>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-select-small gw-card-input-field" appearance="fill">
+                        <mat-select id="CardAppType" class="gw-form-label form-baseline"
+                            [formControl]="CardAppTypeFormControl" required
+                            [disabled] = 'disableCardAppType'
+                            [(ngModel)]="selectedCardAppType" (selectionChange)="CardAppTypeChange($event)">
+                            <mat-option *ngFor="let cardAppType of CardAppTypes" [value]="cardAppType">{{cardAppType}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4 gw-card-row-cardname px-0">
+                <div class="col gw-card-form-label-sml p-l-0 p-t-4">
+                    <span class="gw-form-label">Card Name</span>
+                </div>
+                <div>
+                    <mat-form-field class="mat-input-small gw-card-cardName-field" appearance="fill">
+                        <input id="Description" matInput class="gw-form-label form-baseline"
+                            (input)="validateCardName()" (blur)="validateCardName()" formControlName="Description" 
+                            [(ngModel)]="card.Description" name="Description"
+                            [matTooltip]="card?.Description" matTooltipPosition="below"
+                            matTooltipClass="gw-mat-tooltip" [matTooltipDisabled]="card?.Description?.length > 23 ? 'false': 'true'">
+                        <mat-hint *ngIf="validateCardNameMssg" align="start" class="mat-error">
+                            {{validateCardNameMssg}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4 gw-card-row px-0" *ngIf="isSerialChannel">
+                <div class="col gw-card-form-label p-t-4 p-l-0 p-r-0">
+                    <span class="gw-form-label">Card Address</span>
+                </div>
+                <div class="col">
+                    <!-- <button id="btnDecrement" mat-button class="mat-button-sm mat-button-tertiary-sm__icon-only card-address-btn gw-icon-btn" (click)="decrementSlaveId()">
+                        <mat-icon class="mat-icon gw-icon-btn">remove_circle</mat-icon>
+                    </button> -->
+                    <mat-form-field class="mat-input-small gw-card-input-field" appearance="fill" style="height: 10px;">
+                        <button mat-button class="mat-button-sm mat-button-primary-sm__icon-only" (click)="decrementSlaveId()">
+                            <mat-icon class="mat-icon-address--sml">remove</mat-icon>
+                        </button>
+                        <input id="CardAddress" matInput type="number" class="gw-form-label form-baseline cardText" (input)="validateCardAddress()" (blur)="validateCardAddress()" formControlName="CardAddress" [(ngModel)]="card.CardAddress"
+                            name="CardAddress">
+                        <button mat-button class="mat-button-sm mat-button-primary-sm__icon-only" (click)="incrementSlaveId()">
+                            <mat-icon class="mat-icon-address--sml">add</mat-icon>
+                        </button>
+                        <mat-hint *ngIf="validateCardAddressMssg" align="start" class="mat-error">
+                            {{validateCardAddressMssg}}
+                        </mat-hint>
+                    </mat-form-field>
+                    <!-- <button id="btnIncrement" mat-button class="mat-button-sm mat-button-tertiary-sm__icon-only card-address-btn gw-icon-btn" (click)="incrementSlaveId()">
+                        <mat-icon class="mat-icon gw-icon-btn">add_circle</mat-icon>
+                    </button> -->
+                </div>
+            </div>
+
+            <!-- <div class="col-sm-12 col-md-6 gw-card-row-left px-0 py-2">
+                <div class="col gw-data-source-form-label-left p-l-10">
+                    <mat-checkbox id="InChargePowerSupply" class="form-baseline" formControlName="SupportInChargePowerSupplyModule" name="SupportInChargePowerSupplyModule" [(ngModel)]="card.SupportInChargePowerSupplyModule" [checked]="card.SupportInChargePowerSupplyModule"
+                        (change)="checkChanged($event)">Support Power Supply Module</mat-checkbox>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-card-row-right px-0 py-2">
+                <div class="col gw-data-source-form-label-left">
+                    <mat-checkbox id="EnableDownlink" class="form-baseline" formControlName="EnableDownlink" name="EnableDownlink" [(ngModel)]="card.EnableDownlink" [checked]="card.EnableDownlink" (change)="checkChanged($event)">Enable Downlink</mat-checkbox>
+                </div>
+            </div> -->
+        </div>
+    </form>
+    <!-- GATE-1198-->
+    <div class="d-flex justify-content-between p-t-20">
+        <div class="pt-2 px-2">
+            <span class="mat-subtitle-2">Tools</span>
+        </div>
+        <div class="px-2">
+            <button mat-button class="mat-button-tertiary-sm mat-button-tertiary-sm__icon"
+                 [disabled]="!addToolBtnVisibility"
+                 (click)="addGauge()"> 
+                <mat-icon class="mat-icon-left mat-icon">add</mat-icon>Add Tool
+            </button>
+        </div>
+    </div>
+
+    <div class="m-2 gw-gauge-grid">
+        <div #tooltipRef="tooltip" igxTooltip class="gw-grid-tooltip">
+            <ng-container *ngIf="tooltipRef.context">
+              {{tooltipRef.context.value}}
+            </ng-container>
+        </div>
+        <!-- <igx-grid igxPreventDocumentScroll #gridGauges  (onCellEditEnter)="editStart($event)" -->
+        <igx-grid igxPreventDocumentScroll #gridGauges [data]="gauges" [emptyGridMessage]="'No Tools are configured.'" [primaryKey]="'DeviceId'" 
+            width="100%" resizable="true" (onColumnInit)="initColumns($event)">
+            <!-- <igx-column [headerClasses]="'mat-header-cell'" field="Id" header="Id" [dataType]="'number'"></igx-column> -->
+            <igx-column [headerClasses]="'mat-header-cell'" field="ToolAddress" header="Tool Address" [dataType]="'string'" width="20%">
+                <!-- <ng-template igxCellEditor let-cell="cell">
+                <mat-select class="mat-body-2 form-baseline" [(ngModel)]="cell.editValue">
+                  <mat-option *ngFor="let address of remainingToolAddress" [value]="address">{{address}}</mat-option>
+                </mat-select>
+              </ng-template> -->
+            </igx-column>
+            <igx-column [headerClasses]="'mat-header-cell'" field="GaugeType" header="Tool Type" [dataType]="'string'" width="30%">
+                <ng-template igxCell let-cell="cell">
+                    <span class="gw_gaugeType_label lab">{{gaugeTypeName(cell.rowData)}}</span>
+                </ng-template>
+                <!-- <ng-template igxCellEditor let-cell="cell">
+                <mat-select class="mat-body-2 form-baseline" [(ngModel)]="cell.editValue">
+                  <mat-option *ngFor="let toolType of toolTypes" [value]="toolType.GaugeType">{{toolType.TypeName}}</mat-option>
+                </mat-select>
+              </ng-template> -->
+            </igx-column>
+            <igx-column [headerClasses]="'mat-header-cell'" field="ESPGaugeType" header="ESP Tool Type" [dataType]="'string'" [hidden]="true">
+
+            </igx-column>
+            <igx-column [headerClasses]="'mat-header-cell'" field="Description" header="Tool Name" [dataType]="'string'" width="35%">
+                <!-- <ng-template igxCell let-cell="cell">
+                <input matInput class="mat-body-2 form-baseline" [(ngModel)]="cell.value">
+              </ng-template> -->
+              <ng-template igxCell let-cell="cell">
+                <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50" class="gw-grid-row-tooltip">
+                    {{cell.value}}
+                </span>
+              </ng-template>
+            </igx-column>
+            <igx-column width="200px" [filterable]="false" width="15%">
+                <ng-template igxCell let-cell="cell">
+                    <!-- <button mat-button class="mat-button-sm mat-button-primary-sm__icon-only gw-icon-btn" (click)="viewToolDetails(cell.row.rowID)">
+                  <mat-icon class="mat-icon--sml">edit</mat-icon>
+                </button>
+                <button mat-button class="mat-button-sm mat-button-primary-sm__icon-only gw-icon-btn" >
+                  <mat-icon class="mat-icon--sml">delete</mat-icon>
+                </button> -->
+                    <a href="javascript:void(0);" class="gw-icon-btn p-r-10" (click)="viewToolDetails(cell.row.rowID)">
+                        <mat-icon class="mat-icon--sml">edit</mat-icon>
+                    </a>
+                    <a href="javascript:void(0);" class="gw-icon-btn" (click)="deleteRow(cell.row.index, cell.row.rowID)">
+                        <mat-icon class="mat-icon--sml">delete</mat-icon>
+                    </a>
+                </ng-template>
+            </igx-column>
+        </igx-grid>
+    </div>
+</section>

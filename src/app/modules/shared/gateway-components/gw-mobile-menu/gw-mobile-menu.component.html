@@ -1,0 +1,64 @@
+<section class="gw-mobile-menu_container">
+    <div class="gw-mobile-menu_container_content">
+        <div class="gw-login_avatar">
+            <div class="gw-login_avatar_container">
+                <span class="gw-login_avatar_initials">
+                    {{mobileMenuData.loginStatus ? profileNameInitials : ''}}
+                </span>
+                <img alt="Ring" class="gw-login_avatar__ring" src="./assets/ring.png">
+            </div>
+            <ng-container *ngIf="mobileMenuData.loginStatus">
+                <div class="profile-name">{{profileName}}</div>
+                <div class="profile-email">{{mobileMenuData.profileEmail}}</div>
+            </ng-container>
+        </div>
+        <div>
+            <div *ngFor="let menuItem of mobileMenuData.mobileMenuItems">
+                <div class="gw-mobile-menu-container__divider">
+                    <mat-divider></mat-divider>
+                </div>
+                <div class="gw-mobile-menu-container__sub-title">{{menuItem.subTitle}}</div>
+                <div class="gw-mobile-menu-container__menu-list">
+                    <mat-nav-list>
+                        <bh-nav-list *ngFor="let item of menuItem.navList" [item]="item" [itemList]="menuItem.navList"
+                            (navigationClicked)="navigationClicked($event)">
+                        </bh-nav-list>
+                    </mat-nav-list>
+                </div>
+            </div>
+            <div class="about_help hide-in-non-mobile">
+                <div class="gw-mobile-menu-container__divider">
+                    <mat-divider></mat-divider>
+                </div>
+                <div class="gw-mobile-menu-container__menu-list custom-container">
+                    <div class="firsticon">
+                        <mat-icon class="routeIcon mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">info</mat-icon>
+                    </div>
+                    <div class="secondname">
+                        <a href="javascript:void(0)" (click)="showAboutModal()" routerLinkActive="active-link">About</a>
+                    </div>
+                </div>
+                <div class="gw-mobile-menu-container__menu-list custom-container mtop-10" *ngIf="showHelp">
+                    <div class="firsticon">
+                        <mat-icon class="routeIcon mat-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true">help_center</mat-icon>
+                    </div>
+                    <div class="secondname">
+                        <a target="_blank" href="/onlineHelp/?fromApp" routerLinkActive="active-link">Help</a>
+                    </div>
+                </div>
+            </div>
+            <div class="gw-mobile-menu-container__logout">
+                <div class="gw-mobile-menu-container__divider">
+                    <mat-divider></mat-divider>
+                </div>
+                <div class="gw-mobile-menu-container__menu-list">
+                    <mat-nav-list>
+                        <bh-nav-list *ngFor="let item of logOutItem" [item]="item" [itemList]="logOutItem"
+                            (navigationClicked)="navigationClicked($event)">
+                        </bh-nav-list>
+                    </mat-nav-list>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

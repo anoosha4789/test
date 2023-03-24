@@ -1,0 +1,142 @@
+@import 'base.scss';
+
+.gw-mobile-menu_container {
+    display: none;
+    position: fixed;
+    right: 0;
+    top: 60px;
+    width: 100%;
+    z-index: 10;
+    overflow-y: auto;
+    bottom: 0;
+    background-color: $gw-primary-color-950;
+    color: $gw-text-white;
+}
+
+.about_help{
+    .mtop-10{
+        margin-top: 10px;
+    }
+    .custom-container{
+        display: flex;
+        padding: 0 12px;
+        font-family: "Poppins semibold";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 21px;
+        color: $gw-text-white;
+        opacity: .7;
+        .firsticon {
+            flex: 0 0 8%;
+        }
+        .secondname {
+            flex: 0 0 75%;
+            white-space: nowrap;
+            padding-left: 5px;
+            padding-top: 3px;
+            a{
+                color: $gw-text-white;
+                text-decoration: none;
+            }
+        }
+    }
+}
+@media screen and (min-width: 600px) {
+    .hide-in-non-mobile{
+        display: none;
+    }
+}
+
+.gw-mobile-menu_container_content {
+    padding-top: 20px;
+}
+
+.gw-login_avatar {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.gw-login_avatar_container
+{
+    position: relative;
+    height: 68px;
+    margin-bottom: 12px;
+}
+
+.gw-login_avatar_initials
+{
+    height: 56px;
+    width: 56px;
+    background-color: $gw-primary-color-500;
+    position: absolute;
+    font-family: "Poppins semibold";
+    text-align: center;
+    left: 6px;
+    top: 6px;
+    font-weight: bold;
+    line-height: 56px;
+    border-radius: 46px;
+}
+
+.gw-login_avatar__ring {
+    height: 68px;
+    position: relative;
+}
+
+.gw-login_avatar .profile-name {
+    font-family: "Poppins semibold";
+    letter-spacing: 0;
+    font-size: 1rem;
+    line-height: 1.4em;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: $gw-text-white;
+}
+
+.gw-login_avatar .profile-email {
+    font-family: "Noto Sans";
+    font-weight: 400;
+    letter-spacing: .1px;
+    font-size: .75rem;
+    line-height: 1.3em;
+    color: rgba(255,255,255,.6);
+}
+
+.gw-mobile-menu-container__divider {
+    padding: 20px 12px 12px;
+}
+
+.gw-mobile-menu-container__divider mat-divider {
+    border-top-color: rgba(255,255,255,.08);
+}
+
+.gw-mobile-menu-container__sub-title {
+    padding-left: 12px;
+    padding-bottom: 4px;
+    font-family: "Noto Sans";
+    letter-spacing: .25px;
+    font-size: .75rem;
+    line-height: 1.3em;
+    color: $gw-text-white;
+    font-weight: 600;
+}
+
+.gw-mobile-menu-container__menu-list {
+    padding: 0 4px;
+}
+
+.gw-mobile-menu-container__logout {
+    padding-bottom: 67px;
+}
+
+@media (max-width: 600px) {
+
+    .gw-mobile-menu_container {
+        display: block;
+        z-index: 999;
+    }
+}

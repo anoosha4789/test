@@ -1,0 +1,41 @@
+@import 'base.scss';
+
+.addEditUserForm {
+    padding: 0 24px 24px;
+
+    igx-input-group+igx-input-group {
+        margin-top: 24px;
+    }
+}
+
+.dialog-container {
+    display    : flex;
+    margin-left: 24px;
+}
+
+igx-icon {
+    margin-right: 8px;
+}
+
+.user_acc_input {
+    width: 250px;
+}
+
+
+:host {
+    ::ng-deep {
+
+        .igx-grid__tfoot {
+            display: none;
+        }
+
+    }
+}
+
+.gw-user-grid {
+    height: calc(100vh - 326px);
+}
+
+.gw-add-btn {
+    margin-top: -8px;
+}

@@ -1,0 +1,104 @@
+<section>
+    <form *ngIf="serialChannelProperty != null" [formGroup]="communicationSettingsFormGroup" #communicationSettingsForm="ngForm" autocomplete="off">
+        <div class="row p-l-20 p-b-20 m-r-0">
+            <span class="mat-subtitle-2">Protocol Selection</span>
+        </div>
+
+        <div class="d-flex mt-1">
+            <div class="w-130 pl-3">
+                <span class="gw-form-label">Protocol</span>
+            </div>
+            <div>
+                <mat-form-field class="mat-select-small" appearance="fill">
+                    <!-- <mat-select id="Protocol" class="gw-form-label form-baseline" [disabled]="true"
+                        formControlName="Protocol" [(ngModel)]="channel.Protocol" name="Protocol">
+                        <mat-option [value]="ModbusRTUOverSerial.Id">{{ModbusRTUOverSerial.Name}}</mat-option>
+                    </mat-select> -->
+                    <input id="Protocol" formControlName="Protocol" matInput class="gw-form-label form-baseline" 
+                            name="Protocol" [value]="ModbusRTUOverSerial.Name">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row p-t-10 p-l-20 p-b-20 m-r-0">
+            <span class="mat-subtitle-2">Communication Settings</span>
+        </div>
+        <div class="col-sm-12 col-md-12 gw-data-source-row-big px-0 p-b-16">
+            <div class="col gw-data-source-form-label-left p-r-0">
+                <span class="gw-form-label">Serial Port</span>
+            </div>
+            <div class="col">
+                <mat-form-field class="mat-select-small mat-form-field-width" appearance="fill">
+                    <mat-select id="SerialPort" class="gw-form-label form-baseline" 
+                        formControlName="ComPort" [ngModel]="modelValue(channel.ComPort)" name="SerialPort" (selectionChange)="onChange($event)">
+                        <mat-option *ngFor="let comPort of serialPorts" [value]="comPort.Name">{{comPort.Description}}</mat-option>
+                    </mat-select>
+                    <mat-hint *ngIf="getError('ComPort')" align="start" class="mat-error">
+                        {{getError('ComPort')}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="d-flex flex-wrap mt-1">
+            <div class="col-sm-12 col-md-6 gw-data-source-row-left px-0 p-b-16">
+                <div class="col gw-data-source-form-label-left">
+                    <span class="gw-form-label">Baud Rate</span>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-select-small mat-form-field-width" appearance="fill">
+                        <mat-select id="BaudRate" class="gw-form-label form-baseline" (selectionChange)="onChange($event)"
+                            formControlName="BaudRate" [ngModel]="modelValue(channel.BaudRate)" name="BaudRate">
+                            <mat-option *ngFor="let baudRate of serialChannelProperty.BaudRates" [value]="baudRate">{{baudRate}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-data-source-row-right px-0 p-b-16">
+                <div class="col gw-data-source-form-label-right p-t-4">
+                    <span class="gw-form-label">Poll Rate (ms)</span>
+                </div>
+                <div class="col p-r-0">
+                    <mat-form-field class="mat-input-small mat-form-field-width" appearance="fill">
+                        <input id="PollRateInMs" type="number" formControlName="PollRateInMs" matInput class="gw-form-label form-baseline" 
+                            (focus)="validate($event)" (input)="validate($event)" (blur)="clearValidtions()"
+                            name="PollRateInMs" [(ngModel)]="channel.PollRateInMs">
+                        <mat-hint *ngIf="getError('PollRateInMs')" align="start" class="mat-error">
+                            {{getError('PollRateInMs')}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 gw-data-source-row-left px-0 p-b-16">
+                <div class="col gw-data-source-form-label-left">
+                    <mat-label class="gw-form-label">Poll Mode</mat-label>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-select-small mat-form-field-width" appearance="fill">
+                        <mat-select id= "PollMode" class="gw-form-label form-baseline" name="PollMode" (selectionChange)="onChange($event)"
+                            formControlName="SinglePollRateMode" [ngModel]="channel.SinglePollRateMode" name="PollMode">
+                            <mat-option [value]="false">{{pollModes[0]}}</mat-option>
+                            <mat-option [value]="true">{{pollModes[1]}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-data-source-row-right px-0 p-t-2 p-b-16">
+                <div class="col gw-data-source-form-label-right p-t-4">
+                    <span class="gw-form-label">Modbus Timeout (ms)</span>
+                </div>
+                <div class="col p-r-0">
+                    <mat-form-field class="mat-input-small mat-form-field-width" appearance="fill">
+                        <input id="TimeoutInMs" type="number" formControlName="TimeoutInMs" matInput class="gw-form-label form-baseline" 
+                            (focus)="validate($event)" (input)="validate($event)" (blur)="clearValidtions()"
+                            name="TimeoutInMs" [(ngModel)]="channel.TimeoutInMs">
+                        <mat-hint *ngIf="getError('TimeoutInMs')" align="start" class="mat-error">
+                            {{getError('TimeoutInMs')}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

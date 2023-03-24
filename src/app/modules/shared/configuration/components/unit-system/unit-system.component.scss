@@ -1,0 +1,10 @@
+
+.mat-form-field-appearance-fill { padding: 0;}
+
+.gw-unit-system-row {
+    margin-left: -8px;
+    @media screen and (min-device-width: 1025px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 40%;
+        max-width: 40%;
+    }
+}

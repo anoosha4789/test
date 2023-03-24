@@ -1,0 +1,32 @@
+<div class="m-2 gw-maptemplate-grid-height">
+
+    <div #tooltipRef="tooltip" igxTooltip class="gw-grid-tooltip">
+        <ng-container *ngIf="tooltipRef.context">
+            {{tooltipRef.context.value}}
+        </ng-container>
+    </div>
+
+    <igx-grid igxPreventDocumentScroll #gridLoggerModbusDataPoints [data]="selectedDataPoints"
+        [emptyGridMessage]="'No Data Points are configured.'" [primaryKey]="'Address'" width="100%" resizable="true"
+        [columnHiding]="true">
+        <igx-column [headerClasses]="'mat-header-cell'" field="TagName" header="Description" [dataType]="'string'"
+            width="{{columnDescWidth}}">
+            <ng-template igxCell let-cell="cell">
+                <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                    class="gw-grid-row-tooltip">
+                    {{cell.value}}
+                </span>
+            </ng-template>
+        </igx-column>
+        <igx-column [headerClasses]="'mat-header-cell'" field="UnitSymbol" header="Units" [dataType]="'string'" width="20%">
+        </igx-column>
+        <igx-column [headerClasses]="'mat-header-cell'" width="5%" [editable]="false">
+            <ng-template igxCell let-cell="cell">
+                <a href="javascript:void(0);" class="gw-icon-btn p-r-10"
+                    (click)="onDeleteDataPoint(cell.row.index, cell.row.rowID)">
+                    <mat-icon class="mat-icon--sml mat-delete-icon">delete</mat-icon>
+                </a>
+            </ng-template>
+        </igx-column>
+    </igx-grid>
+</div>
