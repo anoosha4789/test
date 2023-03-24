@@ -1,0 +1,1 @@
+2020-08-28 07:23:04,840;ERROR;ShutdownApplication;Shutting down application
