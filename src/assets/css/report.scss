@@ -1,0 +1,219 @@
+// Report
+
+/* Report header fix while scroll */
+.stiJsViewerToolBar:not(.stiJsViewerToolBarSeparated) {
+    // position: sticky;
+    // top: 0px;
+
+    &> :first-child {
+        padding-top: 0px !important;
+    }
+}
+
+.stiJsViewerForm {
+    @include mq-md() {
+        width: 100%;
+        overflow-x: hidden; 
+        .stiJsViewerFormContainer {
+            padding: 0px !important;
+            table tbody tr div {
+                min-width: auto !important;
+            }
+        }
+    }
+}
+
+.stiJsViewerForm > table , 
+.stiJsViewerFormContainer > table {
+    @include mq-md() {
+        table-layout: fixed;
+    }
+}
+
+#configReport,
+#modbusReport,
+#alarmReport,
+#shiftReport {
+    @include mq-md() {
+        height: 100%;
+    }
+}
+
+/* ----------- iPad 1, 2, Mini and Air ----------- */
+
+/* Portrait and Landscape */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        height: 100%;
+    }
+}
+
+/* Portrait */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        height: 100%;
+    }
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 1) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        height: 100%;
+    }
+}
+
+/* ----------- iPad 3, 4 and Pro 9.7" ----------- */
+
+/* Portrait and Landscape */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        height: 100%;
+    }
+}
+
+/* Portrait */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        height: 100%;
+    }
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        height: 100%;
+    }
+}
+
+/* ----------- iPad Pro 10.5" ----------- */
+
+/* Portrait and Landscape */
+@media only screen and (min-device-width: 834px) and (max-device-width: 1112px) and (-webkit-min-device-pixel-ratio: 2) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        height: 100%;
+    }
+}
+
+/* Portrait */
+/* Declare the same value for min- and max-width to avoid colliding with desktops */
+@media only screen and (min-device-width: 834px) and (max-device-width: 834px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        height: 100%;
+    }
+}
+
+/* Landscape */
+/* Declare the same value for min- and max-width to avoid colliding with desktops */
+@media only screen and (min-device-width: 1112px) and (max-device-width: 1112px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        height: 100%;
+    }
+}
+
+/* ----------- iPad Pro 12.9" ----------- */
+
+/* Portrait and Landscape */
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        height: 100%;
+    }
+}
+
+/* Portrait */
+/* Declare the same value for min- and max-width to avoid colliding with desktops */
+@media only screen and (min-device-width: 1024px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        height: 100%;
+    }
+}
+
+/* Landscape */
+/* Declare the same value for min- and max-width to avoid colliding with desktops */
+@media only screen and (min-device-width: 1366px) and (max-device-width: 1366px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        height: 100%;
+    }
+}
+
+/* HMI device */
+/* Portrait */
+@media only screen and (device-width: 1024px) and (device-height: 1280px) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        // height: 100%;
+    }
+}
+
+/* Landscape */
+@media only screen and (device-width: 1280px) and (device-height: 1024px) {
+
+    #configReport,
+    #modbusReport,
+    #alarmReport,
+    #shiftReport {
+        // height: 100%;
+    }
+}
+
+@media only screen and (max-width: 1180px) {
+    #configReport > div,
+    #modbusReport > div,
+    #alarmReport > div,
+    #shiftReport > div {
+        position: relative !important;  
+    }
+    .gw-back-btn{
+        display: none;
+    }
+}

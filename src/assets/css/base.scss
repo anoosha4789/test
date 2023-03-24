@@ -1,0 +1,287 @@
+@import '~node_modules/bh-theme/theme-lib.theme.scss';
+@import 'igniteui-angular/lib/core/styles/themes/index';
+
+// Gateway Secondary Font
+@mixin gw-secondary-font {
+  font-family: Noto Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+
+// Contains global variables, mixin & function etc...
+
+$gw-primary-color: mat-color($teal, 500);
+$gw-primary-color-050: mat-color($teal, 050);
+$gw-primary-color-100: mat-color($teal, 100);
+$gw-primary-color-200: mat-color($teal, 200);
+$gw-primary-color-300: mat-color($teal, 300);
+$gw-primary-color-500: mat-color($teal, 500);
+$gw-primary-color-600: mat-color($teal, 600);
+$gw-primary-color-700: mat-color($teal, 700);
+$gw-primary-color-900: mat-color($teal, 900);
+$gw-primary-color-950: mat-color($teal, 950);
+
+$gw-secondary-color: mat-color($grey, 500);
+$gw-secondary-color-050: mat-color($grey, 050);
+$gw-secondary-color-100: mat-color($grey, 100);
+$gw-secondary-color-150: mat-color($grey, 150);
+$gw-secondary-color-200: mat-color($grey, 200);
+$gw-secondary-color-300: mat-color($grey, 300);
+$gw-secondary-color-400: mat-color($grey, 400);
+$gw-secondary-color-500: mat-color($grey, 500);
+$gw-secondary-color-600: mat-color($grey, 600);
+$gw-secondary-color-700: mat-color($grey, 700);
+$gw-secondary-color-800: mat-color($grey, 800);
+$gw-secondary-color-900: mat-color($grey, 900);
+$gw-secondary-color-1000: mat-color($earth, 1000);
+
+$gw-tertiary-color: mat-color($earth, 500);
+$gw-tertiary-color-025: mat-color($earth, 025);
+$gw-tertiary-color-050: mat-color($earth, 050);
+$gw-tertiary-color-100: mat-color($earth, 100);
+$gw-tertiary-color-200: mat-color($earth, 200);
+$gw-tertiary-color-300: mat-color($earth, 300);
+$gw-tertiary-color-500: mat-color($earth, 500);
+$gw-tertiary-color-600: mat-color($earth, 600);
+$gw-tertiary-color-700: mat-color($earth, 700);
+$gw-tertiary-color-1000: mat-color($earth, 1000);
+
+$gw-title-color: $gw-primary-color-700;
+$gw-error-color-300: mat-color($rose, 300);
+$gw-error-color-400: mat-color($rose, 400);
+$gw-error-color-500: mat-color($rose, 500);
+$gw-error-color-700: mat-color($rose, 700);
+$gw-error-bg-color: mat-color($rose, 700);
+
+$gw-warning-color-300: mat-color($gold, 300);
+$gw-warning-color-400: mat-color($gold, 400);
+$gw-warning-color-500: mat-color($gold, 500);
+$gw-warning-color-700: mat-color($gold, 700);
+$gw-warning-color-900: mat-color($gold, 900);
+
+$gw-alarm-alert-critical: mat-color($mat-orange, 500);
+$gw-connecting-color-300: mat-color($cyan, 300);
+
+$gw-box-border-color: $text2;
+$gw-border-color: $gw-secondary-color-100;
+
+$gw-text-white: #ffffff;
+$gw-bg-white: #ffffff;
+$gw-text-color: $gw-secondary-color-600;
+
+$gw-label-primary-color: mat-color($earth, 1000);
+$gw-label-title-color: mat-color($earth, 600);
+$gw-montoring-subtitle-color: mat-color($earth, 100);
+
+$gw-label: #ffffff;
+$gw-label-bold: #ffffff;
+
+$gw-h-line-color: #ffffff;
+$gw-reset-btn-color: mat-color($rose, 500);
+$gw-delete-btn-color: mat-color($rose, 500);
+
+$gw-mat-form-field-fill-color: $gw-secondary-color-200;
+$gw-mat-form-field-focus-color: $gw-secondary-color-300;
+$gw-mat-form-field-hover-color: $gw-secondary-color-400;
+
+$gw-tooltip-primary-color: mat-color($mat-yellow, 200);
+$gw-tooltip-text-color: mat-color($earth, 1000);
+
+$gw-mat-table-box-shadow-color: $gw-secondary-color-500;
+
+// marging & padding 
+$max: 50;
+$offset: 2;
+$unit: 'px';
+@mixin gw-marging-padding($className, $styleName) {
+  $i: 0;
+  @while $i <= $max {
+    #{$className + $i} { 
+      #{$styleName}: #{$i + $unit};
+    }
+    $i: $i + $offset;
+  }
+}
+
+// Margins
+@include gw-marging-padding('.m-t-', 'margin-top');
+@include gw-marging-padding('.m-r-', 'margin-right');
+@include gw-marging-padding('.m-b-', 'margin-bottom');
+@include gw-marging-padding('.m-l-', 'margin-left');
+@include gw-marging-padding('.m-x-', 'margin');
+// Paddings
+@include gw-marging-padding('.p-t-', 'padding-top');
+@include gw-marging-padding('.p-r-', 'padding-right');
+@include gw-marging-padding('.p-b-', 'padding-bottom');
+@include gw-marging-padding('.p-l-', 'padding-left');
+@include gw-marging-padding('.p-x-', 'padding');
+
+.gw-m-l--10 {
+  margin-left: -10px;
+}
+
+// Width and Height 
+$max: 500;
+$offset: 2;
+$unit: 'px';
+@mixin gw-field-width($className, $styleName) {
+  $i: 0;
+  @while $i <= $max {
+    #{$className + $i} { 
+      #{$styleName}: #{$i + $unit};
+    }
+    $i: $i + $offset;
+  }
+}
+
+@include gw-field-width('.gw-select-', 'width');
+@include gw-field-width('.gw-input-', 'width');
+@include gw-field-width('.gw-width-', 'width');
+@include gw-field-width('.gw-min-width-', 'min-width');
+@include gw-field-width('.gw-height-', 'height');
+@include gw-field-width('.gw-min-height-', 'min-height');
+
+.gw-no-border {
+  border: none;
+}
+
+.gw-full-width {
+  width: 100%;
+}
+
+// number input - no arrows
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+
+.mat-list-item {
+  color: $gw-secondary-color-1000 !important;
+  font-weight: 500 !important;
+  @include mq-sm() {
+    color: $gw-text-white !important;
+    background-color: #05322b !important;
+  }
+}
+
+// mat-icon--sml
+.mat-icon--sml {
+  padding-top: 2px;
+  vertical-align: middle;
+  transform: rotate(1deg);
+}
+
+::ng-deep.mat-form-field-disabled .mat-form-field-infix { 
+  border-bottom: 1px solid $gw-secondary-color-400 !important;
+} 
+
+
+// Infragistics Grid Theme
+.igx-grid {
+  box-shadow: 0 0 0 1px lightgray !important;
+}
+
+$custom-grid-theme: igx-grid-theme(
+  $cell-active-border-color: transparent,
+  $edit-mode-color: $gw-primary-color
+);
+
+@include igx-grid($custom-grid-theme);
+
+:host {
+  ::ng-deep {
+      @include igx-grid($custom-grid-theme);
+
+      .igx-grid__tbody {
+        border: 1px solid $gw-secondary-color-500;
+      }
+
+      .igx-grid__tbody-message {
+          @include body(2, 2);
+          padding : 0.375rem;
+      }
+
+      .igx-grid__thead-wrapper {
+          background-color: $gw-secondary-color-200;
+          border: 1px solid $gw-secondary-color-500;
+          opacity: 1;
+          width: 100% !important;
+      }
+
+      .igx-grid__thead-thumb {
+        display: none;
+      }
+
+      .igx-grid__th {
+        border-right: 0px;
+      }
+
+      .igx-grid__th-title {
+          @include label(1, 'bold');
+          opacity: 1;
+          margin : 1rem 0;
+      }
+
+      .igx-grid__td {
+        //@include text-link(4, "secondary");
+        @include text-link(4);
+        font-size: .875rem;
+        letter-spacing: 0;
+        line-height: 1.25em;
+        color: $gw-secondary-color-1000;
+      }
+
+      .igx-grid__td--selected {
+        background-color: transparent;
+        color: $gw-secondary-color-1000;
+        opacity: 1;
+      }
+
+      .igx-grid__td:hover {
+        background-color: transparent;
+        color: $gw-secondary-color-1000;
+        opacity: 1;
+      }
+
+      .igx-grid__tr:hover {
+        background-color: transparent;
+        opacity: 1;
+      }
+  }
+}
+
+// igx-tooltip
+$gw-igx-tooltip: igx-tooltip-theme(
+    $text-color: $gw-text-white,
+    $background: #011627,
+    $border-radius: 6px
+);
+
+:host ::ng-deep {
+  @include igx-tooltip($gw-igx-tooltip);
+
+  .ig-tooltip-container-background {
+    border-radius: 6px;
+  }
+}
+
+.gw-text-align-right { text-align: right;}
+
+.gw-text-align-left { text-align: left;}
+
+@mixin gw-poppins-font($font-weight: 600){
+  font-family: "Poppins semibold";
+  font-weight: $font-weight;
+}

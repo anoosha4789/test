@@ -1,0 +1,1325 @@
+@import 'base.scss';
+
+// Button , Tabs, Cards & Input Elements
+
+/* Button */
+.mat-button {
+    text-transform: none !important;
+}
+
+.mat-button.mat-button-base.mat-button-primary-sm:disabled {
+    background-color: $gw-secondary-color-300  !important;
+    color: $gw-tertiary-color-1000  !important;
+    opacity: 1 !important;
+}
+
+.mat-button.mat-button-base.mat-button-tertiary {
+    border: 1px solid $gw-tertiary-color  !important;
+}
+
+.mat-button.mat-button-base.mat-button-tertiary-sm {
+    border: 1px solid $gw-tertiary-color  !important;
+}
+
+.mat-button.mat-button-base.mat-button-tertiary-sm:disabled {
+    border: 1px solid $gw-secondary-color-300  !important;
+}
+
+.mat-button.mat-button-base.mat-button-secondary-sm:disabled {
+    background-color: $gw-secondary-color-300  !important;
+    color: $gw-tertiary-color-1000  !important;
+    opacity: 1 !important;
+}
+
+.gw-tertiary-delete-btn {
+    border: 1px solid $gw-delete-btn-color  !important;
+    color: $gw-delete-btn-color  !important;
+    height: 36px;
+    font-size: 12px !important;
+}
+
+.gw-tertiary-delete-btn:disabled {
+    border: 1px solid $gw-tertiary-color  !important;
+    background-color: $gw-secondary-color-300  !important;
+    color: $gw-tertiary-color-1000  !important;
+    opacity: 1 !important;
+}
+
+.gw-xs-button {
+    height: 28px !important;
+    line-height: 15px !important;
+}
+
+.gw-button-tertiary-sm {
+    font-family: "Poppins semibold" !important;
+    font-size: 12px !important;
+    border: 1px solid $gw-bg-white  !important;
+    height: 35px !important;
+}
+
+.gw-monitoring-card .gw-button-tertiary-sm:hover,
+.gw-toolbox-card .gw-button-tertiary-sm:hover {
+    background-color: $gw-primary-color-500;
+}
+
+/* Checkbox toggle */
+.mat-slide-toggle:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: $gw-primary-color-200;
+}
+
+.mat-slide-toggle:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: $gw-primary-color-200;
+}
+
+.mat-slide-toggle:not(.mat-checked):not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: $gw-secondary-color-400;
+}
+
+.mat-slide-toggle:not(.mat-checked):not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: $gw-secondary-color-600;
+}
+
+
+/* Label */
+.body-label-value {
+    @include body(2, 2);
+    display: inline-flex;
+    margin: 0.375rem 0;
+}
+
+.gw-form-label {
+    @include body(2, 2);
+    color: $gw-label-primary-color;
+    font-weight: bold;
+}
+
+.gw-chart-setting-form-label {
+    @include body(2, 2);
+    color: $gw-label-primary-color;
+}
+
+.gw-form-secondary-label {
+    color: $gw-secondary-color-700;
+}
+
+.gw-text-link-breadcrumb {
+    @include text-link(4);
+    font-size: 14px;
+    color: $gw-tertiary-color-1000;
+    text-decoration: none;
+}
+
+.gw-section-invalid {
+    color: $gw-error-color-500;
+}
+
+
+// General Settings - Label
+.gw-general-setting-form-label {
+    width: 275px;
+
+    @include mq-md() {
+        width: 220px;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+// Error Handling - Label
+.gw-error-handle-form-label {
+    width: 275px;
+
+    @include mq-md() {
+        width: 220px;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+// Unit System - Label
+.gw-unit-system-form-label {
+    width: 140px;
+    float: left;
+
+    @include mq-md() {
+        width: 100%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-unit-system-select {
+    width: 55%;
+
+    @media only screen and (min-width : 1025px) {
+        width: 60%;
+    }
+
+    @include mq-md() {
+        width: 100%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+// Well - Label
+.gw-well-form-label {
+    width: 90px;
+    float: left;
+
+    @include mq-md() {
+        width: 100%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-zone-form-left-label {
+    width: 120px;
+    float: left;
+
+    @include mq-md() {
+        width: 100%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-zone-form-right-label {
+    width: 180px;
+    float: left;
+
+    @include mq-md() {
+        width: 100%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+// Data Sources - Label
+.gw-data-source-form-label-left {
+    width: 130px;
+    float: left;
+
+    @include mq-md() {
+        width: 180px;
+    }
+
+    @include mq-sm() {
+        width: 180px;
+    }
+}
+
+.gw-data-source-form-label-right {
+    width: 180px;
+    float: left;
+
+    // @include mq-md() {
+    //     width: 100%;
+    // }
+
+    // @include mq-sm() {
+    //     width: 100%;
+    // }
+}
+
+// Clock settings label
+.gw-clock-setting-label {
+    width: 190px;
+
+    @include mq-md() {
+        width: 100%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.break-word {
+    word-wrap: break-word;
+}
+
+.gw-modbus-report-label {
+    width: 150px;
+
+    @include mq-md() {
+        width: 100%;
+    }
+}
+
+/* Label End*/
+
+// Network settings input
+.gw-network-table-header {
+    color: $gw-secondary-color-600;
+
+    @include mq-md() {
+        width: 100%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-network-input {
+    width: 65px;
+
+    @include mq-md() {
+        width: 100%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-slaveId-input {
+    width: 48% !important;
+    height: 29.6px !important;
+}
+
+
+// Cards - Home, Dashboard 
+.gw-home-card {
+    width: 296px;
+
+    @include mq-sm() {
+        margin-bottom: 1rem;
+    }
+
+    @media (min-width: 1100px) and (-webkit-min-device-pixel-ratio: 1) {
+        margin-right: 3rem !important;
+    }
+}
+
+// Button - Primary, Secondary 
+.gw-reset-btn {
+    color: $gw-reset-btn-color  !important;
+}
+
+.gw-icon-btn {
+    color: $gw-secondary-color-1000;
+}
+
+.gw-icon-btn:hover {
+    color: $gw-primary-color-700;
+}
+
+// Caption
+.mat-caption-14px {
+    font-size: 14px;
+}
+
+.gw-mat-caption-small {
+    font-size: 0.875rem;
+    color: $gw-secondary-color-700
+}
+
+// Links - anchor tag 
+.gw-action-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.gw-mat-body-warning {
+    @include body(2, 2);
+    color: $gw-error-color-700;
+}
+
+
+
+.gw-ul>li {
+    list-style: none;
+    border-bottom: 1px solid $gw-secondary-color-300;
+    outline: none;
+}
+
+.gw-ul>li:hover {
+    cursor: pointer;
+}
+
+.gw-tab-group .mat-tab-header {
+    margin-left: -20px;
+    margin-right: -20px;
+}
+
+// Mat tab default height;
+.gw-mat-tab-content-box {
+    height: 61.8vh;
+
+    @include mq-sm() {
+        height: 100%;
+    }
+}
+
+.gw-icon-text-container {
+    display: flex;
+    align-items: center;
+}
+
+.gw-info-icon,
+.gw-help-icon {
+    color: $gw-primary-color-500;
+}
+
+.gw-icon-warning {
+    vertical-align: middle;
+    color: $gw-warning-color-700;
+}
+
+.gw-icon-info {
+    vertical-align: middle;
+    color: $gw-error-color-500;
+}
+
+// Select or Dropdown
+
+.gw-data-files-select {
+    width: 320px;
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-modbus-report-select {
+    width: 360px;
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-disable-pointer {
+    pointer-events: none;
+}
+
+// Box
+
+.gw-border-white {
+    border: 1px solid $gw-text-white  !important;
+}
+
+.gw-border-bottom {
+    border-bottom: 1px solid $gw-tertiary-color;
+}
+
+.gw-toolbox-mat-title {
+    color: $gw-secondary-color-1000;
+}
+
+// Progress bar
+.mat-progress-bar {
+    border-radius: 4px;
+}
+
+// Breadcrumb 
+.gw-breadcrumb {
+    min-height: 43px;
+    max-height: fit-content;
+    display: flex;
+    align-items: center;
+    @include text-link(4);
+    background-color: $gw-bg-white;
+    padding: 0 18px;
+
+    @include mq-sm() {
+        padding: 0 12px;
+    }
+}
+
+gw-breadcrumb-link-bold {
+    font-weight: 600;
+}
+
+// Tooltip 
+
+.gw-mat-tab-label {
+    cursor: pointer !important;
+}
+
+@mixin gw-mat-tooltip {
+    font-size: 0.75rem;
+    word-break: break-all;
+}
+
+mat-tooltip-component .mat-tooltip.gw-mat-tooltip {
+    @include gw-mat-tooltip();
+    word-break: break-word;
+}
+
+mat-tooltip-component .mat-tooltip.gw-label-mat-tooltip {
+    @include gw-mat-tooltip();
+    margin-top: 0px;
+}
+
+mat-tooltip-component .mat-tooltip.gw-tool-grid-row-tooltip {
+    @include gw-mat-tooltip();
+    margin-top: -10px;
+}
+
+mat-tooltip-component .mat-tooltip.gw-tool-grid-row-tooltip-line {
+    @include gw-mat-tooltip();
+    margin-top: -10px;
+    max-width: unset !important;
+    white-space: pre-line;
+}
+
+mat-tooltip-component .mat-tooltip.gw-toolbox-card-icon-tooltip,
+mat-tooltip-component .mat-tooltip.gw-tool-details-icon-tooltip {
+    @include gw-mat-tooltip();
+    margin-top: 0px;
+    max-width: unset;
+    white-space: pre-line;
+}
+
+mat-tooltip-component .mat-tooltip.gw-tool-icon-tooltip {
+    @include gw-mat-tooltip();
+    word-break: break-word;
+    margin-top: -8px;
+}
+
+mat-tooltip-component .mat-tooltip.gw-mat-option-tooltip {
+    @include gw-mat-tooltip();
+    margin-top: -10px;
+}
+
+mat-tooltip-component .mat-tooltip.gw-mat-card-tooltip {
+    @include gw-mat-tooltip();
+    margin-top: 2px;
+    word-break: break-word;
+}
+
+mat-tooltip-component .mat-tooltip.gw-dashboard-icon-tooltip {
+    @include gw-mat-tooltip();
+    word-break: break-word;
+    margin-top: -4px;
+}
+
+.gw-grid-tooltip {
+    font-family: "Noto Sans";
+    font-size: 0.75rem;
+    padding: 8px 12px;
+    background: $gw-secondary-color-900;
+    opacity: 0.9;
+    white-space: nowrap;
+}
+
+.gw-grid-row-tooltip {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// Treeview
+.gw-highlight-node {
+    background-color: $gw-primary-color-100;
+    color: $gw-primary-color-700;
+    cursor: pointer;
+
+    & .gw-dashboard-edit-icon {
+        color: $gw-primary-color-700;
+    }
+}
+
+// Toolbox Page
+
+.gw-toolbox-card-header {
+    color: $gw-bg-white;
+    background: $gw-primary-color-700;
+}
+
+.gw-toolbox-card-title {
+    color: $gw-bg-white  !important;
+}
+
+.gw-toolbox-card-title-icon {
+    color: $gw-tertiary-color-200;
+}
+
+.gw-toolbox-card-invalid {
+    background: $gw-error-color-500;
+}
+
+.gw-toolbox-card-warning {
+    background: $gw-warning-color-700;
+}
+
+.gw-toolbox-card-warning .gw-toolbox-card-title-icon {
+    color: $gw-text-white;
+    opacity: 0.75;
+}
+
+.gw-toolbox-card-warning .gw-button-tertiary-sm:hover {
+    background-color: $gw-warning-color-500;
+}
+
+.gw-toolbox-card-invalid .gw-button-tertiary-sm:hover {
+    background-color: $gw-error-color-300;
+}
+
+.gw-toolbox-card-content>div {
+    // border: 0.811031px solid $gw-secondary-color-400;
+}
+
+
+.gw-toolbox-card-content>div:nth-child(even) {
+    background: $gw-secondary-color-200;
+}
+
+.gw-data-error {
+    color: $gw-error-color-500  !important;
+    font-weight: bold;
+}
+
+.gw-data-warning {
+    color: $gw-warning-color-700;
+    font-weight: bold;
+}
+
+.gw-card-toolbox-warning>.mat-button.mat-button-base.mat-button-tertiary-sm {
+    border: 1px solid $gw-warning-color-700  !important;
+    color: $gw-warning-color-700  !important;
+}
+
+.gw-card-toolbox-invalid>.mat-button.mat-button-base.mat-button-tertiary-sm {
+    border: 1px solid $gw-error-color-500  !important;
+    color: $gw-error-color-500  !important;
+}
+
+
+// Toolbox Page End here
+
+.mat-hint {
+    margin-left: -5px;
+}
+
+
+// Gateway Notifier Badges
+@mixin gw-notifier-badge {
+    font-family: "Noto Sans";
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.gw-notifier-warn-badge {
+    @include gw-notifier-badge;
+    background: $gw-error-color-500;
+}
+
+.gw-notifier-warn-badge :hover {
+    @include gw-notifier-badge;
+    background: $gw-error-color-700;
+}
+
+.gw-notifier-badge-text {
+    color: $gw-text-white;
+}
+
+.gw-notifier-ul>li {
+    font-family: "Noto Sans";
+    font-weight: 400;
+    font-size: 0.875rem;
+    letter-spacing: 0.1px;
+    line-height: 1.5em;
+    color: $gw-secondary-color-600;
+}
+
+.gw-notifier-ul>li>a {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+// Disable control
+.gw-disable-control {
+    opacity: 0.5;
+}
+
+// SureSENS Monitoring Card Component
+
+.gw-page-active>div>span {
+    border: 1px solid $gw-primary-color-500;
+}
+
+.gw-suresens-monitoring .mat-card {
+    background: $gw-tertiary-color-025;
+    border: 1px solid $gw-secondary-color-600  !important;
+    box-sizing: border-box;
+    border-radius: 4px;
+}
+
+.gw-suresens-monitoring-card-title {
+    @include heading('section-title');
+    font-family: "Poppins semibold";
+    color: $gw-secondary-color-600;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+%gw-suresens-monitoring-card-subtitle {
+    font-family: "Poppins semibold";
+    color: $gw-secondary-color-1000;
+    display: inline-block;
+    text-align: right;
+}
+
+.gw-suresens-monitoring-card-content .gw-suresens-sptv-card-subtitle-1 {
+    @extend %gw-suresens-monitoring-card-subtitle;
+    width: 100px;
+}
+
+.gw-suresens-monitoring-card-content .gw-suresens-qpt-card-subtitle-1 {
+    @extend %gw-suresens-monitoring-card-subtitle;
+    width: 100px;
+}
+
+.gw-suresens-monitoring-card-content .gw-suresens-esp-card-subtitle-1 {
+    @extend %gw-suresens-monitoring-card-subtitle;
+    width: auto;
+}
+
+
+.gw-suresens-monitoring-card-content .gw-suresens-monitoring-card-subtitle-2 {
+    font-family: "Noto Sans";
+    color: $gw-secondary-color-600;
+    min-width: 30px;
+    display: inline-block;
+    text-align: left;
+}
+
+.gw-suresens-monitoring-card-content .gw-suresens-sptv-card-subtitle-2 {
+    font-family: "Noto Sans";
+    color: $gw-secondary-color-600;
+}
+
+.gw-suresens-monitoring-card-content .gw-suresens-sureflo-card-subtitle-1 {
+    @extend %gw-suresens-monitoring-card-subtitle;
+    // width: 75%;
+    width: 100px;
+}
+
+.gw-suresens-monitoring-card-content .gw-suresens-sureflo-delta-card-subtitle-1 {
+    @extend %gw-suresens-monitoring-card-subtitle;
+    // width: 75%;
+    width: 100px;
+}
+
+.gw-suresens-monitoring-card-content {
+    @include heading('section-title');
+    color: $gw-secondary-color-600;
+    font-weight: 600;
+}
+
+.gw-suresens-monitoring .gw-suresens-monitoring-card-warning {
+    border: 2px solid $gw-warning-color-700  !important;
+}
+
+.gw-suresens-monitoring .gw-suresens-monitoring-card-warning .gw-suresens-tool-status-icon {
+    color: $gw-warning-color-700;
+    margin-right: 14px;
+}
+
+.gw-suresens-monitoring .gw-suresens-monitoring-card-critical {
+    border: 2px solid $gw-error-color-500  !important;
+}
+
+.gw-suresens-monitoring .gw-suresens-monitoring-card-critical .gw-suresens-tool-status-icon {
+    color: $gw-error-color-500;
+}
+
+.gw-monitoring-table-link-warning {
+    color: $gw-warning-color-700;
+    text-decoration: underline;
+}
+
+.gw-monitoring-table-link-critical {
+    color: $gw-error-color-500;
+    text-decoration: underline;
+}
+
+.gw-suresens-monitoring-card-active {
+    color: $gw-primary-color-700;
+}
+
+.gw-suresens-pagination-icon {
+    border: 1px solid $gw-tertiary-color-200;
+    color: $gw-secondary-color-600;
+}
+
+.gw-suresens-pagination-icon-selected {
+    border: 1px solid $gw-primary-color-500;
+    color: $gw-tertiary-color-1000;
+}
+
+.gw-suresens-monitoring-table-container {
+    border: 1px solid $gw-tertiary-color;
+}
+
+.gw-monitoring-table-link,
+.gw-inforce-monitoring-link {
+    text-decoration: underline;
+    color: $gw-primary-color;
+}
+
+
+
+// Footer Components
+
+.gw-footer-icon-status-connected {
+    color: $gw-text-white; // $gw-primary-color-500;
+}
+
+.gw-footer-icon-status-connecting {
+    color: $gw-text-white; // $gw-connecting-color-300;
+}
+
+.gw-footer-icon-status-warning {
+    color: $gw-warning-color-300;
+}
+
+.gw-footer-icon-status-error {
+    color: $gw-error-color-300;
+}
+
+.gw-footer-icon-status-input {
+    color: $gw-error-color-500;
+}
+
+.footer-link-first {
+    @include mq-sm() {
+        // display: block;
+        padding-bottom: 6px;
+    }
+}
+
+.footer-content .company-padding {
+    @include mq-sm() {
+        padding-bottom: 6px !important;
+    }
+}
+
+// SureFLO 
+
+.gw-sureflo-subtitle {
+    color: $gw-secondary-color-600;
+    font-size: 12px;
+}
+
+.gw-sureflo-custom-file-input {
+    width: 90%;
+
+    @include mq-l() {
+        width: 90%;
+    }
+
+    @include mq-md() {
+        width: 88%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-sureflo-pvt-file-input {
+    width: 75.5%;
+
+    @include mq-l() {
+        width: 75.5%;
+    }
+
+    @include mq-md() {
+        width: 73.5%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-sureflo-file-input {
+    width: 80%;
+
+    @include mq-md() {
+        width: 80%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-sureflo-input {
+    width: 100%;
+
+    @include mq-xl() {
+        width: 60%;
+    }
+
+    @include mq-l() {
+        width: 65%;
+    }
+}
+
+
+.gw-sureflo-dialog-file-input {
+    width: 80%;
+
+    @include mq-md() {
+        width: 85%;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-sureflo-input-sm {
+    width: 130px;
+
+    @include mq-md() {
+        width: 120px;
+    }
+
+    @include mq-sm() {
+        width: 100%;
+    }
+}
+
+.gw-sureflo-disable-input {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.gw-sureflo-calfile-action {
+    display: inline-block;
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+    .gw-sureflo-calfile-action .mat-button.mat-button-base.mat-button-primary__icon-only:first-child {
+        padding-left: 10px;
+    }
+
+    .gw-sureflo-calfile-action .mat-button.mat-button-base.mat-button-primary__icon-only {
+        min-width: 22px;
+        padding: 0 1.25px;
+    }
+}
+
+/* Portrait */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 1) {
+    .gw-sureflo-calfile-action .mat-button.mat-button-base.mat-button-primary__icon-only {
+        min-width: 22px;
+        padding: 0px;
+    }
+}
+
+//angular material component css overrides 
+.sureflo-datapoint-dialog .mat-list-single-selected-option,
+.sureflo-datapoint-dialog .mat-list-single-selected-option:hover,
+.sureflo-datapoint-dialog .mat-list-single-selected-option:focus {
+    background: $gw-primary-color-500  !important;
+    color: $gw-text-white  !important;
+}
+
+.sureflo-datapoint-dialog .mat-list-option:hover {
+    background: $gw-primary-color-100  !important;
+    color: $gw-tertiary-color-1000  !important;
+}
+
+
+.gw-mat-divider {
+    border-top-color: $gw-tertiary-color-050  !important;
+}
+
+.gw-loading-message h1 {
+    @include mq-sm() {
+        font-size: 1.25rem;
+    }
+}
+
+// Gateway Dialog CSS 
+.gw-adv-mat-dialog-actions {
+    background: $gw-secondary-color-050;
+    padding: 13.2px 20px;
+}
+
+.gw-alarm-dialog-box {
+    padding: 30px;
+}
+
+// Gateway Alert 
+.gw-alert-error {
+    color: $gw-error-color-500;
+}
+
+.gw-alert-error-no-margin {
+    color: $gw-error-color-500;
+    margin-left: 0px !important;
+}
+
+.gw-alert-warning {
+    color: $gw-error-color-500;
+}
+
+//Gareway Table
+.gw-mat-table>thead,
+.gw-mat-table>tbody {
+    border: 1px solid $gw-secondary-color-500;
+    box-sizing: border-box;
+}
+
+.gw-mat-table .mat-header-cell {
+    background: $gw-tertiary-color-050;
+}
+
+// Inforce Monitoring Page
+
+.gw-inforce-monitoring-subtitle-2 {
+    color: $gw-primary-color-900  !important;
+}
+
+.gw-inforce-gauge-unit,
+.gw-inforce-gauge-min-label,
+.gw-inforce-gauge-max-label {
+    color: $gw-secondary-color-600;
+}
+
+.gw-inforce-monitoring-card {
+    margin: 0px;
+    padding: 0px;
+    border: 1px solid $gw-tertiary-color-200;
+    box-sizing: border-box;
+    border-radius: 6px;
+}
+
+// Inforce Valve Position Mat Expansion Panel
+
+.gw-inforce-monitoring-zone-title {
+    color: $gw-text-white;
+    background: $gw-secondary-color-800;
+}
+
+.gw-inforce-monitoring-zone-row {
+    background: $gw-secondary-color-100;
+    border: 1px solid $gw-secondary-color-400;
+}
+
+.gw-inforce-shift-progress-list,
+.gw-inforce-gauge-title,
+.gw-inforce-panel-gauge-container {
+    color: $gw-tertiary-color-1000;
+}
+
+.gw-inforce-gauge-value {
+    color: $gw-tertiary-color-1000;
+}
+
+// Mobile view
+.gw-inforce-monitoring-row:nth-child(even) {
+    background-color: $gw-secondary-color-200;
+}
+
+
+.gw-target-valve-position {
+    color: $gw-primary-color-500;
+
+    .mat-select-value-text {
+        color: $gw-primary-color-500;
+    }
+}
+
+// mat dialog 
+.gw-advance-dialog,
+.gw-browse-modal-container,
+.gw-dynamic-dialog-container,
+.gw-config-reset-modal-container {
+    .mat-dialog-header {
+        background: $gw-secondary-color-200;
+
+        .mat-dialog-title {
+            color: $gw-tertiary-color-1000;
+        }
+
+        .gw-info-icon,
+        .gw-help-icon {
+            color: $gw-primary-color-500;
+        }
+    }
+}
+
+.mat-dialog-container {
+    border: none;
+    overflow: visible !important;
+}
+
+.mat-dialog-actions {
+    place-content: flex-end;
+    padding: 13.2px 20px !important;
+    margin-bottom: 0 !important;
+    min-height: unset;
+    background: $gw-secondary-color-050;
+
+    &__agree.mat-button-base {
+        margin-left: $space-md;
+    }
+}
+
+// Mat table
+.bh-table .mat-table .mat-header-row {
+    background: $gw-secondary-color-200  !important;
+}
+
+.mat-table .mat-header-cell {
+    background: $gw-secondary-color-200  !important;
+}
+
+// Mat form field , select  and checkbox  disable style
+.mat-form-field .mat-select.mat-select-disabled .mat-select-value {
+    opacity: 1 !important;
+}
+
+.mat-checkbox-label,
+.mat-radio-label,
+.mat-slide-toggle-content {
+    color: $gw-tertiary-color-1000  !important;
+}
+
+.mat-delete-icon {
+    color: $gw-error-color-700;
+}
+
+// Mat Card
+.gw-monitoring-container,
+.gw-inforce-device-details,
+.mat-sidenav-content,
+.gw-sensor-calibration-container {
+    .mat-card.mat-focus-indicator {
+        border: 1px solid $gw-secondary-color-600;
+    }
+}
+
+.mat-sidenav-content .mat-card.mat-focus-indicator {
+    padding-top: 0;
+}
+
+.mat-sidenav .mat-nav-list.mat-list-base .mat-list-item .mat-list-item-content {
+    padding: 0 8px;
+}
+
+::ng-deep .gw-config-container.mat-card.mat-focus-indicator {
+    padding-top: 0 !important;
+}
+
+.gw-incharge-monitoring-container .mat-card.mat-focus-indicator,
+.gw-welcome-container .mat-card.mat-focus-indicator,
+.gw-toolbox-container .mat-card.mat-focus-indicator,
+.gw-inforce-device-details .mat-card.mat-focus-indicator,
+.gw-sensor-calibration-container .mat-card.mat-focus-indicator,
+.gw-inforce-monitoring-container>div>.mat-card.mat-focus-indicator,
+.gw-vent-output-well-card,
+.gw-config-container {
+    border: 1px solid $gw-secondary-color-600  !important;
+}
+
+.mat-tab-header {
+    border-bottom: 1px solid $gw-secondary-color-600  !important;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex:not(:disabled) {
+    background-color: $gw-secondary-color-200  !important;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+    &.cdk-keyboard-focused {
+        background-color: $gw-secondary-color-300;
+    }
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex :hover {
+    background-color: $gw-secondary-color-300;
+}
+
+.mat-form-field-infix {
+    padding: 0.4rem 0 0.4rem 0 !important;
+    border-radius: 4px 4px 0px 0px;
+    border-bottom: 2px solid $gw-secondary-color  !important;
+    border-top: 1px solid $gw-secondary-color  !important;
+    border-left: 1px solid $gw-secondary-color  !important;
+    border-right: 1px solid $gw-secondary-color  !important;
+}
+
+.readonly {
+    .mat-form-field-infix {
+        border-bottom: 2px solid $gw-secondary-color-300  !important;
+        border-top: 1px solid $gw-secondary-color-300  !important;
+        border-left: 1px solid $gw-secondary-color-300  !important;
+        border-right: 1px solid $gw-secondary-color-300  !important;
+    }
+}
+
+// .mat-select-small :disabled .mat-form-field-infix {
+//   border-top: 0;
+//   border-bottom: 1px solid #9e9e9e !important;
+// }
+
+.mat-form-field .mat-input-element {
+    padding-left: 0.25rem !important;
+}
+
+.mat-divider.mat-divider {
+    border-top-color: $gw-secondary-color-600  !important;
+}
+
+// mat tab styles
+.mat-tab-group.mat-primary .mat-tab-label {
+    color: $gw-secondary-color-1000  !important;
+    text-transform: none;
+    font-size: 0.875rem;
+}
+
+.mat-tab-group.mat-primary .mat-tab-label-active {
+    background-color: $gw-primary-color-500;
+    color: $gw-text-white  !important;
+}
+
+.mat-tab-group.mat-primary .mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+    color: $gw-secondary-color-1000;
+}
+
+// Material Expansion Panel
+.gw-mat-expansion-panel-header-title {
+    color: $gw-bg-white  !important;
+    font-size: 12px !important;
+}
+
+.mat-expansion-panel .mat-expansion-panel-header {
+    background-color: $gw-primary-color-700  !important;
+}
+
+.mat-expansion-panel.mat-expansion-panel .mat-expansion-indicator::after {
+    color: $gw-bg-white;
+    margin-top: -10px;
+}
+
+.mat-expansion-panel.mat-expansion-panel.mat-expansion-panel-spacing {
+    margin-top: 0px !important;
+}
+
+mat-expansion-panel.mat-expansion-panel .mat-expansion-panel-content .mat-expansion-panel-body {
+    padding: 0px !important;
+}
+
+// mat stepper icon
+.mat-step-header .mat-step-icon,
+.mat-step-header .mat-step-icon-selected {
+
+    font-weight: 600;
+    border-width: 2px !important;
+}
+
+.gw-input-hidden {
+    display: none;
+}
+
+.gw-dp-table-input {
+    margin-left: 10px;
+    background-color: $gw-text-white;
+}
+
+.table-type-toggle-group {
+    .mat-button-toggle-appearance-standard {
+        color: $gw-tertiary-color-1000;
+    }
+
+    .mat-button-toggle-group-appearance-standard .mat-button-toggle+.mat-button-toggle.mat-button-toggle-checked,
+    .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+        background-color: $gw-primary-color-500;
+        color: $gw-text-white;
+    }
+}
+
+.button-toggle-inner {
+    border-radius: 0;
+}
+
+.button-toggle-outer-left {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.button-toggle-outer-right {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.mat-button-toggle-checked {
+    border-top: 1px;
+    border-bottom: 1px;
+}
+
+.gw-network-input-mac {
+    width: 36px;
+}
+
+// stepper css start //
+.gw-horizontal-stepper {
+    width: 35%;
+    margin: 0 auto;
+}
+
+::ng-deep  .gw-horizontal-stepper .mat-stepper-label-position-bottom .mat-horizontal-stepper-header {
+    padding: 8px 0 8px 0 !important;
+}
+
+::ng-deep  .gw-horizontal-stepper .mat-horizontal-content-container {
+    padding: 0px !important;
+}
+
+::ng-deep .mat-stepper-horizontal-line {
+    margin: 0 -6px !important;
+}
+
+
+::ng-deep .gw-horizontal-stepper  .mat-stepper-label-position-bottom .mat-stepper-horizontal-line {
+    top: 20px !important;
+}
+
+::ng-deep .gw-horizontal-stepper  .mat-stepper-horizontal.mat-stepper-label-position-bottom .mat-horizontal-stepper-header .mat-step-label {
+    padding: 0px;
+}
+
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::before, 
+::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::after, 
+[dir=rtl] ::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:first-child)::after, 
+[dir=rtl] ::ng-deep .mat-stepper-label-position-bottom .mat-horizontal-stepper-header:not(:last-child)::before {
+    width: 0!important;
+}
+
+// stepper css end //
