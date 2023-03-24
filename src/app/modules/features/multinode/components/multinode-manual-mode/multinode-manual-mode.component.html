@@ -1,0 +1,166 @@
+<div class="mt-2 m-l-6 m-b-10 table-type-toggle-group text-center">
+    <mat-button-toggle-group class="gw-button-toggle-group" value="1" aria-label="eFCVs/Power Supply">
+        <mat-button-toggle class="button-toggle button-toggle-outer-left" value="1" (change)="onToggle($event)">eFCVs
+        </mat-button-toggle>
+        <mat-button-toggle class="button-toggle button-toggle-outer-right" value="2" (change)="onToggle($event)">Power
+            Supply</mat-button-toggle>
+    </mat-button-toggle-group>
+</div>
+
+<section class="m-2">
+    <ng-container *ngIf="!isPoweSupplySelected">
+        <div class="container-fluid  p-t-18 ">
+            
+                <div class="row p-b-18">
+                    <span class="mat-subtitle-2">Actuate / Override eFCV</span>
+                </div>
+                <div class="row">
+                    <div class="d-flex mt-1 col-sm-12 col-md-6">
+                        <div class="w-130">
+                            <mat-label class="body-label-value">Well</mat-label>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="mat-select-small" appearance="fill">
+                                <mat-select class="gw-form-label form-baseline"
+                                    (selectionChange)="onWellSelChange($event)" [(ngModel)]="wellId"
+                                    (focusout)="validate($event)" (input)="validate($event)">
+                                    <mat-option *ngFor="let well of wells" [value]="well.WellId"
+                                        [matTooltip]="well?.WellName" matTooltipPosition="below"
+                                        matTooltipClass="gw-mat-option-tooltip"
+                                        [matTooltipDisabled]="well?.WellName?.length > 30 ? 'false': 'true' ">
+                                        {{well.WellName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-1 col-sm-12 col-md-6">
+                        <div class="w-130">
+                            <span class="body-label-value">eFCV</span>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="gw-tool-formfield mat-select-small" appearance="fill">
+                                <mat-select class="gw-form-label form-baseline" panelClass="gw-tool-select"
+                                (selectionChange)="onZoneSelChange($event)" [(ngModel)]="eFCVId"
+                                (focusout)="validate($event)" (input)="validate($event)">
+                                    <mat-option *ngFor="let zone of zones" [value]="zone.eFCVGuid">
+                                        {{zone.ZoneName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-b-18">
+                    <div class="w-130">
+                        <span class="body-label-value">Operation</span>
+                    </div>
+                </div>
+                <div class="container-fluid row p-b-24">
+                    <div class="col-sm-12 col-md-6 gw-unit-system-row p-0">
+                        <div class="row">
+                            <div class="col-3 px-0">
+                                <mat-radio-group [(ngModel)]="selectedOperationMethod" [disabled]="!enableOperation || converttoBoolean(isOperationInProgress) || converttoBoolean(isSIUDisconnected)" (change)="onOperationChanged($event)">
+                                    <mat-radio-button class="px-2 gw-form-label" color="primary"
+                                        value="TimeBasedActuation">Time Based Actuation</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 gw-unit-system-row p-l-0">
+                        <div class="row  gw-unit-system-row-radio">
+                            <div class="col-3 px-0">
+                                <mat-radio-group [(ngModel)]="selectedOperationMethod" [disabled]="!enableOperation || converttoBoolean(isOperationInProgress) || converttoBoolean(isSIUDisconnected)" (change)="onOperationChanged($event)">
+                                    <mat-radio-button class="px-2 gw-form-label" color="primary"
+                                        value="OverridePosition">Override Position</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ng-container *ngIf="selectedOperationMethod == 'TimeBasedActuation'">
+                    <div class="row  p-b-18">
+                        <div class="w-130">
+                            <span class="body-label-value">Actuation Direction</span>
+                        </div>
+                    </div>
+                    <div class="container-fluid row p-b-24">
+                        <div class="col-sm-12 col-md-6 gw-unit-system-row p-0">
+                            <div class="row">
+                                <div class="col-3 px-0">
+                                    <mat-radio-group class="gw-sureflo-radio-group" [disabled]="!enableOperation || converttoBoolean(isOperationInProgress) || converttoBoolean(isSIUDisconnected)"
+                                        [(ngModel)]="selectedActuationDirection">
+                                        <mat-radio-button class="px-2 gw-form-label" color="primary"
+                                            value="TowardsClose">Towards Close</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 gw-unit-system-row p-l-0">
+                            <div class="row gw-unit-system-row-radio">
+                                <div class="">
+                                    <mat-radio-group class="gw-sureflo-radio-group" [disabled]="!enableOperation || converttoBoolean(isOperationInProgress) || converttoBoolean(isSIUDisconnected)"
+                                        [(ngModel)]="selectedActuationDirection">
+                                        <mat-radio-button class="px-2 gw-form-label" color="primary"
+                                            value="TowardsOpen">Towards Open</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <div class="row" *ngIf="selectedOperationMethod == 'TimeBasedActuation'">
+                    <div class="m-t-10">
+                        <span class="body-label-value">Actuation Time (s)</span>
+                    </div>
+                    <div class="col">
+                        <form [formGroup]="timeBasedActuationForm">
+                            <mat-form-field class="mat-input-small" appearance="fill">
+                                <input type="number" matInput formControlName="ActuationTime" name="ActuationTime"
+                                    class="mat-body-2 form-baseline" (focusout)="validate($event)"
+                                    (input)="validate($event)"
+                                    [(ngModel)]="actuationTime">
+                                <mat-hint *ngIf="getError('ActuationTime')" align="start" class="mat-error">
+                                    {{getError('ActuationTime')}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="selectedOperationMethod == 'OverridePosition'">
+                    <div class="d-flex mt-1 col-sm-12 col-md-6 pl-1 ">
+                        <div class="m-t-10">
+                            <span class="body-label-value">Current Position</span>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="mat-input-small" appearance="fill">
+                                <input id="CurrentPosition" matInput class="mat-body-2 form-baseline" readonly value="{{currentPoistion.Description}}">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-1 col-sm-12 col-md-6 pl-1 ">
+                        <div class="w-130">
+                            <span class="body-label-value">Override Position</span>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="gw-tool-formfield mat-select-small" appearance="fill">
+                                <mat-select class="gw-form-label form-baseline" panelClass="gw-tool-select"
+                                    [(ngModel)]="overridePosition" (selectionChange)="onStageChange($event)">
+                                    <mat-option *ngFor="let multiNodeStage of multiNodeeFCVStages" [value]="multiNodeStage.PositionStage">
+                                        {{multiNodeStage.Description}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </ng-container>
+    <ng-container *ngIf="isPoweSupplySelected">
+        <app-manual-mode-power-supply (selectedSieId)="selectedSIE($event)" [manualPowerSupplies]="manualPowerSupplies"></app-manual-mode-power-supply>
+    </ng-container>
+
+</section>

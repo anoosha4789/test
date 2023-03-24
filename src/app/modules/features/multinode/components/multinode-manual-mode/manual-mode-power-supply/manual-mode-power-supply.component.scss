@@ -1,0 +1,31 @@
+
+
+.gw-manual-mode-power-supply-container {
+    
+}
+
+:host ::ng-deep {
+    .gw-manual-mode-power-supply-container {
+        .gw-power-supply-input-wrapper>.mat-form-field-wrapper {
+            // padding-bottom: 0;
+        }
+
+        .mat-tab-header {
+            border-bottom: none !important;
+            padding-left: 8px;
+        }
+
+        .mat-tab-group.mat-primary .mat-tab-label-active {
+            background-color: transparent;
+            color: inherit !important;
+        }
+    }
+}
+
+:host ::ng-deep .gw-manual-mode-power-supply-container .igx-grid__th-title {
+    @media (max-width: 1024px) {
+        white-space: normal;
+        font-size: 11px;
+        margin: 0.7rem 0;
+    }
+}

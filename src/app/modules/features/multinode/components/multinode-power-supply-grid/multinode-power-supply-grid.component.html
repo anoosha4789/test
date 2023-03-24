@@ -1,0 +1,79 @@
+<section class="d-flex flex-wrap mx-3 my-1 gw-power-supply-section">
+    <div [ngClass]="{'gw-eppowersupply-zone-grid': manualPowerSupplies.resizeGrid, 'gw-mmpowersupply-zone-grid': !manualPowerSupplies.resizeGrid }">
+        <div #tooltipRef="tooltip" igxTooltip class="gw-grid-tooltip">
+            <ng-container *ngIf="tooltipRef.context">
+                {{tooltipRef.context.value?.RawValue}}
+            </ng-container>
+        </div>
+        <div #tooltipReffirstcol="tooltip" igxTooltip class="gw-grid-tooltip">
+            <ng-container *ngIf="tooltipReffirstcol.context">
+                {{tooltipReffirstcol.context.value}}
+            </ng-container>
+        </div>
+        <igx-grid #PowerSupplyGrid igxPreventDocumentScroll [(data)]="manualPowerSupplies.powerSupplies"
+            [emptyGridMessage]="'No Wells are configured.'" width="100%" resizable="true">
+            <!-- Power Supply -->
+            <igx-column [width]="tablePowerSupplyWidth" [headerClasses]="'mat-header-cell'" header="Power Supply" field="index"
+                [dataType]="'string'">
+                <ng-template igxCell let-cell="cell">
+                    <span [igxTooltipTarget]="tooltipReffirstcol" (onTooltipShow)="tooltipReffirstcol.context=cell" hideDelay="50"
+                        class="gw-grid-row-tooltip">
+                        <b>{{cell.value}}</b>
+                    </span>
+                </ng-template>
+            </igx-column>
+            <!-- Over Voltage Setting -->
+            <igx-column [width]="tableOverVoltageSettingWidth" [headerClasses]="'mat-header-cell'"
+                field="OverVoltageSetting" header="Over Voltage 
+            Setting (V)" [dataType]="'string'">
+                <ng-template igxCell let-cell="cell">
+                    <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                        class="gw-grid-row-tooltip">
+                        {{cell.value?.RawValue}}
+                    </span>
+                </ng-template>
+            </igx-column>
+            <!-- Over Voltage Reading -->
+            <igx-column [width]="tableOverVoltageReadingWidth" [headerClasses]="'mat-header-cell'"
+                field="VoltageSetting" header="Over Voltage Reading (V)" [dataType]="'string'">
+                <ng-template igxCell let-cell="cell">
+                    <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                        class="gw-grid-row-tooltip">
+                        {{cell.value?.RawValue}}
+                    </span>
+                </ng-template>
+            </igx-column>
+            <!-- Voltage Reading -->
+            <igx-column [width]="tableVoltageReadingWidth" [headerClasses]="'mat-header-cell'" field="VoltageReading"
+                header="Voltage Reading (V)" [dataType]="'string'">
+                <ng-template igxCell let-cell="cell">
+                    <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                        class="gw-grid-row-tooltip">
+                        {{cell.value?.RawValue}}
+                    </span>
+                </ng-template>
+            </igx-column>
+            <!-- Over Current Setting -->
+            <igx-column [width]="tableOverCurrentSettingWidth" [headerClasses]="'mat-header-cell'"
+                field="OverCurrentSetting" header="Over Current Setting (mA)" [dataType]="'string'">
+                <ng-template igxCell let-cell="cell">
+                    <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                        class="gw-grid-row-tooltip">
+                        {{cell.value?.RawValue}}
+                    </span>
+                </ng-template>
+            </igx-column>
+            <!-- Current Reading -->
+            <igx-column [width]="tableCurrentReadingWidth" [headerClasses]="'mat-header-cell'" field="CurrentReading"
+                header="Current Reading (mA)" [dataType]="'string'">
+                <ng-template igxCell let-cell="cell">
+                    <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                        class="gw-grid-row-tooltip">
+                        {{cell.value?.RawValue}}
+                    </span>
+                </ng-template>
+            </igx-column>
+        </igx-grid>
+    </div>
+
+</section>

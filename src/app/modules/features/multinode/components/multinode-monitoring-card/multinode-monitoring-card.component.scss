@@ -1,0 +1,233 @@
+@import 'base.scss';
+$mobile-font-size: 14px;
+
+.mat-card-content {
+    margin-bottom: 0;
+}
+
+.gw-monitoring-card-header {
+    min-height: 40px;
+    margin: -0.725px -1px !important;
+    border-radius: 4px 4px 0 0;
+    display: flex;
+    align-items: center;
+}
+
+.gw-monitoring-card-header>.mat-card-header-text {
+    width: 100%;
+    margin: 0 16px !important;
+}
+
+.gw-monitoring-btn-align {
+    display: flex;
+    align-items: center;
+    padding-right: 8px;
+}
+
+.gw-monitoring-card-title {
+    display: flex;
+    align-items: center;
+}
+
+.gw-ml-5 {
+    margin-left: -5px;
+}
+
+.gw-monitoring-tertiary-btn {
+    border: 1px solid $gw-text-white;
+}
+
+.gw-monitoring-label {
+    font-size: 14px;
+    font-weight: bold;
+
+    @media (max-width: 1024px) {
+        font-size: $mobile-font-size;
+    }
+}
+
+.gw-monitoring-PressureCol:empty::after {
+    content: "\200B";}
+.gw-monitoring-TempCol:empty::after {
+    content: "\200B";}
+
+
+@media (min-width: 1200px) and (max-width: 1494px) {
+    .col-xl-4 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+.gw-monitoring-ToolNameCol {
+    width: 25%;
+}
+
+.gw-monitoring-PortingCol {
+    width: 12%;
+}
+
+.gw-monitoring-PressureCol {
+    width: 28%;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.gw-monitoring-TempCol {
+    width: 20%;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.gw-monitoring-btn-col {
+    width: 15%;
+}
+
+::ng-deep .gw-toolbox-card-header .mat-card-header-text {
+    width: 100%;
+    margin: 0 16px 0 16px;
+}
+
+.gw-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+// .gw-flex-container-card {
+//     min-width: 490px;
+//     //width: 490px;
+// }
+
+.gw-flex-container-card-mob {
+    min-width: 320px;
+}
+
+.gw-monitoring-card-header-xx {
+    background-color: $gw-tertiary-color-600;
+    margin: -20px;
+    margin-bottom: 0px;
+    min-height: 46px;
+}
+
+.gw-card-title-mob {
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.gw-zone-header-color {
+    color: $gw-text-white;
+
+    @media (max-width: 768px),
+    (max-height: 768px) {
+        font-size: 14px
+    }
+}
+
+.gw-zone-Name {
+    display: inline-block;
+    width: 165px;
+    padding-top: 5px;
+}
+
+.gw-zone-Name-Mob {
+    display: inline-block;
+    width: 100px;
+}
+
+.gw-zone-OpenPercentage {
+    display: inline-block;
+    width: 148px;
+}
+
+.gw-zone-OpenPercentage-Mob {
+    display: inline-block;
+    width: 90px;
+}
+
+.gw-zone-header-subtitle-color {
+    color: $gw-text-white;
+}
+
+.gw-monitoring-table {
+    width: 100%;
+    border-spacing: 0px;
+}
+
+.gw-even-color {
+    background-color: $gw-secondary-color-200;
+}
+
+td {
+    text-align: left;
+    padding: 8px;
+}
+
+.td-col-Name {
+    width: 90px;
+    font-weight: bold;
+}
+
+.td-col-Pressure {
+    width: 120px;
+    text-align: right;
+    padding-right: 12px;
+}
+
+.td-col-Temprature {
+    width: 72px;
+}
+
+/* .gw-mt-sublabel {
+    margin-top: -15px;
+} */
+
+.td-col-Pressure,
+.gw-mt-sublabel,
+.gw-zone-header-subtitle-color,
+.gw-monitoring-noTools {
+
+    @media (max-width: 768px),
+    (max-height: 768px) {
+        font-size: $mobile-font-size;
+    }
+}
+
+.gw-viewShift-btn {
+    width: 115px;
+    height: 35px !important;
+    //margin-top:-5px;
+}
+
+.gw-viewShift-btn-Mob {
+    width: 107px;
+    //margin-top:-6px;
+}
+
+.gw-shiftInProgress-btn {
+    border: 1px solid $gw-secondary-color-700  !important;
+    background-color: $gw-tertiary-color-050;
+    color: black;
+    animation: blink 1s ease-in infinite !important;
+}
+
+.gw-shiftInProgress-btn:hover {
+    background-color: $gw-tertiary-color-100  !important;
+}
+
+.gw-monitoring-noTools {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+tr:nth-child(even) {
+    background-color: $gw-secondary-color-200;
+}
+
+.gw-monitoring-ToolNameCol {
+    .mat-icon {
+        cursor: pointer;
+    }
+}

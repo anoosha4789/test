@@ -1,0 +1,155 @@
+<section class="gw-horizontal-stepper">
+    <mat-horizontal-stepper labelPosition="bottom" class="stepper-el" [linear]="true" #wellStepper 
+    (selectionChange)="selectionChange($event)">
+        <ng-template matStepperIcon="edit" let-index="index">
+            <mat-icon>none</mat-icon>{{index+1}}
+        </ng-template>
+        <div *ngFor="let step of steps; let stepIdx = index">
+            <mat-step [completed]="step.completed" [state]="step.state" 
+                [stepControl]="( stepIdx === 0 ? step1 : step2 )">
+            </mat-step>
+        </div>
+    </mat-horizontal-stepper>
+</section>
+
+<ng-container *ngIf="wellStepper.selectedIndex === 0" #efcvContainer>
+    <div class="d-flex justify-content-between p-b-10">
+        <div class="pt-2">
+            <span class="gw-form-label">Number of eFCVs</span>
+            <span class="gw-form-label ml-3">{{efcvs?.length}}</span>
+        </div>
+        <div>
+            <button mat-button class="mat-button-tertiary-sm mat-button-tertiary-sm__icon"
+                (click)="onAddeFCVBtnClick.emit()">
+                <mat-icon class="mat-icon-left mat-icon">add</mat-icon>Add eFCV
+            </button>
+        </div>
+    </div>
+    <div class="gw-inforce-zone-grid">
+        <div #tooltipRef="tooltip" igxTooltip class="gw-grid-tooltip">
+            <ng-container *ngIf="tooltipRef.context">
+                {{tooltipRef.context.value}}
+            </ng-container>
+        </div>
+        <igx-grid #eFCVGrid igxPreventDocumentScroll [(data)]="efcvs" [pinning]="pinningConfig"
+            [emptyGridMessage]="'No eFCVs are configured.'" [primaryKey]="'ZoneId'" width="100%" resizable="true">
+
+            <!--eFCV Name-->
+            <igx-column [headerClasses]="'mat-header-cell'" field="ZoneName" header="eFCV Name"
+                [dataType]="'string'">
+                <ng-template igxCell let-cell="cell">
+                    <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                        class="gw-grid-row-tooltip">
+                        {{cell.value}}
+                    </span>
+                </ng-template>
+            </igx-column>
+            <!-- eFCV Address -->
+            <igx-column [headerClasses]="'mat-header-cell'" field="Address" header="eFCV Address"
+                [dataType]="'string'">
+                <ng-template igxCell let-cell="cell">
+                    <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                        class="gw-grid-row-tooltip">
+                        {{cell.value}}
+                    </span>
+                </ng-template>
+            </igx-column>
+            <!-- Serial Number -->
+            <igx-column [headerClasses]="'mat-header-cell'" field="SerialNumber" header="Serial Number"
+                [dataType]="'string'">
+                <ng-template igxCell let-cell="cell">
+                    <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                        class="gw-grid-row-tooltip">
+                        {{cell.value}}
+                    </span>
+                </ng-template>
+            </igx-column>
+            <!-- Unique Address -->
+            <igx-column [headerClasses]="'mat-header-cell'" field="UId" header="Unique Address"
+                [dataType]="'string'">
+                <ng-template igxCell let-cell="cell">
+                    <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                        class="gw-grid-row-tooltip">
+                        {{cell.value}}
+                    </span>
+                </ng-template>
+            </igx-column>
+            <!-- Measured Depth -->
+            <igx-column [headerClasses]="'mat-header-cell'" field="MeasuredDepth" header="Measured Depth (ft)"
+                [dataType]="'string'">
+                <ng-template igxCell let-cell="cell">
+                    <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                        class="gw-grid-row-tooltip">
+                        {{cell.value}}
+                    </span>
+                </ng-template>
+            </igx-column>
+            <!-- Motor Settings -->
+            <igx-column [headerClasses]="'mat-header-cell'" field="MotorSettings" header="Motor Settings">
+                <ng-template igxCell let-cell="cell">
+                    <span class="gw-info-icon gw-multinode-info-icon pl-2 ml-4" [satPopoverAnchor]="motorPopOver"
+                        (mouseover)="motorPopOver?.open()" (mouseleave)="motorPopOver?.close()"
+                        (click)="motorPopOver?.open()" (blur)="motorPopOver?.close()">
+                        <mat-icon>info</mat-icon>
+                    </span>
+                    <sat-popover #motorPopOver horizontalAlign="before" hasBackdrop="false" [autoFocus]="true"
+                        [restoreFocus]="true">
+                        <div class="gw-motor-tooltip-wrapper">
+                            <div class="mat-subtitle-1">Motor Settings</div>
+                            <div class="gw-well-divider mt-2"></div>
+                            <div class="row m-0 pt-2">
+                                <div class="col-9 gw-form-label pl-0">Max Voltage (V)</div>
+                                <div class="col-3 gw-form-label gw-motor-form-value pr-0">{{cell.value.MaxVoltage}}
+                                </div>
+                            </div>
+                            <div class="row m-0 pt-2">
+                                <div class="col-9 gw-form-label pl-0">Max Current (mA)</div>
+                                <div class="col-3 gw-form-label gw-motor-form-value pr-0">{{cell.value.MaxCurrent}}
+                                </div>
+                            </div>
+                            <div class="row m-0 pt-2">
+                                <div class="col-9 gw-form-label pl-0">Target Voltage (V)</div>
+                                <div class="col-3 gw-form-label gw-motor-form-value pr-0">
+                                    {{cell.value.TargetVoltage}}</div>
+                            </div>
+                            <div class="row m-0 pt-2">
+                                <div class="col-9 gw-form-label px-0">Over Current Threshold (mA)</div>
+                                <div class="col-3 gw-form-label gw-motor-form-value pr-0">
+                                    {{cell.value.OverCurrentThreshold}}</div>
+                            </div>
+                            <div class="row m-0 pt-2">
+                                <div class="col-9 gw-form-label pl-0">Over Current Override</div>
+                                <div class="col-3 gw-form-label gw-motor-form-value pr-0">
+                                    {{cell.value.OverCurrentOverrideFlag ? "Yes" : "No"}}</div>
+                            </div>
+                            <div class="row m-0 pt-2">
+                                <div class="col-9 gw-form-label pl-0">Duty Cycle (%)</div>
+                                <div class="col-3 gw-form-label gw-motor-form-value pr-0">{{cell.value.DutyCycle}}
+                                </div>
+                            </div>
+                        </div>
+                    </sat-popover>
+                </ng-template>
+            </igx-column>
+
+            <igx-column [headerGroupClasses]="'gw-grid-action-header'" width="100px" [filterable]="false" [pinned]="true">
+                <ng-template igxCell let-cell="cell">
+                    <a href="javascript:void(0);" class="gw-icon-btn p-r-10" (click)="onEditZone.emit(cell.row.rowID)">
+                        <mat-icon class="mat-icon--sml">edit</mat-icon>
+                    </a>
+                    <a href="javascript:void(0);" class="gw-icon-btn"
+                        (click)="onDeleteZone.emit([cell.row.index, cell.row.rowID])">
+                        <mat-icon class="mat-icon--sml">delete</mat-icon>
+                    </a>
+                </ng-template>
+            </igx-column>
+
+        </igx-grid>
+    </div>
+</ng-container>
+<ng-container *ngIf="wellStepper.selectedIndex === 1">
+    <app-tec-power-supply [tecPowerSupplyData]="tecPowerSupplyData" [wellName]="well.WellName"
+        (isTecPowerSupplyFormValidEvent)="isTecPowerSupplyFormValidEvent.emit($event)"
+        (tecPowerSupplyFormInValidEvent)="tecPowerSupplyFormInValidEvent.emit($event)"
+        (onFormChangeEvent)="onTecPowerSupplyFormChangeEvent.emit($event)" #powerSupplyComponent></app-tec-power-supply>
+</ng-container>

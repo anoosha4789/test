@@ -1,0 +1,189 @@
+<div class="d-flex flex-wrap px-md-3">
+    <ng-container *ngFor="let monitoringZones of (groupMonitoringZones | paginate: config), let i = index">
+        <div class="col-xl-4 col-lg-6 col-md-12 px-md-2 p-b-16" *ngFor="let zone of monitoringZones, let i = index"
+            style="display: inline-grid;">
+            <mat-card class="gw-monitoring-card gw-flex-container-card p-0" cdkTrapFocus>
+                <mat-card-header class="gw-toolbox-card-header gw-monitoring-card-header">
+                    <!-- title Desktop-->
+                    <mat-card-title *ngIf="!bIsMobileView" class="d-flex flex-wrap justify-content-between mb-0">
+                        <div class="col-6 mat-subtitle-1 p-l-0 py-2 gw-monitoring-card-title">
+                            <span *ngIf="!bIsMobileView" class="gw-zone-header-color"
+                                matTooltip="{{zone.zone.ZoneName}}" matTooltipPosition="above"
+                                matTooltipClass="gw-mat-tooltip"
+                                [matTooltipDisabled]="zone.zone.ZoneName.length > 18 ? 'false': 'true' ">
+                                {{zone.zone.ZoneName | gwTruncate:25}}
+                            </span>
+                        </div>
+                        <div class="col-6 mat-subtitle-2 px-1 py-2 gw-monitoring-card-title justify-content-end">
+                            <span class="gw-zone-header-subtitle-color"
+                            matTooltip="{{zone.Position}}" matTooltipPosition="above"
+                            matTooltipClass="gw-mat-tooltip"
+                            [matTooltipDisabled]="zone.Position.length > 18 ? 'false': 'true' ">
+                                <!-- in *ngIf was ; else noDataZone-->
+                                {{zone.Position | gwTruncate:25}}
+                            </span>
+                        </div>
+                    </mat-card-title>
+
+                    <!-- title Mobile-->
+                    <mat-card-title *ngIf="bIsMobileView" class="d-flex flex-wrap justify-content-between m-t-4 mb-0">
+                        <div class="mat-subtitle-1 py-2 gw-monitoring-card-title">
+                            <span *ngIf="bIsMobileView" class="gw-zone-header-color" matTooltip="{{zone.zone.ZoneName}}"
+                                matTooltipPosition="above" matTooltipClass="gw-mat-tooltip"
+                                [matTooltipDisabled]="zone.zone.ZoneName.length > 10 ? 'false': 'true' ">
+                                {{zone.zone.ZoneName | gwTruncate:15}}
+                            </span>
+                        </div>
+                        <div class="mat-subtitle-2 py-2 gw-monitoring-card-title">
+                            <span class="gw-zone-header-subtitle-color"   matTooltip="{{zone.Position}}" matTooltipPosition="above"
+                            matTooltipClass="gw-mat-tooltip"
+                            [matTooltipDisabled]="zone.Position.length > 10 ? 'false': 'true' ">
+                                <!-- in *ngIf was ; else noDataZone-->
+                                {{zone.Position | gwTruncate:15}}
+                            </span>
+                        </div>
+                    </mat-card-title>
+
+                </mat-card-header>
+
+                <mat-card-content class="gw-monitoring-card-content">
+                    <ng-template *ngIf="zone.tools && zone.tools.length > 0" [ngTemplateOutlet]="zoneDetails"
+                        [ngTemplateOutletContext]="{tools:zone.tools}">
+                    </ng-template>
+                    <div *ngIf="zone.tools == null || zone.tools.length == 0"
+                        class="gw-monitoring-noTools mat-subtitle-2"
+                        [ngStyle]="{'height': bIsMobileView ? '75px': '100px'}">
+                        No tools configured.
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </ng-container>
+</div>
+
+<ng-template #zoneDetails let-tools='tools'>
+    <!-- Content Desktop -->
+    <div *ngIf="!bIsMobileView" class="toolRow ">
+        <div class="d-flex flex-wrap justify-content-between py-2 px-2 align-items-center"
+            [ngClass]="{'gw-data-error': getToolStatusCode(tool.diagnosticsDevice.RawValue) === 2 || tool.diagnosticsCard.RawValue === 0, 
+                        'gw-data-warning': getToolStatusCode(tool.diagnosticsDevice.RawValue) === 1 && tool.diagnosticsCard.RawValue !== 0 , 'gw-even-color': i%2!=0}"
+            *ngFor="let tool of tools, let i = index">
+            <div class="gw-monitoring-ToolNameCol gw-monitoring-label" matTooltip="{{tool.tool.DeviceName}}"
+                matTooltipPosition="below" matTooltipClass="gw-tool-grid-row-tooltip"
+                [matTooltipDisabled]="tool.tool.DeviceName.length > 12 ? 'false': 'true'">
+                <mat-icon
+                    *ngIf="getToolStatusCode(tool.diagnosticsDevice.RawValue) === 2 || tool.diagnosticsCard.RawValue === 0"
+                    class="mat-icon--sml gw-icon-info"
+                    matTooltip="{{tool.diagnosticsCard.RawValue === 0 ?  cardStatus : (tool | gwToolStatus:2) }} "
+                    matTooltipPosition="below" matTooltipClass="gw-tool-icon-tooltip">
+                    info
+                </mat-icon>
+                <mat-icon
+                    *ngIf="getToolStatusCode(tool.diagnosticsDevice.RawValue) === 1 && tool.diagnosticsCard.RawValue !== 0"
+                    class="mat-icon--sml gw-icon-warning" matTooltip="{{ tool | gwToolStatus:2 }} "
+                    matTooltipPosition="below" matTooltipClass="gw-tool-icon-tooltip">
+                    warning
+                </mat-icon>
+                {{tool.tool.DeviceName | gwTruncate:12}}
+            </div>
+            <div class="gw-monitoring-PortingCol mat-body-2" matTooltip="{{tool.tool.Porting}}"
+                matTooltipPosition="below" matTooltipClass="gw-tool-grid-row-tooltip"
+                [matTooltipDisabled]="tool.tool.Porting.length > 12 ? 'false': 'true'">
+                {{tool.tool.Porting | gwTruncate:12}}
+            </div>
+            <div class="gw-monitoring-PressureCol mat-body-2"
+                matTooltip="{{tool.pressureDevice.RawValue | number: '1.2-2'}}" matTooltipPosition="below"
+                matTooltipClass="gw-tool-grid-row-tooltip"
+                [matTooltipDisabled]="(tool.pressureDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                {{ tool.isESPTool ? " ": (tool.pressureDevice.RawValue!== -999 ? (tool.pressureDevice.RawValue | number:
+                '1.2-2'
+                | gwTruncate:10) :
+                (errorHandlingSettings?.BadDataValue | number: '1.2-2') )}} {{ tool.isESPTool ? " " :
+                tool.pressureDevice.UnitSymbol}}
+            </div>
+            <!-- <div class=".gw-monitoring-UnitCol mat-body-2">{{tool.pressureDevice.UnitSymbol}}</div> -->
+            <div class="gw-monitoring-TempCol mat-body-2"
+                matTooltip="{{tool.temperatureDevice.RawValue | number: '1.2-2'}}" matTooltipPosition="below"
+                matTooltipClass="gw-tool-grid-row-tooltip"
+                [matTooltipDisabled]="(tool.temperatureDevice.RawValue | number: '1.2-2')?.toString().length > 7 ? 'false': 'true'">
+                {{ tool.isESPTool ? " ": (tool.temperatureDevice.RawValue!== -999 ? (tool.temperatureDevice.RawValue |
+                number:
+                '1.2-2' | gwTruncate:7)
+                : (errorHandlingSettings?.BadDataValue | number: '1.2-2')) }} {{ tool.isESPTool ? " "
+                :tool.temperatureDevice.UnitSymbol}}
+            </div>
+            <!-- <div class=".gw-monitoring-UnitCol mat-body-2">{{tool.temperatureDevice.UnitSymbol}}</div> -->
+            <div class="gw-monitoring-btnCol">
+                <button mat-button class="mat-button-tertiary-sm gw-xs-button"
+                    (click)="navigateTool(tool.tool.DeviceId)">
+                    View
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Content Mobile -->
+    <div *ngIf="bIsMobileView" class="row mx-0">
+        <table class="gw-monitoring-table">
+            <tr [ngClass]="{'gw-data-error': getToolStatusCode(tool.diagnosticsDevice.RawValue) === 2 || tool.diagnosticsCard.RawValue === 0, 
+                            'gw-data-warning': getToolStatusCode(tool.diagnosticsDevice.RawValue) === 1 && tool.diagnosticsCard.RawValue !== 0}"
+                *ngFor="let tool of tools">
+                <td>
+                    <div class="td-col-Name gw-monitoring-label" matTooltip="{{tool.tool.DeviceName}}"
+                        matTooltipPosition="below" matTooltipClass="gw-tool-grid-row-tooltip"
+                        [matTooltipDisabled]="tool.tool.DeviceName.length > 12 ? 'false': 'true'">
+                        <mat-icon
+                            *ngIf="getToolStatusCode(tool.diagnosticsDevice.RawValue) === 2 || tool.diagnosticsCard.RawValue === 0"
+                            class="mat-icon--sml gw-icon-info"
+                            matTooltip="{{tool.diagnosticsCard.RawValue === 0 ?  cardStatus : (tool | gwToolStatus:2)}} "
+                            matTooltipPosition="below" matTooltipClass="gw-tool-icon-tooltip">
+                            info
+                        </mat-icon>
+                        <mat-icon
+                            *ngIf="getToolStatusCode(tool.diagnosticsDevice.RawValue) === 1 && tool.diagnosticsCard.RawValue !== 0"
+                            class="mat-icon--sml gw-icon-warning" matTooltip="{{ tool | gwToolStatus:2 }} "
+                            matTooltipPosition="below" matTooltipClass="gw-tool-icon-tooltip">
+                            warning
+                        </mat-icon>
+                        {{tool.tool.DeviceName | gwTruncate:12}}
+                    </div>
+                    <!--     <br /> -->
+                    <div class="mat-body-2 gw-mt-sublabel" matTooltip="{{tool.tool.Porting}}" matTooltipPosition="below"
+                        matTooltipClass="gw-tool-grid-row-tooltip"
+                        [matTooltipDisabled]="tool.tool.Porting.length > 12 ? 'false': 'true'">
+                        {{tool.tool.Porting | gwTruncate:12}}
+                    </div>
+                </td>
+                <td>
+                    <div class="td-col-Pressure mat-body-2" *ngIf="!tool.isESPTool"
+                        matTooltip="{{tool.pressureDevice.RawValue | number: '1.2-2'}}" matTooltipPosition="below"
+                        matTooltipClass="gw-tool-grid-row-tooltip"
+                        [matTooltipDisabled]="(tool.pressureDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                        {{tool.pressureDevice.RawValue!== -999 ? (tool.pressureDevice.RawValue | number: '1.2-2' |
+                        gwTruncate:10) : (errorHandlingSettings?.BadDataValue | number: '1.2-2') }}
+                        {{tool.pressureDevice.UnitSymbol}}
+                    </div>
+                    <!--    <br /> -->
+                    <div class="td-col-Pressure gw-mt-sublabel mat-body-2" *ngIf="!tool.isESPTool"
+                        matTooltip="{{tool.temperatureDevice.RawValue | number: '1.2-2'}}" matTooltipPosition="below"
+                        matTooltipClass="gw-tool-grid-row-tooltip"
+                        [matTooltipDisabled]="(tool.temperatureDevice.RawValue | number: '1.2-2')?.toString().length > 7 ? 'false': 'true'">
+                        {{tool.temperatureDevice.RawValue!== -999 ? (tool.temperatureDevice.RawValue | number: '1.2-2' |
+                        gwTruncate:7) : (errorHandlingSettings?.BadDataValue | number: '1.2-2') }}
+                        {{tool.temperatureDevice.UnitSymbol}}
+                    </div>
+                </td>
+                <td class="p-l-0 text-right">
+                    <button mat-button class="mat-button-tertiary-sm gw-xs-button gw-m-l--10"
+                        (click)="navigateTool(tool.tool.DeviceId)">
+                        View
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</ng-template>
+
+<!-- <ng-template #noDataZone>
+    <span class="gw-zone-header-subtitle-color">No InCHARGE</span>
+</ng-template> -->

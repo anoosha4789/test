@@ -1,0 +1,57 @@
+@import 'base.scss';
+@import 'components.scss';
+
+.button-toggle {
+    width: 160px;
+    border: 1px solid;
+}
+.table-type-toggle-group{
+    .gw-button-toggle-group {
+        .mat-button-toggle-checked {
+            border-color:  $gw-secondary-color-900;
+            background-color: $gw-secondary-color-900 !important;
+        }
+    }
+}
+
+::ng-deep .button-toggle-outer-left .mat-button-toggle-button {
+    text-transform: none !important;
+}
+
+.container-fluid{
+    padding-left: 40px;
+}
+
+.body-label-value{
+    font-weight: 600;
+    color: #05322b;
+}
+
+.d-flex{
+    align-items: baseline;
+}
+
+@media only screen and (min-width: 1200px) {
+    .col-md-6{
+        max-width: 30% !important;
+    }
+    .gw-unit-system-row-radio{
+        margin-right: -25px;
+        padding-left: 4px;
+    }
+    
+}
+@media only screen and (max-width: 1024px ) {
+    .gw-unit-system-row-radio{
+        padding-left: 22px;
+    }
+    
+}
+
+@media (max-width:480px) {
+    .gw-unit-system-row-radio{
+        padding-left: 0px;
+    }
+    
+}
+

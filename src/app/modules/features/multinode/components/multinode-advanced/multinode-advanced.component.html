@@ -1,0 +1,39 @@
+<div class="mb-2 sensor-calibration gw-advanced-container">
+    <div class="gw-breadcrumb px-4 py-0">
+        <a class="gw-text-link-breadcrumb gw-breadcrumb-link" [routerLink]="toolboxRoute">Toolbox</a>
+        <span class="gw-text-link-breadcrumb p-l-12">></span>
+        <span class="gw-text-link-breadcrumb p-l-12">Advanced</span>
+    </div>
+    <section class="mb-2 mx-3">
+        <!--Page Title and Action buttons-->
+        <div class="d-flex flex-wrap justify-content-between gw-dashboard-header-container">
+            <div>
+                <h6 class="mat-subheader px-0 pt-1 pl-1 pb-2">Advanced</h6>
+            </div>
+        </div>
+        <mat-card class="gw-vent-output-well-card">
+            <mat-tab-group animationDuration="0ms" [selectedIndex]="selectedTabIndex" (selectedIndexChange)="onTabChanged($event)"
+             class="gw-vent-output-well-tab-group" [ngClass]="{'tabheight':  selectedTabIndex > 0}">
+                <mat-tab label="Manual mode" tabindex="0">
+                    <multinode-manual-mode (selectedSieId)="selectedSIE($event)" (selectedWellId)= "selectedWell($event)" (isPowerSupplyTabSelected)="isPowerSupplyTabSelected($event)" 
+                        (manualModeOperationChanged)="manualModeOperationChanged($event)" isOperationInProgress="{{isOperationInProgress}}" isSIUDisconnected="{{isSIUDisconnected}}">
+                    </multinode-manual-mode>
+                </mat-tab>
+                <mat-tab label="Diagnostics" tabindex="1">
+                    <multinode-diagnostics (selectedWellId)= "selectedWell($event)" isSIUDisconnected="{{isSIUDisconnected}}"></multinode-diagnostics>
+                </mat-tab>
+            </mat-tab-group>
+            <mat-card-actions class="m-0" *ngIf="selectedTabIndex == 0" >
+                <mat-divider *ngIf="selectedTabIndex == 0"></mat-divider>
+                <div class="d-flex justify-content-end gw-mt-12 mx-2">
+                    <button type="submit" *ngIf="!isPowerSupplySelected" mat-button [disabled]="!isFormValid || isOperationInProgress || isSIUDisconnected" (click)="onApplyManualMode()"
+                        class="mat-button-primary-sm mr-0">APPLY</button>
+                    <button type="submit" *ngIf="isPowerSupplySelected" mat-button class="mr-0"  [ngClass]="(disablePowerButton ||isOperationInProgress) ? 'mat-button-primary-sm' : 'mat-button-warn-sm'" [disabled]="disablePowerButton ||isOperationInProgress" (click)="onPowerDown()">POWER
+                        DOWN</button>
+                    <button type="submit" *ngIf="isPowerSupplySelected" [disabled]="disablePowerButton || isOperationInProgress" mat-button
+                        class="mat-button-primary-sm mr-0" (click)="onPowerUp()">POWER UP</button> 
+                </div>
+            </mat-card-actions>
+        </mat-card>
+    </section>
+</div>

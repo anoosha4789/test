@@ -1,0 +1,152 @@
+<section class="d-flex gw-view-actuation-header px-3 mb-3">
+    <span class="col-md-4 col-lg-3 pl-0 pr-0 mat-subtitle-1 gw-view-actuation-headerg-title">Actuation
+        Status</span>
+    <div class="d-flex flex-column pl-3">
+        <div>
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-shift-progress gw-actuate-progress-text"
+                matTooltip="{{efcvInActuation?.ZoneName}}" matTooltipPosition="above" matTooltipClass="gw-mat-tooltip"
+                [matTooltipDisabled]="efcvInActuation?.ZoneName?.length > 12 ? 'false': 'true' ">{{efcvInActuation?.ZoneName
+                | gwTruncate:12}}</span>
+            <span
+                class="gw-text-link-breadcrumb gw-breadcrumb-shift-progress gw-actuate-progress-text pl-3">{{progress}}%</span>
+        </div>
+        <span class="pt-1">
+            <mat-progress-bar class="gw-multinode-actuate-progress" mode="determinate" [value]="progress">
+            </mat-progress-bar>
+        </span>
+    </div>
+</section>
+<section class="gw-view-actuation-scroll-container">
+    <div class="d-flex justify-content-between ml-3 mr-3">
+        <label class="mat-subtitle-2">{{wellInActuation?.WellName}}</label>
+        <label class="mat-subtitle-2">Status: {{currentStatus}}</label>
+    </div>
+    <section class="row mx-0 my-2 m-md-3 gw-inforce-view-shift-container">
+        <!--Actuation Progress Container-->
+        <div class="col-lg-3 px-sm-0 pl-md-0 pr-md-0 pr-lg-0">
+            <mat-card class="gw-inforce-monitoring-card mb-3">
+                <mat-card-header class="gw-inforce-monitoring-card-header">
+                    <mat-card-title class="mat-subtitle-2 gw-inforce-monitoring-title">
+                        Actuation Progress
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content>
+                    <div class="pt-3 pb-3">
+                        <ng-container *ngIf="wellInActuation">
+                            <app-multinode-actuate-hierarchy [wellInActuation]="wellInActuation"
+                                [actuationWellObject]="actuationWellObject" [efcvInActuation]="efcvInActuation"
+                                [dataPointDefinitions]="dataPointDefinitions">
+                            </app-multinode-actuate-hierarchy>
+                        </ng-container>
+                        <div class="d-flex justify-content-center mx-2">
+                            <button mat-button class="mat-button-warn-sm gw-abort-seq-btn" (click)="stopActuation()"
+                                [disabled]="disableStopActuationBtn">
+                                <mat-icon class="mat-icon-left mat-icon--sml">error_outline</mat-icon>
+                                STOP ACTUATION
+                            </button>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <div class="col-lg-6 col-xl-6 px-sm-0 pl-md-0 pr-md-0 pr-lg-4 pl-lg-3">
+            <!--Motor Readings Container-->
+            <mat-card class="gw-inforce-monitoring-card gw-view-actuation-chart-card">
+                <mat-card-header class="gw-inforce-monitoring-card-header">
+                    <mat-card-title class="mat-subtitle-2 gw-inforce-monitoring-title">
+                        Motor Readings
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content class="mt-1 gw-view-actuation-chart-container">
+                    <div class="gw-inforce-shift-chart-view" *ngIf="showChart">
+                        <gateway-multiaxis-chart [chartId]="chartId" [chartOptions]="dataPointChartOptions"
+                            [Height]="415">
+                        </gateway-multiaxis-chart>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <!--Parameter Container-->
+        <div class="col-lg-3 px-md-0 px-sm-0 pl-md-0 pr-md-0 pr-lg-3 pl-lg-2 gw-inforce-param-container">
+            <div class="row">
+                <mat-card class="gw-full-width gw-view-actuation-card gw-flex-container-card p-0" cdkTrapFocus>
+                    <mat-card-header class="gw-toolbox-card-header gw-view-actuation-card-header">
+                        <mat-card-title class="d-flex flex-wrap justify-content-between mb-0">
+                            <span class="mat-subtitle-2 gw-view-actuation-header-color">
+                            Surface Parameters (Output)
+                        </span>       
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="gw-view-actuation-card-content">
+                        <table class="gw-view-actuation-table">
+                            <tr class="gw-view-actuation-thRow">
+                                <th class="gw-view-actuation-th-param">Parameter</th>
+                                <th class="gw-view-actuation-th-value">Current Value</th>
+                            </tr>
+  
+                            <tr class="gw-view-actuation-tr" *ngFor="let parameter of SurfaceparameterList">
+                                <td class="mat-body-2 gw-view-actuation-td-param">{{parameter.key}}</td>
+                                <td class="mat-body-2 gw-view-actuation-td-value">{{parameter.value?.RawValue | number: '1.0-0'}}</td>
+                            </tr>
+                        </table>
+                    </mat-card-content>
+                </mat-card>
+        </div>
+        <div class="row p-t-10">
+            <mat-card class="gw-full-width gw-view-actuation-card gw-flex-container-card p-0" cdkTrapFocus>
+                <mat-card-header class="gw-toolbox-card-header gw-view-actuation-card-header">
+                    <mat-card-title class="d-flex flex-wrap justify-content-between mb-0">
+                        <span class="mat-subtitle-2 gw-view-actuation-header-color">
+                            Downhole Parameters (Input)
+                    </span>       
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="gw-view-actuation-card-content">
+                    <table class="gw-view-actuation-table">
+                        <tr class="gw-view-actuation-thRow">
+                            <th class="gw-view-actuation-th-param">Parameter</th>
+                            <th class="gw-view-actuation-th-value">Current Value</th>
+                        </tr>
+
+                        <tr class="gw-view-actuation-tr" *ngFor="let parameter of parameterList">
+                            <td class="mat-body-2 gw-view-actuation-td-param">{{parameter.key}}</td>
+                            <td class="mat-body-2 gw-view-actuation-td-value">{{parameter.value?.RawValue | number: '1.0-0'}}</td>
+                        </tr>
+                    </table>
+                </mat-card-content>
+            </mat-card>
+        </div>
+            <!-- <mat-card class="gw-inforce-monitoring-card">
+                <mat-card-header class="gw-inforce-monitoring-card-header">
+                    <mat-card-title class="gw-inforce-monitoring-title">
+                        <div class="gw-inforce-parm-block-title">
+                            <div>Parameter</div>
+                            <div>Current Value</div>
+                        </div>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content class="gw-inforce-parm-block">
+                    <ng-container *ngFor="let parameter of parameterList">
+                        <div class="gw-inforce-parm-block-row px-2">
+                            <div>{{parameter.key}}</div>
+                            <ng-container *ngIf="parameter && parameter.value">
+                                <div>
+                                    {{parameter.value?.RawValue | number: '1.0-0'}}
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </mat-card-content>
+            </mat-card> -->
+        </div>
+    </section>
+</section>
+
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-3" (click)="onClose()">CLOSE</button>
+</div>

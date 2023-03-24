@@ -1,0 +1,144 @@
+@import '../../../inforce-configuration/components/inforce-well/inforce-well.component.scss';
+@import 'base.scss';
+@import 'components.scss';
+
+.gw-electric-parameters-container {
+    overflow: auto;
+    height: 630px;
+
+    @media (max-width: 767px) {
+        height: 575px;
+    }
+
+    .button-toggle {
+        // width: 160px;
+        border-radius: 0;
+        border: 1px solid;
+    }
+
+    .gw-button-toggle-group {
+        .mat-button-toggle-checked {
+            border-color: $gw-primary-color-500;
+        }
+    }
+
+    .gw-sie-toggle-group-wrapper {
+        margin-top: 14px;
+
+        @media (max-width: 767px) {
+            margin-top: 8px;
+        }
+    }
+
+    .button-toggle-border:first-of-type {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .button-toggle-border:last-of-type {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    .gw-power-supply-header {
+        background-color: $gw-secondary-color-100;
+    }
+
+    .gw-power-supply-label,
+    .gw-power-supply-value {
+        font-size: 14px;
+        color: $gw-tertiary-color-1000;
+
+        @media (max-width: 767px) {
+            font-size: 11px;
+        }
+    }
+
+    .gw-power-supply-value {
+        font-weight: 700;
+    }
+
+    .gw-electric-well-zone-grid {
+        height: 206px;
+        width: 100%;
+
+        @media (max-width: 767px) {
+            height: 175px;
+        }
+    }
+
+    .gw-chasis-temp {
+        padding-left: 24px !important;
+
+        @media (max-width: 767px) {
+            padding-left: 15px !important;
+        }
+    }
+
+    .gw-sie-ip {
+        @media (max-width: 767px) {
+            padding-left: 15px !important;
+        }
+    }
+
+}
+
+:host ::ng-deep .gw-electric-parameters-container .igx-grid__th-title {
+    white-space: normal;
+
+    @media (max-width: 767px) {
+        font-size: 11px;
+        margin: 0.7rem 0;
+    }
+}
+
+:host ::ng-deep .gw-electric-parameters-container .gw-electric-well-zone-grid .igx-grid__th-title {
+    @media (max-width: 767px) {
+        margin: 1rem 0;
+    }
+}
+
+:host ::ng-deep .gw-electric-parameters-container .gw-grid-row-tooltip {
+    @media (max-width: 767px) {
+        font-size: 11px;
+    }
+}
+
+:host ::ng-deep .gw-electric-parameters-container .igx-grid__thead .igx-display-container {
+    @media (max-width: 767px) {
+        height: 50px;
+    }
+}
+
+:host ::ng-deep .gw-electric-parameters-container .igx-grid__thead .igx-grid__th,
+:host ::ng-deep .gw-electric-parameters-container .igx-grid__tbody .igx-grid__td {
+    @media (max-width: 767px) {
+        padding: 0 0 0 1rem;
+    }
+}
+
+:host ::ng-deep .gw-electric-parameters-container .igx-grid__tbody .igx-grid__td {
+    @media (max-width: 767px) {
+        min-height: 40px !important;
+    }
+}
+
+:host ::ng-deep .gw-electric-parameters-container .igx-grid__tbody .igx-grid__tr {
+    @media (max-width: 767px) {
+        height: 40px;
+    }
+}
+
+:host ::ng-deep .gw-electric-parameters-container .igx-grid__td .igx-display-container {
+    @media (max-width: 767px) {
+        height: 40px;
+    }
+}
+
+::ng-deep .gw-electric-parameters-container .igx-grid__scroll {
+    height: 15px !important;
+}

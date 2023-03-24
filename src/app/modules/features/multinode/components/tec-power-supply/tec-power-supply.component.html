@@ -1,0 +1,100 @@
+<form [formGroup]="tecPowerSupplyForm" autocomplete="off">
+    <div class="d-flex flex-wrap mt-4">
+        <div class="col-sm-12 col-md-6 px-0 gw-unit-system-row">
+            <div class="row ml-0 mr-0">
+                <div class="col-md-6 col-xl-4 gw-unit-system-form-label px-2 mt-1">
+                    <mat-label class="gw-form-label">Max Voltage (V)</mat-label>
+                </div>
+                <div class="col-3 px-0">
+                    <mat-form-field class="mat-input-small px-0 pt-0 w-100" appearance="fill">
+                        <input type="number" matInput class="mat-body-2 form-baseline" formControlName="MaxVoltage" gw-decimal-input
+                            name="MaxVoltage" (input)="validateFormControls()" (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.MaxVoltage" align="start" class="mat-error">
+                            {{formCtrlErrorMessage.MaxVoltage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 px-0 gw-unit-system-row">
+            <div class="row ml-0 mr-0">
+                <div class="col-md-6 col-xl-4 gw-unit-system-form-label px-2 mt-1">
+                    <mat-label class="gw-form-label">Ramp Rate (V)</mat-label>
+                </div>
+                <div class="col-3 px-0">
+                    <mat-form-field class="mat-input-small px-0 pt-0 w-100" appearance="fill">
+                        <input type="number" matInput class="mat-body-2 form-baseline" formControlName="RampRate" gw-decimal-input
+                            name="RampRate" (input)="validateFormControls()" (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.RampRate" align="start" class="mat-error">
+                            {{formCtrlErrorMessage.RampRate}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 px-0 gw-unit-system-row">
+            <div class="row ml-0 mr-0 mt-2">
+                <div class="col-md-6 col-xl-4 gw-unit-system-form-label px-2 mt-1">
+                    <mat-label class="gw-form-label">Max Current (mA)</mat-label>
+                </div>
+                <div class="col-3 px-0">
+                    <mat-form-field class="mat-input-small px-0 pt-0 w-100" appearance="fill">
+                        <input type="number" matInput class="mat-body-2 form-baseline" formControlName="MaxCurrent" gw-decimal-input
+                            name="MaxCurrent" (input)="validateFormControls()" (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.MaxCurrent" align="start" class="mat-error">
+                            {{formCtrlErrorMessage.MaxCurrent}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 px-0 gw-unit-system-row">
+            <div class="row ml-0 mr-0 mt-2">
+                <div class="col-md-6 col-xl-4 gw-unit-system-form-label px-2 mt-1">
+                    <mat-label class="gw-form-label">Settle Voltage (V)</mat-label>
+                </div>
+                <div class="col-3 px-0">
+                    <mat-form-field class="mat-input-small px-0 pt-0 w-100" appearance="fill">
+                        <input type="number" matInput class="mat-body-2 form-baseline" formControlName="SettleVoltage" gw-decimal-input
+                            name="SettleVoltage" (input)="validateFormControls()" (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.SettleVoltage" align="start" class="mat-error">
+                            {{formCtrlErrorMessage.SettleVoltage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 px-0 gw-unit-system-row">
+            <div class="row ml-0 mr-0 mt-2">
+                <div class="col-md-6 col-xl-4 gw-unit-system-form-label px-2 mt-1">
+                    <mat-label class="gw-form-label">Target Voltage (V)</mat-label>
+                </div>
+                <div class="col-3 px-0">
+                    <mat-form-field class="mat-input-small px-0 pt-0 w-100" appearance="fill">
+                        <input type="number" matInput class="mat-body-2 form-baseline" formControlName="TargetVoltage" gw-decimal-input
+                            name="TargetVoltage" (input)="validateFormControls()" (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.TargetVoltage" align="start" class="mat-error">
+                            {{formCtrlErrorMessage.TargetVoltage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 px-0 gw-unit-system-row">
+            <div class="row ml-0 mr-0 mt-2">
+                <div class="col-md-6 col-xl-4 gw-unit-system-form-label px-2 mt-1">
+                    <mat-label class="gw-form-label">Settle Ramp Rate (V)</mat-label>
+                </div>
+                <div class="col-3 px-0">
+                    <mat-form-field class="mat-input-small px-0 pt-0 w-100" appearance="fill">
+                        <input type="number" matInput class="mat-body-2 form-baseline" formControlName="SettleRampRate"
+                            name="SettleRampRate" (input)="validateFormControls()" (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.SettleRampRate" align="start" class="mat-error">
+                            {{formCtrlErrorMessage.SettleRampRate}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

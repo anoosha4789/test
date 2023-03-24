@@ -1,0 +1,84 @@
+<section class="gw-electric-parameters-container">
+    <div class="gw-sie-toggle-group-wrapper m-l-6 m-b-6 table-type-toggle-group text-center">
+        <mat-button-toggle-group class="gw-button-toggle-group" aria-label="SIUs" [(value)]="currentSieId">
+            <mat-button-toggle *ngFor="let sie of sies" class="button-toggle button-toggle-border" [value]="sie?.Id"
+                (change)="onToggleSie($event)">{{sie?.Name}}
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <section class="mx-3 pt-0 pb-2">
+        <label class="mat-subtitle-2 gw-power-supply-label">Panel Status</label>
+        <div class="row m-0 pt-1">
+            <div class="d-flex col-sm-12 col-md-6 p-0">
+                <label class="mat-body-2 gw-power-supply-label gw-power-supply-value p-0 gw-chasis-temp">Chassis Temperature <span *ngIf="chassisTemperature?.UnitSymbol">({{chassisTemperature?.UnitSymbol}})</span>:</label>
+                <label class="mat-body-2  p-0 pl-2">{{chassisTemperature?.RawValue}}</label>
+            </div>
+            <div class="d-flex col-sm-12 col-md-6 p-0">
+                <label class="mat-body-2 gw-power-supply-label gw-power-supply-value p-0 gw-sie-ip">MSMP MAC Address:</label>
+                <label class="mat-body-2 p-0 pl-2">{{currentSie?.MacAddress}}</label>
+            </div>
+            <div class="d-flex col-sm-12 col-md-6 p-0">
+                <label class="mat-body-2 gw-power-supply-label gw-power-supply-value p-0 gw-chasis-temp">SIU IP Address:</label>
+                <label class="mat-body-2  p-0 pl-2">{{currentSie?.IpAddress}}</label>
+            </div>
+            <div class="d-flex col-sm-12 col-md-6 p-0">
+                <label class="mat-body-2 gw-power-supply-label gw-power-supply-value p-0 gw-sie-ip">SIU Port Number:</label>
+                <label class="mat-body-2  p-0 pl-2">{{currentSie?.PortNumber}}</label>
+            </div>
+        </div>
+    </section>
+    <ng-container *ngIf="manualPowerSupplies">
+       <app-multinode-power-supply-grid [manualPowerSupplies]="manualPowerSupplies"></app-multinode-power-supply-grid>
+    </ng-container>
+    <ng-container *ngIf="currentSieWells">
+        <section class="mx-3 pt-1 pb-2">
+            <div class="gw-electric-well-zone-grid">
+                <div #tooltipRef="tooltip" igxTooltip class="gw-grid-tooltip">
+                    <ng-container *ngIf="tooltipRef.context">
+                        {{tooltipRef.context.value?.RawValue  | number: '1.2-2'}}
+                    </ng-container>
+                </div>
+                <div #tooltipReffirstcol="tooltip" igxTooltip class="gw-grid-tooltip">
+                    <ng-container *ngIf="tooltipReffirstcol.context">
+                        {{tooltipReffirstcol.context.value}} - TEC {{tooltipReffirstcol.context.row.index + 1}}
+                    </ng-container>
+                </div>
+                <igx-grid #ElectricParametersWellGrid [(data)]="manualTecPowerSupplies.powerSupplies"
+                    [emptyGridMessage]="'No Wells are configured.'" width="100%" resizable="true">
+                    <!-- Power Supply -->
+                    <igx-column [headerClasses]="'mat-header-cell'" [width]="tableWellWidth" field="wellName" header="Name"  resizable="true"
+                        [dataType]="'string'">
+                        <ng-template igxCell let-cell="cell">
+                            <span [igxTooltipTarget]="tooltipReffirstcol" (onTooltipShow)="tooltipReffirstcol.context=cell"
+                                hideDelay="50" class="gw-grid-row-tooltip">
+                                {{cell.value}} - TEC {{cell.row.index + 1}}
+                            </span>
+                        </ng-template>
+                    </igx-column>
+                    <!-- Motor Voltage -->
+                    <igx-column [headerClasses]="'mat-header-cell'"  resizable="true"  header="Motor Voltage (V)" field="MotorVoltage" [dataType]="'string'">
+                        <ng-template igxCell let-cell="cell">
+                            <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell"
+                                hideDelay="50" class="gw-grid-row-tooltip">
+                                {{cell.value?.RawValue | number: '1.2-2'}}
+                            </span>
+                        </ng-template>
+                    </igx-column>
+                    <!-- TEC Voltage -->
+                    <igx-column [headerClasses]="'mat-header-cell'"  resizable="true" header="TEC Voltage (V)" field="TECVoltage" [dataType]="'string'">
+                        <ng-template igxCell let-cell="cell">
+                            <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell"
+                                hideDelay="50" class="gw-grid-row-tooltip">
+                                {{cell.value?.RawValue | number: '1.2-2'}}
+                            </span>
+                        </ng-template>
+                    </igx-column>
+                </igx-grid>
+            </div>
+        </section> 
+    </ng-container>
+</section>
+
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-3" (click)="onClose()">CLOSE</button>
+</div>

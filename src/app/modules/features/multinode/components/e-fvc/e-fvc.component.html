@@ -1,0 +1,200 @@
+<section class="pt-3 pb-1 px-3 gw-logger-dialog-container gw-efcv-container">
+    <form [formGroup]="efcvForm" autocomplete="off">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 gw-data-source-row-left px-0 p-b-16">
+                <div class="col gw-data-source-form-label-left p-t-4">
+                    <mat-label class="gw-form-label">{{getInputLabel('eFCVName')}}</mat-label>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-input-small pt-0 col-sm-6" appearance="fill">
+                        <input id="eFCVName" formControlName="eFCVName" type="text" matInput
+                            class="mat-body-2 form-baseline" name="eFCVName" (input)="validateForm($event)"
+                            (blur)="validateForm($event)">
+                        <mat-hint *ngIf="efcvNameValidationMessage" align="start" class="mat-error">
+                            {{efcvNameValidationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 gw-data-source-row-left px-0 p-b-16">
+                <div class="col gw-data-source-form-label-left p-t-4">
+                    <mat-label class="gw-form-label">{{getInputLabel('eFCVAddress')}}</mat-label>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-input-small pt-0" appearance="fill">
+                        <input id="eFCVAddress" formControlName="eFCVAddress" type="number" matInput
+                            class="mat-body-2 form-baseline" gw-number-input name="eFCVAddress"
+                            (input)="validateForm($event)" (blur)="validateForm($event)">
+                        <mat-hint *ngIf="efcvAddressValidationMessage" align="start" class="mat-error">
+                            {{efcvAddressValidationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-data-source-row-right px-0 p-b-16">
+                <div class="col gw-data-source-form-label-right p-t-4">
+                    <mat-label class="gw-form-label">{{getInputLabel('SerialNumber')}}</mat-label>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-input-small pt-0" appearance="fill">
+                        <input id="SerialNumber" formControlName="SerialNumber" type="text" matInput
+                            class="mat-body-2 form-baseline" name="SerialNumber" (input)="validateForm($event)"
+                            (blur)="validateForm($event)">
+                        <mat-hint *ngIf="efcvSerialNumberValidationMessage" align="start" class="mat-error">
+                            {{efcvSerialNumberValidationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 gw-data-source-row-left px-0 p-b-16">
+                <div class="col gw-data-source-form-label-left p-t-4">
+                    <mat-label class="gw-form-label">{{getInputLabel('UniqueAddress')}}</mat-label>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-input-small pt-0" appearance="fill">
+                        <input id="UniqueAddress" formControlName="UniqueAddress" type="text" matInput
+                            class="mat-body-2 form-baseline" name="UniqueAddress" (input)="validateForm($event)"
+                            (blur)="validateForm($event)">
+                        <mat-hint *ngIf="efcvUniqueAddressValidationMessage" align="start" class="mat-error">
+                            {{efcvUniqueAddressValidationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 gw-data-source-row-right px-0 p-b-16">
+                <div class="col gw-data-source-form-label-right p-t-4">
+                    <mat-label class="gw-form-label">{{getInputLabel('MeasuredDepth')}}</mat-label>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-input-small pt-0" appearance="fill">
+                        <input matInput id="MeasuredDepth" formControlName="MeasuredDepth" type="number"
+                            class="mat-body-2 form-baseline" name="MeasuredDepth" (input)="validateForm($event)"
+                            (blur)="validateForm($event)" min="0" gw-number-input>
+                        <mat-hint *ngIf="efcMeasuredDepthValidationMessage" align="start" class="mat-error">
+                            {{efcMeasuredDepthValidationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="row p-t-10 p-l-20 p-b-20 m-r-0">
+            <span class="mat-subtitle-2">Motor Settings</span>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 col-md-6 gw-data-source-row-left px-0 p-b-16">
+                <div class="col gw-data-source-form-label-left p-t-4">
+                    <mat-label class="gw-form-label">{{getInputLabel('MaxVoltage')}}</mat-label>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-input-small pt-0" appearance="fill">
+                        <input id="MaxVoltage" formControlName="MaxVoltage" type="number" matInput
+                            class="mat-body-2 form-baseline" gw-decimal-input name="MaxVoltage"
+                            (input)="validateForm($event)" (blur)="validateForm($event)">
+                        <mat-hint *ngIf="efcvMaxVoltageValidationMessage" align="start" class="mat-error">
+                            {{efcvMaxVoltageValidationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-data-source-row-right px-0 p-b-16">
+                <div class="col gw-data-source-form-label-right p-t-4">
+                    <mat-label class="gw-form-label">{{getInputLabel('MaxCurrent')}}</mat-label>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-input-small pt-0" appearance="fill">
+                        <input id="MaxCurrent" formControlName="MaxCurrent" type="number" matInput
+                            class="mat-body-2 form-baseline" gw-decimal-input name="MaxCurrent"
+                            (input)="validateForm($event)" (blur)="validateForm($event)">
+                        <mat-hint *ngIf="efcvMaxCurrentValidationMessage" align="start" class="mat-error">
+                            {{efcvMaxCurrentValidationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 gw-data-source-row-left px-0 p-b-16">
+                <div class="col gw-data-source-form-label-left p-t-4">
+                    <mat-label class="gw-form-label">{{getInputLabel('TargetVoltage')}}</mat-label>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-input-small pt-0" appearance="fill">
+                        <input id="TargetVoltage" formControlName="TargetVoltage" type="number" matInput
+                            class="mat-body-2 form-baseline" gw-decimal-input name="TargetVoltage"
+                            (input)="validateForm($event)" (blur)="validateForm($event)">
+                        <mat-hint *ngIf="efcvTargetVoltageValidationMessage" align="start" class="mat-error">
+                            {{efcvTargetVoltageValidationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-data-source-row-right px-0 p-b-16">
+                <div class="col gw-data-source-form-label-right">
+                    <mat-label class="gw-form-label">{{getInputLabel('OverCurrentThreshold')}}</mat-label>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-input-small pt-0" appearance="fill">
+                        <input id="OverCurrentThreshold" formControlName="OverCurrentThreshold" type="number" matInput
+                            class="mat-body-2 form-baseline" gw-decimal-input name="OverCurrentThreshold"
+                            (input)="validateForm($event)" (blur)="validateForm($event)">
+                        <mat-hint *ngIf="efcCurrentThresholdValidationMessage" align="start" class="mat-error">
+                            {{efcCurrentThresholdValidationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 gw-data-source-row-left px-0 p-b-16">
+                <div class="col gw-data-source-form-label-left p-t-4">
+                    <mat-label class="gw-form-label">{{getInputLabel('OverCurrentOverride')}}</mat-label>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-select-small" appearance="fill">
+                        <mat-select class="gw-form-label form-baseline" id="WellId"
+                            formControlName="OverCurrentOverride" (input)="validateForm($event)"
+                            (blur)="validateForm($event)">
+                            <mat-option *ngFor="let currentOvrride of currentOvrrideList" [value]="currentOvrride.id">
+                                {{currentOvrride.value}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-data-source-row-right px-0 p-b-16">
+                <div class="col gw-data-source-form-label-right p-t-4">
+                    <mat-label class="gw-form-label">{{getInputLabel('DutyCycle')}}</mat-label>
+                </div>
+                <div class="col">
+                    <mat-form-field class="mat-input-small pt-0" appearance="fill">
+                        <input id="DutyCycle" formControlName="DutyCycle" type="number" matInput
+                            class="mat-body-2 form-baseline" gw-decimal-input name="DutyCycle"
+                            (input)="validateForm($event)" (blur)="validateForm($event)">
+                        <mat-hint *ngIf="efcDutyCycleValidationMessage" align="start" class="mat-error">
+                            {{efcDutyCycleValidationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-3" (click)="OnCancel()">CANCEL</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnSubmit()"
+        [disabled]="editMode ? !efcvForm.valid || !efcvForm.dirty : !efcvForm.valid">{{btnText}}</button>
+</div>

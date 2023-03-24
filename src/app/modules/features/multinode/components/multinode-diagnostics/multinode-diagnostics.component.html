@@ -1,0 +1,57 @@
+<section class="m-2">
+    <div class="container-fluid p-t-10 ">
+        <form [formGroup]="diagnosticsForm" autocomplete="off">
+            <div class="row">
+                    <div class="d-flex mt-1 col-sm-12 col-md-4">
+                        <div class="w-130">
+                            <mat-label class="body-label-value">Well</mat-label>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="mat-select-small mat-select-width-75"  appearance="fill">
+                                <mat-select class="gw-form-label form-baseline" (selectionChange)="onWellSelChange($event)"
+                                    id="wellId" formControlName="WellId" [(ngModel)]="selWellId" [matTooltip]="selWellName" matTooltipPosition="below" matTooltipClass="gw-mat-tooltip"
+                                    [matTooltipDisabled]="selWellName?.length > 30 ? 'false': 'true' "
+                                    (input)="validateForm($event)" (blur)="validateForm($event)">
+                                    <mat-option *ngFor="let well of wells" [value]="well.WellId" [matTooltip]="well?.WellName"  
+                                        matTooltipPosition="below" matTooltipClass="gw-mat-option-tooltip"
+                                        [matTooltipDisabled]="well?.WellName?.length > 30 ? 'false': 'true' ">
+                                        {{well.WellName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-1 col-sm-12 col-md-4">
+                        <div class="w-130">
+                            <span class="body-label-value">Test Type</span>
+                        </div>
+                        <div class="col">
+                            <mat-form-field class="gw-tool-formfield mat-select-small mat-select-width-75 " appearance="fill">
+                                <mat-select class="gw-form-label form-baseline" panelClass="gw-tool-select" (selectionChange)="onTestSelChange($event)"
+                                    id="DiagnosticsTestType" formControlName="DiagnosticsTestType" [(ngModel)]="testType" 
+                                    (input)="validateForm($event)" (blur)="validateForm($event)">
+                                    <mat-option *ngFor="let testType of diagnosticsTestTypes" [value]="testType.TestType" >
+                                        {{testType.TestName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-1 col-sm-12 col-md-4 p-t-10 p-b-10 justify-content-mobile">
+                        <button type="submit" mat-button (click)="startStopMultiNodeTest()" [disabled]="!isFormValid || testInitiated || testInProgress || converttoBoolean(isOperationInProgress) || converttoBoolean(isSIUDisconnected)"
+                        class="mat-button-primary-sm mr-0 width-100">START</button>
+                    </div>
+            </div>
+            <div class="w-100">
+                <mat-form-field class="w-100"> 
+                    <textarea #textarea matInput readonly [scrollTop]="textarea.scrollHeight" formControlName="message" [value]='logMessages'></textarea>
+                  </mat-form-field>
+            </div>
+            <div class="btn-clear-log">
+                <button mat-button (click)="clearLogMessages()" [disabled]="testInitiated || testInProgress"
+                        class="mat-button-primary-sm mr-0">Clear Messages</button>
+            </div>
+        </form>
+    </div>   
+
+</section>

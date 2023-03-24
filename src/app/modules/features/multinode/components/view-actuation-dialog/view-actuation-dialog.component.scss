@@ -1,0 +1,142 @@
+@import '../../../inforce/components/inforce-view-shift/inforce-view-shift.component.scss';
+
+::ng-deep .gw-view-actuation-dialog {
+    @media (max-width: 768px) {
+        height: calc(100vh - 50px) !important;
+    }
+}
+
+.gw-view-actuation-header {
+    background: $gw-secondary-color-200;
+    height: 62px;
+    align-items: center;
+
+    .gw-view-actuation-headerg-title {
+        color: $gw-tertiary-color-1000;
+    }
+
+    .gw-actuate-progress-text {
+        font-size: 12px;
+    }
+
+    .gw-multinode-actuate-progress {
+        width: 170px;
+        height: 7px;
+
+        @media (max-width: 399px) {
+            width: 140px;
+        }
+
+        @media (min-width: 400px) and (max-width: 768px) {
+            width: 130px;
+        }
+    }
+}
+
+.gw-view-actuation-card-header {
+    min-height: 40px;
+    width: 244.5px;
+    margin: -0.725px -1px !important;
+    border-radius: 4px 4px 0 0;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        margin: -0.25px 0px !important;
+    }
+}
+
+.gw-view-actuation-card {
+    width: auto;
+
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+}
+
+.gw-view-actuation-card-header>.mat-card-header-text {
+    width: 100%;
+    margin: 0 16px !important;
+}
+
+.gw-view-actuation-card-title {
+    display: flex;
+    align-items: center;
+}
+
+.gw-view-actuation-card-header-xx {
+    background-color: $gw-tertiary-color-600;
+    margin: -20px;
+    margin-bottom: 0px;
+    min-height: 46px;
+}
+
+.gw-view-actuation-table {
+    width: 100%;
+    border-spacing: 0px;
+    border-collapse: collapse;
+
+}
+
+.gw-view-actuation-thRow {
+    background-color: $gw-secondary-color-300 !important;
+    color: $gw-tertiary-color-1000;
+    font-size: 12px !important;
+    height: 32px;
+}
+
+.gw-view-actuation-th-param,
+.gw-view-actuation-td-param {
+    text-align: left;
+    padding-left: 10px;
+    font-size: 12px !important;
+}
+
+.gw-view-actuation-th-value,
+.gw-view-actuation-td-value {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 12px !important;
+}
+
+.gw-view-actuation-tr {
+    height: 32px;
+}
+
+.gw-view-actuation-header-color {
+    color: $gw-text-white;
+    font-size: 14px;
+
+    @media (max-width: 768px),
+    (max-height: 768px) {
+        font-size: 14px
+    }
+}
+
+
+.gw-view-actuation-scroll-container {
+    @media (max-width: 768px) {
+        height: calc(100vh - 190px);
+        overflow: auto;
+    }
+
+    .gw-inforce-param-container {
+        @media (max-width: 768px) {
+            margin-top: 1rem !important;
+            margin-bottom: 1rem !important;
+            margin-left: 12px;
+            margin-right: 12px;
+        }
+    }
+}
+
+.gw-view-actuation-chart-card {
+    height: 443px;
+}
+
+:host ::ng-deep .gw-view-actuation-chart-container .gw-inforce-shift-chart-view {
+    .igx-data-chart {
+        height: 335px !important;
+    }
+}

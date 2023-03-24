@@ -1,0 +1,175 @@
+<section class="gw-end-of-actuation-dialog-container">
+    <div class="mat-subtitle-2 mb-3">
+        {{currentWell?.WellName}}
+    </div>
+    <div class="bh-table default mat-elevation-z8 gw-end-of-actuation-container" *ngIf="!isMobileView">
+        <table mat-table [dataSource]="endOfActuationData.data" class="gw-mat-table">
+            <!-- Zone Name -->
+            <ng-container matColumnDef="zoneName">
+                <th mat-header-cell *matHeaderCellDef> eFCV </th>
+                <td mat-cell *matCellDef="let zone">
+                    <mat-label matTooltip="{{zone.zoneName}}" matTooltipPosition="below"
+                        matTooltipClass="gw-label-mat-tooltip" [matTooltipDisabled]="!isEllipsisActive(zoneName)">
+                        <span #zoneName class="label-two-lines-ellipsis">{{zone.zoneName}}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+
+            <!-- Previous Position -->
+            <ng-container matColumnDef="previousPosition">
+                <th mat-header-cell *matHeaderCellDef> Previous Position </th>
+                <td mat-cell *matCellDef="let zone">
+                    <mat-label matTooltip="{{zone.previousPosition}}" matTooltipPosition="below"
+                        matTooltipClass="gw-label-mat-tooltip"
+                        [matTooltipDisabled]="!isEllipsisActive(previousPosition)">
+                        <span #previousPosition class="label-two-lines-ellipsis">{{zone.previousPosition}}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+
+            <!-- Expected Position -->
+            <ng-container matColumnDef="expectedPosition">
+                <th mat-header-cell *matHeaderCellDef> Expected Position </th>
+                <td mat-cell *matCellDef="let zone">
+                    <mat-label matTooltip="{{zone.expectedPosition}}" matTooltipPosition="below"
+                        matTooltipClass="gw-label-mat-tooltip"
+                        [matTooltipDisabled]="!isEllipsisActive(expectedPosition)">
+                        <span #expectedPosition class="label-two-lines-ellipsis">{{zone.expectedPosition}}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+            <!-- Currrent Position -->
+            <ng-container matColumnDef="currentPosition">
+                <th mat-header-cell *matHeaderCellDef> Current Position </th>
+                <td mat-cell *matCellDef="let zone">
+                    <mat-label matTooltip="{{ zone.currentPosition }}" matTooltipPosition="below"
+                        matTooltipClass="gw-label-mat-tooltip"
+                        [matTooltipDisabled]="!isEllipsisActive(currentPosition)">
+                        <span #currentPosition class="label-two-lines-ellipsis">{{ zone.currentPosition }}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+
+            <!-- Direction -->
+            <ng-container matColumnDef="direction">
+                <th mat-header-cell *matHeaderCellDef> Direction </th>
+                <td mat-cell *matCellDef="let zone">
+                    <mat-label matTooltip="{{ zone.direction }}" matTooltipPosition="below"
+                        matTooltipClass="gw-label-mat-tooltip" [matTooltipDisabled]="!isEllipsisActive(direction)">
+                        <span #direction class="label-two-lines-ellipsis">{{ zone.direction }}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+
+            <!-- Expected Rotation Count -->
+            <ng-container matColumnDef="expectedRotationCount">
+                <th mat-header-cell *matHeaderCellDef> Expected Rotation Count </th>
+                <td mat-cell *matCellDef="let zone">
+                    <mat-label matTooltip="{{ zone.expectedRotationCount }}" matTooltipPosition="below"
+                        matTooltipClass="gw-label-mat-tooltip"
+                        [matTooltipDisabled]="!isEllipsisActive(expectedRotationCount)">
+                        <span #expectedRotationCount class="label-two-lines-ellipsis">{{ zone.expectedRotationCount?
+                            zone.expectedRotationCount:"N/A"}}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+            <!-- Rotation Count -->
+            <ng-container matColumnDef="rotationCount">
+                <th mat-header-cell *matHeaderCellDef> Rotation Count </th>
+                <td mat-cell *matCellDef="let zone">
+                    <mat-label matTooltip="{{ zone.rotationCount }}" matTooltipPosition="below"
+                        matTooltipClass="gw-label-mat-tooltip" [matTooltipDisabled]="!isEllipsisActive(rotationCount)">
+                        <span #rotationCount class="label-two-lines-ellipsis">{{ zone.rotationCount?
+                            zone.rotationCount:"N/A"}}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+            <!-- Time Taken -->
+            <ng-container matColumnDef="timeTaken">
+                <th mat-header-cell *matHeaderCellDef> Time Taken (s) </th>
+                <td mat-cell *matCellDef="let zone">
+                    <mat-label matTooltip="{{ zone.timeTaken }}" matTooltipPosition="below"
+                        matTooltipClass="gw-label-mat-tooltip" [matTooltipDisabled]="!isEllipsisActive(timeTaken)">
+                        <span #timeTaken class="label-two-lines-ellipsis">{{ zone.timeTaken }}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+            <!-- Status -->
+            <ng-container matColumnDef="shiftStatus">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let zone"
+                    [ngClass]="{'gw-actuation-failed': zone.shiftStatus == 'Failed' || zone.shiftStatus == 'Stopped'}">
+                    <mat-label matTooltip="{{zone.shiftStatus}}" matTooltipPosition="below"
+                        matTooltipClass="gw-label-mat-tooltip" [matTooltipDisabled]="!isEllipsisActive(shiftStatus)">
+                        <span #shiftStatus class="label-two-lines-ellipsis">
+                            <mat-icon *ngIf="zone.shiftStatus=='Successful'" class="gw-status-icon">
+                                check_circle
+                            </mat-icon>
+                            <mat-icon *ngIf="zone.shiftStatus=='Failed' || zone.shiftStatus=='Stopped'"
+                                class="gw-status-icon gw-error-icon">
+                                cancel
+                            </mat-icon>{{isMobileView? "":zone.shiftStatus}}
+                        </span>
+                    </mat-label>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <div *ngIf="isMobileView" class="gw-mobile-actuation-wrapper">
+        <mat-card *ngFor="let zone of endOfActuationData.data">
+            <mat-card-content>
+                <div class="gw-mobile-actuation-item">
+                    <label class="mat-caption">eFCV</label>
+                    <span class="mat-caption">{{zone.zoneName}}</span>
+                </div>
+                <div class="gw-mobile-actuation-item">
+                    <label class="mat-caption">Previous Position</label>
+                    <span class="mat-caption">{{zone.previousPosition}}</span>
+                </div>
+                <div class="gw-mobile-actuation-item" *ngIf="!zone.isTimeBasedActuation">
+                    <label class="mat-caption">Expected Position</label>
+                    <span class="mat-caption">{{zone.expectedPosition}}</span>
+                </div>
+                <div class="gw-mobile-actuation-item" *ngIf="!zone.isTimeBasedActuation">
+                    <label class="mat-caption">Current Position</label>
+                    <span class="mat-caption">{{zone.currentPosition}}</span>
+                </div>
+                <div class="gw-mobile-actuation-item" *ngIf="zone.isTimeBasedActuation">
+                    <label class="mat-caption">Direction</label>
+                    <span class="mat-caption">{{zone.direction}}</span>
+                </div>
+                <div class="gw-mobile-actuation-item" *ngIf="!zone.isTimeBasedActuation">
+                    <label class="mat-caption">Expected Rotation Count</label>
+                    <span class="mat-caption">{{zone.expectedRotationCount ? zone.expectedRotationCount:"N/A"}}</span>
+                </div>
+                <div class="gw-mobile-actuation-item" *ngIf="!zone.isTimeBasedActuation">
+                    <label class="mat-caption">Rotation Count</label>
+                    <span class="mat-caption">{{zone.rotationCount ? zone.rotationCount:"N/A"}}</span>
+                </div>
+                <div class="gw-mobile-actuation-item" *ngIf="zone.isTimeBasedActuation">
+                    <label class="mat-caption">Time Taken (s)</label>
+                    <span class="mat-caption">{{zone.timeTaken}}</span>
+                </div>
+                <div class="gw-mobile-actuation-item">
+                    <label class="mat-caption">Status</label>
+                    <span class="mat-caption">
+                        <mat-icon *ngIf="zone.shiftStatus=='Successful'" class="gw-status-icon">
+                            check_circle
+                        </mat-icon>
+                        <mat-icon *ngIf="zone.shiftStatus=='Failed' || zone.shiftStatus=='Stopped'"
+                            class="gw-status-icon gw-error-icon">
+                            cancel
+                        </mat-icon>{{zone.shiftStatus}}
+                    </span>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</section>
+<mat-divider></mat-divider>
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="onClose()">OK</button>
+</div>

@@ -1,0 +1,56 @@
+<mat-card class="m-2 gw-config-container" cdkTrapFocus>
+
+    <mat-card-content id="gw-mat-card-content">
+
+        <mat-tab-group animationDuration="0ms" class="gw-tab-group" [(selectedIndex)]="selectedTabIndex"
+            (selectedTabChange)="selectedTab($event)" (click)="tabClick()">
+
+            <mat-tab label="{{sieName}}">
+                <app-multinode-sie *ngIf="sie" [sie]="sie" [sies]="sieEntity" (sietateEmmiter)="sieUpdate($event)" [selectedTab]="selectedTabIndex"
+                    (isFormValidEvent)="isFormValidEvent($event)" (isFormInValidEvent)="FormInValidEvent($event)"
+                    (hasFormChangedEvent)="onSIEFormChangeEvent($event)"></app-multinode-sie>
+            </mat-tab>
+            <!-- Wells -->
+            <mat-tab *ngFor="let well of wells, let i = index">
+                <ng-template mat-tab-label>
+                    <label class="gw-mat-tab-label" matTooltip="{{well?.currentWellName}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-tooltip">
+                        {{well?.currentWellName | gwTruncate:25}}
+                    </label>
+                </ng-template>
+                <ng-template matTabContent>
+                    <app-multinode-well [well]="well" [steps]="steps" [selectedStepperIndex]="stepperIndex" [wellEnities]="wellsInStore" [paneleFCVPositions]="eFCVPositionSettings"
+                        (isFormValidEvent)="isFormValidEvent($event)" (wellStateEmmiter)="wellStateChange($event)" (stepperChangeEmitter)="onStepperChange($event)">
+                    </app-multinode-well>
+                </ng-template>
+            </mat-tab>
+            <!--Add New Well-->
+            <mat-tab label="{{tabLabelAddWell}}" [disabled]="hasSieErrors || disableAddWell" *ngIf="wells?.length <= 2">
+                <app-multinode-well *ngIf="newWell" [steps]="steps" [selectedStepperIndex]="stepperIndex" [well]="newWell" [wellEnities]="wellsInStore" [paneleFCVPositions]="eFCVPositionSettings"
+                    (isFormValidEvent)="isFormValidEvent($event)" (wellStateEmmiter)="wellStateChange($event)" (stepperChangeEmitter)="onStepperChange($event)">
+                </app-multinode-well>
+            </mat-tab>
+
+        </mat-tab-group>
+    </mat-card-content>
+
+    <mat-card-actions>
+        <mat-divider></mat-divider>
+        <div class="d-flex justify-content-between gw-mt-12 gw-card-actions">
+            <div>
+                <button *ngIf="bShowDeleteButton" mat-button class="mat-button-tertiary-sm__icon gw-tertiary-delete-btn"
+                    [disabled]="bDisableDelete" (click)="onDeleteBtnClicked()">
+                    <mat-icon class="mat-icon-left mat-icon--sml">delete</mat-icon>{{deleteBtnTxt}}
+                </button>
+            </div>
+            <div class="d-flex">
+                <button mat-button class="mat-button-tertiary-sm" *ngIf="bShowBackButton || selectedTabIndex != 0"
+                    (click)="onBackBtnClick()">Back</button>
+                <button [disabled]="!isFormValid" type="submit"
+                    (click)="newWell != null ? onCreateWell() : onNextOrDoneClick()" mat-button
+                    class="mat-button-primary-sm mr-0">{{btnTxt}}</button>
+            </div>
+        </div>
+    </mat-card-actions>
+
+</mat-card>

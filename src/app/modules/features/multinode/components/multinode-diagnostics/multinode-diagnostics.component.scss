@@ -1,0 +1,49 @@
+@import 'base.scss';
+@import 'components.scss';
+
+.container-fluid{
+    padding-left: 15px;
+}
+
+.body-label-value{
+    font-weight: 600;
+    color: #05322b;
+}
+
+.d-flex{
+    align-items: baseline;
+}
+textarea{
+    width: 100%;
+    resize: none !important;
+    height: calc(100vh - 26rem);
+}
+
+@media only screen and (min-width: 1200px) {
+    .col-md-4{
+        max-width: 28% !important;
+    }
+    .mat-select-width-75{
+        width: 100%;
+    }
+}
+.width-100{
+    width: 100px;
+}
+
+@media only screen and (max-width: 600px) {
+    .w-130{
+        width: 50% !important;
+    }
+    .justify-content-mobile{
+        justify-content: center;
+    }
+    textarea{
+        height: calc(100vh - 34rem);
+    }
+}
+
+.btn-clear-log {
+    margin-top: -8px;
+    float: right;
+}

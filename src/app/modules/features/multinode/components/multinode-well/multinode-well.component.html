@@ -1,0 +1,211 @@
+<!-- Well-->
+<section class="gw-multinode-well-container">
+    <form [formGroup]="wellForm" autocomplete="off">
+        <!--  <div class="col-md-9 col-lg-6 d-flex flex-wrap pt-1 p-b-10">
+            <div class="col-4 px-0 pt-2">
+                <label class="gw-form-label pt-1">Well Name</label>
+            </div>
+            <div class="col-4 px-0">
+                <mat-form-field class="mat-input-small pl-0 gw-inforce-well-name-input"
+                    appearance="fill">
+                    <input name="WellName" formControlName="WellName" matInput class="gw-form-label form-baseline"
+                        (input)="validateFormControls()" (blur)="validateFormControls()">
+                    <mat-hint *ngIf="formCtrlErrorMessage?.WellName" class="mat-error">
+                        {{formCtrlErrorMessage?.WellName}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div> -->
+        <div class="col-sm-12 col-md-12 px-0 gw-unit-system-row">
+            <div class="row ml-0 mr-0  p-b-10">
+                <div class="col-md-3 col-xl-2 gw-unit-system-form-label px-2 mt-1">
+                    <mat-label class="gw-form-label">Well Name</mat-label>
+                </div>
+                <div class="col-3 px-0">
+                    <mat-form-field class="mat-input-small px-0 pt-0 w-100" appearance="fill">
+                        <input matInput class="mat-body-2 form-baseline" formControlName="WellName" name="WellName"
+                            [(ngModel)]="well.WellName" (input)="validateFormControls()"
+                            (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.WellName" align="start" class="mat-error">
+                            {{formCtrlErrorMessage?.WellName}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+                <div class="col px-0 d-flex justify-content-end">
+                    <button mat-button class="mat-button-tertiary-sm mat-button-tertiary-sm__icon"
+                        (click)="showeFCVPositionDialog()">
+                        <mat-icon class="mat-icon-left mat-icon gw-multinode-edit-icon mt-1">edit</mat-icon> eFCV
+                        POSITIONS
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="gw-well-divider"></div>
+    <div class="mt-4 m-l-6 table-type-toggle-group text-center">
+        <!-- <mat-button-toggle-group class="gw-button-toggle-group" value="1" aria-label="eFCV/TEC Power Supply">
+            <mat-button-toggle class="button-toggle button-toggle-outer-left" value="1" (change)="onToggle($event)">eFCV
+            </mat-button-toggle>
+            <mat-button-toggle class="button-toggle button-toggle-outer-right" value="2" (change)="onToggle($event)">TEC
+                Power Supply</mat-button-toggle>
+        </mat-button-toggle-group> -->
+
+        <section class="gw-horizontal-stepper">
+            <mat-horizontal-stepper labelPosition="bottom" class="stepper-el" [linear]="true" #wellStepper 
+            (selectionChange)="stepperSelectionChange($event)">
+                <ng-template matStepperIcon="edit" let-index="index">
+                    <mat-icon>none</mat-icon>{{index+1}}
+                </ng-template>
+                <div *ngFor="let step of steps; let stepIdx = index">
+                    <mat-step [completed]="step.completed" [state]="step.state" 
+                        [stepControl]="( stepIdx === multinodeWellStepper.eFCV ? step1 : step2 )">
+                    </mat-step>
+                </div>
+            </mat-horizontal-stepper>
+        </section>
+    </div>
+  <!--   <ng-container *ngIf="!isTecPoweSupplySelected"> -->
+    <div *ngIf="wellStepper?.selectedIndex === multinodeWellStepper.eFCV" #efcvContainer>
+        <div class="mat-subtitle-1">eFCV</div>
+        <div class="d-flex justify-content-between p-b-10">
+            <div class="pt-2">
+                <span class="gw-form-label">Number of eFCVs</span>
+                <span class="gw-form-label ml-3">{{efcvs?.length}}</span>
+            </div>
+            <div>
+                <button mat-button class="mat-button-tertiary-sm mat-button-tertiary-sm__icon"
+                    (click)="onAddeFCVBtnClick()">
+                    <mat-icon class="mat-icon-left mat-icon">add</mat-icon>Add eFCV
+                </button>
+            </div>
+        </div>
+        <div class="gw-inforce-zone-grid">
+            <div #tooltipRef="tooltip" igxTooltip class="gw-grid-tooltip">
+                <ng-container *ngIf="tooltipRef.context">
+                    {{tooltipRef.context.value}}
+                </ng-container>
+            </div>
+            <igx-grid #eFCVGrid igxPreventDocumentScroll [(data)]="efcvs" [pinning]="pinningConfig"
+                [emptyGridMessage]="'No eFCVs are configured.'" [primaryKey]="'ZoneId'" width="100%" resizable="true">
+
+                <!--eFCV Name-->
+                <igx-column [headerClasses]="'mat-header-cell'" field="ZoneName" header="eFCV Name"
+                    [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell">
+                        <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                            class="gw-grid-row-tooltip">
+                            {{cell.value}}
+                        </span>
+                    </ng-template>
+                </igx-column>
+                <!-- eFCV Address -->
+                <igx-column [headerClasses]="'mat-header-cell'" field="Address" header="eFCV Address"
+                    [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell">
+                        <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                            class="gw-grid-row-tooltip">
+                            {{cell.value}}
+                        </span>
+                    </ng-template>
+                </igx-column>
+                <!-- Serial Number -->
+                <igx-column [headerClasses]="'mat-header-cell'" field="SerialNumber" header="Serial Number"
+                    [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell">
+                        <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                            class="gw-grid-row-tooltip">
+                            {{cell.value}}
+                        </span>
+                    </ng-template>
+                </igx-column>
+                <!-- Unique Address -->
+                <igx-column [headerClasses]="'mat-header-cell'" field="UId" header="Unique Address"
+                    [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell">
+                        <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                            class="gw-grid-row-tooltip">
+                            {{cell.value}}
+                        </span>
+                    </ng-template>
+                </igx-column>
+                <!-- Measured Depth -->
+                <igx-column [headerClasses]="'mat-header-cell'" field="MeasuredDepth" header="Measured Depth (ft)"
+                    [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell">
+                        <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                            class="gw-grid-row-tooltip">
+                            {{cell.value}}
+                        </span>
+                    </ng-template>
+                </igx-column>
+                <!-- Motor Settings -->
+                <igx-column [headerClasses]="'mat-header-cell'" field="MotorSettings" header="Motor Settings">
+                    <ng-template igxCell let-cell="cell">
+                        <span class="gw-info-icon gw-multinode-info-icon pl-2 ml-4" [satPopoverAnchor]="motorPopOver"
+                            (mouseover)="motorPopOver?.open()" (mouseleave)="motorPopOver?.close()"
+                            (click)="motorPopOver?.open()" (blur)="motorPopOver?.close()">
+                            <mat-icon>info</mat-icon>
+                        </span>
+                        <sat-popover #motorPopOver horizontalAlign="before" hasBackdrop="false" [autoFocus]="true"
+                            [restoreFocus]="true">
+                            <div class="gw-motor-tooltip-wrapper">
+                                <div class="mat-subtitle-1">Motor Settings</div>
+                                <div class="gw-well-divider mt-2"></div>
+                                <div class="row m-0 pt-2">
+                                    <div class="col-9 gw-form-label pl-0">Max Voltage (V)</div>
+                                    <div class="col-3 gw-form-label gw-motor-form-value pr-0">{{cell.value.MaxVoltage}}
+                                    </div>
+                                </div>
+                                <div class="row m-0 pt-2">
+                                    <div class="col-9 gw-form-label pl-0">Max Current (mA)</div>
+                                    <div class="col-3 gw-form-label gw-motor-form-value pr-0">{{cell.value.MaxCurrent}}
+                                    </div>
+                                </div>
+                                <div class="row m-0 pt-2">
+                                    <div class="col-9 gw-form-label pl-0">Target Voltage (V)</div>
+                                    <div class="col-3 gw-form-label gw-motor-form-value pr-0">
+                                        {{cell.value.TargetVoltage}}</div>
+                                </div>
+                                <div class="row m-0 pt-2">
+                                    <div class="col-9 gw-form-label px-0">Over Current Threshold (mA)</div>
+                                    <div class="col-3 gw-form-label gw-motor-form-value pr-0">
+                                        {{cell.value.OverCurrentThreshold}}</div>
+                                </div>
+                                <div class="row m-0 pt-2">
+                                    <div class="col-9 gw-form-label pl-0">Over Current Override</div>
+                                    <div class="col-3 gw-form-label gw-motor-form-value pr-0">
+                                        {{cell.value.OverCurrentOverrideFlag ? "Yes" : "No"}}</div>
+                                </div>
+                                <div class="row m-0 pt-2">
+                                    <div class="col-9 gw-form-label pl-0">Duty Cycle (%)</div>
+                                    <div class="col-3 gw-form-label gw-motor-form-value pr-0">{{cell.value.DutyCycle}}
+                                    </div>
+                                </div>
+                            </div>
+                        </sat-popover>
+                    </ng-template>
+                </igx-column>
+
+                <igx-column [headerGroupClasses]="'gw-grid-action-header'" width="100px" [filterable]="false" [pinned]="true">
+                    <ng-template igxCell let-cell="cell">
+                        <a href="javascript:void(0);" class="gw-icon-btn p-r-10" (click)="onEditZone(cell.row.rowID)">
+                            <mat-icon class="mat-icon--sml">edit</mat-icon>
+                        </a>
+                        <a href="javascript:void(0);" class="gw-icon-btn"
+                            (click)="onDeleteZone(cell.row.index, cell.row.rowID)">
+                            <mat-icon class="mat-icon--sml">delete</mat-icon>
+                        </a>
+                    </ng-template>
+                </igx-column>
+
+            </igx-grid>
+        </div>
+    </div>
+    <ng-container *ngIf="wellStepper?.selectedIndex === multinodeWellStepper.TEC_POWER_SUPPLY">
+        <div class="mat-subtitle-1">TEC Power Supply</div>
+        <app-tec-power-supply [tecPowerSupplyData]="tecPowerSupplyData" [wellName]="well.WellName"
+            (isTecPowerSupplyFormValidEvent)="isTecPowerSupplyFormValidEvent($event)"
+            (tecPowerSupplyFormInValidEvent)="tecPowerSupplyFormInValidEvent($event)"
+            (onFormChangeEvent)="onTecPowerSupplyFormChangeEvent($event)" #powerSupplyComponent></app-tec-power-supply>
+    </ng-container>
+</section>

@@ -1,0 +1,30 @@
+@import 'base.scss';
+
+.mat-tab-group.mat-tab-group {
+  height: calc(100vh - 17.5rem);
+}
+
+
+.mat-card-content {
+  margin-bottom: 0;
+}
+
+.mat-card.mat-focus-indicator {
+  padding: 0px !important;
+}
+
+:host ::ng-deep .gw-advanced-container .gw-vent-output-well-tab-group>.mat-tab-header {
+  margin-bottom: 0.5rem !important;
+}
+
+.mat-card .mat-card-actions {
+  padding-bottom: 10px;
+}
+
+.tabheight {
+  height: calc(100vh - 13.38rem) !important;
+}
+
+::ng-deep .gw-mn-power-down-popup .mat-button-primary-sm {
+  background-color: $gw-error-color-500 !important;
+}

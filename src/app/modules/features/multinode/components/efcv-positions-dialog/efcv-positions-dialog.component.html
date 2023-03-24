@@ -1,0 +1,11 @@
+<section class="pt-4 pl-4">
+    <app-efcv-positions-settings [eFCVPositions]="eFCVPositions" (isFormValidEvent)="isFormValidEvent($event)"
+        (eFCVPositionStateEmmiter)="eFCVPositionStateChange($event)" (isFormDirtyEvent)="isFormDirtyEvent($event)"
+        (efcvPositionFormInValidEvent)="efcvPositionFormInValidEvent($event)"></app-efcv-positions-settings>
+</section>
+
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-3" (click)="OnCancel()">Cancel</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnSubmit()"
+        [disabled]="!isFormValid || !isFormDirty">Apply</button>
+</div>

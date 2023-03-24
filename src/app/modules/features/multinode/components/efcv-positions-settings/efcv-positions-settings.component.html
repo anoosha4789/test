@@ -1,0 +1,129 @@
+<form [formGroup]="efcvPositionsForm" *ngIf="efcvPositionsForm" autocomplete="off">
+    <div class="container-fluid">
+
+        <div class="row p-b-10">
+            <div class="col-2 px-3 gw-efcv-position-label">
+                <span class="mat-subtitle-2">Position</span>
+            </div>
+            <div class="col pl-4 gw-efcv-position-input">
+                <span class="mat-subtitle-2">Description</span>
+            </div>
+        </div>
+
+        <ng-container *ngFor="let positions of eFCVPositions?.PositionStagesData, let i = index">
+            <ng-container *ngIf="positions.PositionStage!==NOTSET">
+                <div class="row p-b-10">
+                    <div class="col-2 px-3 pt-1 mt-2 gw-efcv-position-label gw-efcv-dialog-label">
+                        <span class="gw-form-label">{{positions.PositionStageDesc}}</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-input-small gw-efcv-position-input" appearance="fill">
+                            <input id={{positions.PositionStageDesc}} matInput class="mat-body-2 form-baseline"
+                                (blur)="Validate($event)" (input)="onInputChange($event)"
+                                formControlName={{positions.PositionStageDesc}} name={{positions.PositionStageDesc}}>
+                            <mat-hint *ngIf="getError(positions.PositionStageDesc)" align="start" class="mat-error">
+                                {{getError(positions.PositionStageDesc)}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+
+        <!--        <div class="row p-b-10">
+            <div class="col-2 px-3 pt-2 mt-1 gw-efcv-position-label">
+                <span class="gw-form-label">OPEN</span>
+            </div>
+            <div class="col">
+                <mat-form-field class="mat-input-small gw-efcv-position-input" appearance="fill">
+                    <input id="OPEN" matInput class="mat-body-2 form-baseline" (blur)="Validate($event)"
+                        (input)="Validate($event)" formControlName="OPEN" name="OPEN"
+                        [(ngModel)]="eFCVPositionSettings.OPEN">
+                    <mat-hint *ngIf="getError('OPEN')" align="start" class="mat-error">
+                        {{getError('OPEN')}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row p-b-10">
+            <div class="col-2 px-3 pt-2 mt-1 gw-efcv-position-label">
+                <span class="gw-form-label">STAGE_1</span>
+            </div>
+            <div class="col">
+                <mat-form-field class="mat-input-small gw-efcv-position-input" appearance="fill">
+                    <input id="STAGE_1" matInput class="mat-body-2 form-baseline" (blur)="Validate($event)"
+                        (input)="Validate($event)" formControlName="STAGE_1" name="STAGE_1"
+                        [(ngModel)]="eFCVPositionSettings.STAGE_1">
+                    <mat-hint *ngIf="getError('STAGE_1')" align="start" class="mat-error">
+                        {{getError('STAGE_1')}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row p-b-10">
+            <div class="col-2 px-3 pt-2 mt-1 gw-efcv-position-label">
+                <span class="gw-form-label">STAGE_2</span>
+            </div>
+            <div class="col">
+                <mat-form-field class="mat-input-small gw-efcv-position-input" appearance="fill">
+                    <input id="STAGE_2" matInput class="mat-body-2 form-baseline" (blur)="Validate($event)"
+                        (input)="Validate($event)" formControlName="STAGE_2" name="STAGE_2"
+                        [(ngModel)]="eFCVPositionSettings.STAGE_2">
+                    <mat-hint *ngIf="getError('STAGE_2')" align="start" class="mat-error">
+                        {{getError('STAGE_2')}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row p-b-10">
+            <div class="col-2 px-3 pt-2 mt-1 gw-efcv-position-label">
+                <span class="gw-form-label">STAGE_3</span>
+            </div>
+            <div class="col">
+                <mat-form-field class="mat-input-small gw-efcv-position-input" appearance="fill">
+                    <input id="STAGE_3" matInput class="mat-body-2 form-baseline" (blur)="Validate($event)"
+                        (input)="Validate($event)" formControlName="STAGE_3" name="STAGE_3"
+                        [(ngModel)]="eFCVPositionSettings.STAGE_3">
+                    <mat-hint *ngIf="getError('STAGE_3')" align="start" class="mat-error">
+                        {{getError('STAGE_3')}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row p-b-10">
+            <div class="col-2 px-3 pt-2 mt-1 gw-efcv-position-label">
+                <span class="gw-form-label">STAGE_4</span>
+            </div>
+            <div class="col">
+                <mat-form-field class="mat-input-small gw-efcv-position-input" appearance="fill">
+                    <input id="STAGE_4" matInput class="mat-body-2 form-baseline" (blur)="Validate($event)"
+                        (input)="Validate($event)" formControlName="STAGE_4" name="STAGE_4"
+                        [(ngModel)]="eFCVPositionSettings.STAGE_4">
+                    <mat-hint *ngIf="getError('STAGE_4')" align="start" class="mat-error">
+                        {{getError('STAGE_4')}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row p-b-10">
+            <div class="col-2 px-3 pt-2 mt-1 gw-efcv-position-label">
+                <span class="gw-form-label">CLOSED</span>
+            </div>
+            <div class="col">
+                <mat-form-field class="mat-input-small gw-efcv-position-input" appearance="fill">
+                    <input id="CLOSED" matInput class="mat-body-2 form-baseline" (blur)="Validate($event)"
+                        (input)="Validate($event)" formControlName="CLOSED" name="CLOSED"
+                        [(ngModel)]="eFCVPositionSettings.CLOSED">
+                    <mat-hint *ngIf="getError('CLOSED')" align="start" class="mat-error">
+                        {{getError('CLOSED')}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div> -->
+    </div>
+</form>

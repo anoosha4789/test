@@ -1,0 +1,74 @@
+@import '../../../inforce-configuration/components/inforce-well/inforce-well.component.scss';
+@import 'base.scss';
+@import 'components.scss';
+
+
+.gw-multinode-well-container {
+    .gw-inforce-zone-grid {
+        height: calc(100vh - 470px);
+    }
+
+    .button-toggle {
+        width: 160px;
+        border: 1px solid;
+    }
+
+    .gw-multinode-info-icon {
+        display: flex;
+        width: 100%;
+    }
+
+    .gw-button-toggle-group {
+        .mat-button-toggle-checked {
+            border-color: $gw-secondary-color-500;
+            background-color: $gw-secondary-color-900  !important;
+        }
+    }
+}
+
+.gw-well-divider {
+    background: $gw-secondary-color-300 ;
+    height: 1px;
+    width: 100%;
+}
+
+.gw-motor-tooltip-wrapper {
+    width: 289px;
+    padding: 15px;
+    background: $gw-bg-white;
+    box-shadow: 0px 15px 12px rgba(0, 0, 0, 0.1), 0px 19px 38px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.gw-motor-form-value {
+    font-weight: 700;
+}
+
+:host ::ng-deep .gw-multinode-well-container .igx-grid__th--pinned-first,
+:host ::ng-deep .gw-multinode-well-container .igx-grid__td--pinned-first {
+    border-left: none !important;
+}
+
+:host ::ng-deep .gw-multinode-well-container .gw-grid-action-header {
+    min-width: 116px !important;
+}
+
+:host ::ng-deep .gw-multinode-well-container .igx-grid__td--pinned.igx-grid__td--selected {
+    background: inherit;
+}
+
+.gw-multinode-edit-icon {
+    font-size: 18px;
+}
+
+::ng-deep .gw-multinode-well-container .button-toggle-outer-left .mat-button-toggle-button {
+    text-transform: none;
+}
+
+:host ::ng-deep .gw-multinode-well-container .igx-grid__th-title {
+    white-space: normal;
+}
+
+::ng-deep .gw-multinode-well-container .igx-grid__scroll {
+    height: 15px !important;
+}

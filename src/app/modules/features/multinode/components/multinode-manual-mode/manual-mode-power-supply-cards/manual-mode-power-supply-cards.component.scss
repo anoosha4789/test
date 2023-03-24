@@ -1,0 +1,27 @@
+@import "../../multinode-monitoring-card/multinode-monitoring-card.component.scss";
+
+.gw-power-supply-item-wrapper {
+    @media (max-width: 768px) {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
+
+.gw-power-supply-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 15px;
+
+    &:not(:first-child) {
+        margin-top: -18px;
+    }
+
+    .gw-power-supply-input {
+        width: 130px;
+    }
+}
+
+.gw-power-supply-item-wrapper .mat-card.mat-focus-indicator {
+    border: 1px solid $gw-secondary-color-600;
+}

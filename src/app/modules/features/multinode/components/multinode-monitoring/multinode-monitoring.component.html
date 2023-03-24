@@ -1,0 +1,63 @@
+<section class="gw-breadcrumb">
+    <p class="gw-text-link-breadcrumb">Monitoring > {{selectedWell}}</p>
+</section>
+
+<mat-divider class="gw-monitoring-divider"></mat-divider>
+
+<section class="gw-multinode-monitoring-container gw-incharge-monitoring-container p-l-10 p-r-10 px-md-3 p-t-10">
+    <mat-card class="gw-monitoring-mat-card-container" cdkTrapFocus>
+        <mat-card-content class="gw-mat-tab-group gw-monitoring-mat-card-content">
+            <mat-tab-group #monitoringTabGroup class="gw-monitoring-tab-group" animationDuration="0ms"
+                [dynamicHeight]='false' (animationDone)="onTabAnimationDone()" [(selectedIndex)]="selectedTabIndex"
+                (selectedTabChange)="onTabChanged($event);">
+                <mat-tab *ngFor="let well of wells, let i = index">
+                    <ng-template mat-tab-label>
+                        <label class="gw-mat-tab-label" matTooltip="{{well.WellName}}" matTooltipPosition="below"
+                            matTooltipClass="gw-mat-tooltip"
+                            [matTooltipDisabled]="well.WellName.length > 20 ? 'false': 'true' ">
+                            {{well.WellName | gwTruncate:20}}
+                        </label>
+                    </ng-template>
+                    <ng-template matTabContent>
+                        <multinode-monitoring-card [wellId]="well.WellId" [wellZones]="well.Zones" [config]="config"
+                            [tabGroupHeight]="monitoringTabGroup?._elementRef?.nativeElement?.offsetHeight"
+                            (multinodeMonitoringZonesEmitter)="onMultinodeMonitoringZoneChange($event)">
+                        </multinode-monitoring-card>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+        <mat-card-actions class="m-0">
+            <mat-divider></mat-divider>
+            <div class="d-flex justify-content-between mx-2 py-2">
+                <button mat-button class="mat-button-tertiary-sm mat-button-tertiary-sm__icon m-0"
+                    (click)="showElectricalParametersDialog()">ELECTRICAL PARAMETERS
+                </button>
+                <!-- Pagination -->
+                <ng-container *ngIf="!isMobileView && multinodeMonitoringZones?.length > config.itemsPerPage">
+                    <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
+                        <div class="d-flex mx-3 gw-multinode-monitoring-pagination">
+                            <div *ngFor="let page of p.pages"
+                                [ngClass]="[ p.getCurrent() === page.value ? 'gw-multinode-pagination-icon-selected' : 'gw-multinode-pagination-icon']"
+                                (click)="p.setCurrent(page.value)">
+                                <div *ngIf="p.getCurrent() !== page.value">
+                                    <span class="gw-multinode-pagination-icon-content">{{ page.label }}</span>
+                                </div>
+                                <div *ngIf="p.getCurrent() === page.value">
+                                    <span class="gw-multinode-pagination-icon-content">{{ page.label }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </pagination-template>
+                </ng-container>
+                <!-- Pagination End -->
+                <button type="submit" (click)="actuateWell($event)" mat-button
+                    class="mat-button-primary-sm mr-0 gw-actuate-button" *ngIf="selectedWell!==actuatingWell"
+                    [disabled]="isSIUDisconnected || isCurrentStatusActuating || isOperationInProgress">ACTUATE eFCV</button>
+                <button type="submit" (click)="viewActuation()" mat-button
+                    class="mat-button-primary-sm mr-0 gw-actuate-button" *ngIf="selectedWell===actuatingWell">VIEW
+                    ACTUATION</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</section>

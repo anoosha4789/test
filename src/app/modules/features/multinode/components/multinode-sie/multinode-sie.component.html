@@ -1,0 +1,123 @@
+<section class="m-2">
+    <div>
+        <form [formGroup]="sieFormGroup" *ngIf="sie" autocomplete="off">
+            <div class="container-fluid">
+                <div class="row p-b-16">
+                    <div class="px-3 gw-general-setting-form-label">
+                        <span class="gw-form-label">{{getInputLabel('Name')}}</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-input-small" appearance="fill">
+                            <input id="Name" matInput class="mat-body-2 form-baseline" (focusout)="validate($event)"
+                                (input)="validate($event)" [matTooltip]="sie?.Name" matTooltipPosition="below"
+                                matTooltipClass="gw-mat-tooltip" (blur)="clearValidtions()" 
+                                [matTooltipDisabled]="sie?.Name.length > 20 ? 'false': 'true' " formControlName="Name"
+                                [(ngModel)]="sie.Name" name="Name">
+                            <mat-hint *ngIf="getError('Name')" align="start" class="mat-error">
+                                {{getError('Name')}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div formGroupName="IpAddressList" class="row p-b-16">
+                    <div class="px-3 gw-general-setting-form-label">
+                        <span class="gw-form-label">{{getInputLabel('IpAddress')}}</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-input-small gw-network-input gw-ip-address-wrapper"
+                            appearance="fill">
+                            <input id="ipPartOne" formControlName="ipPartOne" type="number" matInput
+                                class="mat-body-2 form-baseline" [(value)]="IpAddressList[0]" gw-ip-input
+                                (input)="setIpAddress($event, 0)">
+                            <mat-hint *ngIf="!sieFormGroup.valid && sieFormGroup.get('IpAddressList').touched"
+                                class="mat-error" align="start">
+                                {{ ipAddressErrorMessage}}
+                            </mat-hint>
+                        </mat-form-field>
+                        <span class="pl-1 pr-1">.</span>
+                        <mat-form-field class="mat-input-small gw-network-input" appearance="fill">
+                            <input id="ipPartTwo" formControlName="ipPartTwo" type="number" matInput gw-ip-input
+                                class="mat-body-2 form-baseline" [(value)]="IpAddressList[1]"
+                                (input)="setIpAddress($event, 1)">
+                        </mat-form-field>
+                        <span class="pl-1 pr-1">.</span>
+                        <mat-form-field class="mat-input-small gw-network-input" appearance="fill">
+                            <input id="ipPartThree" formControlName="ipPartThree" type="number" matInput gw-ip-input
+                                class="mat-body-2 form-baseline" [(value)]="IpAddressList[2]"
+                                (input)="setIpAddress($event, 2)">
+                        </mat-form-field>
+                        <span class="pl-1 pr-1">.</span>
+                        <mat-form-field class="mat-input-small gw-network-input" appearance="fill">
+                            <input id="ipPartFour" formControlName="ipPartFour" type="number" matInput gw-ip-input
+                                class="mat-body-2 form-baseline" [(value)]="IpAddressList[3]"
+                                (input)="setIpAddress($event, 3)">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div formGroupName="MacAddressList" class="row p-b-16">
+                    <div class="px-3 gw-general-setting-form-label">
+                        <span class="gw-form-label">{{getInputLabel('MacAddress')}}</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-input-small gw-network-input-mac gw-ip-address-wrapper"
+                            appearance="fill">
+                            <input id="macPartOne" formControlName="macPartOne" type="text" matInput
+                                class="mat-body-2 form-baseline" [(value)]="MacAddressList[0]"
+                                (input)="setMacAddress($event, 0)">
+                            <mat-hint *ngIf="!sieFormGroup.valid && sieFormGroup.get('MacAddressList').touched"
+                                class="mat-error" align="start">
+                                {{ macAddressErrorMessage}}
+                            </mat-hint>
+                        </mat-form-field>
+                        <span class="pl-1 pr-1">.</span>
+                        <mat-form-field class="mat-input-small gw-network-input-mac" appearance="fill">
+                            <input id="macPartTwo" formControlName="macPartTwo" type="text" matInput
+                                class="mat-body-2 form-baseline" [(value)]="MacAddressList[1]"
+                                (input)="setMacAddress($event, 1)">
+                        </mat-form-field>
+                        <span class="pl-1 pr-1">.</span>
+                        <mat-form-field class="mat-input-small gw-network-input-mac" appearance="fill">
+                            <input id="macPartThree" formControlName="macPartThree" type="text" matInput
+                                class="mat-body-2 form-baseline" [(value)]="MacAddressList[2]"
+                                (input)="setMacAddress($event, 2)">
+                        </mat-form-field>
+                        <span class="pl-1 pr-1">.</span>
+                        <mat-form-field class="mat-input-small gw-network-input-mac" appearance="fill">
+                            <input id="macPartFour" formControlName="macPartFour" type="text" matInput 
+                                class="mat-body-2 form-baseline" [(value)]="MacAddressList[3]"
+                                (input)="setMacAddress($event, 3)">
+                        </mat-form-field>
+                        <span class="pl-1 pr-1">.</span>
+                        <mat-form-field class="mat-input-small gw-network-input-mac" appearance="fill">
+                            <input id="macPartFive" formControlName="macPartFive" type="text" matInput
+                                class="mat-body-2 form-baseline" [(value)]="MacAddressList[4]"
+                                (input)="setMacAddress($event, 4)">
+                        </mat-form-field>
+                        <span class="pl-1 pr-1">.</span>
+                        <mat-form-field class="mat-input-small gw-network-input-mac" appearance="fill">
+                            <input id="macPartSix" formControlName="macPartSix" type="text" matInput
+                                class="mat-body-2 form-baseline" [(value)]="MacAddressList[5]"
+                                (input)="setMacAddress($event, 5)">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row p-b-16">
+                    <div class="px-3 gw-general-setting-form-label">
+                        <span class="gw-form-label">{{getInputLabel('PortNumber')}}</span>
+                    </div>
+                    <div class="col">
+                        <mat-form-field class="mat-input-small" appearance="fill">
+                            <input id="PortNumber" type="number" matInput class="mat-body-2 form-baseline"
+                                (focusout)="validate($event)" (input)="validate($event)"
+                                (blur)="clearValidtions()" 
+                                formControlName="PortNumber" [(ngModel)]="sie.PortNumber" name="PortNumber">
+                            <mat-hint *ngIf="getError('PortNumber')" align="start" class="mat-error">
+                                {{getError('PortNumber')}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

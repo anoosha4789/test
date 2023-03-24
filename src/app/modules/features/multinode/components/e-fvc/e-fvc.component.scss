@@ -1,0 +1,11 @@
+.gw-data-source-form-label-left{
+    width: 155px;
+}
+
+.gw-data-source-form-label-right {
+    width: 170px;
+}
+
+:host ::ng-deep .gw-efcv-container .mat-form-field-infix {
+    width: 164px!important;
+}

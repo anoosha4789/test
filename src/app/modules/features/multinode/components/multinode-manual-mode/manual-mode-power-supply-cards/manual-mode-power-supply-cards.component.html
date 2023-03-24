@@ -1,0 +1,63 @@
+<div class="d-flex flex-wrap px-md-0">
+    <div class="col-xl-4 col-lg-6 col-md-12 px-md-2 p-b-16 gw-power-supply-item-wrapper"
+        *ngFor="let powerSupply of manualPowerSupply?.powerSupplies; let i = index">
+        <mat-card class="gw-monitoring-card gw-flex-container-card p-0" cdkTrapFocus>
+            <mat-card-header class="gw-toolbox-card-header gw-monitoring-card-header">
+                <!-- title Desktop-->
+                <mat-card-title class="d-flex flex-wrap justify-content-between mb-0">
+                    <div class="col-6 mat-subtitle-1 p-l-0 py-2 gw-monitoring-card-title">
+                        <span class="gw-zone-header-color" matTooltip="{{powerSupply?.Name}}" matTooltipPosition="above"
+                            matTooltipClass="gw-mat-tooltip"
+                            [matTooltipDisabled]="powerSupply?.Name.length > 18 ? 'false': 'true' ">
+                            {{powerSupply?.Name | gwTruncate:25}}
+                        </span>
+                    </div>
+                </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content class="gw-monitoring-card-content">
+
+                <div class="gw-power-supply-item">
+                    <label>Over Voltage Setting (V)</label>
+                    <mat-form-field class="mat-input-small gw-power-supply-input gw-power-supply-input-wrapper"
+                        appearance="fill">
+                        <input id="OverVoltageSetting" type="number" matInput class="mat-body-2 form-baseline"
+                            [(ngModel)]="powerSupply.OverVoltageSetting" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="gw-power-supply-item">
+                    <label>Voltage Setting (V)</label>
+                    <mat-form-field class="mat-input-small gw-power-supply-input gw-power-supply-input-wrapper"
+                        appearance="fill">
+                        <input id="VoltageSetting" type="number" matInput class="mat-body-2 form-baseline"
+                            [(ngModel)]="powerSupply.VoltageSetting" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="gw-power-supply-item">
+                    <label>Voltage Reading (V)</label>
+                    <mat-form-field class="mat-input-small gw-power-supply-input gw-power-supply-input-wrapper"
+                        appearance="fill">
+                        <input id="VoltageReading" type="number" matInput class="mat-body-2 form-baseline"
+                            [(ngModel)]="powerSupply.VoltageReading" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="gw-power-supply-item">
+                    <label>Over Current Setting (mA)</label>
+                    <mat-form-field class="mat-input-small gw-power-supply-input gw-power-supply-input-wrapper"
+                        appearance="fill">
+                        <input id="OverCurrentSetting" type="number" matInput class="mat-body-2 form-baseline"
+                            [(ngModel)]="powerSupply.OverCurrentSetting" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="gw-power-supply-item">
+                    <label>Current Reading (mA)</label>
+                    <mat-form-field class="mat-input-small gw-power-supply-input gw-power-supply-input-wrapper"
+                        appearance="fill">
+                        <input id="CurrentReading" type="number" matInput class="mat-body-2 form-baseline"
+                            [(ngModel)]="powerSupply.CurrentReading" readonly>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

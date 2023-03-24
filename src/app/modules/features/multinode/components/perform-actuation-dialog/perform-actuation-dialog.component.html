@@ -1,0 +1,76 @@
+<section class="gw-multinode-actuation-modal-container">
+    <label class="mat-subtitle-2">{{well?.WellName}}</label>
+    <!-- Shift Table-->
+    <div class="bh-table default mat-elevation-z8 gw-actuation-container mt-3">
+        <table mat-table [dataSource]="actuationList" class="gw-mat-table">
+            <!-- Zone Name -->
+            <ng-container matColumnDef="ZoneName">
+                <th mat-header-cell class="zone" *matHeaderCellDef> eFCV </th>
+                <td mat-cell class="zone" *matCellDef="let actuation">
+                    <!--  <mat-label matTooltip="{{zone.ZoneName}}" matTooltipPosition="below"
+                        matTooltipClass="gw-label-mat-tooltip" [matTooltipDisabled]="!isEllipsisActive(zoneName)">
+                        <span #zoneName class="label-two-lines-ellipsis">{{zone.ZoneName}}</span>
+                    </mat-label> -->
+                    <mat-form-field class="mat-select-small gw-valve-position-select gw-target-dropdown"
+                        appearance="fill">
+                        <mat-select class="gw-form-label form-baseline" [value]="actuation.SelectedZone.ZoneId"
+                            (selectionChange)="onZoneChange($event, actuation)">
+                            <mat-option class="gw-target-option" *ngFor="let zone of actuation.Zones"
+                                [value]="zone.ZoneId">
+                                {{zone.ZoneName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+            </ng-container>
+
+            <!-- From Position -->
+            <ng-container matColumnDef="CurrentPosition">
+                <th mat-header-cell *matHeaderCellDef> Current Valve Position </th>
+                <td mat-cell *matCellDef="let actuation">
+                    <mat-label
+                        matTooltip="{{actuation.SelectedZone.CurrentTargetPosition ? actuation.SelectedZone.CurrentTargetPosition : 'UNKNOWN POSITION' }}"
+                        matTooltipPosition="below" matTooltipClass="gw-label-mat-tooltip"
+                        [matTooltipDisabled]="!isEllipsisActive(description)">
+                        <span #description
+                            class="label-two-lines-ellipsis">{{(actuation.SelectedZone?.CurrentTargetPosition ?
+                            actuation.SelectedZone?.CurrentTargetPosition : 'UNKNOWN POSITION')}}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+
+            <!-- Target Valve Position -->
+            <ng-container matColumnDef="NumberOfPositions">
+                <th mat-header-cell class="target-value" *matHeaderCellDef> Target Valve Position </th>
+                <td mat-cell class="target-value" *matCellDef="let actuation">
+                    <mat-form-field class="mat-select-small gw-valve-position-select gw-target-dropdown"
+                        appearance="fill"
+                        [ngClass]="{'gw-target-valve-position': actuation.SelectedZone.CurrentTargetPosition !== actuation.SelectedZone.SelectedTargetPosition}">
+                        <mat-select class="gw-form-label form-baseline"
+                            [(value)]="actuation.SelectedZone.SelectedTargetPosition"
+                            [disabled]="!actuation.SelectedZone.isPositionValid"
+                            (selectionChange)="onPositionChange($event, actuation)">
+                            <mat-option class="gw-target-option" *ngIf="!actuation.SelectedZone.isPositionValid"
+                                [value]="actuation.SelectedZone.SelectedTargetPosition">REHOME
+                            </mat-option>
+                            <mat-option class="gw-target-option"
+                                *ngFor="let valvePostion of actuation.SelectedZone.TargetValvePositionDd"
+                                [value]="valvePostion.Description">
+                                {{valvePostion.Description}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</section>
+<!-- <mat-divider></mat-divider> -->
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnCancel()">CANCEL</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" [disabled]="!actuateBtnVisiblity"
+        (click)="OnSubmit()">CONFIRM ACTUATE</button>
+</div>

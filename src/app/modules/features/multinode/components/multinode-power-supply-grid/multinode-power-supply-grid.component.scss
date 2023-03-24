@@ -1,0 +1,17 @@
+.gw-power-supply-section {
+    .gw-eppowersupply-zone-grid {
+        height: 272px;
+        width: 100%;
+
+        @media (max-width: 767px) {
+            height: 215px;
+        }
+    }
+    .gw-mmpowersupply-zone-grid {
+        height: 260px;
+        width: 100%;
+        @media (max-width: 767px) {
+            height: 290px;
+        }
+    }
+}
