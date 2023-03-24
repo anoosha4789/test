@@ -1,0 +1,23 @@
+<section class="gw-modbus-report-container">
+
+    <div class="d-flex flex-wrap mat-body-2 mat-body-2" *ngIf="!reportVisibility">	
+        <div class="gw-modbus-report-label px-0 py-1 gw-form-label"> Select Modbus Map</div>
+        <div class="col px-sm-0">
+            <mat-form-field class="mat-select-small gw-modbus-report-select" appearance="fill">
+                <mat-select id="modbusmap" class="gw-form-label form-baseline" formControlName="modbusmap"
+                    [(value)]="selectedModbusMap" (selectionChange)="onModbusMapSelChange($event)">
+                    <mat-option *ngFor="let modbusMap of modbusMapList" [value]="modbusMap"
+                        [matTooltip]="modbusMap.MapName"
+                        matTooltipPosition="below" matTooltipClass="gw-mat-option-tooltip"
+                        [matTooltipDisabled]="modbusMap.MapName.length > 48 ? 'false': 'true' ">
+                        {{modbusMap.MapName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <!--Report View-->
+    <div id="modbusReport" [hidden]="!reportVisibility"></div>
+
+</section>

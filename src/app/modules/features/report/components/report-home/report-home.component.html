@@ -1,0 +1,35 @@
+<mat-card class="m-2 gw-data-files-container" cdkTrapFocus>
+    <mat-card-content>
+        <mat-tab-group animationDuration="0ms" [(selectedIndex)]="activeTabIndex"
+            (selectedTabChange)="onTabChanged($event);" class="gw-tab-group">
+            <!-- Configuration Report-->
+            <mat-tab label="Configuration">
+                <ng-template matTabContent>
+                    <app-configuration-report></app-configuration-report>
+                </ng-template>
+            </mat-tab>
+
+            <!-- Modbusmap Report -->
+            <mat-tab label="Modbus map" *ngIf="modbusMapList && modbusMapList.length > 0">
+                <ng-template matTabContent>
+                    <app-modbusmap-report [modbusMapData]="modbusMapList"></app-modbusmap-report>
+                </ng-template>
+            </mat-tab>
+
+            <!-- Alarm history Report-->
+            <mat-tab *ngIf="isInforce || isMultiNode" label="Alarm History Report">
+                <ng-template matTabContent>
+                    <app-alarm-history-report></app-alarm-history-report>
+                </ng-template>
+            </mat-tab>
+
+            <!-- Shift history Report-->
+            <mat-tab *ngIf="isInforce" label="Shift History Report">
+                <ng-template matTabContent>
+                    <app-shift-history-report></app-shift-history-report>
+                </ng-template>
+            </mat-tab>
+
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>

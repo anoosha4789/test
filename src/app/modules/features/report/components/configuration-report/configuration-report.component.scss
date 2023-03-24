@@ -1,0 +1,12 @@
+.gw-report-container {
+    height: 100%;
+}
+
+#configReport>div {
+    // position: relative !important;
+    height: 100%;
+
+    @media only screen and (min-width: 768px) {
+        height: calc(100% - 40px);
+    }
+}

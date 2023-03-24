@@ -1,0 +1,13 @@
+.gw-alarm-report-container {
+    position: relative;
+    height: 100%;
+    overflow: auto;
+}
+
+#alarmReport > div {
+    // position: relative !important;
+    height: 100%;   
+    @media only screen and (min-width: 768px) {
+        height: calc(100% - 40px);
+    }
+}

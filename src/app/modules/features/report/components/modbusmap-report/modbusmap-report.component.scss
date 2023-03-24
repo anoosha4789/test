@@ -1,0 +1,42 @@
+.gw-modbus-report-container {
+    position: relative;
+    height: 100%;
+    overflow: auto;
+}
+
+.mat-form-field-appearance-fill {
+    padding: 0;
+}
+
+#modbusReport > div {
+    // position: relative !important;
+    height: 100%;   
+    @media only screen and (min-width: 768px) {
+        height: calc(100% - 40px);
+    }
+}
+.gw-modbus-dropdownpadding{
+    @media (min-width: 768px) {
+        padding-left: 30px !important;
+    }
+}
+.gw-modbus-labelPadding{
+    @media (max-width: 600px) {
+        padding-left: 15px !important;
+    }
+}
+
+.gw-modbus-menu div{
+    @media (max-width: 600px) {
+        font-size: 8px !important;
+    }
+    @media all and (device-width: 375px) and (device-height: 667px) and (orientation:portrait) {
+        font-size: 6.5px !important;
+    }
+    @media all and (device-width: 375px) and (device-height: 812px) and (orientation:portrait) {
+        font-size: 6.5px !important;
+    }
+    @media all and (device-width: 390px) and (device-height: 844px) and (orientation:portrait) {
+        font-size: 7px !important;
+    }
+}

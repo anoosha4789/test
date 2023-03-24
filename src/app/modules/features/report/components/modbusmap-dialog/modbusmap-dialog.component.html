@@ -1,0 +1,24 @@
+<section cdkTrapFocus>
+    <div mat-dialog-content>
+        <div class="row p-l-30 p-r-30 p-b-16">
+            <div class="col-12 pt-3 pb-2">
+                <span class="gw-form-label"></span>
+            </div>
+            <div class="col-12 px-2">
+                <mat-form-field class="mat-select-small" appearance="fill">
+                    <mat-select id="modbusmap" class="gw-form-label form-baseline" formControlName="modbusmap"
+                        [(value)]="selModbusMap" (selectionChange)="onModbusMapSelChange($event)">
+                        <mat-option *ngFor="let modbusMap of modbusMapList" [value]="modbusMap">
+                            {{modbusMap.Name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div mat-dialog-actions class="d-flex justify-content-end mx-3 my-1 p-x-10">
+        <button mat-button class="mat-button-tertiary-sm mr-2" (click)="onCancelBtnClick()">Cancel</button>
+        <button mat-button class="mat-button-primary-sm" (click)="onOkBtnClick()">Ok</button>
+    </div>
+</section>
