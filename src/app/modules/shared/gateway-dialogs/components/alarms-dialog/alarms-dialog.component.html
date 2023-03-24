@@ -1,0 +1,147 @@
+<section *ngIf="!IsMobileView">
+    <div class="row p-b-20 mx-0 mat-dialog-header">
+        <mat-label class="mat-subtitle-2">{{Title}}</mat-label>
+    </div>
+    <!-- <mat-divider></mat-divider> -->
+    <div class="px-4 py-3">
+        <div class="row igx-grid-class">
+            <igx-grid #alarmGrid igxPreventDocumentScroll [(data)]="ActiveAlarmDescriptions" [emptyGridMessage]="'No active alarms'"
+                [primaryKey]="'AlarmId'" width="100%" [height]="'100%'" resizable="true">
+    
+                <igx-column width="0.1px" field="Status" header=" " [dataType]="'boolean'" [cellStyles]="styles">
+                    <ng-template igxCell let-cell="cell" let-val>
+                        <div class="highlightcellclass"
+                            [ngClass]="cell.rowData.SeverityType ==1  ? 'highlight-alert-error' : (cell.rowData.SeverityType ==2 ?'highlight-alert':'highlight-alert-warning') "></div>
+                    </ng-template>
+                </igx-column>
+    
+                <!--<igx-column [headerClasses]="'mat-header-cell'" header=" "  width="5%" [dataType]="'boolean'">
+                    <ng-template igxCell let-cell="cell" let-val>
+                        <mat-icon class="alarm-alert-warning" *ngIf="cell.rowData.SeverityType ==2">warning</mat-icon>
+                        <mat-icon class="alarm-alert-error" *ngIf="cell.rowData.SeverityType ==1">error</mat-icon>
+                        <mat-icon class="alarm-alert" *ngIf="cell.rowData.SeverityType ==3">warning</mat-icon>
+                    </ng-template>
+                </igx-column>
+                Date and Time 
+                <igx-column [headerClasses]="'mat-header-cell'" field="DateandTime" header="Date and Time"
+                    [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell">
+                        <p hideDelay="50" class="gw-grid-row-tooltip igx-grid__td-text_date">
+                            {{cell.value}}
+                        </p>
+                    </ng-template>
+                </igx-column>
+            -->
+                <!--Alarm-->
+                <igx-column [headerClasses]="'mat-header-cell'" field="Descripiton" header="Alarm" [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell">
+                        <mat-icon class="alarm-alert" *ngIf="cell.rowData.SeverityType ==2">warning</mat-icon>
+                        <mat-icon class="alarm-alert-error" *ngIf="cell.rowData.SeverityType ==1">error</mat-icon>
+                        <mat-icon class="alarm-alert-warning" *ngIf="cell.rowData.SeverityType ==3">warning</mat-icon>
+                        <p hideDelay="50" class="gw-grid-row-tooltip igx-grid__td-text_alarms"
+                            [ngClass]="cell.rowData.SeverityType ==1 ? 'alarm-alert-error' : (cell.rowData.SeverityType ==2 ?'alarm-alert':'alarm-alert-warning')">
+                            {{cell.value}}
+                        </p>
+                    </ng-template>
+                </igx-column>
+    
+                <!--Details-->
+                <igx-column [headerClasses]="'mat-header-cell'" width="35%" field="Details" header="Details" [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell">
+                        <p hideDelay="50" class="gw-grid-row-tooltip igx-grid__td-text">
+                            {{getAlarmMessage(cell.rowData)}}
+                        </p>
+                    </ng-template>
+                </igx-column>
+    
+                <!--Action Items-->
+                <igx-column [headerClasses]="'mat-header-cell'" field="ActionItems" header="Action Items"
+                    [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell">
+                        <p hideDelay="50" class="gw-grid-row-tooltip  igx-grid__td-text">
+                            {{cell.value}}
+                        </p>
+                    </ng-template>
+                </igx-column>
+    
+            </igx-grid>
+    
+        </div>
+    </div>
+    <!-- <mat-divider></mat-divider> -->
+    <div mat-dialog-actions class="d-flex justify-content-end">
+        <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnCancel()">Close</button>
+    </div>
+</section>
+
+
+<!-- Content Mobile -->
+<div *ngIf="IsMobileView" class="row mx-1 gw-height-480">
+    <div class="mt-2">
+        <mat-label class="mat-subtitle-2">{{Title}}</mat-label>
+    </div>
+    <div class="gw-alarm-dialog-container">
+        <table *ngIf="ActiveAlarmDescriptions" class="alarm_mob-table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table class="gw-alarm-dialog-table" *ngFor="let alarm of ActiveAlarmDescriptions">
+                          <!--  <tr class="gw-no-border">
+                                 <td [ngClass]="alarm.SeverityType==1 ? 'tbl_cell_highlight_error': (alarm.SeverityType==2?'tbl_cell_highlight_warning': 'tbl_cell_highlight')">
+
+                                </td>
+                                <td>
+                                    <span class="mat-header-cell">Date and Time:<br /></span>
+                                    <span class="gw-grid-row-tooltip igx-grid__td-text_date">
+                                        {{alarm.DateandTime}}</span>
+                                </td>
+                                <td>
+                                    <mat-icon class="alarm-alert-warning" *ngIf="alarm.SeverityType==2">warning</mat-icon>
+                                    <mat-icon class="alarm-alert-error" *ngIf="alarm.SeverityType==1">error</mat-icon>
+                                    <mat-icon class="alarm-alert" *ngIf="alarm.SeverityType==3">warning</mat-icon>
+                                </td>
+                            </tr>-->
+                            <tr class="gw-no-border">
+                                <td [ngClass]="alarm.SeverityType==1 ? 'tbl_cell_highlight_error': (alarm.SeverityType==2?'tbl_cell_highlight': 'tbl_cell_highlight_warning')">
+
+                                </td>
+                                <td>
+
+                                    <span class="mat-header-cell">Alarm:<br /></span>
+                                    <span class="gw-grid-row-tooltip igx-grid__td-text_alarms"
+                                        [ngClass]="alarm.SeverityType==1 ? 'alarm-alert-error' : (alarm.SeverityType==2? 'alarm-alert':'alarm-alert-warning')">
+                                        {{alarm.Descripiton}}</span>
+                                </td>
+                            </tr>
+                            <tr class="gw-no-border">
+                                <td [ngClass]="alarm.SeverityType==1 ? 'tbl_cell_highlight_error': (alarm.SeverityType==2?'tbl_cell_highlight': 'tbl_cell_highlight_warning')">
+
+                                </td>
+                                <td>
+                                    <span class="mat-header-cell">Details:<br /></span>
+                                    <span class="gw-grid-row-tooltip igx-grid__td-text">{{getAlarmMessage(alarm)}}</span>
+
+                                </td>
+                            </tr>
+                            <tr class="gw-no-border">
+                                <td [ngClass]="alarm.SeverityType==1 ? 'tbl_cell_highlight_error': (alarm.SeverityType==2?'tbl_cell_highlight': 'tbl_cell_highlight_warning')">
+
+                                </td>
+                                <td>
+                                    <span class="mat-header-cell">Action Items:<br /></span>
+                                    <span class="gw-grid-row-tooltip  igx-grid__td-text"> {{alarm.ActionItems}}</span>
+                                    <br>
+                                    <br>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="button_center">
+        <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnCancel()">Close</button>
+    </div>
+</div>

@@ -1,0 +1,147 @@
+@import 'base.scss';
+
+.mat-drawer-content {
+    @include mq-sm() {
+        // padding-left: 0.5rem !important;
+    }
+}
+
+.gw-side-nav {
+    width: 262px;
+    top: 0 !important;
+    height: calc(100% - 40px);
+    border-right: 1px solid $gw-secondary-color-600 !important;
+
+    //box-sizing: border-box;
+    //border-radius: 4px;
+    @include mq-md() {
+        height: calc(100% - 10px) !important;
+    }
+
+    @include mq-sm() {
+        display: none;
+        padding-left: 0.5rem;
+    }
+}
+
+.gw-stepper-nav-container {
+    border: none !important;
+    background: transparent;
+}
+
+.gw-stepper-nav {
+    border: none;
+    background: transparent;
+}
+
+.gw-side-nav-content {
+    position: relative;
+    height: calc(100% - 20px);
+}
+
+.mat-list-item {
+    margin-right: 0;
+    margin-left: 0;
+    width: 100%;
+}
+
+.mat-list-base {
+    padding-top: 0;
+}
+
+.mat-step-header .mat-step-icon {
+    border: 1px solid $gw-tertiary-color-200;
+}
+
+.mat-step-header .mat-step-icon-state-edit {
+    border: 1px solid $gw-primary-color;
+    color: $gw-tertiary-color-1000 !important;
+    background: transparent;
+}
+
+.mat-step-header .mat-step-icon-state-number {
+    background-color: transparent;
+    color: $gw-tertiary-color-600;
+}
+
+.mat-step-header .mat-step-icon {
+    border: 1px solid $gw-tertiary-color-200;
+}
+
+
+.mat-step-header .mat-step-icon-state-edit {
+    border: 1px solid $gw-primary-color;
+    color: $gw-tertiary-color-1000 !important;
+    background: transparent;
+}
+
+.mat-step-header .mat-step-icon-state-number {
+    background-color: transparent;
+    color: $gw-tertiary-color-600;
+}
+
+
+
+/*left sidenav style override*/
+:host ::ng-deep mat-sidenav:not(.mat-drawer-opened) {
+    transform: translate3d(0, 0, 0) !important;
+    visibility: visible !important;
+    width: 64px !important;
+
+    & .mat-list-item {
+        width: 40px;
+
+        & .mat-list-item-content {
+            & .secondname {
+                display: none;
+            }
+
+            & .thirdicon {
+                display: none !important;
+            }
+        }
+    }
+
+    #sublink {
+        padding-left: 0;
+    }
+
+    .mat-vertical-stepper-content,
+    .mat-step-label,
+    .gw-stepper-nav-title {
+        display: none;
+    }
+}
+
+:host ::ng-deep mat-sidenav:not(.mat-drawer-opened)~mat-sidenav-content {
+    margin-left: 64px;
+
+    @include mq-sm() {
+        margin-left: 0px;
+    }
+}
+
+:host ::ng-deep .mat-drawer-container {
+    z-index: unset;
+}
+
+:host ::ng-deep .mat-drawer-content {
+    z-index: 2;
+}
+
+:host ::ng-deep .gw-nested-tree {
+
+    .mat-list-base .mat-list-item:active,
+    .mat-list-base .mat-list-item:hover,
+    .mat-list-base .mat-list-item:visited {
+        background: transparent;
+    }
+
+    .mat-list-base {
+        padding-top: 0px;
+    }
+}
+
+.gw-word-break {
+    word-break: break-all;
+  }

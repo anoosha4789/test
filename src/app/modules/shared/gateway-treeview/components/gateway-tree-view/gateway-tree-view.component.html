@@ -1,0 +1,49 @@
+<mat-tree [dataSource]="dataSourceTree" [treeControl]="treeControl">
+  <!-- This is the tree node template for leaf nodes -->
+  <mat-tree-node class="p-t-20 p-b-20" *matTreeNodeDef="let node" matTreeNodePadding
+    (mouseleave)="toggleSourceIndex = null" (mouseenter)="toggleEdit(node.index)"
+    [ngClass]="{'gw-highlight-row': toggleSourceIndex === node.index, 'gw-tree-node-info': node.info && node.description,'gw-tree-node-desc': node.info && !node.description }"
+    (click)="dataSourceClick(node.routerLink, node.params)">
+    <!-- use a disabled button to provide padding for tree leaf -->
+    <button mat-icon-button disabled></button>
+    <div class="gw-mat-tree-Node p-t-4">
+      <mat-label class="mat-body-2" [ngClass]="{'gw-section-invalid': node.errors && node.errors.length > 0}"
+        matTooltip="{{node.name}}" matTooltipPosition="below" matTooltipClass="gw-label-mat-tooltip"
+        [matTooltipDisabled]="node.name?.length > 25 ? 'false': 'true'">
+        {{node.name | gwTruncate:25}}
+      </mat-label>
+      <ng-container *ngIf="node.errors && node.errors.length > 0">
+        <gw-error-notifier [errorsList]="node.errors"></gw-error-notifier>
+      </ng-container>
+      <a class="gw-icon-btn gw-float-right m-r-6" *ngIf="toggleSourceIndex === node.index">
+        <mat-icon class="gw-dashboard-edit-icon">edit</mat-icon>
+      </a>
+      <br *ngIf="node.info" />
+      <mat-label *ngIf="node.info" class="mat-caption gw-tree-node-info-label">{{node.info}}</mat-label>
+      <br *ngIf="node.description" />
+      <mat-label *ngIf="node.description" class="mat-caption gw-tree-node-info-label">{{node.description}}</mat-label>
+
+    </div>
+  </mat-tree-node>
+
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-tree-node class="p-t-20 p-b-20" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
+    (mouseleave)="toggleSourceIndex = null" (mouseenter)="toggleEdit(node.index)"
+    [ngClass]="{'gw-highlight-row': toggleSourceIndex === node.index}"
+    >
+    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+      <mat-icon class="mat-icon-rtl-mirror gw-dashboard-edit-icon">
+        {{treeControl.isExpanded(node) ? 'expand_less' : 'expand_more'}}
+      </mat-icon>
+    </button>
+    <div class="gw-mat-tree-Node p-t-4" (click)="dataSourceClick(node.routerLink, node.params)">
+      <mat-label class="mat-body-2" [ngClass]="{'gw-section-invalid': node.errors && node.errors.length > 0}">{{node.name}}</mat-label>
+      <ng-container *ngIf="node.errors && node.errors.length > 0">
+        <gw-error-notifier [errorsList]="node.errors"></gw-error-notifier>
+      </ng-container>
+      <a class="gw-icon-btn gw-float-right m-r-6" *ngIf="toggleSourceIndex === node.index">
+        <mat-icon *ngIf="!node.parentNode" class="gw-dashboard-edit-icon">edit</mat-icon>
+      </a>
+    </div>
+  </mat-tree-node>
+</mat-tree>

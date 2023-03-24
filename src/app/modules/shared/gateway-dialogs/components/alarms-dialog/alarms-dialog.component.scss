@@ -1,0 +1,117 @@
+@import 'base.scss';
+
+.mat-dialog-header {
+    padding: $space-md;
+    // background: mat-color($grey, 100);
+}
+
+.gw-alarm-dialog-container {
+    max-height: 370px;
+    overflow-y: auto;
+}
+
+.gw-alarm-dialog-table {
+    border: 1px solid $gw-secondary-color-600;
+    width: 100%;
+}
+
+.gw-alarm-grid {
+    height: calc(100vh - 442.5px);
+}
+
+    .igx-grid-class {
+        @media (min-width: 667px){
+            height: 200px;
+        }
+        @media (min-width: 768px){
+            height: 380px;
+        }
+  
+}
+
+.igx-grid-cell {
+    color:#CB6E17;
+ }
+ .highlightcellclass{
+    padding: 2px;
+    width: 100%;
+    height: 100%;
+ }
+ .igx-grid__td-text {
+    white-space: normal;
+    font-size: 12px;
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 16px;
+    letter-spacing: 0.25px;
+    margin: 6px;
+ }
+ .igx-grid__td-text_alarms {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 0.1px;
+    white-space: normal;
+    
+ }
+ .alarm-alert-error {
+    color: $gw-error-color-500;
+}
+.alarm-alert-warning {
+    color: $gw-warning-color-500;
+}
+
+.alarm-alert {
+    color: $gw-alarm-alert-critical;
+}
+.alarm-alert-warningmsg {
+    color: $gw-warning-color-700;
+}
+.highlight-alert-error {
+    background-color: $gw-error-color-500;
+}
+.highlight-alert-warning {
+    background-color: $gw-warning-color-300;
+}
+.highlight-alert {
+    background-color: $gw-alarm-alert-critical;
+}
+.igx-grid__td-text_date {
+    font-family: Noto Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 14px;
+line-height: 20px;
+letter-spacing: 0.05px;
+white-space: normal;
+    
+ }
+ .alarm_mob-table {
+    width: 100%;
+    border-spacing: 0px;
+}
+.alarm-header-color {
+    color: $gw-text-white;
+}
+.button_center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2px;
+  width: 100%;
+}
+.tbl_cell_highlight_warning{
+    background-color: $gw-warning-color-300;
+    width: 3px;
+}
+.tbl_cell_highlight_error{
+    background-color: $gw-error-color-500;
+    width: 3px;
+}
+.tbl_cell_highlight{
+    background-color: $gw-alarm-alert-critical;
+    width: 3px;
+}

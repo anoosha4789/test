@@ -1,0 +1,56 @@
+<article class="d-flex justify-content-center">
+    <div class="gw-modal-container gw-config-reset-modal-container">
+        <div *ngIf="isManufacturingUser == false">
+            <div class="mat-dialog-header">
+                <div mat-dialog-title class="mat-subtitle-1">Configuration Reset</div>
+            </div>
+            <!-- <header class="m-t-18 m-b-10 m-l-24" mat-dialog-title>
+                <p class="mat-subtitle-1 m-0">Configuration Reset </p>
+            </header> -->
+            <!-- <mat-divider></mat-divider> -->
+
+            <div mat-dialog-content class="d-flex row mx-0 py-4">
+                <div class="col-12 p-l-0">
+                    <span class="mat-body-2">This will restore the panel to its factory default configuration.</span>
+                </div>
+                <div class="col-12 p-t-18 p-l-0">
+                    <span class="mat-body-2">Make sure you “<strong>Export</strong>" the current configuration and/or “<strong>Download</strong>" any
+                        existing data and/or log files that you do not want to lose after this reset.</span>
+                </div>
+                <div class="col-12 p-t-18 p-b-6 p-l-0">
+                    <span class="gw-mat-body-warning">If you reset, the current configuration, as well as all the data and log files will be deleted.</span>
+                </div>
+            </div>
+        </div>
+        
+        <div *ngIf="isManufacturingUser == true">
+            <div class="mat-dialog-header">
+                <div mat-dialog-title class="mat-subtitle-1">Configuration Reset</div>
+            </div>
+            <!-- <header class="m-t-18 m-b-10 m-l-24" mat-dialog-title>
+                <p class="mat-subtitle-1 m-0">Manufacture Reset </p>
+            </header> -->
+            <!-- <mat-divider></mat-divider> -->
+
+            <div mat-dialog-content class="d-flex row mx-0 py-4">
+                <div class="col-12 p-l-0">
+                    <span class="mat-body-2">This will restore the panel to its factory default configuration and then perform a system shutdown.</span>
+                </div>
+                <div class="col-12 p-t-18 p-l-0">
+                    <span class="mat-body-2">Make sure you “<strong>Export</strong>" the current configuration and/or “<strong>Download</strong>" any
+                        existing data and/or log files that you do not want to lose after this reset.</span>
+                </div>
+                <div class="col-12 p-t-18 p-b-6 p-l-0">
+                    <span class="gw-mat-body-warning">If you reset, the current configuration, as well as all the data and log files will be deleted.
+                        &nbsp;&nbsp;After reset is completed, the system will shutdown.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- <mat-divider></mat-divider> -->
+        <div mat-dialog-actions class="d-flex justify-content-end">
+            <button mat-button class="mat-button-tertiary-sm cancel-btn" (click)="OnCancel()">Cancel</button>
+            <button mat-button class="mat-button-warn-sm reset-btn" [mat-dialog-close]="true" cdkFocusInitial>Reset</button>
+        </div>
+    </div>
+</article>

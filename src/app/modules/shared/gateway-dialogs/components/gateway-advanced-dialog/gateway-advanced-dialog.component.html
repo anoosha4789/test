@@ -1,0 +1,15 @@
+<section class="gw-advance-dialog">
+  <div *ngIf="title" class="mat-dialog-header">
+    <div mat-dialog-title class="mat-subtitle-1">{{title}}</div>
+  </div>
+  <!-- <mat-divider></mat-divider> -->
+  <div class="body-content">
+    <!-- <div class="mat-body-1">{{content}}</div> -->
+    <ng-template appInsertion> </ng-template>
+  </div>
+  <!-- <mat-divider *ngIf="showActions"></mat-divider> -->
+  <div *ngIf="showActions" mat-dialog-actions>
+    <button [hidden]="!showCancelButton" mat-button class="mat-button-text-sm" (click)="OnCancel()">Cancel</button>
+    <button mat-button class="mat-button-primary-sm mat-dialog-actions__agree" (click)="OnOk()">OK</button>
+  </div>
+</section>

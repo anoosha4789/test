@@ -1,0 +1,32 @@
+@import 'base.scss';
+
+.mat-dialog-header {
+    padding: $space-md $space-sm $space-sm;
+    // background: mat-color($grey, 100);
+}
+.mat-dialog-title {
+    color: mat-color($teal, 950);
+    margin: 0;
+}
+
+// .mat-dialog-header {
+//     padding-left: 1rem !important;
+//     padding-right: 1rem !important;
+//     padding-bottom: 0.5rem !important;
+//     padding-top: 0.875rem !important;
+// }
+
+.gw-notifier-ul {
+    margin:0;
+    padding: 0;
+}
+
+.gw-notifier-ul > li {
+    display: flex;
+    align-items: center;
+    list-style: none;
+}
+
+.gw-info-icon {
+    display: inline-flex;
+}

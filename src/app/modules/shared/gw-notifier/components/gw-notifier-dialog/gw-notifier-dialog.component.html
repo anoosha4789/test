@@ -1,0 +1,15 @@
+<div class="px-3 p-b-12" *ngFor="let errorNotifier of errorNotifierList">
+    <div class="py-2" *ngIf="errorNotifier.tabName">
+        <span class="mat-subtitle-2">{{errorNotifier.tabName}}</span>
+    </div>
+    <ul class="gw-notifier-ul">
+        <li *ngFor="let error of errorNotifier.errors">
+            <mat-icon class="mat-error gw-info-icon">info</mat-icon>
+            <a (click)="navToPage(errorNotifier)" class="ml-2">{{error.value}}</a>
+        </li>
+    </ul>
+</div>
+<!-- <mat-divider></mat-divider> -->
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button mat-button class="mat-button-tertiary-sm" (click)="onCloseBtnClick()">Close</button>
+</div>

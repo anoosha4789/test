@@ -1,0 +1,17 @@
+<ng-container *ngIf="expandable; else navListTemplate">
+  <mat-expansion-panel expandOnActiveLink [navListItemComponents]="navListItemComponents"
+    class="mat-elevation-z0 gw-expansion-panel">
+    <mat-expansion-panel-header [routerLink]="item?.route" routerLinkActive="active"
+      (isActiveChange)="isActive.emit($event)" class="gw-exp-panel-header">
+      <mat-icon class="mr-2">{{item.iconName}}</mat-icon>
+      <mat-panel-title class="gw-word-break" matTooltip="{{ item?.displayName}}" matTooltipPosition="below" matTooltipClass="gw-mat-tooltip"
+        [matTooltipDisabled]=" item?.displayName?.length > 30 ? 'false': 'true' ">{{
+        item?.displayName | gwTruncate:30 }}</mat-panel-title>
+    </mat-expansion-panel-header>
+    <ng-container *ngTemplateOutlet="navListTemplate"></ng-container>
+  </mat-expansion-panel>
+</ng-container>
+
+<ng-template #navListTemplate>
+  <mat-nav-list><ng-content></ng-content></mat-nav-list>
+</ng-template>

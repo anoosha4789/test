@@ -1,0 +1,14 @@
+<section>
+    <div class="gw-modal-container">
+        <header mat-dialog-title class="download-dlg-header">
+            <p class="mat-body-1 m-0">Are you sure you want to stop this download?</p>
+        </header>
+        <!-- <mat-divider></mat-divider> -->
+        <div class="d-flex justify-content-end download-dlg-actions">
+            <button mat-button class="mat-button-tertiary-sm cancel-btn mr-3" (click)="OnCancelBtnClick()">Cancel</button>
+            <button mat-button class="mat-button-warn-sm reset-btn" (click)="onOkBtnClick()" cdkFocusInitial>
+                Stop Download
+            </button>
+        </div>
+    </div>
+</section>  

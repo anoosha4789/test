@@ -1,0 +1,53 @@
+<section class="d-flex justify-content-center">
+<div class="gw-browse-modal-container">
+    <div class="mat-dialog-header">
+        <div mat-dialog-title class="mat-subtitle-1">{{data.Title}}
+            <span class="gw-help-icon m-r-8">
+                <mat-icon>info</mat-icon>
+            </span>
+        </div>
+    </div>
+    <!-- <header mat-dialog-title>
+        <p class="mat-subtitle-1">{{data.Title}}
+            <span class="gw-help-icon m-r-8">
+                <mat-icon>info</mat-icon>
+            </span>
+        </p>
+    </header> -->
+    <!-- <mat-divider></mat-divider> -->
+
+    <div *ngIf="exportFileError != null" class="gw-form-label mat-error mx-4 p-t-6">{{exportFileError}}</div>
+
+    <div mat-dialog-content class="d-flex row m-x-2 py-3">
+        <div class="col-12 p-l-0">
+            <span class="mat-body-2">File Name</span>
+        </div>
+        <form class="gw-browse-form" #browseForm="ngForm" [formGroup]="browseDialogForm">
+            <mat-form-field class="gw-form-label mat-input-small mt-2" appearance="fill">
+
+                <input matInput class="gw-form-label" [ngModel]="data.SelectedFileName | truncateFileExtension" (ngModelChange)="data.SelectedFileName=$event"
+                    [readonly]="data.ForImportFile" formControlName="FileName" (click)="BrowseFile()" (focusout)="validateExportFile()" autocomplete="off">
+
+                <input type="file" id="selectFile" name="selectFile" multiple="false" accept="{{data.FileExtensions}}"
+                    class="gw-input-hidden" autocomplete="off"/>
+                
+                <!-- <div *ngIf="validationMssg != null" class="mat-caption mat-error p-l-2">{{validationMssg}}</div> -->
+                <mat-hint *ngIf="validationMssg != null" align="start" class="mat-error">
+                    {{validationMssg}}
+                </mat-hint>
+            </mat-form-field>
+
+            <button mat-button class="mat-button mat-button-primary__icon-only" (click)="BrowseFile()"
+                [hidden]="!data.ForImportFile">
+                <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+            </button>
+        </form>
+    </div>
+    <!-- <mat-divider></mat-divider> -->
+
+    <div mat-dialog-actions class="d-flex justify-content-end">
+        <button mat-button class="mat-button-tertiary-sm" (click)="OnCancel()">{{secondaryBtnText}}</button>
+        <button mat-button class="mat-button-primary-sm" (click)="OnOk()" [disabled]="data.IsConfigDirty || validationMssg != null" cdkFocusInitial>{{primaryBtnText}}</button>
+    </div>
+</div>
+</section>

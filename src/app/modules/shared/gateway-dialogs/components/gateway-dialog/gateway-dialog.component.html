@@ -1,0 +1,13 @@
+<div *ngIf="title" class="mat-dialog-header">
+    <div mat-dialog-title>{{title}}</div>
+    <div *ngIf="subtitle" class="mat-dialog-overline">{{subtitle}}</div>
+</div>
+<!-- <mat-divider></mat-divider> -->
+<div mat-dialog-content [class.no-top-padding]="title">
+  <div class="mat-body-1 text-break" [innerHTML]="content"></div>
+</div>
+<!-- <mat-divider></mat-divider> -->
+<div mat-dialog-actions>
+  <button [hidden]="!showCancelButton" mat-button class="mat-button-tertiary-sm" (click)="OnCancel()">{{secondaryBtnText ? secondaryBtnText : 'Cancel' }}</button>
+  <button mat-button [ngClass]="isDeleteBtn ? 'mat-button-warn-sm': 'mat-button-primary-sm'" (click)="OnOk()">{{primaryBtnText ? primaryBtnText : 'OK' }}</button>
+</div>

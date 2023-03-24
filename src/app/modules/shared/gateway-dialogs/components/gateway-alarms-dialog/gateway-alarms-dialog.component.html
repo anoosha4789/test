@@ -1,0 +1,225 @@
+<section *ngIf="!IsMobileView">
+    <div class="row p-b-20 mx-0 mat-dialog-header">
+        <mat-label class="mat-subtitle-2">{{Title}}</mat-label>
+    </div>
+    <!-- <mat-divider></mat-divider> -->
+    <div class="px-4 py-3">
+        <div class="row igx-grid-class">
+            <igx-grid #alarmGrid igxPreventDocumentScroll [(data)]="ActiveAlarmDescriptions" [emptyGridMessage]="'No active alarms'"
+                [primaryKey]="'AlarmId'" width="100%" [height]="'100%'" resizable="true">
+    
+                <!-- <igx-column width="0.1px" field="Status" header=" " [dataType]="'boolean'" [cellStyles]="styles">
+                    <ng-template igxCell let-cell="cell" let-val>
+                        <div class="highlightcellclass"
+                            [ngClass]="cell.rowData.SeverityType ==1  ? 'highlight-alert-error' : (cell.rowData.SeverityType ==2 ?'highlight-alert':'highlight-alert-warning') "></div>
+                    </ng-template>
+                </igx-column> -->
+                <!--Alarm-->
+                <igx-column [headerClasses]="'mat-header-cell'" width="28%" field="Descripiton" header="Description" [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell">
+                        <mat-icon class="alarm-alert-error" *ngIf="cell.rowData.AlarmState == 0">error</mat-icon>
+                        <p hideDelay="50" class="gw-grid-row-tooltip igx-grid__td-text_alarms"
+                            [ngClass]="cell.rowData.AlarmState == 2 ? 'alarm-suspended-error' : (cell.rowData.AlarmState == 0 ? 'alarm-alert-error':'alarm-acknowledged-error')">
+                            {{cell.value}}
+                        </p>
+                    </ng-template>
+                </igx-column>
+    
+                <!--State-->
+                <igx-column [headerClasses]="'mat-header-cell'" field="AlarmState" header="State" [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell" >
+                        <p hideDelay="50" class="gw-grid-row-tooltip igx-grid__td-text" [ngClass]="cell.rowData.AlarmState == 2 ? 'alarm-suspended-error' : (cell.rowData.AlarmState == 0 ? 'alarm-alert-error':'alarm-acknowledged-error')" style="min-width: 90px;">
+                            {{getAlarmStateDescription(cell.value)}}
+                        </p>
+                        <a href="javascript:void(0);" class="gw-icon-btn p-r-10" [satPopoverAnchor]="actionPopOver" (click)="actionPopOver?.toggle()" >
+                            <mat-icon class="mat-icon--sml">edit</mat-icon>
+                        </a>
+                        <sat-popover #actionPopOver horizontalAlign="after" hasBackdrop [autoFocus]="true"
+                            [restoreFocus]="true">
+                            <div class="tooltip-wrapper">
+                                <div *ngIf="cell.rowData.AlarmState === 0">
+                                    <a class="gw-action-link" href="javascript:void(0);"  (click)="ChangeAlarmState(cell.rowData, 'acknowledge'); actionPopOver.close()">
+                                        <mat-label class="mat-subtitle pop-menu-text">Acknowledge</mat-label>
+                                    </a>
+                              </div>
+                              <div *ngIf="cell.rowData.AlarmState != 2">
+                                    <a class="gw-action-link" href="javascript:void(0);"  (click)="ChangeAlarmState(cell.rowData, 'disable'); actionPopOver.close()">
+                                        <mat-label class="mat-subtitle pop-menu-text">Suspend</mat-label>
+                                    </a>
+                              </div>
+                              <div *ngIf="cell.rowData.AlarmState === 2">
+                                    <a class="gw-action-link" href="javascript:void(0);"  (click)="ChangeAlarmState(cell.rowData, 'enable'); actionPopOver.close()">
+                                        <mat-label class="mat-subtitle pop-menu-text">Resume</mat-label>
+                                    </a>
+                              </div>
+                            </div>
+                        </sat-popover>                        
+                    </ng-template>
+                </igx-column>
+
+                <!--Count-->
+                <igx-column [headerClasses]="'mat-header-cell'" width="10%"  field="AlarmCount" header="Count" [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell">
+                        <p hideDelay="50" class="gw-grid-row-tooltip igx-grid__td-text" [ngClass]="cell.rowData.AlarmState == 2 ? 'alarm-suspended-error' : ''">
+                            {{cell.value}}
+                        </p>
+                    </ng-template>
+                </igx-column>        
+                
+                <!--Start time-->
+                <igx-column [headerClasses]="'mat-header-cell'" width="20%"  field="AlarmStartTime" header="Start Time" [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell">
+                        <p hideDelay="50" class="gw-grid-row-tooltip igx-grid__td-text" [ngClass]="cell.rowData.AlarmState == 2 ? 'alarm-suspended-error' : ''">
+                            {{cell.value | date:'MMM dd, yyyy HH:mm:ss a'}}
+                        </p>
+                    </ng-template>
+                </igx-column>
+                
+                <!--Equipment-->
+                <igx-column [headerClasses]="'mat-header-cell'" field="AlarmEquipmentName" header="Equipment" [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell" >
+                        <p hideDelay="50" class="gw-grid-row-tooltip igx-grid__td-text" [ngClass]="cell.rowData.AlarmState == 2 ? 'alarm-suspended-error' : ''">
+                            {{cell.value}}
+                        </p>
+                    </ng-template>
+                </igx-column>        
+                
+                <!--Parent-->
+                <igx-column [headerClasses]="'mat-header-cell'" field="AlarmParentName" header="Parent" [dataType]="'string'">
+                    <ng-template igxCell let-cell="cell">
+                        <p hideDelay="50" class="gw-grid-row-tooltip igx-grid__td-text" [ngClass]="cell.rowData.AlarmState == 2 ? 'alarm-suspended-error' : ''">
+                            {{cell.value}}
+                        </p>
+                    </ng-template>
+                </igx-column>
+            </igx-grid>
+    
+        </div>
+    </div>
+    <!-- <mat-divider></mat-divider> -->
+    <div mat-dialog-actions class="d-flex justify-content-end">
+        <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnCancel()">Close</button>
+    </div>
+</section>
+
+
+<!-- Content Mobile -->
+<div *ngIf="IsMobileView" class="row mx-1 gw-height-480">
+    <div class="mob-alarm-header">
+        <mat-label class="mat-subtitle-2">{{Title}}</mat-label>
+    </div>
+    <div class="gw-alarm-dialog-container">
+        <table *ngIf="ActiveAlarmDescriptions" class="alarm_mob-table">
+            <tbody>
+                <tr>
+                    <td>
+                        <table class="gw-alarm-dialog-table" *ngFor="let alarm of ActiveAlarmDescriptions">
+                            <tr class="gw-no-border">
+                                <td [ngClass]="alarm.SeverityType==1 ? 'tbl_cell_highlight_error': (alarm.SeverityType==2?'tbl_cell_highlight': 'tbl_cell_highlight_warning')">
+
+                                </td>
+                                <td>
+
+                                    <span class="mat-header-cell">Description:<br /></span>
+                                    <span hideDelay="50" class="gw-grid-row-tooltip igx-grid__td-text_alarms"
+                                        [ngClass]="alarm.AlarmState == 2 ? 'alarm-suspended-error' : (alarm.AlarmState == 0 ? 'alarm-alert-error':'alarm-acknowledged-error')">
+                                        {{alarm.Descripiton}}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="gw-no-border">
+                                <td [ngClass]="alarm.SeverityType==1 ? 'tbl_cell_highlight_error': (alarm.SeverityType==2?'tbl_cell_highlight': 'tbl_cell_highlight_warning')">
+
+                                </td>
+                                <td>
+                                    <span class="mat-header-cell">State:<br /></span>
+                                    <span hideDelay="50" class="gw-grid-row-tooltip igx-grid__td-text" [ngClass]="alarm.AlarmState == 2 ? 'alarm-suspended-error' : (alarm.AlarmState == 0 ? 'alarm-alert-error':'alarm-acknowledged-error')" style="min-width: 90px;">
+                                        {{getAlarmStateDescription(alarm.AlarmState)}}
+                                    </span>
+                                    <a href="javascript:void(0);" class="gw-icon-btn p-r-10" [satPopoverAnchor]="actionPopOvermobile" (click)="actionPopOvermobile?.toggle()" >
+                                        <mat-icon class="mat-icon--sml">edit</mat-icon>
+                                    </a>
+                                    <sat-popover #actionPopOvermobile horizontalAlign="after" hasBackdrop [autoFocus]="true"
+                                        [restoreFocus]="true">
+                                        <div class="tooltip-wrapper">
+                                            <div *ngIf="alarm.AlarmState === 0">
+                                                <a class="gw-action-link" href="javascript:void(0);"  (click)="ChangeAlarmState(alarm, 'acknowledge'); actionPopOvermobile.close()">
+                                                    <mat-label class="mat-subtitle pop-menu-text">Acknowledge</mat-label>
+                                                </a>
+                                          </div>
+                                          <div *ngIf="alarm.AlarmState != 2">
+                                                <a class="gw-action-link" href="javascript:void(0);"  (click)="ChangeAlarmState(alarm, 'disable'); actionPopOvermobile.close()">
+                                                    <mat-label class="mat-subtitle pop-menu-text">Suspend</mat-label>
+                                                </a>
+                                          </div>
+                                          <div *ngIf="alarm.AlarmState === 2">
+                                                <a class="gw-action-link" href="javascript:void(0);"  (click)="ChangeAlarmState(alarm, 'enable'); actionPopOvermobile.close()">
+                                                    <mat-label class="mat-subtitle pop-menu-text">Resume</mat-label>
+                                                </a>
+                                          </div>
+                                        </div>
+                                    </sat-popover> 
+                                </td>
+                            </tr>
+                            <tr class="gw-no-border">
+                                <td [ngClass]="alarm.SeverityType==1 ? 'tbl_cell_highlight_error': (alarm.SeverityType==2?'tbl_cell_highlight': 'tbl_cell_highlight_warning')">
+
+                                </td>
+                                <td>
+                                    <span class="mat-header-cell">Count:<br /></span>
+                                    <span class="gw-grid-row-tooltip igx-grid__td-text">{{alarm.AlarmCount}}</span>
+
+                                </td>
+                            </tr>
+                            <tr class="gw-no-border">
+                                <td [ngClass]="alarm.SeverityType==1 ? 'tbl_cell_highlight_error': (alarm.SeverityType==2?'tbl_cell_highlight': 'tbl_cell_highlight_warning')">
+
+                                </td>
+                                <td>
+                                    <span class="mat-header-cell">Start Time:<br /></span>
+                                    <span class="gw-grid-row-tooltip igx-grid__td-text">{{alarm.AlarmStartTime | date:'MMM dd, yyyy HH:mm:ss a'}}</span>
+
+                                </td>
+                            </tr>
+                            <tr class="gw-no-border">
+                                <td [ngClass]="alarm.SeverityType==1 ? 'tbl_cell_highlight_error': (alarm.SeverityType==2?'tbl_cell_highlight': 'tbl_cell_highlight_warning')">
+
+                                </td>
+                                <td>
+                                    <span class="mat-header-cell">Equipment:<br /></span>
+                                    <span class="gw-grid-row-tooltip igx-grid__td-text">{{alarm.AlarmEquipmentName}}</span>
+
+                                </td>
+                            </tr>
+                            <tr class="gw-no-border">
+                                <td [ngClass]="alarm.SeverityType==1 ? 'tbl_cell_highlight_error': (alarm.SeverityType==2?'tbl_cell_highlight': 'tbl_cell_highlight_warning')">
+
+                                </td>
+                                <td>
+                                    <span class="mat-header-cell">Parent:<br /></span>
+                                    <span class="gw-grid-row-tooltip igx-grid__td-text">{{alarm.AlarmParentName}}</span>
+
+                                </td>
+                            </tr>
+                            <!-- <tr class="gw-no-border">
+                                <td [ngClass]="alarm.SeverityType==1 ? 'tbl_cell_highlight_error': (alarm.SeverityType==2?'tbl_cell_highlight': 'tbl_cell_highlight_warning')">
+
+                                </td>
+                                <td>
+                                    <span class="mat-header-cell">Action Items:<br /></span>
+                                    <span class="gw-grid-row-tooltip  igx-grid__td-text"> {{alarm.ActionItems}}</span>
+                                    <br>
+                                    <br>
+                                </td>
+                            </tr> -->
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="button_center">
+        <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnCancel()">Close</button>
+    </div>
+</div>

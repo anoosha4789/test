@@ -1,0 +1,40 @@
+@import 'base.scss';
+
+.gw-browse-form {
+  width: 100%;
+}
+
+.gw-browse-modal-container {
+  margin: 0;
+  padding: 0;
+  width: 440px;
+  display: flex;
+  flex-direction: column;
+  
+  .mat-dialog-title {
+      margin: 3px 0px 3px 16px;
+  }
+
+  .mat-dialog-content {
+      margin: 0px 2px;
+  }
+
+  .gw-help-icon {
+      float: right;
+  }
+
+  .mat-form-field-appearance-fill {
+      padding: 0;
+      width: 88%;
+  }
+
+}
+
+.mat-dialog-header {
+  padding: $space-md $space-sm $space-sm;
+  // background: mat-color($grey, 100);
+}
+.mat-dialog-title {
+  color: mat-color($teal, 950);
+  margin: 0;
+}

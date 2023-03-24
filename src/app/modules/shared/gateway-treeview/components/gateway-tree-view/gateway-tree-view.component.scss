@@ -1,0 +1,36 @@
+@import 'base.scss';
+
+.gw-mat-tree-Node {
+    width: 100%;
+}
+
+.gw-highlight-row {
+    background-color: $gw-primary-color-100;
+    color           : $gw-primary-color-700;
+  
+    & .gw-dashboard-edit-icon {
+      color: $gw-primary-color-700;
+    }
+}
+
+.gw-dashboard-edit-icon {
+    font-size: 1.125rem;
+    cursor   : pointer;
+    &:hover {
+        color: $gw-primary-color-700;
+    }
+}
+
+.gw-tree-node-info {
+    padding-top: 30px;
+    padding-bottom: 40px;
+}
+
+.gw-tree-node-desc {
+    padding-top: 20px;
+    padding-bottom: 25px;
+}
+.gw-tree-node-info-label {
+    padding-left: 10px;
+    line-height: 20px;
+}

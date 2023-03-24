@@ -1,0 +1,86 @@
+<!-- Content Container -->
+<mat-sidenav-container class="sidenav-container" hasBackdrop="false" autosize *ngIf="navItems">
+
+  <!-- Side Navigation-->
+  <mat-sidenav #appDrawer class="gw-side-nav " mode="side" [fixedInViewport]="false" opened="true"
+    [attr.role]="'navigation'"
+    [ngClass]="{'pt-0 gw-stepper-nav':stepperVisibility, 'sidenav pt-4': !stepperVisibility}">
+    <mat-nav-list>
+
+      <ng-container *ngIf="stepperVisibility; then stepper; else defaultNav"></ng-container>
+
+      <!-- Inital Work Flow Stepper-->
+      <ng-template #stepper>
+        <p class="mx-3 my-2 mat-display-4 gw-stepper-nav-title">Initial Configuration</p>
+        <mat-vertical-stepper class="stepper-el gw-trans-bg" [linear]="isLinear" #gwStepper>
+          <!--(selectionChange)="selectionChange($event)"-->
+          <ng-template matStepperIcon="edit" let-index="index">
+            <mat-icon>none</mat-icon>{{index+1}}
+          </ng-template>
+          <mat-step *ngFor="let nav of navItems" [completed]="nav.completed" [state]="nav.state">
+            <ng-template matStepLabel>
+              <a class="mat-subtitle-2">{{nav.label}}</a> <!--[routerLink]="nav.route"-->
+            </ng-template>
+            <div class="mat-body-2 gw-body-text">
+              {{nav.desc}}
+            </div>
+          </mat-step>
+        </mat-vertical-stepper>
+      </ng-template>
+
+      <!--Post Configuration Save -->
+      <ng-template #defaultNav>
+        <ng-container *ngIf="!nestedTree">
+          <bh-nav-list *ngFor="let item of navItems" [item]="item" [itemList]="navItems"
+            (click)="onNavItemSelected(item)"></bh-nav-list>
+        </ng-container>
+        <ng-container *ngIf="nestedTree">
+          <div *ngFor="let item of navItems" class="gw-nested-tree">
+            <nav-list>
+              <nav-list-item *ngIf="item.children?.length===0" [item]="item"><span class="gw-word-break"
+                  matTooltip="{{ item?.displayName}}" matTooltipPosition="below" matTooltipClass="gw-mat-tooltip"
+                  [matTooltipDisabled]=" item?.displayName?.length > 30 ? 'false': 'true' ">{{item.displayName |
+                  gwTruncate:30}}</span></nav-list-item>
+              <nav-list *ngIf="item.children?.length>0" [expandable]="true" [item]="item">
+                <ng-container *ngFor="let child of item.children">
+                  <nav-list-item [item]="child" *ngIf="child.children?.length===0" class="d-block pl-3"><span
+                      class="gw-word-break" matTooltip="{{ child?.displayName}}" matTooltipPosition="below"
+                      matTooltipClass="gw-mat-tooltip"
+                      [matTooltipDisabled]=" child?.displayName?.length > 30 ? 'false': 'true' ">{{child.displayName |
+                      gwTruncate:30}}</span></nav-list-item>
+                  <nav-list *ngIf="child.children?.length>0" [expandable]="true" [item]="child" class="d-block pl-3">
+                    <ng-container *ngFor="let subChild of child.children">
+                      <nav-list-item *ngIf="subChild.children?.length===0" [item]="subChild" class="d-block pl-3"><span
+                          class="gw-word-break" matTooltip="{{ subChild?.displayName}}" matTooltipPosition="below"
+                          matTooltipClass="gw-mat-tooltip"
+                          [matTooltipDisabled]=" subChild?.displayName?.length > 30 ? 'false': 'true' ">{{subChild.displayName
+                          | gwTruncate:30}}</span></nav-list-item>
+                      <nav-list *ngIf="subChild.children?.length>0" [expandable]="true" [item]="subChild"
+                        class="d-block pl-3">
+                        <ng-container *ngFor="let innerChild of subChild.children">
+                          <nav-list-item [item]="innerChild" class="d-block pl-3"><span class="gw-word-break"
+                              matTooltip="{{ innerChild?.displayName}}" matTooltipPosition="below"
+                              matTooltipClass="gw-mat-tooltip"
+                              [matTooltipDisabled]=" innerChild?.displayName?.length > 30 ? 'false': 'true' ">{{innerChild.displayName
+                              | gwTruncate:30}}</span></nav-list-item>
+                        </ng-container>
+                      </nav-list>
+                    </ng-container>
+                  </nav-list>
+                </ng-container>
+              </nav-list>
+            </nav-list>
+
+          </div>
+        </ng-container>
+      </ng-template>
+
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!--Side Navigation Content-->
+  <mat-sidenav-content class="p-0">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

@@ -1,0 +1,48 @@
+@import 'base.scss';
+
+.mat-dialog-content {
+    &.no-top-padding {
+        padding-top: 0;
+    }
+}
+
+.mat-dialog-header {
+    padding: $space-md $space-md $space-sm $space-md;
+    background: transparent;
+}
+
+.mat-dialog-title {
+    @include heading('section-title');
+    color: $gw-primary-color-950;
+    mix-blend-mode: normal;
+    margin: 0;
+}
+
+.mat-dialog-overline {
+    @include overline();
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
+    color: $gw-secondary-color-600;
+    mix-blend-mode: normal;
+    padding-top: $space-xs;
+}
+
+// .mat-body-1 {
+//     color: $gw-secondary-color-600;
+// }
+
+.mat-dialog-container {
+    padding: $space-md;
+}
+
+.mat-dialog-actions {
+    background: transparent;
+    place-content: flex-end;
+    margin-bottom: 0;
+    min-height: unset;
+}
+
+.mat-dialog-content {
+    margin: 0;
+    padding: $space-md $space-md 0 $space-md;
+}
