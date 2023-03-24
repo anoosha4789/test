@@ -1,0 +1,79 @@
+<div class="d-flex flex-wrap pb-md-3" [class.px-md-3]="!showMaintainceMode && panelTypeName =='suresens'" [class.pt-md-3]="showMaintainceMode || panelTypeName =='multinode'">
+
+    <div class="gw-toolbox-card col-md-12 col-lg-6 col-xl-4 px-md-2 p-b-16" [class.pl-0]="showMaintainceMode || panelTypeName =='multinode'"
+        *ngFor="let card of inchargeMonitoringCards, let i = index">
+        <mat-card class="p-0" cdkTrapFocus>
+            <mat-card-header class="gw-toolbox-card-header"
+                [ngClass]="{'gw-toolbox-card-invalid': card.commStatus.RawValue === 0 ||  card.commStatus.RawValue === -999  || card.toolStatusCode == 2,
+                'gw-toolbox-card-warning': card.commStatus.RawValue !== 0 && card.commStatus.RawValue !== -999 && card.toolStatusCode == 1 }">
+                <mat-card-title class="d-flex justify-content-between mb-0" style="gap: 10px">
+                    <div class="mat-subtitle-1 py-2 gw-toolbox-card-title">
+                        <mat-icon class="gw-ml-5 mr-2" *ngIf="card.commStatus"
+                            matTooltip="{{ card.commStatus.RawValue === 0 || card.commStatus.RawValue === -999 ? cardStatus
+                                : card.toolTipData}}" matTooltipPosition="below" matTooltipClass="gw-toolbox-card-icon-tooltip"
+                                [style.cursor]="(card.commStatus.RawValue === 0 || card.commStatus.RawValue === -999 || card.toolTipData) ? 'pointer' : 'inherit'">
+                            {{card.commStatus.RawValue !== 0 && card.commStatus.RawValue !== -999 && card.toolStatusCode == 1 ? 'warning' :
+                                card.commStatus.RawValue === 0 || card.commStatus.RawValue === -999 || card.toolStatusCode == 2 ? 'info' :
+                            'check_circle'
+                            }}
+                        </mat-icon>
+                        
+                        <!-- <span *ngIf="!bIsMobileView" matTooltip="{{card.details.Description}}" matTooltipPosition="above"
+                            matTooltipClass="gw-mat-tooltip"
+                            [matTooltipDisabled]="card.details.Description.length > 16 ? 'false': 'true' ">
+                            {{card.details.Description | gwTruncate:16}} 
+                        </span> -->
+                        <span matTooltip="{{card.details.Description}}" matTooltipPosition="above"
+                             matTooltipClass="gw-mat-tooltip"
+                            [matTooltipDisabled]="!isEllipsisActive(description)"
+                        >
+                            <span #description class="label-single-line-ellipsis">{{card.details.Description | gwTruncate:25}}</span>
+                        </span>  
+                    </div>
+                    <div class="gw-toolbox-btn-align">
+                        <button type="submit" *ngIf="bIsMobileView" mat-button class="mat-button gw-button-tertiary-sm"
+                            [routerLink]="[gatewayRoute, card.details.DeviceId]">View</button>
+                        <button type="submit"  *ngIf="!bIsMobileView" mat-button class="mat-button gw-button-tertiary-sm"
+                            [routerLink]="[gatewayRoute, card.details.DeviceId]"  title="View interface card details.">View Card Details</button>
+                    </div>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="gw-toolbox-card-content">
+                <div class="d-flex flex-wrap justify-content-between py-2">
+                    <div class="col gw-toolbox-label pr-xl-2">Protocol</div>
+                    <div class="col">{{card.protocol}}</div>
+                </div>
+                <div class="d-flex flex-wrap justify-content-between py-2">
+                    <div class="col gw-toolbox-label pr-xl-2">{{ card.isTCPIPChannel ? 'IP Address' : 'Serial Port' }}</div>
+                    <div class="col">{{card.port}}</div>
+                </div>
+                <div class="d-flex flex-wrap justify-content-between py-2">
+                    <div class="col gw-toolbox-label pr-xl-2">{{ card.isTCPIPChannel ? 'Port Number' : 'Card Address' }}</div>
+                    <div class="col">{{card.isTCPIPChannel ? card.portNumber: card.details.CardAddress}}</div>
+                </div>
+                <div class="d-flex flex-wrap justify-content-between py-2">
+                    <div class="col gw-toolbox-label pr-xl-2">Cable Voltage (V)</div>
+                    <div class="col" *ngIf="card.currentDevice">
+                        <ng-container *ngIf="card.voltageDevice.RawValue !== -999; else defBadDataValue">
+                            {{card.voltageDevice.RawValue | number: '1.2-2'}}
+                        </ng-container>    
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap justify-content-between py-2">
+                    <div class="col gw-toolbox-label pr-xl-2">Total Cable Current (mA) </div>
+                    <div class="col" *ngIf="card.voltageDevice">
+                        <ng-container *ngIf="card.currentDevice.RawValue !== -999; else defBadDataValue">
+                            {{card.currentDevice.RawValue | number: '1.2-2'}}
+                        </ng-container>    
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+</div>
+
+ <!--Default Bad Data-->
+ <ng-template #defBadDataValue>
+    {{errorHandlingSettings?.BadDataValue | number: '1.2-2'}}
+</ng-template>

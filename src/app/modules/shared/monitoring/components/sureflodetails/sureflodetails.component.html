@@ -1,0 +1,132 @@
+<section class="m-4">
+    <div class="row gw-incharge-row gw-tool-breadcrumb-row">
+        <a class="gw-text-link-breadcrumb" [routerLink]="monitoringRoute">Monitoring</a>
+        <a class="gw-text-link-breadcrumb p-l-2" [routerLink]="monitoringRoute" [queryParams]="{ well: flowMeterWellId}">{{toolTitle}}</a>
+    </div>
+    <mat-divider class="gw-tool-divider"></mat-divider>
+    <div class="row gw-incharge-row">
+        <div *ngIf="multi_axis_series" class="col-lg-8 col-md-6 col-sm-12 col-xs-12 p-l-0 gw-toolDetails-ChartView">
+            <div *ngIf="IsMobileView">
+                <gateway-multiaxis-chart [chartId]="chartId" [chartOptions]="multi_axis_series" [Height]="500"></gateway-multiaxis-chart>
+            </div>
+            <div *ngIf="!IsMobileView">
+                <gateway-multiaxis-chart [chartId]="chartId" [chartOptions]="multi_axis_series" [Height]="225"></gateway-multiaxis-chart>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 m-0 gw-toolDetails-ValueView">
+            <div class="row">
+                <mat-accordion class="gw-full-width">
+                      <mat-expansion-panel #overViewPanel [expanded]="expandPanels[0]">
+                        <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'" (click)="togglePanel(0)">
+                          <mat-panel-title class="gw-mat-expansion-panel-header-title">
+                            Flowmeter Overview
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <table class="gw-toolDetails-table">
+                                <tr class="gw-toolDetails-thRow">
+                                    <th class="gw-toolDetails-th-param">Parameter</th>
+                                    <th class="gw-toolDetails-th-value">Current Value</th>
+                                </tr>
+
+                                <tr class="gw-toolDetails-tr">
+                                    <td class="mat-body-2 gw-toolDetails-td-param">Technology</td>
+                                    <td class="mat-body-2 gw-toolDetails-td-value">{{flowMeterTechnology}}</td>
+                                </tr>
+
+                                <tr class="gw-toolDetails-tr">
+                                    <td class="mat-body-2 gw-toolDetails-td-param">Well Type</td>
+                                    <td class="mat-body-2 gw-toolDetails-td-value">{{flowMeterFluidType}}</td>
+                                </tr>
+
+                                <tr class="gw-toolDetails-tr">
+                                    <td class="mat-body-2 gw-toolDetails-td-param">Well Name</td>
+                                    <td class="mat-body-2 gw-toolDetails-td-value">{{flowMeterWellName}}</td>
+                                </tr>
+
+                                <tr class="gw-toolDetails-tr" *ngFor="let item of sureFLOOverviewMonitoringTools">
+                                    <td class="mat-body-2 gw-toolDetails-td-param">{{item.tag}} ({{item.deviceDataPoint.UnitSymbol}})</td>
+                                    <td class="mat-body-2 gw-toolDetails-td-value">
+                                        <ng-container *ngIf="item.deviceDataPoint.RawValue !== -999; else defBadDataValue">
+                                            {{item.deviceDataPoint.RawValue | number: '1.3-3' | gwTruncate:15}}
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                      </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+            <div class="row p-t-10" *ngFor="let item of sureFLOMonitoringTool | keyvalue; let inx = index">
+                <mat-accordion class="gw-full-width">
+                    <mat-expansion-panel #diagnosticPanel [expanded]="expandPanels[inx + 1]">
+                      <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'" (click)="togglePanel(inx + 1)">
+                        <mat-panel-title class="gw-mat-expansion-panel-header-title">
+                          {{item.key}}
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div>
+                        <table class="gw-toolDetails-table">
+                            <tr class="gw-toolDetails-thRow">
+                                <th class="gw-toolDetails-th-param">Parameter</th>
+                                <th class="gw-toolDetails-th-value">Current Value</th>
+                                <th></th>
+                            </tr>
+
+                            <tr class="gw-toolDetails-tr" *ngFor="let points of item.value">
+                                <td class="mat-caption gw-toolDetails-td-param">
+                                    <!-- <mat-icon *ngIf="points.point.DevicePointIndex === 2 && getToolStatusCode(diagnosticDevice.RawValue) === 2" class="mat-icon--sml gw-icon-info">
+                                        info
+                                    </mat-icon>
+                                    <mat-icon *ngIf="points.point.DevicePointIndex === 2 && getToolStatusCode(diagnosticDevice.RawValue) === 1" class="mat-icon--sml gw-icon-warning">
+                                        warning
+                                    </mat-icon> -->
+                                    {{points.point.Description}} 
+                                    <span *ngIf="points.deviceDataPoint.UnitSymbol">({{points.deviceDataPoint.UnitSymbol}})</span>
+                                </td>
+                                <td *ngIf="points.isFloat" [attr.colspan]="points.point.ReadOnly == false ? '1': '2'" class="mat-body-2 gw-toolDetails-td-value">
+                                    <span matTooltip="{{points.deviceDataPoint.RawValue | number: '1.3-3'}}" 
+                                        matTooltipPosition="below" 
+                                        matTooltipClass="gw-tool-grid-row-tooltip"
+                                        [matTooltipDisabled]="(points.deviceDataPoint.RawValue | number: '1.3-3')?.toString().length > 10 ? 'false': 'true'">
+                                        <ng-container *ngIf="points.deviceDataPoint.RawValue !== -999; else defBadDataValue">
+                                            {{points.deviceDataPoint.RawValue | number: '1.3-3' | gwTruncate:15}}
+                                        </ng-container>
+                                    </span>
+                                </td>
+                                <td *ngIf="!points.isFloat" [attr.colspan]="points.point.ReadOnly == false ? '1': '2'" class="mat-body-2 gw-toolDetails-td-value">
+                                    <span matTooltip="{{points.deviceDataPoint.RawValue}}" 
+                                        matTooltipPosition="below" 
+                                        matTooltipClass="gw-tool-grid-row-tooltip"
+                                        [matTooltipDisabled]="points.deviceDataPoint.RawValue?.toString().length > 10 ? 'false': 'true'">
+                                       
+                                        <ng-container *ngIf="points.deviceDataPoint.RawValue !== -999; else defUnsignedIntValue">
+                                            {{points.deviceDataPoint.RawValue | gwTruncate:15}}
+                                        </ng-container>
+                                       
+                                    </span>
+                                </td>
+                                <td *ngIf="points.point.ReadOnly == false" class="gw-toolDetails-td-value">
+                                    <button mat-button class="mat-button-tertiary-sm gw-xs-button"
+                                         (click)="setServerValue(points)">Set</button>
+                                </td>
+                            </tr>
+                        </table>
+                      </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Default Bad Data-->
+<ng-template #defBadDataValue>
+{{errorHandlingSettings?.BadDataValue | number: '1.2-2'}}
+</ng-template>
+
+<!--Default Bad Data Unsigned Integer-->
+<ng-template #defUnsignedIntValue>
+    {{errorHandlingSettings?.BadDataValueUnsignedInteger}}
+</ng-template>

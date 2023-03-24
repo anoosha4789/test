@@ -1,0 +1,16 @@
+<div class="sureflo-datapoint-dialog p-3">
+    <mat-radio-group aria-labelledby="select-data-point" [(ngModel)]="selectedPath" class="gw-sureflo-radio-group">
+        <mat-radio-button *ngFor="let dataPoint of dataPointList" [value]="dataPoint.displayLabel" class="m-2" color="primary"
+            (change)="radioChange(dataPoint)">
+            {{dataPoint.displayLabel}}
+        </mat-radio-button>
+    </mat-radio-group>
+    <div  class="mat-body-1" *ngIf="!dataPointList">
+        No Tools Found.
+    </div>
+</div>
+<!-- <mat-divider></mat-divider> -->
+<div mat-dialog-actions class="d-flex justify-content-end">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnCancel()">Cancel</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnSubmit()" [disabled]="actionBtnDisabled">Select</button>
+</div>

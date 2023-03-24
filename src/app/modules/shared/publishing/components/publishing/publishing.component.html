@@ -1,0 +1,71 @@
+<mat-card class="m-2 gw-config-container" cdkTrapFocus *ngIf="isConfigSaved && publishing">
+    <mat-card-content id="gw-mat-card-content">
+        <mat-tab-group animationDuration="0ms" [(selectedIndex)]="selectedTabIndex"
+            (selectedTabChange)="onTabChanged($event);" class="gw-tab-group">
+
+            <!-- Data Publishing-->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <label class="gw-mat-tab-label" matTooltip="{{publishingName}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-tooltip"
+                        [matTooltipDisabled]="publishingName.length > 20 ? 'false': 'true' ">
+                        {{publishingName | gwTruncate:20}}
+                    </label>
+                </ng-template>
+                <ng-template matTabContent>
+                    <gw-data-publishing [publishing]="publishing" (isFormValidEvent)="isFormValidEvent($event)"
+                        (publishingFormInvalidEvent)="publishingFormInvalidEvent($event)"
+                        (publishingUpdatedEvent)="hasPublishingUpdatedEvent($event)"
+                        (publishingChangedEvent)="hasPublishingChangedEvent($event)" (showCustomMapDialogEvent)="showNewCustomMapDialog()">
+                    </gw-data-publishing>
+                </ng-template>
+            </mat-tab>
+
+            <!-- Custom Map-->
+            <mat-tab label="Map Template Details" [disabled]="hasPublishingErrors || isImportVisible">
+                <ng-template matTabContent>
+                    <gw-map-template-details #mapTemplateComponent [publishing]="publishing" (showCustomMapDialogEvent)="showNewCustomMapDialog()" (editMapEvent)="editMap($event)"></gw-map-template-details>
+                </ng-template>
+            </mat-tab>
+
+        </mat-tab-group>
+    </mat-card-content>
+    <mat-card-actions>
+        <mat-divider></mat-divider>
+        <div class="d-flex justify-content-between gw-mt-12 gw-card-actions">
+            <div>
+                <button *ngIf="bShowDeleteButton" mat-button class="mat-button-tertiary-sm__icon gw-tertiary-delete-btn"
+                    (click)="deletePublishingClick()">
+                    <mat-icon class="mat-icon-left mat-icon--sml">delete</mat-icon>Delete
+                </button>
+            </div>
+            <div class="d-flex">
+                <button *ngIf="bShowBackButton || selectedTabIndex != 0" mat-button class="mat-button-tertiary-sm"
+                    (click)="onBackBtnClick()">Back</button>
+                <button type="submit" [disabled]="!isFormValid || isImportVisible" mat-button class="mat-button-primary-sm mr-0"
+                    (click)="saveDataPubBtnClick()">{{actionBtnTxt}}</button>
+            </div>
+        </div>
+    </mat-card-actions>
+</mat-card>
+
+
+<mat-card class="m-2 gw-config-container" cdkTrapFocus *ngIf="!isConfigSaved">
+    <mat-card-content id="gw-mat-card-content">
+        <mat-tab-group animationDuration="0ms" class="gw-tab-group">
+
+            <mat-tab label="New Publishing">
+                <ng-template matTabContent>
+                    <div class="mat-subtitle-2 mt-1 mb-4">
+                        Data Publishing
+                        <span class="gw-info-icon pl-2">
+                            <mat-icon>info</mat-icon>
+                        </span>
+                    </div>
+                    <p class="mat-body-2">A valid configuration must be saved before creating a new publishing channel.</p>
+                </ng-template>
+            </mat-tab>
+
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>

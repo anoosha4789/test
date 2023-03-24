@@ -1,0 +1,54 @@
+.gw-maptemplate-row {
+    @media (min-width: 1533px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 10%;
+        max-width: 10%;
+    }
+
+    @media (max-width: 1532px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 15%;
+        max-width: 15%;
+    }
+
+    @media (max-width: 1307px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+.gw-maptemplate-left-row {
+    @media (min-width: 1533px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+
+    @media (max-width: 1532px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    @media (max-width: 1307px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+    .mat-form-field-appearance-fill {
+        padding-top: 0;
+    }
+}
+
+.gw-map-icon-wrapper{
+    width: 25px !important;
+    height: 25px !important;
+    min-width: 25px;
+    line-height: 0;
+}
+.gw-map-options-wrapper{
+    max-height: 130px;
+    overflow: auto;
+}   
+
+a.disabled{
+    cursor:not-allowed;
+}
+// footer{
+// border-top: 1px solid #BDBDBD;
+// }

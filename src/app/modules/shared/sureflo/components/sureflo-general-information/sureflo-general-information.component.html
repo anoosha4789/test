@@ -1,0 +1,70 @@
+<section id="surefloGenInfoForm" class="container-fluid">
+    <form novalidate [formGroup]="surefloGeneralInfoForm" autocomplete="off">
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">General Information</span>
+        </div>
+        <div class="container-fluid">
+            <div class="row p-b-10">
+                <div class="col-lg-4 col-xl-3 p-1">
+                    <span class="gw-form-label">Name</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input" appearance="fill">
+                        <input matInput name="Name" formControlName="Name" class="mat-body-2 form-baseline"
+                            (input)="validateFormControls()" (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.Name" class="mat-error">
+                            {{formCtrlErrorMessage.Name}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row p-b-10">
+                <div class="col-lg-4 col-xl-3 p-1">
+                    <span class="gw-form-label">Serial Number</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input" appearance="fill">
+                        <input matInput name="SerialNumber" formControlName="Serial" class="mat-body-2 form-baseline"
+                            (input)="validateFormControls()" (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.Serial" class="mat-error">
+                            {{formCtrlErrorMessage.Serial}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row p-b-10">
+                <div class="col-lg-4 col-xl-3 p-1">
+                    <span class="gw-form-label">Technology</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-select-small gw-sureflo-input" appearance="fill">
+                        <mat-select class="mat-body-2 form-baseline" formControlName="Technology" [disabled]="isReadOnly"
+                        (selectionChange)="onTechnologySelChange($event)">
+                            <mat-option *ngFor="let flowMeterType of flowMeterTypes" [value]="flowMeterType">
+                                {{flowMeterType}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-b-10">
+                <div class="col-lg-4 col-xl-3 p-1">
+                    <span class="gw-form-label">Well Type</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-select-small gw-sureflo-input" appearance="fill">
+                        <mat-select class="mat-body-2 form-baseline" formControlName="FluidType" [disabled]="isReadOnly"
+                        (selectionChange)="onWellTypeSelChange($event)">
+                            <mat-option *ngFor="let wellFlowType of wellFlowTypes" [value]="wellFlowType">
+                                {{wellFlowType}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        
+        </div>
+
+    </form>
+</section>

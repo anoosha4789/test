@@ -1,0 +1,45 @@
+<div class="row m-r-0">
+    <input id="MapFocus" matInput class="gw_customMap-hiddenField" #MapFocus>
+    <!--Hidden field added to retain focus on close of a dialog-->
+    <div class="col-lg-3 p-r-0 p-l-24 p-t-6">
+        <div *ngIf="bNoDataPointsAvalbale" class="body-label-value p-x-6">No data points available for this register
+            range.</div>
+        <cdk-virtual-scroll-viewport
+            [ngClass]="!IsDefaultMap && selectedTreeNodes.length != 0 ? 'gw-tree-view-scrollbar' : 'gw-tree-view-scrollbar-full'"
+            class="gw-dynamic-card-scrollbar gw-checked-treeview-scroll-viewport" itemSize="40">
+            <gateway-checked-treeview [treeNodes]="dataSourceNode" [existingDataPoints]="existingDataPoints" [clearNodes]="clearSelectedNodes"
+                (selectedTreeNodes)="dataPointsSelected($event)" [systemClockMultipleEnable]="true"></gateway-checked-treeview>
+        </cdk-virtual-scroll-viewport>
+        <button *ngIf="!IsDefaultMap && selectedTreeNodes.length != 0" type="submit" mat-button
+            class="mat-button-primary-sm gw-addtoMap-btn m-r-10" (click)="OnAddDataPoints()">
+            Add <mat-icon class="mat-icon-left gw-addtoMap-icon mat-icon">input</mat-icon>
+        </button>
+    </div>
+    <div class="col-lg-9 p-l-6 p-t-10 gw-customMap-divider">
+        <div class="row p-l-22 p-r-30">
+            <div *ngIf="!IsDefaultMap && isEdit" class="col">
+                <form [formGroup]="mapTemplateForm" #customMapForm="ngForm" autocomplete="off">
+                    <span class="mat-subtitle-2 p-t-18 p-r-10">Name</span>
+                    <mat-form-field class="mat-input-small gw-customMap-name" appearance="fill">
+                        <input id="MapName" matInput class="gw-form-label form-baseline" formControlName="MapName"
+                            name="MapName" [(ngModel)]="modbusMapName" [matTooltip]="modbusMapName"
+                            matTooltipPosition="below" matTooltipClass="gw-mat-tooltip"
+                            [matTooltipDisabled]="modbusMapName?.length > 29 ? 'false': 'true' "
+                            (input)="validateCustomMap()" (blur)="validateCustomMap()" autocomplete="off">
+                        <mat-hint *ngIf="validationMessage != null" align="start" class="mat-error">
+                            {{validationMessage}}
+                        </mat-hint>
+                    </mat-form-field>
+                </form>
+            </div>
+            <div class="col d-flex justify-content-end">
+				<button  type="submit" mat-button  [disabled]="disableRemoveButton" [ngClass]="disableRemoveButton ? 'mat-button-primary-sm' : 'mat-button-warn-sm'"  class="text-capitalize" (click)="OnDeleteDataPoints()">
+                    <mat-icon class="mat-icon-left mat-icon">remove_circle</mat-icon> REMOVE
+                </button>
+            </div>
+        </div>
+        <gw-modbus-template-points [modbusId]="modbusId" [displayType]="displayType" [deleteDataPoints]="deleteDataPoints" [notifier]="childNotifier"
+            (registerTypeUpdatedEvent)="registerTypeUpdated($event)" (selectedRowsTodeleteEnable) = "selectedRowsTodeleteEnable($event)"
+            (modbusDeviceMapUpdatedEvent)="modbusDeviceMapUpdated($event)"></gw-modbus-template-points>
+    </div>
+</div>

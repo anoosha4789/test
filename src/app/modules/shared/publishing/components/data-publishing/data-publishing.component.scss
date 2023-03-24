@@ -1,0 +1,45 @@
+.dataPublishingForm {
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    .gw-unit-system-row {
+        margin-left: -8px;
+        @media screen and (min-device-width: 1310px) and (-webkit-min-device-pixel-ratio: 1) {
+            flex: 0 0 40%;
+            max-width: 40%;
+        }
+    }
+    
+    .mat-card.mat-focus-indicator {
+        padding-top: 0px;
+    }
+    
+    .mat-form-field-appearance-fill { padding: 0;}
+
+    .gw-slaveId-btn {
+        min-width: 45px !important;
+        line-height: 29.6px !important;
+        height: 100%;
+    }
+    
+    .gw-slaveId-form-field .mat-form-field-infix {
+        padding: 0px !important;
+    }
+    
+    .gw-slaveId-input { 
+        border: none; 
+        text-align: center !important;
+    }
+
+    .gw-unit-system-form-label{
+        width: 140px !important;
+    }       
+}
+.gw-map-options-wrapper{
+    max-height: 130px;
+    overflow: auto;
+} 
+// footer{
+//     border-top: 1px solid #BDBDBD;
+// }
+

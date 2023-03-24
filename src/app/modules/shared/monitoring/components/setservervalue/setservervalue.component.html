@@ -1,0 +1,56 @@
+<section>
+    <div class="p-x-2">
+        <div class="row p-l-20 p-r-20">
+            <div class="col-6 p-t-10">
+                <span class="gw-form-label">Current {{label}}</span>
+            </div>
+            <div *ngIf="dataType == 0" class="col-6 p-t-10 p-l-0">
+                <span class="gw-form-label p-l-8">{{currentValue}}&nbsp; {{deviceDataPoint.UnitSymbol}}</span>
+            </div>
+            <div *ngIf="dataType != 0" class="col-6 p-t-10 p-l-0">
+                <span class="gw-form-label p-l-8">{{data.selectValues[deviceDataPoint.RawValue].value}}</span>
+            </div>
+        </div>
+
+        <div class="row p-l-20 p-r-20 p-t-10">
+            <div class="col-6 p-t-14">
+                <span class="gw-form-label">New {{label}}</span>
+            </div>
+            <div *ngIf="dataType == 0" class="col-6 p-l-0">
+                <mat-form-field class="mat-input-small newValueField" appearance="fill">
+                    <button mat-button class="mat-button-sm mat-button-primary-sm__icon-only gw-set-inteval-btn" (click)="decrementValue()">
+                        <mat-icon class="mat-icon--sml">remove</mat-icon>
+                    </button>
+                    <input *ngIf="isInteger" id="newValue" matInput type="text" gw-number-input class="gw-form-label form-baseline newValueText gw-set-inteval-input" name="newValue" 
+                    [(ngModel)]="newValue" [formControl]="newValueFormControl" autocomplete="off" (input)="validateDataValue()" >
+                    <input *ngIf="!isInteger" id="newValue" matInput type="number" class="gw-form-label form-baseline newValueText gw-set-inteval-input" name="newValue" 
+                    [(ngModel)]="newValue" [formControl]="newValueFormControl" autocomplete="off" (input)="validateDataValue()" >
+                    <button mat-button class="mat-button-sm mat-button-primary-sm__icon-only gw-set-inteval-btn" (click)="incrementValue()">
+                        <mat-icon class="mat-icon--sml">add</mat-icon>
+                    </button>
+                    <mat-hint *ngIf="errMessage" align="start" class="mat-error gw-tool-mat-hint">
+                        {{errMessage}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+
+            <div *ngIf="dataType != 0" class="col-6 p-l-0">
+                <mat-form-field class="mat-select-small newValueField" appearance="fill">
+                    <mat-select id="newValueSelect" class="gw-form-label form-baseline" [(ngModel)]="newValue">
+                        <mat-option *ngFor="let keyValueData of data.selectValues" [value]="keyValueData.key">{{keyValueData.value}}</mat-option>
+                      </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div *ngIf="warning" class="row p-l-30 p-r-30 gw-warning gw-mat-body-warning">
+            <mat-icon class="gw-warning-icon mat-icon notranslate material-icons mat-icon-no-color p-r-10">warning</mat-icon>
+            <span>{{warning}}</span>
+        </div>
+    </div>
+    <!-- <mat-divider></mat-divider> -->
+    <div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+        <button type="submit" mat-button class="mat-button-tertiary-sm mr-4" (click)="OnCancel()">Cancel</button>
+        <button type="submit" mat-button class="mat-button-primary-sm" [disabled]="!bIsValid" (click)="OnOk()">Set</button>
+    </div>
+</section>

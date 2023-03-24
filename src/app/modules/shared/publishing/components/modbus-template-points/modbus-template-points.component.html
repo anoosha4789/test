@@ -1,0 +1,54 @@
+<div class="m-t-0 m-l-6 m-b-10 table-type-toggle-group">
+    <mat-button-toggle-group value="3" #registerTableTypeGroup="matButtonToggleGroup" aria-label="Register Table Types">
+        <mat-button-toggle class="button-toggle button-toggle-outer-left" value="3" (change)="onRegisterTableTypeChange($event)">40000</mat-button-toggle>
+        <mat-button-toggle class="button-toggle button-toggle-inner" value="4" (change)="onRegisterTableTypeChange($event)">30000</mat-button-toggle>
+        <mat-button-toggle class="button-toggle button-toggle-inner" value="2" (change)="onRegisterTableTypeChange($event)">10000</mat-button-toggle>
+        <mat-button-toggle class="button-toggle button-toggle-outer-right" value="1" (change)="onRegisterTableTypeChange($event)">00000</mat-button-toggle>
+      </mat-button-toggle-group>
+</div>
+
+<div class="m-2 gw-maptemplate-grid-height">
+    
+    <div #tooltipRef="tooltip" igxTooltip class="gw-grid-tooltip">
+        <ng-container *ngIf="tooltipRef.context">
+          {{tooltipRef.context.value}}
+        </ng-container>
+    </div>
+
+    <igx-grid igxPreventDocumentScroll #gridModbusDataPoints [data]="modBusDataPoints" [emptyGridMessage]="'No Addresses are configured.'" [primaryKey]="'Address'" 
+        width="100%" resizable="true" [columnHiding]="true">
+        <igx-column [headerClasses]="'mat-header-cell'" width="5%" field="isChecked" header=" " [editable]="false">
+            <ng-template igxHeader let-column>
+                <mat-checkbox color='primary' class="mt-2" 
+                [checked]="SelectedRegisterType === 3? checked3 : SelectedRegisterType === 4 ? checked4 :SelectedRegisterType === 2? checked2: checked1"
+                [indeterminate]="SelectedRegisterType === 3? indeterminate3 : SelectedRegisterType === 4 ? indeterminate4 :SelectedRegisterType === 2? indeterminate2: indeterminate1"
+                 (change)="onSelectAllDataPointsToRemove($event)"></mat-checkbox>
+             </ng-template>
+            <ng-template igxCell let-cell="cell">
+               <mat-checkbox color='primary' [checked]="cell.value"  (change)="onSelectDataPointToRemove($event,cell.row.index, cell.row.rowID)"></mat-checkbox>
+            </ng-template>
+        </igx-column>
+        <igx-column [headerClasses]="'mat-header-cell'" field="Address" header="Address" [dataType]="'string'" width="15%">
+        </igx-column>
+        <igx-column *ngIf="showDataFormat" [headerClasses]="'mat-header-cell'" field="DataFormat" header="Data Format" [dataType]="'string'" width="26%">
+        </igx-column>
+        <igx-column *ngIf="!showDataFormat" [headerClasses]="'mat-header-cell'" field="DataType" header="Data Type" [dataType]="'string'" width="26%">
+        </igx-column>
+        <igx-column [headerClasses]="'mat-header-cell'" field="Description" header="Description" [dataType]="'string'" width="{{columnDescWidth}}">
+            <ng-template igxCell let-cell="cell">
+                <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50" class="gw-grid-row-tooltip">
+                    {{cell.value}}
+                </span>
+            </ng-template>
+        </igx-column>
+        <igx-column [headerClasses]="'mat-header-cell'" field="Units" header="Units" [dataType]="'string'" width="12%">
+        </igx-column>
+        <!-- <igx-column [headerClasses]="'mat-header-cell'" width="5%" [editable]="false">
+            <ng-template igxCell let-cell="cell">
+                <a href="javascript:void(0);" class="gw-icon-btn p-r-10" (click)="onDeleteDataPoint(cell.row.index, cell.row.rowID)">
+                    <mat-icon class="mat-icon--sml mat-delete-icon">delete</mat-icon>
+                </a>
+            </ng-template>
+        </igx-column> -->
+    </igx-grid>
+</div>

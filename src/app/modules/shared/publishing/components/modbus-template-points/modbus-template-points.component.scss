@@ -1,0 +1,21 @@
+
+@import 'base.scss';
+@import 'components.scss';
+
+.gw-maptemplate-grid-height {
+    margin-bottom: 0px !important;
+    height: calc(100vh - 374px);
+}
+
+.button-toggle {
+    width: 100px;
+    border: 1px solid;
+}
+
+.mat-delete-icon {
+    margin-left: -15px;
+}
+
+:host ::ng-deep .igx-grid__th-title .mat-checkbox .mat-checkbox-ripple{
+    height: 0px !important;
+}

@@ -1,0 +1,139 @@
+<section class="m-4">
+    <div class="row gw-incharge-row gw-tool-breadcrumb-row">
+        <a *ngIf="!fromCard" class="gw-text-link-breadcrumb" [routerLink]="monitoringRoute">Monitoring</a>
+        <a *ngIf="!fromCard" class="gw-text-link-breadcrumb p-l-2" [routerLink]="monitoringRoute" [queryParams]="{ well: wellId}">{{toolTitle}}</a>
+        <a *ngIf="fromCard" class="gw-text-link-breadcrumb" [routerLink]="toolboxRoute">Toolbox</a>
+        <a *ngIf="fromCard" class="gw-text-link-breadcrumb p-l-2" [routerLink]="[cardRoute, cardDeviceId]">{{toolCardTitle}}</a>
+    </div>
+    <mat-divider class="gw-tool-divider"></mat-divider>
+    <div class="row gw-incharge-row">
+        <div *ngIf="multi_axis_series" class="col-lg-8 col-md-6 col-sm-12 col-xs-12 p-l-0 gw-toolDetails-ChartView">
+            <!-- <gateway-multiaxis-chart [chartId]="chartId" [chartOptions]="multi_axis_series" [Height]="225"></gateway-multiaxis-chart> -->
+            <div *ngIf="IsMobileView">
+                <gateway-multiaxis-chart [chartId]="chartId" [chartOptions]="multi_axis_series" [Height]="500"></gateway-multiaxis-chart>
+            </div>
+            <div *ngIf="!IsMobileView">
+                <gateway-multiaxis-chart [chartId]="chartId" [chartOptions]="multi_axis_series" [Height]="225"></gateway-multiaxis-chart>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 m-0 gw-toolDetails-ValueView">
+            <div class="row">
+                <mat-accordion class="gw-full-width">
+                      <mat-expansion-panel #overViewPanel [expanded]="expandPanels[0]">
+                        <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'" (click)="togglePanel(0)">
+                          <mat-panel-title class="gw-mat-expansion-panel-header-title">
+                            Tool Overview
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <table class="gw-toolDetails-table">
+                                <tr class="gw-toolDetails-thRow">
+                                    <th class="gw-toolDetails-th-param">Parameter</th>
+                                    <th class="gw-toolDetails-th-value">Current Value</th>
+                                </tr>
+
+                                <tr class="gw-toolDetails-tr">
+                                    <td class="mat-body-2 gw-toolDetails-td-param">Tool Address</td>
+                                    <td class="mat-body-2 gw-toolDetails-td-value">{{toolAddress}}</td>
+                                </tr>
+
+                                <tr class="gw-toolDetails-tr">
+                                    <td class="mat-body-2 gw-toolDetails-td-param">Tool Type</td>
+                                    <td class="mat-body-2 gw-toolDetails-td-value">{{toolTypeName}}</td>
+                                </tr>
+
+                                <tr class="gw-toolDetails-tr">
+                                    <td class="mat-body-2 gw-toolDetails-td-param">
+                                        <mat-icon *ngIf="cardToolsStatusCode === 2 || diagnosticCard.RawValue === 0 || diagnosticCard.RawValue === -999" 
+                                            class="mat-icon--sml gw-icon-info" matTooltip="{{
+                                                diagnosticCard.RawValue === 0 || diagnosticCard.RawValue === -999 ? cardStatus : toolTipText}} "
+                                            matTooltipPosition="below" matTooltipClass="gw-tool-details-icon-tooltip">
+                                            info
+                                        </mat-icon>
+                                        <mat-icon *ngIf="cardToolsStatusCode === 1 && diagnosticCard.RawValue !== 0" class="mat-icon--sml gw-icon-warning" 
+                                            matTooltip="{{toolTipText}}" matTooltipPosition="below" matTooltipClass="gw-tool-details-icon-tooltip">
+                                            warning
+                                        </mat-icon>
+                                        Card
+                                    </td>
+                                    <td class="mat-body-2 gw-toolDetails-td-value">
+                                        <span >{{cardName}}</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                      </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+            <div class="row p-t-10" *ngFor="let item of inchargeMonitoringTool | keyvalue; let inx = index">
+                <mat-accordion class="gw-full-width">
+                    <mat-expansion-panel #diagnosticPanel [expanded]="expandPanels[inx + 1]">
+                      <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'" (click)="togglePanel(inx + 1)">
+                        <mat-panel-title class="gw-mat-expansion-panel-header-title">
+                          {{item.key}}
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div>
+                        <table class="gw-toolDetails-table">
+                            <tr class="gw-toolDetails-thRow">
+                                <th class="gw-toolDetails-th-param">Parameter</th>
+                                <th class="gw-toolDetails-th-value">Current Value</th>
+                                <th></th>
+                            </tr>
+
+                            <tr class="gw-toolDetails-tr" *ngFor="let points of item.value">
+                                <td class="mat-caption gw-toolDetails-td-param">
+                                    <mat-icon *ngIf="points.point.DevicePointIndex === 2 && toolDiagnosticStatus === 2" class="mat-icon--sml gw-icon-info"
+                                        matTooltip="{{ diagnosticDevice.RawValue | gwToolStatus:0 }} "
+                                        matTooltipPosition="below" matTooltipClass="gw-tool-icon-tooltip">
+                                        info
+                                    </mat-icon>
+                                    <mat-icon *ngIf="points.point.DevicePointIndex === 2 && toolDiagnosticStatus === 1" class="mat-icon--sml gw-icon-warning"
+                                        matTooltip="{{ diagnosticDevice.RawValue | gwToolStatus:0 }} "
+                                        matTooltipPosition="below" matTooltipClass="gw-tool-icon-tooltip">
+                                        warning
+                                    </mat-icon>
+                                    {{points.point.Description}} 
+                                    <span *ngIf="points.deviceDataPoint.UnitSymbol">({{points.deviceDataPoint.UnitSymbol}})</span>
+                                </td>
+                                <td *ngIf="points.isFloat" [attr.colspan]="points.point.ReadOnly == false ? '1': '2'" class="mat-body-2 gw-toolDetails-td-value">
+                                    <span matTooltip="{{points.deviceDataPoint.RawValue | number: '1.2-2'}}" 
+                                        matTooltipPosition="below" 
+                                        matTooltipClass="gw-tool-grid-row-tooltip"
+                                        [matTooltipDisabled]="(points.deviceDataPoint.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                                        <ng-container *ngIf="points.deviceDataPoint.RawValue !== -999 ; else defBadDataValue">
+                                            {{points.deviceDataPoint.RawValue | number: '1.2-2' | gwTruncate:10}}
+                                        </ng-container> 
+                                    </span>
+                                </td>
+                                <td *ngIf="!points.isFloat" [attr.colspan]="points.point.ReadOnly == false ? '1': '2'" class="mat-body-2 gw-toolDetails-td-value">
+                                    <span matTooltip="{{points.deviceDataPoint.RawValue}}" 
+                                        matTooltipPosition="below" 
+                                        matTooltipClass="gw-tool-grid-row-tooltip"
+                                        [matTooltipDisabled]="points.deviceDataPoint.RawValue?.toString().length > 10 ? 'false': 'true'">
+                                        <ng-container *ngIf="points.deviceDataPoint.RawValue !== -999  ; else defUnsignedIntValue">
+                                            {{points.deviceDataPoint.RawValue | gwTruncate:10}}
+                                        </ng-container>  
+                                    </span>
+                                </td>
+                                <td *ngIf="points.point.ReadOnly == false" class="gw-toolDetails-td-value">
+                                    <button mat-button class="mat-button-tertiary-sm gw-xs-button" [disabled]="diagnosticCard.RawValue === 0 || diagnosticDevice.RawValue === -999"
+                                         (click)="setServerValue(points)">Set</button>
+                                </td>
+                            </tr>
+                        </table>
+                      </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+     <!--Default Bad Data-->
+     <ng-template #defBadDataValue>
+        {{errorHandlingSettings?.BadDataValue | number: '1.2-2'}}
+     </ng-template>
+     <ng-template #defUnsignedIntValue>
+        {{errorHandlingSettings?.BadDataValueUnsignedInteger}}
+    </ng-template>
+</section>

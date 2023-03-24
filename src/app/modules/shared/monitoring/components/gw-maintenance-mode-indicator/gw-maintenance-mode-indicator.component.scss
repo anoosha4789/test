@@ -1,0 +1,23 @@
+@import 'base.scss';
+
+.gw-mmode-indicator {
+    font-size: 14px;
+    font-family: Noto Sans;
+    @media screen and (max-width: 600px) {
+        font-size: 12px;
+        }
+
+}
+.gw-overlay-maintenancemode {
+    z-index: 2;
+    position: absolute;
+    // right: 0;     
+    left: 50%;
+    transform: translate(-50%);    
+    @media screen and (max-width: 600px) {
+      right: 0;
+      transform: unset;
+      padding: 10px;
+      }
+      
+  }

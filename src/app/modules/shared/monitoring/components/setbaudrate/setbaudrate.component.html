@@ -1,0 +1,38 @@
+<section>
+    <div class="p-x-2">
+        <div class="row p-l-20 p-r-20">
+            <div class="col-6 p-t-10">
+                <span class="gw-form-label">Current Setpoint</span>
+            </div>
+            <div class="col-6 p-l-0 p-t-10">
+                <span class="gw-form-label p-l-8">{{deviceDataPoint.RawValue}}</span>
+            </div>
+        </div>
+
+        <div class="row p-l-20 p-r-20 p-t-10">
+            <div class="col-6 p-t-14">
+                <span class="gw-form-label">New Setpoint</span>
+            </div>
+
+            <div *ngIf="serialChannelProperty" class="col-6 p-l-0">
+                <mat-form-field class="mat-select-small newValueField" appearance="fill">
+                    <mat-select id="newValueSelect" class="gw-form-label form-baseline" [ngModel]="modelValue(newValue)" (selectionChange)="onChange($event)">
+                        <mat-option *ngFor="let baudRate of serialChannelProperty.BaudRates" [value]="baudRate">{{baudRate}}</mat-option>
+                      </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row p-l-20 p-r-30 p-t-10">
+            <div class="ml-3 gw-baudrate-block mat-error">
+                <mat-icon class="pt-2 gw-baudrate-icon">warning</mat-icon>
+                <span>Changing the Baud Rate will trigger a server restart. All local changes will be lost!</span>
+            </div>
+        </div>
+    </div>
+    <!-- <mat-divider></mat-divider> -->
+    <div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+        <button type="submit" mat-button class="mat-button-tertiary-sm mr-4" (click)="OnCancel()">Cancel</button>
+        <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnOk()">Set</button>
+    </div>
+</section>

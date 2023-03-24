@@ -1,0 +1,58 @@
+@import 'base.scss';
+
+.gw-customMap-name {
+    width: 250px;
+}
+
+.gw-customMap-btn {
+    width: 95px;
+}
+
+.gw-addtoMap-btn {
+    position: absolute;
+    bottom: 2px;
+    width: 92%;
+    border-radius: 0px;
+
+    @media (max-width: 1170px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 90%;
+    }
+}
+
+.gw-addtoMap-icon {
+    padding-left: 10px;
+}
+
+.gw-customMap-divider {
+    border-left: 1px solid $gw-secondary-color-400;
+    padding-bottom: 10px;
+}
+
+.gw_customMap-hiddenField {
+    height: 0px;
+    width: 0px;
+}
+
+.gw-tree-view-scrollbar {
+    height: 100%;
+
+    @media (max-height: 870px) and (-webkit-min-device-pixel-ratio: 1) {
+        height: 92%;
+    }
+
+    @media (min-height: 871px) and (-webkit-min-device-pixel-ratio: 1) {
+        height: 95%;
+    }
+}
+
+.gw-tree-view-scrollbar-full {
+    height: 100%;
+
+    @media (max-height: 870px) and (-webkit-min-device-pixel-ratio: 1) {
+        height: 98%;
+    }
+
+    @media (min-height: 871px) and (-webkit-min-device-pixel-ratio: 1) {
+        height: 100%;
+    }
+}

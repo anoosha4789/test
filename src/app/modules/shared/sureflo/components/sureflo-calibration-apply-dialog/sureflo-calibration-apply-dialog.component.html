@@ -1,0 +1,32 @@
+<section class="d-flex justify-content-center">
+    <div class="gw-modal-container">
+        <div mat-dialog-content class="container mx-0 py-2">
+            <div class="row p-2">
+                <div class="col px-0">
+                    <span class="mat-body-2">
+                        The current calibration will be applied and saved to the "Downloads" folder.
+                    </span>
+                </div>
+            </div>
+            <div class="row px-2">
+                <div class="col px-0 pt-2">
+                    <span class="gw-form-label">File Name</span>
+                </div>
+            </div>
+            <div class="row px-2">
+                <div class="col px-0">
+                    <mat-form-field class="gw-form-label mat-input-small gw-cal-file-input" appearance="fill">
+                        <input matInput class="gw-form-label" [value]="data.fileName" (keyup)="onkeyUp($event)"
+                            autocomplete="off">
+                        <!-- <mat-hint *ngIf="validationMssg != null" class="mat-error"> {{validationMssg}}</mat-hint> -->
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <!-- <mat-divider></mat-divider> -->
+        <div mat-dialog-actions class="d-flex justify-content-end my-1">
+            <button type="submit" mat-button class="mat-button-tertiary-sm m-r-10" (click)="OnCancel()">Cancel</button>
+            <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnOk()">Apply</button>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,113 @@
+<ng-container *ngIf="showMaintainceMode">
+<gw-maintenance-mode-indicator></gw-maintenance-mode-indicator>
+</ng-container>
+<ng-container [ngTemplateOutlet]="showMaintainceMode ? toolboxInforce : panelTypeSursens ? toolboxSureSENS : toolboxMultinode"></ng-container>
+<ng-template #toolboxInforce>
+<section class="m-4 inforce-toolbox">
+    <section class="fixed-toolbox" [ngClass]="{'gw-saveInProgress': bSavingConfigurationIsInProgress }">
+        <div class="row m-0 p-b-14">
+            <div class="mat-subtitle-1 fs-20">Toolbox</div>
+        </div>
+        <div class="row m-0 p-b-14">
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 p-0 sub-title">Panel Maintenance</div>
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 p-0">
+                <div class="row m-0">
+                    <div class="col text-right p-0 sub-title m-mode mode">Maintenance Mode</div>
+                    <div class="text-right p-0 sub-title m-mode mode-switch">
+                        <mat-slide-toggle color={{toggleConfig.color}} [checked]="isPanelinMaintainceMode"
+                            (change)="toggleMaintainanceMode($event)">
+                            {{maintainceModeText}}
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-f m-0 p-b-14">
+            <div class="hide-under-736">
+                <button mat-button class="gw-text-link-breadcrumb c-border l-h-30 fs-12 w-100"
+                    [routerLink]="'/inforce/toolbox/sensorcalibration'"
+                    [disabled]="(currentOperationMode!=0 || !isCommunicated) && panelDefaultData?.FlowMeterTransmitterType !== FLUID_WELL"
+                    title="Sensor and Flowmeter Calibrations.">SENSOR CALIBRATION</button>
+            </div>
+            <div class="hide-under-736">
+                <button class="mat-button gw-text-link-breadcrumb c-border l-h-30 fs-12 w-100"
+                    [routerLink]="'/inforce/toolbox/manualmode'"
+                    [disabled]="!(currentOperationMode==0 || currentOperationMode==4) || !isCommunicated"
+                    title="Manually set HPU and valve positions.">MANUAL MODE</button>
+            </div>
+            <div class="width-50">
+                <button class="mat-button gw-text-link-breadcrumb c-border l-h-30 fs-12 w-100"
+                    [routerLink]="'/inforce/toolbox/ventoutput'"
+                    [disabled]="!(currentOperationMode==0 || currentOperationMode==3) || !isCommunicated"
+                    title="Vent output lines.">VENT OUTPUTS</button>
+            </div>
+
+            <div class="width-50">
+                <button class="mat-button gw-text-link-breadcrumb c-border l-h-30 fs-12 w-100"
+                    [routerLink]="'/inforce/toolbox/recirculate'"
+                    [disabled]="!(currentOperationMode==0 || currentOperationMode==2) || !isCommunicated"
+                    title="Recirculate Wells.">RECIRCULATE</button>
+            </div>
+        </div>
+
+        <mat-divider class="gw-monitoring-divider"></mat-divider>
+    </section>
+    <div class="fixed-toolbox-card">
+        <app-toolbox-card></app-toolbox-card>
+    </div>
+</section>
+</ng-template>
+
+<ng-template #toolboxSureSENS>
+    <!--Breadcrumb-->
+    <section class="gw-breadcrumb">
+        <p class="gw-text-link-breadcrumb">Toolbox</p>
+    </section>
+
+    <!--Divider-->
+    <mat-divider class="gw-monitoring-divider"></mat-divider>
+    <!--Toolbox Content-->
+    <section class="gw-toolbox-container p-l-10 p-r-10 px-md-3 p-t-10">
+        <mat-card cdkTrapFocus class="gw-toolbox-mat-card-container p-0">
+            <mat-card-header class="gw-toolbox-header-box gw-border-bottom">
+                <mat-card-title class="d-flex flex-wrap justify-content-between align-items-center mb-0">
+                    <div class="gw-toolbox-mat-title">
+                        Interface Card Overview
+                    </div>
+                </mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content class="gw-toolbox-mat-card-content gw-toolbox-align">
+                <app-toolbox-card></app-toolbox-card>
+            </mat-card-content>
+
+        </mat-card>
+
+    </section>
+</ng-template>
+
+<ng-template #toolboxMultinode>
+    <section class="m-4 inforce-toolbox">
+        <section class="fixed-toolbox" [ngClass]="{'gw-saveInProgress': bSavingConfigurationIsInProgress }">
+            <div class="row m-0 p-b-14">
+                <div class="mat-subtitle-1 fs-20">Toolbox</div>
+            </div>
+            <div class="row m-0 p-b-14">
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 p-0 sub-title">MultiNode System Settings</div>
+            </div>
+            <div class="d-f m-0 p-b-14">
+                <div class="width-50">
+                    <button mat-button class="gw-text-link-breadcrumb c-border l-h-30 fs-12 w-100"
+                        [routerLink]="'/multinode/toolbox/advanced'"
+                        title="MultiNode System Settings">ADVANCED</button>
+                </div>
+            </div>
+    
+            <mat-divider class="gw-monitoring-divider"></mat-divider>
+        </section>
+        <div class="fixed-toolbox-card">
+            <app-toolbox-card></app-toolbox-card>
+        </div>
+    </section>
+    
+</ng-template>

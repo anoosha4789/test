@@ -1,0 +1,23 @@
+@import 'base.scss';
+
+.mat-dialog-header {
+    padding: $space-md;
+    // background: mat-color($grey, 100);
+}
+.mat-dialog-title {
+    color: mat-color($teal, 950);
+    margin: 0;
+}
+
+.gw-add-custommap-row {
+    @media (min-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 45%;
+        max-width: 45%;
+    }
+
+    @media (min-width: 1308px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 40%;
+        max-width: 40%;
+    }
+}
+

@@ -1,0 +1,53 @@
+<section>
+    <div class="p-x-2">
+        <form #addPointsForm="ngForm" [formGroup]="addDataPointForm">
+            <div class="row p-t-20 p-l-20 p-r-30 p-b-16">
+                <div class="col-lg-5 col-md-12 col-sm-12 p-t-10">
+                    <span class="gw-form-label">Start Register</span>
+                </div>
+                <div class="col-lg-7 col-md-12 col-sm-12">
+                    <mat-form-field class="mat-input-small" appearance="fill">
+                        <input id="startAddress" type="number" matInput class="gw-form-label form-baseline" 
+                            [(ngModel)]="startAddress" formControlName="StartAddress" (input)="validateStartAddress()" (blur)="validateStartAddress()" autocomplete="off">
+                        <mat-hint *ngIf="validateStartAddresMssg != null" align="start" class="mat-error">
+                            {{validateStartAddresMssg}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+
+        <div class="row p-l-20 p-r-30 p-b-16">
+            <div class="col-lg-5 col-md-12 col-sm-12 p-t-10">
+                <span class="gw-form-label">End Register</span>
+            </div>
+            <div class="col-lg-7 col-md-12 col-sm-12">
+                <mat-form-field class="mat-input-small" appearance="fill">
+                    <input id="endAddress" type="number" matInput readonly class="gw-form-label form-baseline" [(ngModel)]="endAddress" (input)="validateEndAddress()">
+                    <mat-hint *ngIf="validateEndAddresMssg != null" align="start" class="mat-error">
+                        {{validateEndAddresMssg}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row p-l-20 p-r-30 p-b-16">
+            <div class="col-lg-5 col-md-12 col-sm-12 p-t-10">
+                <span class="gw-form-label">Slave Data Type</span>
+            </div>
+            <div class="col-lg-7 col-md-12 col-sm-12">
+                <mat-form-field class="mat-select-small" appearance="fill">
+                    <mat-select id="SlaveDataType" class="gw-form-label form-baseline"
+                        [(ngModel)]="selectedDataType" (selectionChange)="OnSelectedDataTypeChange()">
+                        <mat-option *ngFor="let dataType of arrDataPointDataTypes" [value]="dataType">{{dataPointDataTypes[dataType]}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <!-- <mat-divider></mat-divider> -->
+    <div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+        <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnCancel()">Cancel</button>
+        <button type="submit" mat-button class="mat-button-primary-sm" [disabled]="bInValidAddress" (click)="OnOk()">Add</button>
+    </div>
+</section>

@@ -1,0 +1,25 @@
+<section class="gw-horizontal-stepper">
+    <mat-horizontal-stepper labelPosition="bottom" class="stepper-el" [linear]="isLinear" #surefloStepper 
+    (selectionChange)="selectionChange($event)">
+        <ng-template matStepperIcon="edit" let-index="index">
+            <mat-icon>none</mat-icon>{{index+1}}
+        </ng-template>
+        <div *ngFor="let step of steps; let stepIdx = index">
+            <mat-step [completed]="step.completed" [state]="step.state" 
+                [stepControl]="( stepIdx === 0 ? step1 : step2 )">
+            </mat-step>
+        </div>
+    </mat-horizontal-stepper>
+</section>
+
+<ng-container *ngIf="surefloStepper.selectedIndex === 0">
+    <sureflo-general-information (onFlowMeterDataChange)="updateFlowMeterData($event)" [data]="flowMeterData" #surefloGenInfo></sureflo-general-information>
+</ng-container>
+
+<ng-container *ngIf="surefloStepper.selectedIndex === 1 && !isSureflo298EXSelected">
+    <sureflo-stepper-gauge-data (onFlowMeterDataChange)="updateFlowMeterData($event)" [data]="flowMeterData" #surefloGaugeData></sureflo-stepper-gauge-data>
+</ng-container>
+
+<ng-container *ngIf="surefloStepper.selectedIndex === 1 && isSureflo298EXSelected">
+    <sureflo-stepper-ex-gauge-data (onFlowMeterDataChange)="updateFlowMeterData($event)" [data]="flowMeterData" #surefloExGaugeData></sureflo-stepper-ex-gauge-data>
+</ng-container>

@@ -1,0 +1,142 @@
+<section class="container-fluid" id="surefloGaugeForm">
+
+    <form novalidate [formGroup]="surefloPTForm" autocomplete="off">
+
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">Gauge Data</span>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row p-b-4">
+                <div class="col-lg-4 col-xl-3 p-1">
+                    <span class="gw-form-label">Inlet Pressure</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-file-input" appearance="fill">
+                        <input name="InletPressureSource" matInput
+                            [value]="inletPressureFilePath" class="gw-form-label form-baseline" [readonly]="true" 
+                            (click)="inletPressureFilePath === defInputTxt ? onInletPressureInputClick() : ''" [disabled]="!isConfigSaved"/>
+                    </mat-form-field>
+                    <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="inletPressureFilePath === defInputTxt ? onInletPressureInputClick() : onResetBtnClick('InletPressureSource')"
+                        [disabled]="!isConfigSaved">
+                        <mat-icon class="mat-icon gw-primary-icon">{{ inletPressureFilePath === defInputTxt ? 'note_add' : 'cancel' }}</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row p-b-4">
+                <div class="col-lg-4 col-xl-3 p-1">
+                    <span class="gw-form-label">Throat Pressure</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-file-input" appearance="fill">
+                        <input name="ThroatPressureSource" matInput
+                            [value]="throatPressureFilePath" class="gw-form-label form-baseline" 
+                            (click)="throatPressureFilePath === defInputTxt ? onThroatPressureInputClick() : ''" [readonly]="true" [disabled]="!isConfigSaved"/>
+                    </mat-form-field>
+                    <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="throatPressureFilePath === defInputTxt ? onThroatPressureInputClick() : onResetBtnClick('ThroatPressureSource')"
+                        [disabled]="!isConfigSaved">
+                        <mat-icon class="mat-icon gw-primary-icon">{{ throatPressureFilePath === defInputTxt ? 'note_add' : 'cancel' }}</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="row p-b-4">
+                <div class="col-lg-4 col-xl-3 p-1">
+                    <span class="gw-form-label">Reservoir Temperature</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-file-input" appearance="fill">
+                        <input name="TemperatureSource" matInput 
+                            [value]="temperatureFilePath" class="gw-form-label form-baseline" 
+                            (click)="temperatureFilePath === defInputTxt ? onTemperatureInputClick() : ''" [readonly]="true" [disabled]="!isConfigSaved"/>
+                    </mat-form-field>
+                    <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="temperatureFilePath === defInputTxt ? onTemperatureInputClick() : onResetBtnClick('TemperatureSource')"
+                        [disabled]="!isConfigSaved">
+                        <mat-icon class="mat-icon gw-primary-icon">{{ temperatureFilePath === defInputTxt ? 'note_add' : 'cancel' }}</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <ng-container *ngIf="!fluidTypeGasVisibility && !fluidTypeWaterVisibility">
+            <div class="row p-b-18">
+                <span class="mat-subtitle-2">Remote Gauge Data</span>
+            </div>
+        
+            <div class="container-fluid">
+                <div class="row p-b-4">
+                    <div class="col-lg-4 col-xl-3 p-1">
+                        <span class="gw-form-label">Use Remote Gauge</span>
+                    </div>
+                    <div class="col p-2" [ngClass]="{'gw-sureflo-disable-input': !isConfigSaved}">
+                        <mat-slide-toggle [disableRipple]="true" color={{toggleConfig.color}} (change)="onToggle($event)"
+                            formControlName="UseRemoteGauge">
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+        
+                <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !remoteGaugeSecVisibility}">
+                    <div class="col-lg-4 col-xl-3 p-1">
+                        <span class="gw-form-label">Remote Pressure</span>
+                    </div>
+                    <div class="col px-sm-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-file-input" appearance="fill">
+                            <input name="RemotePressureSource" matInput
+                                [value]="remotePressureFilePath" class="gw-form-label form-baseline" [readonly]="true"
+                                (click)="remotePressureFilePath === defInputTxt ? onRemotePressureInputClick() : ''" [disabled]="!remoteGaugeSecVisibility || !isConfigSaved">
+                        </mat-form-field>
+                        <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                            (click)="remotePressureFilePath === defInputTxt ? onRemotePressureInputClick() : onResetBtnClick('RemotePressureSource')"
+                            [disabled]="!remoteGaugeSecVisibility || !isConfigSaved">
+                            <mat-icon class="mat-icon gw-primary-icon">{{ remotePressureFilePath === defInputTxt ? 'note_add' : 'cancel' }}</mat-icon>
+                        </button>
+                    </div>
+                </div>
+        
+            </div>
+        </ng-container>
+
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">Calibration Data</span>
+        </div>
+        <div class="container-fluid">
+            <div class="row p-b-4">
+                <div class="col-lg-4 col-xl-3 p-1">
+                    <span class="gw-form-label">Calibration File</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-file-input" appearance="fill">
+                        <input id="CalibrationFile" name="CalibrationFile" matInput [value]="calibrationFilePath"
+                            class="gw-form-label form-baseline" [readonly]="true" (click)="browseFileDialog(calibrationFile)"
+                            [disabled]="!isConfigSaved">
+                        <input #calibrationFile hidden="true" type="file" multiple="false" accept=".txt"
+                            (change)="onCalibrationFileChange($event)" />
+                        <mat-hint *ngIf="calibrationErrorMsg" class="mat-error">
+                            {{calibrationErrorMsg}}
+                        </mat-hint>
+                    </mat-form-field>
+                    <div class="gw-sureflo-calfile-action">
+                        <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                            (click)="browseFileDialog(calibrationFile)" [disabled]="!isConfigSaved">
+                            <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                        </button>
+                        <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                            (click)="calFileEditBtnVisibility ? onEditCalFileBtnClick() : onCreateCalFileBtnClick()">
+                            <mat-icon class="mat-icon gw-primary-icon">{{calFileEditBtnVisibility ? 'edit' : 'add'}}</mat-icon>
+                        </button>
+                        <button type="button" mat-button class="mat-button mat-button-primary__icon-only" *ngIf="calFileEditBtnVisibility"
+                            (click)="onDownloadCalFileBtnClick()">
+                            <mat-icon class="mat-icon gw-primary-icon">download</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</section>

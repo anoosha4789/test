@@ -1,0 +1,178 @@
+<section class="m-4">
+    <div class="row gw-incharge-row gw-tool-breadcrumb-row">
+        <a class="gw-text-link-breadcrumb" [routerLink]="gatewayRoute">Toolbox</a>
+        <a class="gw-text-link-breadcrumb p-l-2" [routerLink]="gatewayRoute">{{cardTitle}}</a>
+        <div *ngIf="!IsMobileView" class="gw-card-connected" [ngClass]="{'gw-data-error': !isCardConnected }">
+            <b>{{cardTitle1}}{{ isCardConnected ? 'Connected' : 'Disconnected' }}</b>
+            <mat-icon class="gw-cardstatus-icon p-l-6">{{ isCardConnected ? 'check_circle' : 'cancel' }}</mat-icon>
+        </div>
+        <div *ngIf="IsMobileView" class="gw-card-connected" [ngClass]="{'gw-data-error': !isCardConnected }">
+            <b>{{ isCardConnected ? 'Connected' : 'Disconnected' }}</b>
+            <mat-icon class="gw-cardstatus-icon p-l-6">{{ isCardConnected ? 'check_circle' : 'cancel' }}</mat-icon>
+        </div>
+    </div>
+    <mat-divider class="gw-tool-divider"></mat-divider>
+    <div class="row gw-incharge-row p-lr-10">
+        <div *ngIf="multi_axis_series" class="col-lg-8 col-md-6 col-sm-12 col-xs-12 p-l-0 gw-toolDetails-ChartView">
+            <div *ngIf="IsMobileView">
+                <gateway-multiaxis-chart [chartId]="chartId" [chartOptions]="multi_axis_series" [Height]="500">
+                </gateway-multiaxis-chart>
+            </div>
+            <div *ngIf="!IsMobileView">
+                <gateway-multiaxis-chart [chartId]="chartId" [chartOptions]="multi_axis_series" [Height]="225">
+                </gateway-multiaxis-chart>
+            </div>
+
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 m-0 gw-toolDetails-ValueView">
+            <div class="row p-b-10" *ngFor="let item of cardDataPanels; let inx=index">
+                <mat-accordion class="gw-full-width">
+                    <mat-expansion-panel [expanded]="expandPanels[inx]">
+                        <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
+                            <mat-panel-title class="gw-mat-expansion-panel-header-title">
+                                {{item.panelName}}
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <table class="gw-toolDetails-table">
+                                <tr class="gw-toolDetails-thRow">
+                                    <th class="gw-toolDetails-th-param">Parameter</th>
+                                    <th class="gw-toolDetails-th-value">Current Value</th>
+                                    <th></th>
+                                </tr>
+                                <tr class="gw-toolDetails-tr"
+                                    *ngFor="let points of item.deviceDataPoints | swampyFilter">
+                                    <td class="mat-caption gw-toolDetails-td-param">
+                                        {{points.pointTemplate.Description}} <span
+                                            *ngIf="points.deviceDataPoint.UnitSymbol">({{points.deviceDataPoint.UnitSymbol}})</span>
+                                    </td>
+                                    <td *ngIf="points.isFloat" [attr.colspan]="points.colSpan"
+                                        class="mat-body-2 gw-toolDetails-td-value">
+
+                                        <!-- <span 
+                                                matTooltip="{{points.toolTip}}" matTooltipPosition="below" 
+                                                matTooltipClass="gw-tool-grid-row-tooltip"
+                                                [matTooltipDisabled]="points.showToolTip">
+                                                <ng-container *ngIf="points.displayValue !== '-999' ; else defBadDataValue">
+                                                    {{points.displayValue}}
+                                                </ng-container> 
+                                            </span> -->
+                                        <span>
+                                            <ng-container
+                                                *ngIf="points.displayValue && points.displayValue !== '-999' && points.displayValue !== '-999.00'; else defBadDataValue">
+                                                {{points.displayValue}}
+                                            </ng-container>
+                                        </span>
+                                    </td>
+                                    <td *ngIf="!points.isFloat" [attr.colspan]="points.colSpan"
+                                        class="mat-body-2 gw-toolDetails-td-value">
+
+                                        <!-- <span 
+                                            matTooltip="{{points.toolTip}}" matTooltipPosition="below" 
+                                            matTooltipClass="gw-tool-grid-row-tooltip"
+                                            [matTooltipDisabled]="points.showToolTip">
+                                            <ng-container *ngIf="points.displayValue !== '-999'  ; else defUnsignedIntValue">
+                                                {{points.displayValue}}
+                                            </ng-container> 
+                                        </span> -->
+                                        <span>
+                                            <ng-container
+                                                *ngIf="points.displayValue && points.displayValue !== '-999' && points.displayValue !== '-999.00'; else defUnsignedIntValue">
+                                                {{points.displayValue}}
+                                            </ng-container>
+                                        </span>
+                                    </td>
+
+                                    <td *ngIf="points.pointTemplate.ReadOnly == false" class="gw-toolDetails-td-value">
+                                        <ng-container
+                                            [ngTemplateOutlet]="isSwampy && points.deviceDataPoint.DataPointIndex == BAUDRATE_DATAPOINT_INDEX ? baudRateSetBtn : setBtn"
+                                            [ngTemplateOutletContext]="{point:points}">
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div *ngIf="item.panelName === 'Card Settings'" class="row p-x-6">
+                                <div class="col gw-text-align-right p-r-6">
+                                    <button mat-button class="mat-button-tertiary-sm" (click)="resetCardClick()"
+                                        [disabled]="!isCardConnected">Reset Card</button>
+                                </div>
+                                <div class="col gw-text-align-left p-l-6">
+                                    <button mat-button class="mat-button-tertiary-sm" (click)="setHostTimestampClick()"
+                                        [disabled]="!isCardConnected">Set Host Time</button>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+            <div class="row">
+                <mat-accordion class="gw-full-width">
+                    <mat-expansion-panel [expanded]="false">
+                        <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'">
+                            <mat-panel-title class="gw-mat-expansion-panel-header-title">
+                                Tools
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div>
+                            <table class="gw-toolDetails-table">
+                                <tr class="gw-toolDetails-thRow">
+                                    <th class="gw-toolDetails-th-param">Tool Name</th>
+                                    <th class="gw-toolDetails-th-value">Diagnostic Code</th>
+                                    <th></th>
+                                </tr>
+                                <tr class="gw-toolDetails-tr" *ngFor="let tool of inchargeMonitoringToolDetails">
+                                    <td class="gw-toolDetails-td-param">
+                                        <mat-icon *ngIf="tool.toolDiagnosticStatus === 2"
+                                            class="mat-icon--sml gw-icon-info" matTooltip="{{ tool | gwToolStatus:1 }} "
+                                            matTooltipPosition="below" matTooltipClass="gw-tool-icon-tooltip">
+                                            info
+                                        </mat-icon>
+                                        <mat-icon *ngIf="tool.toolDiagnosticStatus === 1"
+                                            class="mat-icon--sml gw-icon-warning"
+                                            matTooltip="{{ tool | gwToolStatus:1 }} " matTooltipPosition="below"
+                                            matTooltipClass="gw-tool-icon-tooltip">
+                                            warning
+                                        </mat-icon>
+                                        {{tool.toolName}}
+                                    </td>
+                                    <td class="gw-toolDetails-td-value">
+                                        <span>
+                                            <ng-container
+                                                *ngIf="tool.toolDiagnosticCode !== -999 ; else defUnsignedIntValue">
+                                                {{tool.toolDiagnosticCode}}
+                                            </ng-container>
+                                        </span>
+                                    </td>
+                                    <td class="gw-toolDetails-td-value" [ngClass]="{'gw-card-toolbox-invalid': tool.toolDiagnosticStatus === 2, 
+                                        'gw-card-toolbox-warning': tool.toolDiagnosticStatus === 1 }">
+                                        <button mat-button class="mat-button-tertiary-sm gw-xs-button"
+                                            [routerLink]="[toolDetailsRoute, tool.deviceId]"
+                                            [queryParams]="{ fromCard: true}">View</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+            <ng-template #setBtn let-point='point'>
+                <button mat-button class="mat-button-tertiary-sm gw-xs-button" [disabled]="!isCardConnected"
+                    (click)="setServerValue(point)">Set</button>
+            </ng-template>
+
+            <ng-template #baudRateSetBtn let-point='point'>
+                <button mat-button class="mat-button-tertiary-sm gw-xs-button" [disabled]="true"
+                    (click)="setServerValue(point)">Set</button>
+            </ng-template>
+        </div>
+    </div>
+    <!--Default Bad Data-->
+    <ng-template #defBadDataValue>
+        {{errorHandlingSettings?.BadDataValue | number: '1.2-2'}}
+    </ng-template>
+    <ng-template #defUnsignedIntValue>
+        {{errorHandlingSettings?.BadDataValueUnsignedInteger}}
+    </ng-template>
+</section>

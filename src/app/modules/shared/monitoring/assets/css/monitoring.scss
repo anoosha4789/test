@@ -1,0 +1,115 @@
+@import 'base.scss';
+
+@media (min-width: 768px) and (max-width: 950px) {
+    .col-md-6 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+.gw-card-connected {
+    @include body (2,2);
+    display:flex; 
+    flex: 1; 
+    justify-content: flex-end; 
+    color: $gw-primary-color-700;
+ }
+
+ .gw-cardstatus-icon {
+    height: 16px;
+    margin-top: -4px;
+ }
+ 
+.gw-tool-breadcrumb-row {
+    margin-top:-12px; 
+    margin-bottom: 12px;
+}
+
+.gw-tool-divider {
+    margin-left: -24px; 
+    margin-right:-24px;
+    padding-top: 10px;
+}
+
+@media (min-width: 470px) {
+    .gw-incharge-row {
+        margin-left: -8px; 
+        margin-right: -8px;
+    }
+}
+
+.gw-toolDetails-ChartView {
+    @media (max-width: 950px) {
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-bottom: 10px;
+    }
+
+    @media (min-width: 951px) {
+        height: 100%;
+    }
+}
+
+.gw-toolDetails-ValueView {
+    @media (min-width: 950px) {
+        height: 75vh;
+        overflow: auto;
+    }
+    @media (max-width: 949px) {
+        margin-bottom: 6rem !important;
+    }
+}
+
+.gw-toolDetails-table {
+    width: 100%;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    // tr {        
+    //     border: 1.62px solid $gw-secondary-color-400;
+    // }
+}
+
+.gw-toolDetails-thRow {
+    background-color: $gw-secondary-color-300 !important;
+    color: $gw-tertiary-color-1000;
+    font-size: 12px;
+    height: 32px;
+}
+
+.gw-toolDetails-th-param {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.gw-toolDetails-th-value {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.gw-toolDetails-tr {
+    height: 32px;
+}
+
+.gw-toolDetails-td-param {
+    text-align: left;
+    padding-left: 10px;
+    font-size: 12px;
+    color:$gw-tertiary-color-1000;
+}
+
+.gw-toolDetails-td-value {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 12px;
+    color: $gw-tertiary-color-1000;
+}
+
+tr:nth-child(odd) {background-color: $gw-secondary-color-100;}
+
+:host ::ng-deep {
+    .gw-toolDetails-ChartView  #toolChart .legend-title{
+        min-width: 260px;
+    }
+}

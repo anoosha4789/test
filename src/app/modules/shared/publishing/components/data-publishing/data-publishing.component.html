@@ -1,0 +1,289 @@
+<section>
+    <form [formGroup]="dataPublishingForm" autocomplete="off" class="dataPublishingForm" *ngIf="publishing.Channel">
+        <!-- {{publishing | json}} -->
+        <ng-container formGroupName="Channel">
+
+            <div class="gw-data-pub-protocol">
+                <div class="row p-l-20 p-b-20">
+                    <span class="mat-subtitle-2">Protocol Selection</span>
+                </div>
+            
+                <!--Protocol-->
+                <div class="d-flex flex-wrap">
+                    <!-- <div class="col-sm-12 col-md-6 pr-0 gw-unit-system-row"> -->
+                        <div class="gw-unit-system-form-label px-2">
+                        <mat-label class="gw-form-label">Protocol</mat-label>
+                        </div>
+                        <div class="px-2">
+                        <mat-form-field class="mat-select-small gw-select-200" appearance="fill">
+                            <mat-select class="form-baseline" id="Protocol" [disabled]="!isNewPublishing"
+                            [(value)]="selectedProtocolId" (selectionChange)="onProtocolSelectChange($event)">
+                            <mat-option *ngFor="let protocol of protocolList" [value]="protocol.modbusProtocol">
+                                {{protocol.Name}}
+                            </mat-option>
+                        </mat-select>
+                        </mat-form-field>
+                        </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+
+            <div class="gw-data-pub-comm-settings">
+                <div class="row p-t-5 p-l-20 p-b-20">
+                    <span class="mat-subtitle-2">Communication Settings</span>
+                </div>
+
+                <ng-container *ngIf="serialChannel && serialChannelProperty">
+
+                    <!--Serial Port-->
+                    <div class="d-flex flex-wrap mt-1">
+                        <div class="col-sm-12 col-md-12 pr-0 gw-unit-system-row">
+                          <div class="col gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">Serial Port</mat-label>
+                          </div>
+                          <div class="col px-2">
+                            <mat-form-field class="mat-select-small gw-select-180" appearance="fill">
+                                <mat-select class="form-baseline" id="ComPort" formControlName="ComPort"
+                                    (selectionChange)="onSelectChange($event)"
+                                    [(value)]="selectedComPort">
+                                    <mat-option *ngFor="let comPort of serialPorts"
+                                        [value]="comPort.Name">
+                                        {{comPort.Description}}</mat-option>
+                                </mat-select>
+                                <mat-hint *ngIf="noSerialPortsAvailableMsg" align="start" class="mat-error">
+                                  {{noSerialPortsAvailableMsg}}
+                              </mat-hint>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-wrap mt-1">
+                        <div class="col-sm-12 col-md-6 pr-0 gw-unit-system-row">
+                          <!--Baud Rate Label-->
+                          <div class="col gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">Baud Rate</mat-label>
+                          </div>
+
+                          <div class="col px-2">
+                            <mat-form-field class="mat-select-small gw-select-180" appearance="fill">
+                                <mat-select class="form-baseline"  id="BaudRate"  formControlName="BaudRate"
+                                    (selectionChange)="onSelectChange($event)"
+                                    [ngModel]="modelValue(serialChannel.BaudRate)">
+                                    <mat-option *ngFor="let baudRate of serialChannelProperty.BaudRates"
+                                        [value]="baudRate">
+                                        {{baudRate}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6 pr-0 gw-unit-system-row">
+                          <!--Data Bits Label-->
+                          <div class="col gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">Data Bits</mat-label>
+                          </div>
+
+                          <div class="col px-2">
+                            <mat-form-field class="mat-select-small gw-select-180" appearance="fill">
+                                <mat-select class="form-baseline" id="DataBits" formControlName="DataBits"
+                                    [ngModel]="modelValue(serialChannel.DataBits)" (selectionChange)="onSelectChange($event)">
+                                    <mat-option *ngFor="let dataBit of serialChannelProperty.DataBits"
+                                        [value]="dataBit">
+                                        {{dataBit}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6 pr-0 gw-unit-system-row">
+                          <!--Parity Label-->
+                          <div class="col gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">Parity</mat-label>
+                          </div>
+
+                          <div class="col px-2">
+                            <mat-form-field class="mat-select-small gw-select-180" appearance="fill">
+                                <mat-select class="gw-form-label form-baseline" id="Parity" formControlName="Parity"
+                                    [(value)]="serialChannel.Parity">
+                                    <mat-option
+                                        *ngFor="let parity of serialChannelProperty.Parity; let parityIdx = index"
+                                        [value]="parityIdx">
+                                        {{parity}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6 pr-0 gw-unit-system-row">
+                          <!--Stop Bits Label-->
+                          <div class="col gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">Stop Bits</mat-label>
+                          </div>
+
+                          <div class="col px-2">
+                            <mat-form-field class="mat-select-small gw-select-180" appearance="fill">
+                                    <mat-select class="form-baseline" id="StopBits" formControlName="StopBits"
+                                        [ngModel]="modelValue(serialChannel.StopBits)" (selectionChange)="onSelectChange($event)">
+                                        <mat-option *ngFor="let stopBit of serialChannelProperty.StopBits"
+                                            [value]="stopBit">
+                                            {{stopBit}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                          </div>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="tcpChannel">
+                    <div class="d-flex flex-wrap mt-1">
+
+                        <!--IP Address-->
+                        <div class="col-sm-12 col-md-6 pr-0 gw-unit-system-row">
+                          <div class="col gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">IP Address</mat-label>
+                          </div>
+                          <div class="col px-2">
+                            <mat-form-field class="mat-select-small gw-select-180" appearance="fill">
+                                <input matInput type="text" class="gw-form-label" name="IpAddress" formControlName="IpAddress"
+                                        [(value)]="tcpChannel.IpAddress">
+                                        <mat-hint *ngIf="ipAddressValidationMsg" align="start" class="mat-error">
+                                          {{ipAddressValidationMsg}}
+                                      </mat-hint>
+                            </mat-form-field>
+                          </div>
+                        </div>
+
+                        <!--Port-->
+                        <div class="col-sm-12 col-md-6 pr-0 gw-unit-system-row">
+                          <div class="col gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">Port</mat-label>
+                          </div>
+                          <div class="col px-2">
+                            <mat-form-field class="mat-select-small gw-select-180" appearance="fill">
+                                <input Id="IpPortNumber" matInput type="number" gw-number-input class="gw-form-label" formControlName="IpPortNumber"
+                                name="IpPortNumber" [(ngModel)]="tcpChannel.IpPortNumber" (input)="validatePort()" (blur)="validatePort()">
+                                <mat-hint *ngIf="ipPortValidationMsg" align="start" class="mat-error">
+                                    {{ipPortValidationMsg}}
+                                </mat-hint>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+
+        <div class="gw-data-pub-slave-settings" formGroupName="ModbusConfiguration" *ngIf="slaveSettingsProperty">
+            <div class="row p-t-5 p-l-20 p-b-20">
+                <span class="mat-subtitle-2">Slave Settings</span>
+            </div>
+            
+            <!--Connection To-->
+            <div class="d-flex flex-wrap mt-1">
+                <div class="col-sm-12 col-md-12 pr-0 gw-unit-system-row">
+                  <div class="col gw-unit-system-form-label px-2">
+                    <mat-label class="gw-form-label">Connection To</mat-label>
+                  </div>
+                  <div class="col px-2">
+                    <mat-form-field class="mat-select-small gw-select-180" appearance="fill">
+                        <mat-select class="form-baseline"  id="ConnectionTo"  formControlName="ConnectionTo"
+                            [(value)]="publishing.ConnectionTo">
+                            <mat-option *ngFor="let connection of slaveSettingsProperty.PublishingConnectionTypes"
+                                [value]="connection">
+                                {{connection}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap mt-1">
+
+                <!--Word Order-->
+                <div class="col-sm-12 col-md-6 pr-0 gw-unit-system-row">
+                  <div class="col gw-unit-system-form-label px-2">
+                    <mat-label class="gw-form-label">Word Order</mat-label>
+                  </div>
+                  <div class="col px-2">
+                    <mat-form-field class="mat-select-small gw-select-180" appearance="fill">
+                        <mat-select class="form-baseline"  id="WordOrder" formControlName="WordOrder"
+                            [(value)]="publishing.WordOrder">
+                            <mat-option *ngFor="let wordOrderType of slaveSettingsProperty.WordOrderTypes"
+                                [value]="wordOrderType">
+                                {{wordOrderType}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <!--Byte Order-->
+                <div class="col-sm-12 col-md-6 pr-0 gw-unit-system-row">
+                  <div class="col gw-unit-system-form-label px-2">
+                    <mat-label class="gw-form-label">Byte Order</mat-label>
+                  </div>
+                  <div class="col px-2">
+                    <mat-form-field class="mat-select-small gw-select-180" appearance="fill">
+                        <mat-select class="form-baseline"  id="ByteOrder"  formControlName="ByteOrder"
+                            [(value)]="publishing.ByteOrder">
+                            <mat-option *ngFor="let byteOrderType of slaveSettingsProperty.ByteOrderTypes"
+                                [value]="byteOrderType">
+                                {{byteOrderType}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <!--Map Template-->
+                <div class="col-sm-12 col-md-6 pr-0 gw-unit-system-row">
+                  <div class="col gw-unit-system-form-label px-2">
+                    <mat-label class="gw-form-label">Map Template</mat-label>
+                  </div>
+                  <div class="col px-2">
+                    <mat-form-field class="mat-select-small gw-select-180" appearance="fill">
+                        <mat-select class="form-baseline" #RegisteredModbusMapId id="RegisteredModbusMapId" formControlName="RegisteredModbusMapId"
+                            [(ngModel)]="publishing.RegisteredModbusMapId" (selectionChange)="onSelectChange($event)"
+                            [matTooltip]="selectedMapName" matTooltipPosition="below"
+                            matTooltipClass="gw-mat-tooltip" [matTooltipDisabled]="selectedMapName?.length > 17 ? 'false': 'true' ">
+                            <div class="gw-map-options-wrapper">
+                            <mat-option *ngFor="let template of mapTemplateList" [value]="template.Id" matTooltip="{{template?.MapName}}"
+                                matTooltipPosition="below" matTooltipClass="gw-mat-option-tooltip"
+                                [matTooltipDisabled]="template?.MapName.length > 34 ? 'false': 'true' ">
+                                {{template.MapName}}
+                            </mat-option>
+                          </div>
+                            <footer *ngIf="!isImportConfig">
+                              <mat-label class="mat-option" (click)="showNewCustomMapDialog()">+ Add New</mat-label>
+                            </footer>
+                        </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <!--Slave ID-->
+                <div class="col-sm-12 col-md-6 pr-0 gw-unit-system-row">
+                  <div class="col gw-unit-system-form-label px-2">
+                    <mat-label class="gw-form-label">Slave ID</mat-label>
+                  </div>
+                  <div class="col px-2">
+                    <mat-form-field class="mat-select-small gw-select-180 gw-slaveId-form-field" appearance="fill">
+                        <button mat-button class="mat-button-sm mat-button-primary-sm__icon-only gw-slaveId-btn" (click)="decSlaveId()">
+                            <mat-icon class="mat-icon--sml">remove</mat-icon>
+                        </button>
+                       
+                        <input id="SlaveId" matInput type="number" class="gw-form-label gw-slaveId-input" formControlName="SlaveId"
+                        [(ngModel)]="publishing.SlaveId" (input)="validateSlave()" (blur)="validateSlave()">
+
+                        <button mat-button class="mat-button-sm mat-button-primary-sm__icon-only gw-slaveId-btn" (click)="incSlaveId()">
+                            <mat-icon class="mat-icon--sml">add</mat-icon>
+                        </button>
+                        <mat-hint *ngIf="slaveIdValidationMsg" align="start" class="mat-error">
+                            {{slaveIdValidationMsg}}
+                        </mat-hint>
+                    </mat-form-field>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</section>

@@ -1,0 +1,95 @@
+// @import 'base.scss';
+
+// @media (min-width: 768px) and (max-width: 950px) {
+//     .col-md-6 {
+//         -webkit-box-flex: 0;
+//         -ms-flex: 0 0 100%;
+//         flex: 0 0 100%;
+//         max-width: 100%;
+//     }
+// }
+
+// .gw-tool-breadcrumb-row {
+//     margin-top:-12px; 
+//     margin-bottom: 12px;
+// }
+
+// .gw-tool-divider {
+//     margin-left: -24px; 
+//     margin-right:-24px;
+//     padding-top: 10px;
+// }
+
+// @media (min-width: 470px) {
+//     .gw-incharge-row {
+//         margin-left: -8px; 
+//         margin-right: -8px;
+//     }
+// }
+
+// .gw-toolDetails-ChartView {
+//     @media (max-width: 950px) {
+//         padding-left: 0px;
+//         padding-right: 0px;
+//         padding-bottom: 10px;
+//     }
+
+//     @media (min-width: 951px) {
+//         height: 78vh;
+//         overflow: auto;
+//     }
+// }
+
+// .gw-toolDetails-ValueView {
+//     height: 75vh;
+//     overflow: auto;
+// }
+
+// .gw-toolDetails-table {
+//     width: 100%;
+//     border-spacing: 0px;
+// }
+
+// .gw-toolDetails-thRow {
+//     background-color: $gw-tertiary-color-100 !important;
+//     color: $gw-tertiary-color-700;
+//     font-size: 12px;
+//     height: 32px;
+// }
+
+// .gw-toolDetails-th-param {
+//     text-align: left;
+//     padding-left: 10px;
+// }
+
+// .gw-toolDetails-th-value {
+//     text-align: right;
+//     padding-right: 10px;
+// }
+
+// .gw-toolDetails-tr {
+//     height: 32px;
+// }
+
+// .gw-toolDetails-td-param {
+//     text-align: left;
+//     padding-left: 10px;
+//     font-size: 12px;
+//     color:$gw-tertiary-color-1000;
+// }
+
+// .gw-toolDetails-td-value {
+//     text-align: right;
+//     padding-right: 10px;
+//     font-size: 12px;
+//     color: $gw-tertiary-color-1000;
+// }
+
+// tr:nth-child(odd) {background-color: $gw-secondary-color-200;}
+
+@media (max-width: 950px) {
+    .p-lr-10{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

@@ -1,0 +1,62 @@
+<article class="gw-modal-container gw-dynamic-dialog-container">
+        <!-- <header class="m-t-18 m-b-10 m-l-24" mat-dialog-title>
+            <p class="mat-subtitle-1 m-0">New Custom Modbus Map</p>
+        </header> -->
+        <div class="mat-dialog-header">
+            <div mat-dialog-title class="mat-subtitle-1 mat-dialog-title">New Custom Modbus Map</div>
+        </div>
+        <!-- <mat-divider></mat-divider> -->
+        <div mat-dialog-content class="container mx-0 p-t-16">
+            <div class="row mx-0 mt-1 p-l-10 p-b-16">
+                <div class="col-lg-4 col-md-6 p-t-10">
+                    <span class="gw-form-label">Name</span>
+                </div>
+                <div class="col-lg-8 col-md-6">
+                    <form [formGroup]="mapTemplateForm" #customMapForm="ngForm" autocomplete="off">
+                        <mat-form-field class="mat-input-small" appearance="fill">
+                            <input id="MapName" matInput class="gw-form-label form-baseline" autocomplete="off" formControlName="MapName"
+                                name="MapName" [(ngModel)]="mapName" 
+                                [matTooltip]="mapName" matTooltipPosition="below"
+                                matTooltipClass="gw-mat-tooltip" [matTooltipDisabled]="mapName?.length > 22 ? 'false': 'true' "
+                                (input)="validateCustomMap()" (blur)="validateCustomMap()">
+                            <mat-hint *ngIf="validationMessage != null" align="start" class="mat-error">
+                                {{validationMessage}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row mx-0 p-l-10 p-b-16">
+                <div class="col-lg-4 col-md-6 p-t-10">
+                    <span class="gw-form-label">Create From</span>
+                </div>
+                <div class="col-lg-8 col-md-6">
+                    <mat-form-field class="mat-select-small" appearance="fill">
+                        <mat-select class="form-baseline"
+                        [(ngModel)]="selectedModBusMapId" (selectionChange)="onMapTemplateChange($event)"
+                        [matTooltip]="selectedMapName"
+                        matTooltipPosition="below" matTooltipClass="gw-mat-tooltip"
+                        [matTooltipDisabled]="selectedMapName?.length > 16 ? 'false': 'true' ">
+                            <mat-option [value]="customMapId">[New]</mat-option>
+                            <mat-option [value]="diagnosticMapId">[New Diagnostic Map]</mat-option>                        
+                            <mat-option *ngFor="let template of mapTemplateList" [value]="template.Id" 
+                                [matTooltip]="template?.MapName"
+                                matTooltipPosition="below" matTooltipClass="gw-mat-option-tooltip"
+                                [matTooltipDisabled]="template?.MapName.length > 34 ? 'false': 'true' ">
+                                {{template.MapName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        
+
+        <!-- <mat-divider></mat-divider> -->
+        <div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+            <button type="submit" mat-button class="mat-button-tertiary-sm m-r-10" (click)="OnCancel()">Cancel</button>
+            <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnOk()" [disabled]="!bIsValidMap">Add</button>
+        </div>
+
+</article>

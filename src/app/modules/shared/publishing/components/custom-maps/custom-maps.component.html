@@ -1,0 +1,13 @@
+<div class="gw-tab-group p-l-10 p-r-10">   
+    <gw-addEdit-custom-modbus-map [addEditModbusMap]="selectedMap" [displayType]="displayType" [isEdit]="isEdit"
+        [saveModbusMap]="saveMap" (mapHasChangesEmitter)="modbusMapChanged($event)" (mapUpdatedEmitter)="mapEditUpdated()"
+        (mapDeletedEmitter)="modbusMapDeleted()" (newMapAddedEmitter)="modbusNewMapUpdated()" (validationMessageEmitter)="validationMessage($event)"
+        (isFormDirtyEmitter)="isFormDirtyEvent($event)">
+    </gw-addEdit-custom-modbus-map>  
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnCancel()">CLOSE</button>   
+    <button type="submit" mat-button class="mat-button-primary-sm" *ngIf="!IsDefaultMap" [disabled]="isEdit ? !isValid || !isFormDirty : !isValid"
+        (click)="saveMapData()">{{isEdit ? "SAVE" : "CREATE" }}</button>
+</div>
