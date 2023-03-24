@@ -1,0 +1,19 @@
+@import '~node_modules/bh-theme/theme-lib.theme.scss';
+@import 'igniteui-angular/lib/core/styles/themes/index';
+@include igx-core();
+@include igx-theme($default-palette);
+@import './assets/stimulsoft/stimulsoft.theme.css';
+@import './assets/fonts/gateway-font.scss';
+@import './assets/fonts/angular-material-icon.scss';
+@import './assets/css/base.scss';
+@import './assets/css/components.scss';
+@import './assets/css/report.scss';
+@import './assets/css/layout.scss';
+
+
+
+
+
+
+
+
