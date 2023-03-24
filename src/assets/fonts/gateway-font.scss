@@ -1,0 +1,160 @@
+$noto-sans-font-path: "~assets/fonts/noto-sans";
+$poppins-font-path: "~assets/fonts/poppins";
+/*
+**********************
+Noto Sans Font Family
+https://google-webfonts-helper.herokuapp.com/fonts/noto-sans
+**********************
+*/
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Noto Sans'), 
+       url(#{$noto-sans-font-path}/cyrillic-ext/noto-sans-v14-cyrillic-ext-regular.woff2) format('woff2'),
+       url(#{$noto-sans-font-path}/cyrillic-ext/noto-sans-v14-cyrillic-ext-regular.woff) format('woff');
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Noto Sans'), 
+       url(#{$noto-sans-font-path}/cyrillic/noto-sans-v14-cyrillic-regular.woff2) format('woff2'),
+       url(#{$noto-sans-font-path}/cyrillic/noto-sans-v14-cyrillic-regular.woff) format('woff');
+}
+/* devanagari */
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Noto Sans'), 
+       url(#{$noto-sans-font-path}/devanagari/noto-sans-v14-devanagari-regular.woff2) format('woff2'),
+       url(#{$noto-sans-font-path}/devanagari/noto-sans-v14-devanagari-regular.woff) format('woff');
+}
+/* greek-ext */
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Noto Sans'), 
+       url(#{$noto-sans-font-path}/greek-ext/noto-sans-v14-greek-ext-regular.woff2) format('woff2'),
+       url(#{$noto-sans-font-path}/greek-ext/noto-sans-v14-greek-ext-regular.woff) format('woff');
+}
+/* greek */
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Noto Sans'), 
+       url(#{$noto-sans-font-path}/greek/noto-sans-v14-greek-regular.woff2) format('woff2'),
+       url(#{$noto-sans-font-path}/greek/noto-sans-v14-greek-regular.woff) format('woff');
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Noto Sans'), 
+       url(#{$noto-sans-font-path}/vietnamese/noto-sans-v14-vietnamese-regular.woff2) format('woff2'),
+       url(#{$noto-sans-font-path}/vietnamese/noto-sans-v14-vietnamese-regular.woff) format('woff');
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Noto Sans'), 
+       url(#{$noto-sans-font-path}/latin-ext/noto-sans-v14-latin-ext-regular.woff2) format('woff2'),
+       url(#{$noto-sans-font-path}/latin-ext/noto-sans-v14-latin-ext-regular.woff) format('woff');
+}
+/* latin */
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Noto Sans'), 
+       url(#{$noto-sans-font-path}/latin/noto-sans-v14-latin-regular.woff2) format('woff2'),
+       url(#{$noto-sans-font-path}/latin/noto-sans-v14-latin-regular.woff) format('woff');
+}
+/*
+**********************
+Poppins Font Family
+https://google-webfonts-helper.herokuapp.com/fonts/poppins
+**********************
+*/
+/* devanagari */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Poppins'), 
+       url(#{$poppins-font-path}/devanagari/poppins-v15-devanagari-regular.woff2) format('woff2'),
+       url(#{$poppins-font-path}/devanagari/poppins-v15-devanagari-regular.woff) format('woff');
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Poppins'), 
+       url(#{$poppins-font-path}/latin-ext/poppins-v15-latin-ext-regular.woff2) format('woff2'),
+       url(#{$poppins-font-path}/latin-ext/poppins-v15-latin-ext-regular.woff) format('woff');
+}
+/* latin */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Poppins'), 
+       url(#{$poppins-font-path}/latin/poppins-v15-latin-regular.woff2) format('woff2'),
+       url(#{$poppins-font-path}/latin/poppins-v15-latin-regular.woff) format('woff');
+}
+/*
+**********************
+Poppins semibold Font Family
+https://google-webfonts-helper.herokuapp.com/fonts/poppins
+**********************
+*/
+/* devanagari */
+@font-face {
+  font-family: 'Poppins semibold';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Poppins semibold'), 
+       url(#{$poppins-font-path}/devanagari/poppins-v15-devanagari-600.woff2) format('woff2'),
+       url(#{$poppins-font-path}/devanagari/poppins-v15-devanagari-600.woff) format('woff');
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Poppins semibold';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Poppins semibold'), 
+       url(#{$poppins-font-path}/latin-ext/poppins-v15-latin-ext-600.woff2) format('woff2'),
+       url(#{$poppins-font-path}/latin-ext/poppins-v15-latin-ext-600.woff) format('woff');
+}
+/* latin */
+@font-face {
+  font-family: 'Poppins semibold';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Poppins semibold'), 
+       url(#{$poppins-font-path}/latin/poppins-v15-latin-600.woff2) format('woff2'),
+       url(#{$poppins-font-path}/latin/poppins-v15-latin-600.woff) format('woff');
+}
