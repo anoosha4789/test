@@ -1,0 +1,23 @@
+<!--Header-->
+<app-header></app-header>
+
+<!--Content Container-->
+<article class="gw-container">
+  <router-outlet></router-outlet>
+</article>
+
+<!-- Loading Busy Wait -->
+<ng-template #customLoadingTemplate>
+  <div class="gw-loading-message">
+      <h1>
+          {{loadingMessage}}
+      </h1>
+  </div>
+</ng-template>
+
+<ngx-loading [show]="loading" [config]="config" [template]="customLoadingTemplate">
+</ngx-loading>
+
+<!--Footer-->
+<!-- <app-footer></app-footer> -->
+<gateway-footer></gateway-footer>

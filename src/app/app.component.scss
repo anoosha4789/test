@@ -1,0 +1,41 @@
+@import '../assets/css/base.scss';
+
+.error-msg-panel {
+    height: 30px;
+    display: table;
+    overflow: hidden;
+    width: 100%;
+    z-index: 10;
+    position: fixed;
+    bottom: 0px;
+    margin-bottom: 40px;
+  
+    .error-msg-panel__innerdiv {
+      background: $gw-error-bg-color;  
+      color: $gw-text-white;
+      font-size: 15px;
+      text-align: center;
+      display: table-cell;
+      vertical-align: middle;
+    }
+  
+    mat-icon {
+      font-size: 16px;
+      height: 16px;
+      width: 16px;
+      margin-right: 2px;
+    }
+  }
+
+@keyframes blink {
+    50% { opacity: 0.0; }
+}
+
+@-webkit-keyframes blink {
+    50% { opacity: 0.0; }
+}
+
+.blink {
+    animation: blink 2s step-start 0s infinite;
+    -webkit-animation: blink 2s step-start 0s infinite;
+}
