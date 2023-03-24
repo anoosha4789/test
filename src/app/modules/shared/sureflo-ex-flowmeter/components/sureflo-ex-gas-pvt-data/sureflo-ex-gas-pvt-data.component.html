@@ -1,0 +1,141 @@
+<!--298EX Gas Prodcer/Injector-->
+<section id="surefloExPVTSection" class="container-fluid px-4 pt-2">
+
+    <form novalidate [formGroup]="surefloExPVTForm" autocomplete="off">
+
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">PVT Data & Additional Parameters</span>
+        </div>
+        <div class="container-fluid">
+            <div class="row p-b-4">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Use Custom Gas Properties</span>
+                </div>
+                <div class="col p-2">
+                    <mat-slide-toggle formControlName="UseCustomGasProperties" [disableRipple]="true"
+                        color={{customGasToggle.color}} (change)="toggleCustomGasSection($event)"
+                        disabled={{customGasToggle.disabled}}>
+                    </mat-slide-toggle>
+                </div>
+            </div>
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !customGasToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Gas FVF PVT File</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-custom-file-input" appearance="fill">
+                        <input id="gasVolFactorCalFile" name="GasVolumeFactorCalibration" matInput
+                            [value]="gasVolFactorCalFilePath" [disabled]="!customGasToggle.checked"
+                            class="gw-form-label form-baseline" [readonly]="true"
+                            (click)="browseFileDialog(gasVolFactorCalFile)">
+                        <input #gasVolFactorCalFile hidden="true" type="file" multiple="false" accept=".cal"
+                            (change)="onGasVolFactorCalFileChange($event)" />
+                        <mat-hint *ngIf="gasVolFactorInvalidMsg" class="mat-error">{{gasVolFactorInvalidMsg}}</mat-hint>
+                    </mat-form-field>
+                    <button mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog(gasVolFactorCalFile)" [disabled]="!customGasToggle.checked">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !customGasToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Gas Density PVT File</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-custom-file-input" appearance="fill">
+                        <input id="gasDensityCalFile" name="GasDensityCalibration" matInput
+                            [value]="gasDensityCalFilePath" [disabled]="!customGasToggle.checked"
+                            class="gw-form-label form-baseline" [readonly]="true"
+                            (click)="browseFileDialog(gasDensityCalFile)">
+                        <input #gasDensityCalFile hidden="true" type="file" multiple="false" accept=".cal"
+                            (change)="onGasDensityCalFileChange($event)" />
+                        <mat-hint *ngIf="gasDensityInvalidMsg" class="mat-error">{{gasDensityInvalidMsg}}</mat-hint>
+                    </mat-form-field>
+                    <button mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog(gasDensityCalFile)" [disabled]="!customGasToggle.checked">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !customGasToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Gas Viscosity PVT File</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-custom-file-input" appearance="fill">
+                        <input id="gasViscosityCalFile" name="GasViscosityCalibration" matInput
+                            [value]="gasViscosityCalFilePath" [disabled]="!customGasToggle.checked"
+                            class="gw-form-label form-baseline" [readonly]="true"
+                            (click)="browseFileDialog(gasViscosityCalFile)">
+                        <input #gasViscosityCalFile hidden="true" type="file" multiple="false" accept=".cal"
+                            (change)="onGasViscosityCalFileChange($event)" />
+                        <mat-hint *ngIf="gasViscosityInvalidMsg" class="mat-error">{{gasViscosityInvalidMsg}}</mat-hint>
+                    </mat-form-field>
+                    <button mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog(gasViscosityCalFile)" [disabled]="!customGasToggle.checked">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': customGasToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Gas Specific Gravity</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                        <input type="number" matInput name="SpecificGravityGas" formControlName="SpecificGravityGas"
+                            class="gw-form-label form-baseline" (input)="validateFormControls()"
+                            (blur)="validateFormControls()" [disableControl]="customGasToggle.checked">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.SpecificGravityGas" class="mat-error">
+                            {{formCtrlErrorMessage.SpecificGravityGas}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!--Additional Parameters-->
+    <form novalidate [formGroup]="surefloExAddParamForm" autocomplete="off">
+        <div class="container-fluid">
+            <div class="row p-b-4">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Coeff Expansion (ppm/°F)</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                        <input type="number" matInput name="CoefficientExpansion" formControlName="CoefficientExpansion"
+                            class="gw-form-label form-baseline" (input)="validateFormControls()"
+                            (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.CoefficientExpansion" class="mat-error">
+                            {{formCtrlErrorMessage.CoefficientExpansion}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-b-4">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Measured Depth (ft)</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                        <input type="number" matInput name="MeasuredDepth" formControlName="MeasuredDepth"
+                            class="gw-form-label form-baseline" (input)="validateFormControls()"
+                            (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.MeasuredDepth" class="mat-error">
+                            {{formCtrlErrorMessage.MeasuredDepth}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</section>

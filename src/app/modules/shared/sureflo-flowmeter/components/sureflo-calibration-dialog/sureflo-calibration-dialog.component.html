@@ -1,0 +1,49 @@
+<section class="m-2">
+    <mat-card class="pb-0">
+        <mat-card-content class="gw-calibration-container">
+            <mat-tab-group animationDuration="0ms" [(selectedIndex)]="activeTabIndex" (selectedTabChange)="onTabChanged($event);" class="gw-tab-group">
+
+                <mat-tab label="Gauge Data">
+                    <ng-template matTabContent>
+                        <sureflo-gauge-data [data]="calibrationData" (isFormValidEvent)="isGaugFormValidEvent($event)">
+                        </sureflo-gauge-data>
+                    </ng-template>
+                </mat-tab>
+
+                <!--Oil Producer PVT Data Tab -->
+                <mat-tab label="PVT Data" *ngIf="!fluidTypeGasVisibility && !fluidTypeWaterVisibility">
+                    <ng-template matTabContent>
+                        <sureflo-pvt-data [data]="calibrationData" (isFormValidEvent)="isPVTFormValidEvent($event)">
+                        </sureflo-pvt-data>
+                    </ng-template>
+                </mat-tab>
+
+                <!-- Water Injector PVT Data Tab -->
+                <mat-tab label="PVT Data" *ngIf="fluidTypeWaterVisibility">
+                    <ng-template matTabContent>
+                        <sureflo-water-pvt-data [data]="calibrationData" (isFormValidEvent)="isPVTFormValidEvent($event)">
+                        </sureflo-water-pvt-data>
+                    </ng-template>
+                </mat-tab>
+
+                <mat-tab label="Additional Parameters">
+                    <ng-template matTabContent>
+                        <sureflo-additional-param [data]="calibrationData" (isFormValidEvent)="isAddParamFormValidEvent($event)">
+                        </sureflo-additional-param>
+                    </ng-template>
+                </mat-tab>
+
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
+</section>
+<!-- <mat-divider></mat-divider> -->
+<div mat-dialog-actions class="d-flex justify-content-between gw-adv-mat-dialog-actions">
+    <div>
+        <button mat-button class="mat-button-primary-sm" (click)="onResetBtnClick()">Reset</button>
+    </div>
+    <div>
+        <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="onCancelBtnClick()">Cancel</button>
+        <button type="submit" mat-button class="mat-button-primary-sm" (click)="onSubmitBtnClick()" [disabled]="!isFormValid">Apply</button>
+    </div>
+</div>

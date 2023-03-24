@@ -1,0 +1,40 @@
+<ng-container *ngIf="data.length > 0">
+    <div class="d-flex flex-wrap" *ngFor="let gauge of data">
+        <div class="px-2 gw-zone-form-left-label">
+            <label class="gw-form-label">{{gauge.portingType}} Gauge</label>
+        </div>
+        <div class="col px-sm-0">
+            <mat-form-field class="mat-input-small gw-tc-input" appearance="fill" 
+                matTooltip="{{gauge.gaugePath}}" matTooltipPosition="below" 
+                matTooltipClass="gw-mat-tooltip gw-tool-connection-tooltip">
+                <input matInput class="gw-form-label form-baseline" [value]="gauge.gaugePath | gwTruncate:30"
+                    [disabled]="true">
+            </mat-form-field>
+        </div>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="data.length == 0">
+    <div class="d-flex flex-wrap mt-1">
+        <div class="px-2 gw-zone-form-left-label">
+            <label class="gw-form-label">Annulus Gauge</label>
+        </div>
+        <div class="col px-sm-0">
+            <mat-form-field class="mat-input-small gw-tc-input" appearance="fill">
+                <input matInput type="text" class="gw-form-label form-baseline" name="Annulus" [disabled]="true">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap">
+        <div class="px-2 gw-zone-form-left-label">
+            <label class="gw-form-label">Tubing Gauge</label>
+        </div>
+        <div class="col px-sm-0">
+            <mat-form-field class="mat-input-small gw-tc-input" appearance="fill">
+                <input matInput type="text" class="gw-form-label form-baseline" name="Tubing" [disabled]="true">
+            </mat-form-field>
+        </div>
+    </div>
+
+</ng-container>

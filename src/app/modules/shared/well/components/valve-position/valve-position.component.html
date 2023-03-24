@@ -1,0 +1,20 @@
+<div class="p-1 gw-valve-grid">
+    <igx-grid igxPreventDocumentScroll #gridPositions [data]="positions" [emptyGridMessage]="'No Valve positions are configured.'"
+        width="100%" resizable="true" (onColumnInit)="initColumns($event)">
+
+        <igx-column field="Index" header="No" dataType="integer"></igx-column>
+
+        <igx-column field="ShiftVolume" header="Shift Volume (mL)" dataType="integer">
+            <ng-template igxCell let-value>
+                {{ value | number:'1.1-2' }}
+            </ng-template>
+        </igx-column>
+
+        <igx-column field="OpenPercent" header="Open (%)" dataType="integer">
+            <ng-template igxCell let-value>
+                {{ value | number:'1.1-2' }}
+            </ng-template>
+        </igx-column>
+
+    </igx-grid>
+</div>

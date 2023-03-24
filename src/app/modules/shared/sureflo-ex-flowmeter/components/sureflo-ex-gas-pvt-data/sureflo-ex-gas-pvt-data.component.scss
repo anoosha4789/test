@@ -1,0 +1,20 @@
+
+::ng-deep #surefloExPVTSection .mat-form-field-appearance-fill {
+    padding: 0em 0.6em 0 0.6em;
+}
+
+::ng-deep #surefloExPVTSection .mat-form-field-wrapper {
+    margin-bottom: -0.375em;
+}
+
+#surefloExPVTSection {
+    height: 480px;
+}
+
+#surefloExPVTSection .mat-input-small .mat-error {
+    margin-top: -4px;
+}
+
+::ng-deep #surefloExPVTSection .mat-form-field-subscript-wrapper {
+    width: 50vh;
+}

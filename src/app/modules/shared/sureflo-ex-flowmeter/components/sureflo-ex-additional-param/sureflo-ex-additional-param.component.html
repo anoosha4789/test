@@ -1,0 +1,140 @@
+<section id="surefloExParamSection" class="container-fluid px-4 pt-2">
+    <form [formGroup]="surefloExAddParamForm" autocomplete="off" novalidate>
+
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">Additional Parameters</span>
+        </div>
+
+        <div class="d-flex">
+            <div class="col">
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">Measured Depth (ft)</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="MeasuredDepth" formControlName="MeasuredDepth"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.MeasuredDepth"  class="mat-error">
+                                    {{formCtrlErrorMessage.MeasuredDepth}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">True Vertical Depth (ft)</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="TrueVerticalDepth" formControlName="TrueVerticalDepth"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.TrueVerticalDepth"  class="mat-error">
+                                    {{formCtrlErrorMessage.TrueVerticalDepth}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">Surface Watercut (%)</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="SurfaceWaterCut" formControlName="SurfaceWaterCut"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.SurfaceWaterCut"  class="mat-error">
+                                    {{formCtrlErrorMessage.SurfaceWaterCut}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">Water Cut Inversion (%)</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="WaterCutInversion" formControlName="WaterCutInversion"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.WaterCutInversion"  class="mat-error">
+                                    {{formCtrlErrorMessage.WaterCutInversion}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col">
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">Emulsification Stability</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="EmulsificationStability"
+                                formControlName="EmulsificationStability" class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.EmulsificationStability"  class="mat-error">
+                                    {{formCtrlErrorMessage.EmulsificationStability}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">Roughness Factor (ft)</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="RoughnessFactor" formControlName="RoughnessFactor"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.RoughnessFactor"  class="mat-error">
+                                    {{formCtrlErrorMessage.RoughnessFactor}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">Coeff Expansion (ppm/°F)</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="CoefficientExpansion"
+                                formControlName="CoefficientExpansion" class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.CoefficientExpansion"  class="mat-error">
+                                    {{formCtrlErrorMessage.CoefficientExpansion}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">Deviation (Deg)</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="Deviation" formControlName="Deviation"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.Deviation"  class="mat-error">
+                                    {{formCtrlErrorMessage.Deviation}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+</section>

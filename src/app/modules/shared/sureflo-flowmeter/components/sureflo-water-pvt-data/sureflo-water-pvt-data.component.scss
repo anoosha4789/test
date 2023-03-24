@@ -1,0 +1,20 @@
+
+::ng-deep #surefloWaterPVTSection .mat-form-field-appearance-fill {
+    padding: 0em 0.6em 0 0.6em;
+}
+
+::ng-deep #surefloWaterPVTSection .mat-form-field-wrapper {
+    margin-bottom: -0.375em;
+}
+
+#surefloWaterPVTSection {
+    height: 480px;
+}
+
+#surefloWaterPVTSection .mat-input-small .mat-error {
+    margin-top: -4px;
+}
+
+::ng-deep #surefloWaterPVTSection .mat-form-field-subscript-wrapper {
+    width: 35vh;
+}

@@ -1,0 +1,24 @@
+// .mat-tab-group.mat-tab-group {
+//     height: calc(100% - 60px);
+// }
+
+.mat-form-field-appearance-fill {
+    padding: 0;
+}
+
+.gw-inner-tab-group {
+   overflow: hidden;
+   height: calc(100% - 125px) !important;
+}
+
+.gw-inner-tab-group .mat-tab-header {
+    // border-bottom: 1px solid #ededed;
+}
+
+
+.gw-inner-tab-group .mat-tab-header .mat-tab-label-active {
+    background-color: transparent;
+    color: inherit;
+}
+
+.gw-mat-tab-content-box { overflow: hidden;}

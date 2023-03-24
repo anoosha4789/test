@@ -1,0 +1,208 @@
+<!-- Oil Producer -->
+<section id="surefloAddParamSection" class="container-fluid px-4 pt-2"  *ngIf="!fluidTypeGasVisibility && !fluidTypeWaterVisibility">
+    <form [formGroup]="surefloAddParamForm" autocomplete="off" novalidate>
+
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">Additional Parameters</span>
+        </div>
+
+        <div class="d-flex">
+            <div class="col">
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">Deviation (deg)</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="Deviation" formControlName="Deviation"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.Deviation" class="mat-error">
+                                    {{formCtrlErrorMessage.Deviation}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">Friction Factor</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="FrictionFactor" formControlName="FrictionFactor"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.FrictionFactor" class="mat-error">
+                                    {{formCtrlErrorMessage.FrictionFactor}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">Delta Threshold (psi)</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="DeltaThreshold" formControlName="DeltaThreshold"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.DeltaThreshold" class="mat-error">
+                                    {{formCtrlErrorMessage.DeltaThreshold}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col">
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">Discharge Coefficient</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="CD" formControlName="CD" class="mat-body-2 form-baseline" 
+                                (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.CD" class="mat-error">
+                                    {{formCtrlErrorMessage.CD}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">Surface Watercut (%)</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="SurfaceWaterCutPercent" formControlName="SurfaceWaterCutPercent"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.SurfaceWaterCutPercent" class="mat-error">
+                                    {{formCtrlErrorMessage.SurfaceWaterCutPercent}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col p-1">
+                        <span class="gw-form-label">Downhole Watercut (%)</span>
+                    </div>
+                    <div class="col p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="DHWaterCutPercent" formControlName="DHWaterCutPercent"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.DHWaterCutPercent" class="mat-error">
+                                    {{formCtrlErrorMessage.DHWaterCutPercent}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+</section>
+
+<!-- Gas Producer / Injector -->
+<section id="surefloAddParamSection" class="container-fluid px-4 pt-2" *ngIf="fluidTypeGasVisibility">
+    <form [formGroup]="surefloAddParamForm" autocomplete="off" novalidate>
+
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">Additional Parameters</span>
+        </div>
+
+        <div class="d-flex">
+            <div class="col-6">
+
+                <div class="row">
+                    <div class="col-8 p-1">
+                        <span class="gw-form-label">Delta Threshold (psi)</span>
+                    </div>
+                    <div class="col-4 p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="DeltaThreshold" formControlName="DeltaThreshold"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.DeltaThreshold" class="mat-error">
+                                    {{formCtrlErrorMessage.DeltaThreshold}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-8 p-1">
+                        <span class="gw-form-label">Produced Gas Gravity</span>
+                    </div>
+                    <div class="col-4 p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="ProducedGasGravity" formControlName="ProducedGasGravity"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.ProducedGasGravity" class="mat-error">
+                                    {{formCtrlErrorMessage.ProducedGasGravity}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+</section>
+
+
+<!-- Water Injector -->
+<section id="surefloAddParamSection" class="container-fluid px-4 pt-2" *ngIf="fluidTypeWaterVisibility">
+    <form [formGroup]="surefloAddParamForm" autocomplete="off" novalidate>
+
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">Additional Parameters</span>
+        </div>
+
+        <div class="d-flex">
+            <div class="col-6">
+
+                <div class="row">
+                    <div class="col-8 p-1">
+                        <span class="gw-form-label">Delta Threshold (psi)</span>
+                    </div>
+                    <div class="col-4 p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="DeltaThreshold" formControlName="DeltaThreshold"
+                                class="mat-body-2 form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.DeltaThreshold" class="mat-error">
+                                    {{formCtrlErrorMessage.DeltaThreshold}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-8 p-1">
+                        <span class="gw-form-label">Discharge Coefficient</span>
+                    </div>
+                    <div class="col-4 p-1">
+                        <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                            <input type="number" matInput name="CD" formControlName="CD" class="mat-body-2 form-baseline" 
+                                (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.CD" class="mat-error">
+                                    {{formCtrlErrorMessage.CD}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+</section>

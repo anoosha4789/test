@@ -1,0 +1,267 @@
+<section id="surefloExPVTSection" class="container-fluid px-4 pt-2">
+
+    <form novalidate [formGroup]="surefloExPVTForm" autocomplete="off">
+
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">PVT Data</span>
+        </div>
+        <div class="container-fluid">
+            <div class="row p-b-4">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Use Custom Oil Properties</span>
+                </div>
+                <div class="col p-2">
+                    <mat-slide-toggle formControlName="UseCustomOilProperties" [disableRipple]="true"
+                        color={{customOilToggle.color}} (change)="toggleCustomOilSection($event)"
+                        disabled={{customOilToggle.disabled}}>
+                    </mat-slide-toggle>
+                </div>
+            </div>
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !customOilToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Oil FVF PVT File</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-custom-file-input" appearance="fill">
+                        <input id="oilVolFactorCalFile" name="OilVolumeFactorCalibration" matInput [value]="oilVolFactorCalFilePath"
+                            class="gw-form-label form-baseline" [readonly]="true" (click)="browseFileDialog(oilVolFactorCalFile)"
+                            [disabled]="!customOilToggle.checked">
+                        <input #oilVolFactorCalFile hidden="true" type="file" multiple="false" accept=".cal"
+                            (change)="onOilVolFactorCalFileChange($event)" />
+                        <mat-hint *ngIf="oilVolFactorInvalidMsg" class="mat-error">{{oilVolFactorInvalidMsg}}</mat-hint>
+                    </mat-form-field>
+                    <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog(oilVolFactorCalFile)" [disabled]="!customOilToggle.checked">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !customOilToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Oil Density PVT File</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-custom-file-input" appearance="fill">
+                        <input id="oilDensityCalFile" name="OilDensityCalibration" matInput
+                            [value]="oilDensityCalFilePath" [disabled]="!customOilToggle.checked"
+                            class="gw-form-label form-baseline" [readonly]="true"
+                            (click)="browseFileDialog(oilDensityCalFile)">
+                        <input #oilDensityCalFile hidden="true" type="file" multiple="false" accept=".cal"
+                            (change)="onOilDensityCalFileChange($event)" />
+                        <mat-hint *ngIf="oilDensityInvalidMsg" class="mat-error">{{oilDensityInvalidMsg}}</mat-hint>
+                    </mat-form-field>
+                    <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog(oilDensityCalFile)" [disabled]="!customOilToggle.checked">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !customOilToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Oil Viscosity PVT File</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-custom-file-input" appearance="fill">
+                        <input id="oilViscosityCalFile" name="OilViscosityCalibration" matInput
+                            [value]="oilViscosityCalFilePath" [disabled]="!customOilToggle.checked"
+                            class="gw-form-label form-baseline" [readonly]="true"
+                            (click)="browseFileDialog(oilViscosityCalFile)">
+                        <input #oilViscosityCalFile hidden="true" type="file" multiple="false" accept=".cal"
+                            (change)="onOilViscosityCalFileChange($event)" />
+                        <mat-hint *ngIf="oilViscosityInvalidMsg" class="mat-error">{{oilViscosityInvalidMsg}}</mat-hint>
+                    </mat-form-field>
+                    <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog(oilViscosityCalFile)" [disabled]="!customOilToggle.checked">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': customOilToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Oil Specific Gravity</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                        <input type="number" [disableControl]="customOilToggle.checked" 
+                            matInput name="SpecificGravityOil" formControlName="SpecificGravityOil"
+                            class="gw-form-label form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                            <mat-hint *ngIf="formCtrlErrorMessage?.SpecificGravityOil" class="mat-error">
+                                {{formCtrlErrorMessage.SpecificGravityOil}}
+                            </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <div class="row p-b-4">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Use Custom Water Properties</span>
+                </div>
+                <div class="col p-2">
+                    <mat-slide-toggle formControlName="UseCustomWaterProperties" [disableRipple]="true"
+                        color={{customWaterToggle.color}} (change)="toggleCustomWaterSection($event)">
+                    </mat-slide-toggle>
+                </div>
+            </div>
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !customWaterToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Water FVF PVT File</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-custom-file-input" appearance="fill">
+                        <input id="waterVolFactorCalFile" name="WaterVolumeFactorCalibration" matInput
+                            [value]="waterVolFactorCalFilePath" [disabled]="!customWaterToggle.checked"
+                            class="gw-form-label form-baseline" [readonly]="true"
+                            (click)="browseFileDialog(waterVolFactorCalFile)">
+                        <input #waterVolFactorCalFile hidden="true" type="file" multiple="false" accept=".cal"
+                            (change)="onWaterVolFactorCalFileChange($event)" />
+                        <mat-hint *ngIf="waterVolFactorInvalidMsg" class="mat-error">{{waterVolFactorInvalidMsg}}</mat-hint>
+                    </mat-form-field>
+                    <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog(waterVolFactorCalFile)" [disabled]="!customWaterToggle.checked">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !customWaterToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Water Density PVT File</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-custom-file-input" appearance="fill">
+                        <input id="waterDensityCalFile" name="WaterDensityCalibration" matInput
+                            [value]="waterDensityCalFilePath" [disabled]="!customWaterToggle.checked"
+                            class="gw-form-label form-baseline" [readonly]="true"
+                            (click)="browseFileDialog(waterDensityCalFile)">
+                        <input #waterDensityCalFile hidden="true" type="file" multiple="false" accept=".cal"
+                            (change)="onWaterDensityCalFileChange($event)" />
+                        <mat-hint *ngIf="waterDensityInvalidMsg" class="mat-error">{{waterDensityInvalidMsg}}</mat-hint>
+                    </mat-form-field>
+                    <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog(waterDensityCalFile)" [disabled]="!customWaterToggle.checked">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !customWaterToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Water Viscosity PVT File</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-custom-file-input" appearance="fill">
+                        <input id="waterViscosityCalFile" name="WaterViscosityCalibration" matInput
+                            [value]="waterViscosityCalFilePath" [disabled]="!customWaterToggle.checked"
+                            class="gw-form-label form-baseline" [readonly]="true"
+                            (click)="browseFileDialog(waterViscosityCalFile)">
+                        <input #waterViscosityCalFile hidden="true" type="file" multiple="false" accept=".cal"
+                            (change)="onWaterViscosityCalFileChange($event)" />
+                        <mat-hint *ngIf="waterViscosityInvalidMsg" class="mat-error">{{waterViscosityInvalidMsg}}</mat-hint>
+                    </mat-form-field>
+                    <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog(waterViscosityCalFile)" [disabled]="!customWaterToggle.checked">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': customWaterToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Water Specific Gravity</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                        <input type="number" matInput formControlName="SpecificGravityWater" name="SpecificGravityWater"
+                            class="gw-form-label form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()"
+                            [disableControl]="customWaterToggle.checked">
+                            <mat-hint *ngIf="formCtrlErrorMessage?.SpecificGravityWater"  class="mat-error">
+                                {{formCtrlErrorMessage.SpecificGravityWater}}
+                            </mat-hint>
+
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-b-4">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Gas Specific Gravity</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                        <input type="number" matInput formControlName="SpecificGravityGas" name="SpecificGravityGas"
+                            class="gw-form-label form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                            <mat-hint *ngIf="formCtrlErrorMessage?.SpecificGravityGas"  class="mat-error">
+                                {{formCtrlErrorMessage.SpecificGravityGas}}
+                            </mat-hint>
+
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-b-4">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Oil Surface Viscosity (cP)</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                        <input type="number" matInput formControlName="OilSurfaceViscosity" name="OilSurfaceViscosity"
+                            class="gw-form-label form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                            <mat-hint *ngIf="formCtrlErrorMessage?.OilSurfaceViscosity"  class="mat-error">
+                                {{formCtrlErrorMessage.OilSurfaceViscosity}}
+                            </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-b-4">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Gas Oil Ratio (scf/stb)</span>
+                </div>
+                <div class="col-2 px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill"
+                        [ngClass]="{'gw-sureflo-disable-input': customGasVisibility}">
+                        <input type="number" matInput formControlName="GasOilRatio" name="GasOilRatio" [disableControl]="customGasVisibility"
+                            class="gw-form-label form-baseline" (input)="validateFormControls()" (blur)="validateFormControls()">
+                            <mat-hint *ngIf="formCtrlErrorMessage?.GasOilRatio"  class="mat-error">
+                                {{formCtrlErrorMessage.GasOilRatio}}
+                            </mat-hint>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-6 px-0">
+                    <span class="px-3">
+                        <mat-checkbox formControlName="UseCustomGasProperties" [color]="customWaterToggle.color"
+                            (change)="onUseGasPVTChange($event)"></mat-checkbox>
+                    </span>
+                    <mat-form-field class="mat-input-small gw-sureflo-pvt-file-input" appearance="fill"
+                        [ngClass]="{'gw-sureflo-disable-input': !customGasVisibility}">
+                        <input id="gasOilRatioCalFile" name="GasOilRatioCalFile" matInput
+                            [value]="gasOilRatioCalFilePath" [disabled]="!customGasVisibility"
+                            class="gw-form-label form-baseline" [readonly]="true"
+                            (click)="browseFileDialog(gasOilRatioCalFile)">
+                        <input #gasOilRatioCalFile hidden="true" type="file" multiple="false" accept=".cal"
+                            (change)="onGasOilRatioCalFileChange($event)" />
+                        <mat-hint *ngIf="gasCalFileInvalidMsg" class="mat-error">{{gasCalFileInvalidMsg}}</mat-hint>
+                    </mat-form-field>
+                    <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog(gasOilRatioCalFile)"
+                        [ngClass]="{'gw-sureflo-disable-input': !customGasVisibility}"
+                        [disabled]="!customGasVisibility">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+
+
+

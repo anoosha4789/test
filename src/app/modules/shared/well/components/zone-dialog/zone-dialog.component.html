@@ -1,0 +1,95 @@
+<div class="p-x-24">
+    
+    <form [formGroup]="zoneForm" autocomplete="off" *ngIf="selectedZone">
+        <div class="row p-b-20 m-l-0">
+            <mat-label class="mat-subtitle-2">Zone Details</mat-label>
+        </div>
+         <!--Zone Name-->
+        <div class="row p-l-30 p-r-30 p-b-16">
+            <div class="col-lg-6 col-md-12 col-sm-12 p-t-10">
+                <span class="gw-form-label">Name</span>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <mat-form-field class="mat-input-small" appearance="fill">
+                    <input name="ZoneName" matInput class="gw-form-label form-baseline"
+                        formControlName="ZoneName" [(value)]="selectedZone.ZoneName"
+                        (input)="validateZone($event)" (blur)="validateZone($event)"
+                        [matTooltip]="inputZoneName" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-tooltip" [matTooltipDisabled]="inputZoneName?.length > 24 ? 'false': 'true' ">
+                    <!-- <div *ngIf="zoneName.invalid && zoneName.errors.required" class="mat-caption mat-error">Zone Name required.</div>
+                    <div *ngIf="zoneName.invalid && zoneName.errors.maxlength" class="mat-caption mat-error">
+                        Only maximum 50 characters is allowed for 'Zone Name'.</div>
+                    <div *ngIf="!isZoneNameValid" class="mat-caption mat-error">{{errorMsg}}</div> -->
+                    <mat-hint *ngIf="errorMsg != null" align="start" class="mat-error">
+                        {{errorMsg}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+            
+        </div>
+
+        <!--Valve Type-->
+        <div class="row p-l-30 p-r-30 p-b-16" *ngIf="selectedZone.Tools && selectedZone.Tools.length > 0">
+            <div class="col-lg-6 col-md-12 col-sm-12 p-t-10">
+                <span class="gw-form-label">Valve Type</span>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <mat-form-field class="mat-select-small" appearance="fill">
+                    <input name="ValveType" matInput class="gw-form-label form-baseline"
+                    [value]="ValveType" [disabled]="true">
+                    <!-- <mat-select id="ValveType" class="gw-form-label form-baseline" formControlName="ValveType"
+                        [(value)]="selectedZone.ValveType" (selectionChange)="onValveTypeChange($event)">
+                        <mat-option *ngFor="let valveType of valveTypeList" [value]="valveType">
+                            {{valveType}}
+                        </mat-option>
+                    </mat-select> -->
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!--Valve Size-->
+        <div class="row p-l-30 p-r-30 p-b-16" *ngIf="selectedZone.Tools && selectedZone.Tools.length > 0">
+            <div class="col-lg-6 col-md-12 col-sm-12 p-t-10">
+                <span class="gw-form-label">Valve Size (in)</span>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <mat-form-field class="mat-select-small" appearance="fill">
+                    <input name="ValveSize" matInput class="gw-form-label form-baseline"
+                    [value]="ValveSize" [disabled]="true">
+                    <!-- <mat-select id="ValveSize" class="gw-form-label form-baseline" formControlName="ValveSize"
+                        [(value)]="selectedZone.ValveSize" (selectionChange)="onValveSizeChange($event)">
+                        <mat-option *ngFor="let valveSize of valveSizeList" [value]="valveSize">{{valveSize}}
+                        </mat-option>
+                    </mat-select> -->
+                </mat-form-field>
+            </div>
+        </div>
+       
+        <!--Measured Depth-->
+        <div class="row p-l-30 p-r-30 p-b-16">
+            <div class="col-lg-6 col-md-12 col-sm-12 p-t-10">
+                <span class="gw-form-label">Measured Depth (ft)</span>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <mat-form-field class="mat-input-small" appearance="fill">
+                    <input type="text" matInput class="gw-form-label form-baseline" name="MeasuredDepth"
+                        formControlName="MeasuredDepth" [(value)]="selectedZone.MeasuredDepth" min="0"
+                        (input)="validateDepth($event)" (blur)="validateDepth($event)" gw-number-input>
+                    <!-- <div *ngIf="measuredDepth.dirty && measuredDepth.invalid" class="mat-caption mat-error">Measured Depth required.</div>
+                    <div *ngIf="!isDepthValid" class="mat-caption mat-error">{{invalidDepthMsg}}</div> -->
+                    <mat-hint *ngIf="invalidDepthMsg != null" align="start" class="mat-error">
+                        {{invalidDepthMsg}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+<!-- <mat-divider></mat-divider> -->
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnCancel()">Cancel</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnSubmit()" [disabled]="!zoneForm.valid">{{ modalEditMode ?  'Apply' : 'Add'}}</button>
+</div>

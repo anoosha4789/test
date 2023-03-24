@@ -1,0 +1,25 @@
+<section class="gw-shift-volume-graph-container">
+    <igx-data-chart height="100%" width="100%" [dataSource]="data" 
+        [chartTitle]="chartTitle" 
+        titleTextStyle="11pt Noto Sans"
+        xAxisTitleTextStyle="9pt Noto Sans"
+        yAxisTitleTextStyle="9pt Noto Sans">
+
+        <igx-numeric-x-axis #xAxis isLogarithmic=false abbreviateLargeNumbers=true title="Shift Volume (mL)">
+        </igx-numeric-x-axis>
+        <igx-numeric-y-axis #yAxis isLogarithmic=false abbreviateLargeNumbers=true title="Open %">
+        </igx-numeric-y-axis>
+
+        <igx-scatter-line-series markerType="Circle" [dataSource]="data" [xAxis]="xAxis" [yAxis]="yAxis" 
+            brush="#02A783"
+            markerBrush="#02A783"
+            markerOutline="#02A783"
+            xMemberPath="ShiftVolume" yMemberPath="OpenPercent" showDefaultTooltip="false">
+        </igx-scatter-line-series>
+
+    </igx-data-chart>
+</section>
+<!-- <div class="legendContainer" >
+    <igx-legend #legend class="legend" orientation="horizontal" >
+    </igx-legend>
+</div> -->

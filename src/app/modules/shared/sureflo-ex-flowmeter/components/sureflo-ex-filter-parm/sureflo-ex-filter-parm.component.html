@@ -1,0 +1,140 @@
+<section id="surefloExFilterParamSection" class="container-fluid px-4 pt-2">
+    <form [formGroup]="surefloExFilterParamForm" autocomplete="off" novalidate>
+
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">Filter Parameters</span>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col px-1">
+                    <p class="gw-sureflo-subtitle mt-1">
+                        Pressure/Temperature Buffer Configuration
+                    </p>
+                    <div class="d-flex">
+                        <div class="col p-1">
+                            <span class="gw-form-label">Left Weight (Points)</span>
+                        </div>
+                        <div class="col p-1">
+                            <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                                <input type="number" matInput name="PTBufferLeftWeight" formControlName="PTBufferLeftWeight" class="mat-body-2 form-baseline"
+                                (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.PTBufferLeftWeight" align="start" class="mat-error">
+                                    {{formCtrlErrorMessage.PTBufferLeftWeight}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="col p-1">
+                            <span class="gw-form-label">Right Weight (Points)</span>
+                        </div>
+                        <div class="col p-1">
+                            <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                                <input type="number" matInput name="PTBufferRightWeight" formControlName="PTBufferRightWeight" class="mat-body-2 form-baseline"
+                                (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.PTBufferRightWeight" align="start" class="mat-error">
+                                    {{formCtrlErrorMessage.PTBufferRightWeight}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="col p-1">
+                            <span class="gw-form-label">Nth Degree Order</span>
+                        </div>
+                        <div class="col p-1">
+                            <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                               <input type="number" matInput name="PTBufferOrder" formControlName="PTBufferOrder" class="mat-body-2 form-baseline"
+                               (input)="validateFormControls()" (blur)="validateFormControls()">
+                               <mat-hint *ngIf="formCtrlErrorMessage?.PTBufferOrder" align="start" class="mat-error">
+                                {{formCtrlErrorMessage.PTBufferOrder}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <p class="gw-sureflo-subtitle mt-1">
+                        Differential Pressure Threshold
+                    </p>
+                    <div class="d-flex">
+                        <div class="col p-1">
+                            <span class="gw-form-label">Lowest Value</span>
+                        </div>
+                        <div class="col p-1">
+                            <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                               <input type="number" matInput name="ThresholdLow" formControlName="ThresholdLow" class="mat-body-2 form-baseline"
+                               (input)="validateFormControls()" (blur)="validateFormControls()">
+                               <mat-hint *ngIf="formCtrlErrorMessage?.ThresholdLow" align="start" class="mat-error">
+                                {{formCtrlErrorMessage.ThresholdLow}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="col p-1">
+                            <span class="gw-form-label">Highest Value</span>
+                        </div>
+                        <div class="col p-1">
+                            <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                               <input type="number" matInput name="ThresholdHigh" formControlName="ThresholdHigh" class="mat-body-2 form-baseline"
+                               (input)="validateFormControls()" (blur)="validateFormControls()">
+                               <mat-hint *ngIf="formCtrlErrorMessage?.ThresholdHigh" align="start" class="mat-error">
+                                {{formCtrlErrorMessage.ThresholdHigh}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col px-1">
+                    <p class="gw-sureflo-subtitle mt-1">Flow Buffer Configuration</p>
+                    <div class="d-flex">
+                        <div class="col p-1">
+                            <span class="gw-form-label">Left Weight (Points)</span>
+                        </div>
+                        <div class="col p-1">
+                            <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                               <input type="number" matInput name="FlowBufferLeftWeight" formControlName="FlowBufferLeftWeight" class="mat-body-2 form-baseline"
+                               (input)="validateFormControls()" (blur)="validateFormControls()">
+                               <mat-hint *ngIf="formCtrlErrorMessage?.FlowBufferLeftWeight" align="start" class="mat-error">
+                                {{formCtrlErrorMessage.FlowBufferLeftWeight}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="col p-1">
+                            <span class="gw-form-label">Right Weight (Points)</span>
+                        </div>
+                        <div class="col p-1">
+                            <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                               <input type="number" matInput name="FlowBufferRightWeight" formControlName="FlowBufferRightWeight" class="mat-body-2 form-baseline"
+                               (input)="validateFormControls()" (blur)="validateFormControls()">
+                               <mat-hint *ngIf="formCtrlErrorMessage?.FlowBufferRightWeight" align="start" class="mat-error">
+                                {{formCtrlErrorMessage.FlowBufferRightWeight}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="col p-1">
+                            <span class="gw-form-label">Nth Degree Order</span>
+                        </div>
+                        <div class="col p-1">
+                            <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                               <input type="number" matInput name="FlowBufferOrder" formControlName="FlowBufferOrder" class="mat-body-2 form-baseline"
+                               (input)="validateFormControls()" (blur)="validateFormControls()">
+                               <mat-hint *ngIf="formCtrlErrorMessage?.FlowBufferOrder" align="start" class="mat-error">
+                                {{formCtrlErrorMessage.FlowBufferOrder}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</section>

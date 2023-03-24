@@ -1,0 +1,107 @@
+<section id="surefloGaugeSection" class="container-fluid px-4 pt-2">
+
+    <form [formGroup]="surefloGaugeForm" autocomplete="off" novalidate>
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">Gauge Data</span>
+        </div>
+        <div class="container-fluid">
+            <div class="row p-b-4">
+               <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Inlet Diameter (in)</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small" appearance="fill">
+                        <input matInput  type="number" formControlName="InletDiameter" name="InletDiameter" class="mat-body-2 form-baseline"
+                        (input)="validateFormControls()" (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.InletDiameter" align="start" class="mat-error">
+                            {{formCtrlErrorMessage.InletDiameter}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-b-4">
+               <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Throat Diameter (in)</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small" appearance="fill">
+                        <input matInput  type="number" formControlName="ThroatDiameter"  name="ThroatDiameter" class="mat-body-2 form-baseline"
+                        (input)="validateFormControls()" (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.ThroatDiameter" align="start" class="mat-error">
+                            {{formCtrlErrorMessage.ThroatDiameter}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+           
+            <div class="row p-b-4">
+               <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Static Correction (psi)</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small" appearance="fill">
+                        <input matInput  type="number" formControlName="StaticCorrection" name="StaticCorrection" class="mat-body-2 form-baseline"
+                        (input)="validateFormControls()" (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.StaticCorrection" align="start" class="mat-error">
+                            {{formCtrlErrorMessage.StaticCorrection}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <ng-container *ngIf="!fluidTypeGasVisibility && !fluidTypeWaterVisibility && remoteGaugeSecVisibility">
+                <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !remoteGaugeSecVisibility}">
+                   <div class="col-md-5 col-lg-4 p-1">
+                        <span class="gw-form-label">Remote Diameter (in)</span>
+                    </div>
+                    <div class="col px-sm-1">
+                        <mat-form-field class="mat-input-small" appearance="fill">
+                            <input matInput type="number" formControlName="RemoteDiameter" name="RemoteDiameter"
+                                class="mat-body-2 form-baseline" [readonly]="!remoteGaugeSecVisibility"
+                                (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.RemoteDiameter" align="start" class="mat-error">
+                                    {{formCtrlErrorMessage.RemoteDiameter}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            
+            
+                <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !remoteGaugeSecVisibility}">
+                   <div class="col-md-5 col-lg-4 p-1">
+                        <span class="gw-form-label">Length P1 to P3 (ft)</span>
+                    </div>
+                    <div class="col px-sm-1">
+                        <mat-form-field class="mat-input-small" appearance="fill">
+                            <input matInput type="number" formControlName="LengthP1toP3" name="LengthP1toP3"
+                                class="mat-body-2 form-baseline" [readonly]="!remoteGaugeSecVisibility"
+                                (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.LengthP1toP3" align="start" class="mat-error">
+                                    {{formCtrlErrorMessage.LengthP1toP3}}
+                                </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+            
+                <div class="row p-b-10" [ngClass]="{'gw-sureflo-disable-input': !remoteGaugeSecVisibility}">
+                    <div class="col px-1 pb-2">
+                        <mat-radio-group formControlName="RGCPosition" color={{radioBtnConfig.color}}>
+                            <mat-radio-button [value]="1" [disableRipple]="true" [disabled]="!remoteGaugeSecVisibility">
+                                Upstream
+                            </mat-radio-button>
+                            <mat-radio-button [value]="0" [disableRipple]="true" [disabled]="!remoteGaugeSecVisibility">
+                                Downstream
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            
+               
+            </ng-container>
+        </div>
+
+    </form>
+
+</section>

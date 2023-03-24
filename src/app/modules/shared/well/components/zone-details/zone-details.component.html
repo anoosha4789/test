@@ -1,0 +1,106 @@
+<!--InCHARGE Zone(s) associate with InCHARGE Tools-->
+<ng-container *ngIf="zone && zone.ZoneId > 0 && isInchargeTool && !isSuresensOnlyTool"> 
+    <div class="d-flex flex-wrap mt-3">
+        <div class="col px-0">
+            <div class="col gw-zone-form-left-label pl-2 pt-0">
+                <label class="gw-form-label">Valve Type</label>
+            </div>
+            <div class="col">
+                <mat-form-field class="mat-input-small gw-input-100" appearance="fill">
+                    <input matInput class="gw-form-label form-baseline" [value]="gaugeDetails.ToolType"
+                        name="ValveType" [disabled]="true">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col px-2">
+            <div class="col gw-zone-form-right-label pl-0 pt-0">
+                <label class="gw-form-label">Full Shift Volume (mL)</label>
+            </div>
+            <div class="col p-r-0">
+                <mat-form-field class="mat-input-small gw-input-100" appearance="fill">
+                    <input matInput class="gw-form-label form-baseline" [value]="gaugeDetails.DefaultFullShiftVolumeInML | number:'1.1-2'"
+                        name="FullShiftVolume" [disabled]="true">
+                </mat-form-field>
+            </div>
+        </div>
+
+    </div>
+    <div class="d-flex flex-wrap pb-2">
+        <div class="col px-0">
+            <div class="col gw-zone-form-left-label pl-2 pt-0">
+                <label class="gw-form-label">Valve Size (in)</label>
+            </div>
+            <div class="col">
+                <mat-form-field class="mat-input-small gw-input-100" appearance="fill">
+                    <input matInput class="gw-form-label form-baseline" [value]="gaugeDetails.ToolSize"
+                        name="ValveSize" [disabled]="true">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col px-2">
+            <div class="col gw-zone-form-right-label pl-0 pt-0">
+                <label class="gw-form-label">Full Stroke Length (in)</label>
+            </div>
+            <div class="col p-r-0">
+                <mat-form-field class="mat-input-small gw-input-100" appearance="fill">
+                    <input matInput class="gw-form-label form-baseline" [value]="gaugeDetails.FullStrokeLengthInInch"
+                        name="FullStokeLength" [disabled]="true">
+                </mat-form-field>
+            </div>
+        </div>
+
+    </div>
+
+    <mat-tab-group animationDuration="1ms" class="gw-inner-tab-group" (selectedTabChange)="onTabChange($event);" 
+        [(selectedIndex)]="selectedTabIndex">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="mat-tab__mat-icon mx-2 pb-4">table_chart</mat-icon>
+                Positions
+            </ng-template>
+            <div>
+                <app-valve-position [data]="gaugeDetails.ShiftVolumeInMLAndOpenPercentages"></app-valve-position>
+            </div>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="mat-tab__mat-icon ml-0 mr-2 pb-4">show_chart</mat-icon>
+                graph
+            </ng-template>
+            <app-shift-volume-chart [gaugeDetails]="gaugeDetails"></app-shift-volume-chart>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="mat-tab__mat-icon ml-0 mr-2 pb-4">link</mat-icon>
+                Tool Connection
+            </ng-template>
+            <div class="mt-1">
+                <app-tool-connection-details [portingList]="portingList"></app-tool-connection-details>
+            </div>
+        </mat-tab>
+
+    </mat-tab-group>
+
+</ng-container>
+
+<!--Monoitoring Zone(s) associate with SureSENS Tools-->
+<div *ngIf="zone && zone.ZoneId > 0 && isSuresensOnlyTool && !isInchargeTool" class="mt-3">
+    <app-tool-connection-details [portingList]="portingList"></app-tool-connection-details>
+</div>
+
+
+<!--Zone(s) Yet to associate with Tools-->
+<ng-container *ngIf="zone && !(zone.ZoneId > 0) || (!isInchargeTool &&  !isSuresensOnlyTool)" >
+    <div class="mat-subtitle-2 mt-1 mb-4">
+        Zone Details
+        <span class="gw-info-icon pl-2">
+            <mat-icon>info</mat-icon>
+        </span>
+    </div>
+    <p class="mat-body-2">No Tool(s) is associated with the Zone at this time.</p>
+    <p class="mat-body-2">No additional settings are required at this time.</p>
+</ng-container>
+
+

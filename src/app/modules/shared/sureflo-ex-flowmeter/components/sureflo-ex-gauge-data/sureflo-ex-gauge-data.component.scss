@@ -1,0 +1,26 @@
+
+::ng-deep #surefloExGaugeSection .mat-form-field-appearance-fill {
+    padding: 0em 0.6em 0 0.6em;
+}
+
+::ng-deep #surefloExGaugeSection .mat-form-field-wrapper {
+    margin-bottom: -0.375em;
+}
+
+#surefloExGaugeSection {
+    height: 480px;
+}
+
+mat-radio-button:nth-child(1){
+    margin-right: 23%;
+}
+
+#surefloExGaugeSection .mat-input-small .mat-error {
+    margin-top: -4px;
+}
+
+@media only screen and (max-width: 1199px) {
+    mat-radio-button:nth-child(1){
+        margin-right: 23%;
+    }
+}

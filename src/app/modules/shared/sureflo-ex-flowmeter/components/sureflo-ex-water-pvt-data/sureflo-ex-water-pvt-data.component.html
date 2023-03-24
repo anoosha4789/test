@@ -1,0 +1,160 @@
+<!--298EX Water Injector-->
+<section id="surefloExPVTSection" class="container-fluid px-4 pt-2">
+
+    <form novalidate [formGroup]="surefloExPVTForm" autocomplete="off">
+
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">PVT Data & Additional Parameters</span>
+        </div>
+        <div class="container-fluid">
+            <div class="row p-b-4">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Use Custom Water Properties</span>
+                </div>
+                <div class="col p-2">
+                    <mat-slide-toggle formControlName="UseCustomWaterProperties" [disableRipple]="true"
+                        color={{customWaterToggle.color}} (change)="toggleCustomWaterSection($event)"
+                        disabled={{customWaterToggle.disabled}}>
+                    </mat-slide-toggle>
+                </div>
+            </div>
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !customWaterToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Water FVF PVT File</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-custom-file-input" appearance="fill">
+                        <input id="waterVolFactorCalFile" name="WaterVolumeFactorCalibration" matInput
+                            [value]="waterVolFactorCalFilePath" [disabled]="!customWaterToggle.checked"
+                            class="gw-form-label form-baseline" [readonly]="true"
+                            (click)="browseFileDialog(waterVolFactorCalFile)">
+                        <input #waterVolFactorCalFile hidden="true" type="file" multiple="false" accept=".cal"
+                            (change)="onWaterVolFactorCalFileChange($event)" />
+                        <mat-hint *ngIf="waterVolFactorInvalidMsg" class="mat-error">{{waterVolFactorInvalidMsg}}
+                        </mat-hint>
+                    </mat-form-field>
+                    <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog(waterVolFactorCalFile)" [disabled]="!customWaterToggle.checked">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !customWaterToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Water Density PVT File</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-custom-file-input" appearance="fill">
+                        <input id="waterDensityCalFile" name="waterDensityCalibration" matInput
+                            [value]="waterDensityCalFilePath" [disabled]="!customWaterToggle.checked"
+                            class="gw-form-label form-baseline" [readonly]="true"
+                            (click)="browseFileDialog(waterDensityCalFile)">
+                        <input #waterDensityCalFile hidden="true" type="file" multiple="false" accept=".cal"
+                            (change)="onWaterDensityCalFileChange($event)" />
+                        <mat-hint *ngIf="waterDensityInvalidMsg" class="mat-error">{{waterDensityInvalidMsg}}</mat-hint>
+                    </mat-form-field>
+                    <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog(waterDensityCalFile)" [disabled]="!customWaterToggle.checked">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': !customWaterToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Water Viscosity PVT File</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-custom-file-input" appearance="fill">
+                        <input id="waterViscosityCalFile" name="WaterViscosityCalibration" matInput
+                            [value]="waterViscosityCalFilePath" [disabled]="!customWaterToggle.checked"
+                            class="gw-form-label form-baseline" [readonly]="true"
+                            (click)="browseFileDialog(waterViscosityCalFile)">
+                        <input #waterViscosityCalFile hidden="true" type="file" multiple="false" accept=".cal"
+                            (change)="onWaterViscosityCalFileChange($event)" />
+                        <mat-hint *ngIf="waterViscosityInvalidMsg" class="mat-error">{{waterViscosityInvalidMsg}}
+                        </mat-hint>
+                    </mat-form-field>
+                    <button type="button" mat-button class="mat-button mat-button-primary__icon-only"
+                        (click)="browseFileDialog(waterViscosityCalFile)" [disabled]="!customWaterToggle.checked">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+
+            <div class="row p-b-4" [ngClass]="{'gw-sureflo-disable-input': customWaterToggle.checked}">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Water Specific Gravity</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                        <input type="number" matInput name="SpecificGravityWater" formControlName="SpecificGravityWater"
+                            class="gw-form-label form-baseline" (input)="validateFormControls()"
+                            (blur)="validateFormControls()" [disableControl]="customWaterToggle.checked">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.SpecificGravityWater" class="mat-error">
+                            {{formCtrlErrorMessage.SpecificGravityWater}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <!--Additional Parameters-->
+    <form novalidate [formGroup]="surefloExAddParamForm" autocomplete="off">
+        <div class="container-fluid">
+            <div class="row p-b-4">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Coeff Expansion (ppm/°F)</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                        <input type="number" matInput name="CoefficientExpansion" formControlName="CoefficientExpansion"
+                        class="gw-form-label form-baseline" (input)="validateFormControls()"
+                        (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.CoefficientExpansion" class="mat-error">
+                            {{formCtrlErrorMessage.CoefficientExpansion}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-b-4">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Surface Watercut (%)</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                        <input type="number" matInput name="SurfaceWaterCut" formControlName="SurfaceWaterCut"
+                        class="gw-form-label form-baseline" (input)="validateFormControls()"
+                        (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.SurfaceWaterCut" class="mat-error">
+                            {{formCtrlErrorMessage.SurfaceWaterCut}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row p-b-4">
+                <div class="col-md-5 col-lg-4 p-1">
+                    <span class="gw-form-label">Measured Depth (ft)</span>
+                </div>
+                <div class="col px-sm-1">
+                    <mat-form-field class="mat-input-small gw-sureflo-input-sm" appearance="fill">
+                        <input type="number" matInput name="MeasuredDepth" formControlName="MeasuredDepth"
+                        class="gw-form-label form-baseline" (input)="validateFormControls()"
+                        (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.MeasuredDepth" class="mat-error">
+                            {{formCtrlErrorMessage.MeasuredDepth}}
+                        </mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</section>
