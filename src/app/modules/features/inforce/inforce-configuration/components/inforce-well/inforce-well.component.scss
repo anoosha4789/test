@@ -1,0 +1,151 @@
+.mat-card.mat-focus-indicator {
+    padding-top: 0px;
+}
+
+.gw-inforce-zone-grid {
+    height: calc(100vh - 445.5px);
+}
+
+.gw-inforce-well-name-input, .gw-inforce-well-arch-select, .gw-inforce-well-output-select {
+    padding: 0px
+}
+
+.gw-inforce-well-name-col {
+    @media (min-width: 1533px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 33.3%;
+        max-width: 33.3%;
+    }
+
+    @media (max-width: 1532px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 33.5%;
+        max-width: 33.5%;
+    }
+
+    @media (max-width: 1307px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 37.5%;
+        max-width: 37.5%;
+    }
+}
+
+.gw-inforce-well-arch-col {
+    @media (min-width: 1533px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 33.3%;
+        max-width: 33.3%;
+    }
+
+    @media (max-width: 1532px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 26%;
+        max-width: 26%;
+    }
+
+    @media (max-width: 1307px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 32%;
+        max-width: 32%;
+    }
+}
+
+.gw-inforce-well-output-col {
+    @media (min-width: 1533px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 33.3%;
+        max-width: 33.3%;
+    }
+
+    @media (max-width: 1532px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 25.5%;
+        max-width: 25.5%;
+    }
+
+    @media (max-width: 1307px) and (-webkit-min-device-pixel-ratio: 1) {
+        flex: 0 0 30.5%;
+        max-width: 30.5%;
+    }
+}
+
+.gw-inforce-well-name-col > div:first-child {
+    width: 73px;
+    float: left;
+    @media (max-width: 959px) {
+        width: 100%;
+    }
+}
+
+.gw-inforce-well-arch-col > div:first-child {
+    width: 115px;
+    float: left;
+    @media (max-width: 959px) {
+        width: 100%;
+    }
+}
+
+.gw-inforce-well-output-col > div:first-child {
+    width: 132px;
+    float: left;
+    @media (max-width: 959px) {
+        width: 100%;
+    }
+}
+
+.gw-inforce-well-name-col > div:nth-child(2) {
+    width: calc(100% - 73px);
+    float: left;
+    @media (max-width: 959px) {
+        width: 100%;
+    }
+}
+
+.gw-inforce-well-arch-col > div:nth-child(2) {
+    width: calc(100% - 115px);
+    float: left;
+    @media (max-width: 959px) {
+        width: 100%;
+    }
+}
+
+.gw-inforce-well-output-col > div:nth-child(2) {
+    width: calc(100% - 132px);
+    float: left;
+    @media (max-width: 959px) {
+        width: 100%;
+    }
+}
+
+.gw-inforce-well-name-input {
+    width: 180px;
+    
+    @media (max-width: 1023px) {
+        width: 100%;
+    }
+}
+
+
+.gw-inforce-well-arch-select  {
+    min-width: 95px;
+    max-width: 105px;
+    @media (max-width: 1023px) {
+        width: 100%;
+        max-width: 100%;
+    }
+    @media (min-width: 1023px) and (max-width: 1025px) {
+        width: 90px;
+        min-width: 90px;
+    }
+}
+
+.w-96 {
+    width: 98px;
+    min-width: 98px;
+    @media (min-width: 1270px) {
+        width: 105px;
+        min-width: 105px;
+    }
+}
+
+.gw-inforce-well-output-select {
+    width: 68px;
+    @media (max-width: 1023px) {
+        width: 100%;
+    }
+   
+}
+
+

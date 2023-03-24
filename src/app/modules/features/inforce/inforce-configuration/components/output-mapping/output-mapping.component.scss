@@ -1,0 +1,61 @@
+@import 'base.scss';
+
+.output-mapping-table {
+    height: calc(100vh - 326px);
+    overflow: auto;
+    border-radius: 0px;
+    border-bottom-style: none;
+    box-shadow: 0 0 0 1px $gw-mat-table-box-shadow-color !important;
+    .mat-table .mat-cell {
+        padding-bottom: 0px;
+        padding-top: 0px;
+    }
+    table{
+        width: 100%;
+        th {
+            border-bottom: 2px solid $gw-secondary-color-500;
+        }
+        .mat-header-cell{
+            background-color: $gw-secondary-color-200;
+            font-family: "Noto Sans";
+            letter-spacing: 0.25px;
+            font-size: 0.75rem;
+            line-height: 1em;
+            color: $gw-tertiary-color-1000;
+            font-weight: 600;
+            //opacity: 1;
+            padding: 1rem 1.5rem;
+        }
+        // .mat-header-cell:first-of-type{
+        //     border-right: 1px solid rgba(0, 0, 0, 0.08);
+        // }
+        .p-l-24 {
+            padding-left: 1.5rem !important;
+        }
+        .custom-select{
+            width: 260px;
+            padding-left: 0;
+            // padding-top: 4.4px;
+        }
+        ::ng-deep {
+            // .mat-form-field-appearance-fill .mat-form-field-flex:not(:disabled) {
+            //     background-color: #000000;
+            // }
+            .mat-cell.mat-form-field-invalid .mat-form-field-ripple  {
+                background-color: $gw-error-color-500 !important;
+                opacity: 1;
+                transform: scaleX(1);
+                transition: transform 300ms cubic-bezier(0.25, 0.8, 0.25, 1),opacity 100ms cubic-bezier(0.25, 0.8, 0.25, 1),background-color 300ms cubic-bezier(0.25, 0.8, 0.25, 1);
+            }
+            // .mat-form-field-wrapper {
+            //     padding-bottom: 0;
+            // }
+            // .mat-form-field-underline {
+            //     bottom: 0;
+            // }
+        }
+        tr.mat-header-row {
+            height: 50px !important;
+        }
+    }
+}

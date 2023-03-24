@@ -1,0 +1,223 @@
+<div class="container-fluid returnsBasedShiftForm">
+    <form [formGroup]="returnsBasedShiftForm" autocomplete="off" novalidate [class.readonly]="readOnly">
+
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">Returns Measurement Settings</span>
+        </div>
+
+        <div class="container-fluid row">
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-6 gw-unit-system-form-label px-2">
+                        <mat-label class="gw-form-label">Tolerance High</mat-label>
+                    </div>
+                    <div class="col-3 px-0">
+                        <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                            <input type="number" matInput class="mat-body-2 form-baseline"
+                                formControlName="ToleranceHigh" name="ToleranceHigh" (input)="validateFormControls()"
+                                (blur)="validateFormControls()">
+                            <mat-hint *ngIf="formCtrlErrorMessage?.ToleranceHigh" align="start" class="mat-error">
+                                {{formCtrlErrorMessage.ToleranceHigh}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3 col-md-2 col-xl-1 px-0 cus-panel">
+                        <mat-form-field class="mat-select-small gw-unit-system-select pt-0 px-0 w-100"
+                            appearance="fill" >
+                            <mat-select (selectionChange)="onUnitDropdownChange($event.value)" [value]="defUnitVal">
+                                <mat-option value="mL">mL</mat-option>
+                                <mat-option value="%">%</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-6 gw-unit-system-form-label px-2 pl-4">
+                        <mat-label class="gw-form-label">Tolerance Low</mat-label>
+                    </div>
+                    <div class="col-3 px-0">
+                        <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                            <input type="number" matInput class="mat-body-2 form-baseline"
+                                formControlName="ToleranceLow" name="ToleranceLow" (input)="validateFormControls()"
+                                (blur)="validateFormControls()">
+                            <mat-hint *ngIf="formCtrlErrorMessage?.ToleranceLow" align="start" class="mat-error">
+                                {{formCtrlErrorMessage.ToleranceLow}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3 col-md-2 col-xl-1 px-0 cus-panel">
+                        <mat-form-field class="mat-select-small gw-unit-system-select pt-0 px-0 w-100"
+                            appearance="fill">
+                            <mat-select (selectionChange)="onUnitDropdownChange($event.value)" [value]="defUnitVal">
+                                <mat-option value="mL">mL</mat-option>
+                                <mat-option value="%">%</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-6 gw-unit-system-form-label px-2">
+                        <mat-label class="gw-form-label">Stabilization Interval</mat-label>
+                    </div>
+                    <div class="col-3 px-0">
+                        <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                            <input type="number" matInput class="mat-body-2 form-baseline"
+                                formControlName="ReturnFlowStabilizationCheckingPeriodInSeconds"
+                                name="ReturnFlowStabilizationCheckingPeriodInSeconds" (input)="validateFormControls()"
+                                (blur)="validateFormControls()">
+                            <mat-hint *ngIf="formCtrlErrorMessage?.ReturnFlowStabilizationCheckingPeriodInSeconds"
+                                align="start" class="mat-error">
+                                {{formCtrlErrorMessage.ReturnFlowStabilizationCheckingPeriodInSeconds}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3 px-0 pt-1">
+                        <mat-label class="gw-form-label">s</mat-label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-6 gw-unit-system-form-label px-2 pl-4">
+                        <mat-label class="gw-form-label">Stabilization Flow Rate</mat-label>
+                    </div>
+                    <div class="col-3 px-0">
+                        <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                            <input type="number" matInput class="mat-body-2 form-baseline"
+                                formControlName="MinimumReturnsFlowRateForStabilization"
+                                name="MinimumReturnsFlowRateForStabilization" (input)="validateFormControls()"
+                                (blur)="validateFormControls()">
+                            <mat-hint *ngIf="formCtrlErrorMessage?.MinimumReturnsFlowRateForStabilization" align="start"
+                                class="mat-error">
+                                {{formCtrlErrorMessage.MinimumReturnsFlowRateForStabilization}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3 px-0 pt-1">
+                        <mat-label class="gw-form-label">mL/min</mat-label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row p-b-18">
+            <span class="mat-subtitle-2">Time Settings</span>
+        </div>
+
+        <div class="container-fluid row">
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-6 gw-unit-system-form-label px-2">
+                        <mat-label class="gw-form-label">Pressure Lock Time</mat-label>
+                    </div>
+                    <div class="col-3 px-0">
+                        <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                            <input type="number" matInput class="mat-body-2 form-baseline"
+                                formControlName="PressureLockTime" name="PressureLockTime"
+                                (input)="validateFormControls()" (blur)="validateFormControls()">
+                            <mat-hint *ngIf="formCtrlErrorMessage?.PressureLockTime" align="start" class="mat-error">
+                                {{formCtrlErrorMessage.PressureLockTime}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3 px-0 pt-1">
+                        <mat-label class="gw-form-label">s</mat-label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-6 gw-unit-system-form-label px-2 pl-4">
+                        <mat-label class="gw-form-label">Vent Time</mat-label>
+                    </div>
+                    <div class="col-3 px-0">
+                        <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                            <input type="number" matInput class="mat-body-2 form-baseline" formControlName="VentTime"
+                                name="VentTime" (input)="validateFormControls()" (blur)="validateFormControls()">
+                            <mat-hint *ngIf="formCtrlErrorMessage?.VentTime" align="start" class="mat-error">
+                                {{formCtrlErrorMessage.VentTime}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3 px-0 pt-1">
+                        <mat-label class="gw-form-label">s</mat-label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-6 gw-unit-system-form-label px-2">
+                        <mat-label class="gw-form-label">Minimum Shift Time</mat-label>
+                    </div>
+                    <div class="col-3 px-0">
+                        <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                            <input type="number" matInput class="mat-body-2 form-baseline"
+                                formControlName="MinShiftTime" name="MinShiftTime" (input)="validateFormControls()"
+                                (blur)="validateFormControls()">
+                            <mat-hint *ngIf="formCtrlErrorMessage?.MinShiftTime" align="start" class="mat-error">
+                                {{formCtrlErrorMessage.MinShiftTime}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3 px-0 pt-1">
+                        <mat-label class="gw-form-label">s</mat-label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-6 gw-unit-system-form-label px-2 pl-4">
+                        <mat-label class="gw-form-label">Maximum Shift Time</mat-label>
+                    </div>
+                    <div class="col-3 px-0">
+                        <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                            <input type="number" matInput class="mat-body-2 form-baseline"
+                                formControlName="MaxShiftTime" name="MaxShiftTime" (input)="validateFormControls()"
+                                (blur)="validateFormControls()">
+                            <mat-hint *ngIf="formCtrlErrorMessage?.MaxShiftTime" align="start" class="mat-error">
+                                {{formCtrlErrorMessage.MaxShiftTime}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-3 px-0 pt-1">
+                        <mat-label class="gw-form-label">s</mat-label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-container *ngIf="showHCMSSleeveSettings">
+            <div class="row p-b-18">
+                <span class="mat-subtitle-2">HCM-S Sleeve Settings</span>
+            </div>
+
+            <div class="container-fluid row">
+                <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                    <div class="row">
+                        <div class="col-6 gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">Minimum Reset Time</mat-label>
+                        </div>
+                        <div class="col-3 px-0">
+                            <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                                <input name="MinimumResetTime" type="number" matInput class="mat-body-2 form-baseline"
+                                    formControlName="MinimumResetTime" (input)="validateFormControls()"
+                                    (blur)="validateFormControls()" (focusout)="setMinResetTime()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.MinimumResetTime" align="start" class="mat-error">
+                                    {{formCtrlErrorMessage.MinimumResetTime}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-3 px-0 pt-1">
+                            <mat-label class="gw-form-label">min</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+    </form>
+</div>

@@ -1,0 +1,20 @@
+.cus-select{
+    padding-left: 0;
+    width: 130%;
+}
+
+.gw-zonemapping-grid {
+    height: calc(100vh - 326px);
+    min-width: 600px;
+}
+
+.zoneMapping-error {
+    margin-left: -10px;
+    min-width: 220px;
+}
+
+.gw-zonemapping-grid {
+    .mat-form-field-appearance-fill {
+        padding: .6em .6em 0;
+    }
+}

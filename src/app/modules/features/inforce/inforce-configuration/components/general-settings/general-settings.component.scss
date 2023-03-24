@@ -1,0 +1,25 @@
+.mat-tab-group.mat-tab-group {
+  height: calc(100% - 10px);
+}
+
+.mat-tab-body-wrapper {
+    height: 100% !important;
+}
+
+.mat-card.mat-focus-indicator {
+    padding-top: 0px;
+}
+
+.cardHeight {
+    height: 50vh;
+}
+.gw-warning-icon{
+    font-size:18px;
+    vertical-align:middle
+}
+
+.gw-warning-block>span {
+    display       : inline-flex;
+    margin-top    : 0.7rem;
+    vertical-align: middle;
+}

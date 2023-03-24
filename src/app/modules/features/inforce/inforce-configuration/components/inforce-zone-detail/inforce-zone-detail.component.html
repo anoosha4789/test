@@ -1,0 +1,116 @@
+<section class="m-2" *ngIf="!isMonitoringZone; else monitoringZone">
+
+  <!-- Header Section -->
+    <div class="container-fluid">
+      <div class="row d-flex justify-content-between">
+        <div class="gw-inforce-zone-title">
+          <span class="mat-subtitle-2">{{title}}</span>
+        </div>
+
+        <div>
+          <button mat-button class="mat-button-tertiary-sm mr-2" (click)="onImportBtnClick()">
+            <mat-icon class="mat-icon-left mat-icon">file_download</mat-icon>Import
+          </button>
+          <button mat-button class="mat-button-tertiary-sm" (click)="onExportBtnClick()" [disabled]="valvePosandReturnForm.invalid">
+            <mat-icon class="mat-icon-left mat-icon">file_upload</mat-icon>Export
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!--Error Message Section-->
+    <div class="gw-grid-alert-container">
+      <ng-container *ngIf="alertsList.length > 0">
+        <gw-alert [data]="alertsList[0]"></gw-alert>
+      </ng-container>
+    </div>
+        
+    <!-- Valve Position Table-->
+    <div class="bh-table default mat-elevation-z8 gw-inforce-zone-container">
+      <form [formGroup]="valvePosandReturnForm" autocomplete="off">
+        <table mat-table [dataSource]="dataSource" class="gw-mat-table">
+    
+          <!-- From Position -->
+          <ng-container matColumnDef="FromPosition">
+            <th mat-header-cell *matHeaderCellDef> From Position </th>
+            <td mat-cell *matCellDef="let element"> {{element.get('FromPosition').value}} </td>
+          </ng-container>
+    
+          <!-- To Position-->
+          <ng-container matColumnDef="ToPosition">
+            <th mat-header-cell *matHeaderCellDef> To Position </th>
+            <td mat-cell *matCellDef="let element"> {{element.get('ToPosition').value}} </td>
+          </ng-container>
+    
+          <!-- Current Position -->
+          <ng-container matColumnDef="Id">
+            <th mat-header-cell *matHeaderCellDef> Current </th>
+            <td mat-cell *matCellDef="let element" [formGroup]="element">
+              <mat-radio-group color={{radioBtnConfig.color}} (change)="onCurrentPosChange($event, element)">
+                <mat-radio-button [disableRipple]="true" [checked]="zone.CurrentPosition === element.get('ToPosition').value" [value]="element.get('ToPosition').value"></mat-radio-button>
+              </mat-radio-group>
+            </td>
+          </ng-container>
+    
+          <!-- Position Description -->
+          <ng-container matColumnDef="Description">
+            <th mat-header-cell *matHeaderCellDef> Position Description </th>
+            <td mat-cell *matCellDef="let element" [formGroup]="element">
+              <mat-form-field class="mat-input-small gw-inforce-pos-input" appearance="fill">
+                <input type="text" matInput class="gw-form-label form-baseline" formControlName="Description"
+                  (input)="validateFormControls(element)" (blur)="validateFormControls(element)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+    
+          <!-- Return Volume (ml) -->
+          <ng-container matColumnDef="ReturnVolume">
+            <th mat-header-cell *matHeaderCellDef> Return Volume (mL) </th>
+            <td mat-cell *matCellDef="let element" [formGroup]="element">
+              <mat-form-field class="mat-input-small gw-inforce-return-input" appearance="fill">
+                <input type="number" matInput class="gw-form-label form-baseline" formControlName="ReturnVolume"
+                  (input)="validateFormControls(element)" (blur)="validateFormControls(element)">
+              </mat-form-field>
+            </td>
+          </ng-container>
+    
+          <!-- User Selectable -->
+          <ng-container matColumnDef="UserSelectable">
+            <th mat-header-cell *matHeaderCellDef> User Selectable </th>
+            <td mat-cell *matCellDef="let element" [formGroup]="element">
+              <mat-form-field class="mat-select-small gw-inforce-user-sel" appearance="fill">
+                <mat-select class="mat-body-2 gw-form-label form-baseline"
+                  (selectionChange)="onUserSelDdChange($event, element)" formControlName="UserSelectable">
+                  <mat-option *ngFor="let item of userSelDdList" [value]="item.key">{{item.value}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
+    
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </form>
+    </div>
+      <!--Zone Shift Settings-->
+      <div class="d-flex justify-content-end mt-2 gw-card-actions">
+        <button mat-button class="mat-button-tertiary-sm" (click)="onShiftSettingsBtnClick()">
+          Shift Settings
+        </button>
+      </div>
+</section>
+
+<!--Zone Type Monitoring-->
+<ng-template #monitoringZone>
+  <section class="m-2">
+    <div class="mat-subtitle-2 mb-4">
+      Zone Details
+      <span class="gw-info-icon pl-2">
+        <mat-icon>info</mat-icon>
+      </span>
+    </div>
+    <p class="mat-body-2">This zone is set up for monitoring only.</p>
+    <p class="mat-body-2">No additional settings are required at this time.</p>
+  </section>
+</ng-template>

@@ -1,0 +1,50 @@
+<section class="m-2">
+    <div class="d-flex justify-content-between p-b-18">
+        <span class="mat-subtitle-2">Panel to Line Mapping</span>
+    </div>
+
+    <div class="bh-table default mat-elevation-z8 output-mapping-table">
+        <table mat-table [dataSource]="panelToLineList" class="">
+            <!-- PanelConnection Column -->
+            <ng-container matColumnDef="PanelConnection">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Panel Connection </th>
+                <td mat-cell *matCellDef="let element; let i = index"
+                    [class.mat-form-field-invalid]="errorMessages[i]?.PanelConnection">
+                    <mat-form-field class="mat-select-small custom-select"
+                        [class.mat-form-field-invalid]="errorMessages[i]?.PanelConnection" appearance="fill">
+                        <mat-select class="mat-body-2 gw-form-label form-baseline"
+                            [class.ng-invalid]="errorMessages[i]?.PanelConnection" [value]="element.PanelConnection"
+                            (selectionChange)="onOutputValueChange(i, $event)">
+                            <mat-select-trigger>{{getOutputLabel(element.PanelConnection)}}</mat-select-trigger>
+                            <mat-option *ngFor="let option of outputOptions" [value]="option.value">
+                                {{option.label}}{{isInSelectedOutputs(option.value) ? '(*)' : ''}}</mat-option>
+                        </mat-select>
+                        <mat-hint *ngIf="errorMessages[i]?.PanelConnection" class="mat-error">
+                            {{errorMessages[i].PanelConnection}}
+                        </mat-hint>
+                    </mat-form-field>
+                </td>
+            </ng-container>
+
+            <!-- DownholeLine Column -->
+            <ng-container matColumnDef="DownholeLine">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-cell"> Downhole Line </th>
+                <td mat-cell *matCellDef="let element; let i = index"
+                    [class.mat-form-field-invalid]="errorMessages[i]?.DownholeLine">
+                    <mat-form-field class="mat-input-small custom-select p-l-24"
+                        [class.mat-form-field-invalid]="errorMessages[i]?.DownholeLine" appearance="fill">
+                        <input matInput type="text" class="gw-form-label form-baseline" [value]="element.DownholeLine"
+                            [class.ng-invalid]="errorMessages[i]?.DownholeLine"
+                            (input)="onDownholeLineChange(i, $event)" autocomplete="off">
+                        <mat-hint *ngIf="errorMessages[i]?.DownholeLine" class="mat-error">
+                            {{errorMessages[i].DownholeLine}}
+                        </mat-hint>
+                    </mat-form-field>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</section>

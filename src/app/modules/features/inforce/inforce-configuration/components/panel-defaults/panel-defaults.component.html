@@ -1,0 +1,293 @@
+<section class="m-2 panel-defaults">
+    <div class="container-fluid">
+    <form [formGroup]="panelDefaultForm" autocomplete="off" novalidate>
+    <ng-container formGroupName="alarmsAndLimits">
+        <ng-container *ngIf="panelConfiguration?.Id !== undefined && panelConfiguration?.Id !== -1 && uiCommon?.IsConfigSaved">
+            <div class="row p-b-12">
+                <span class="mat-subtitle-2">Limits and Alarms</span>
+            </div>
+            <div class="container-fluid row">
+                <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                    <div class="row">
+                        <div class="col-7 gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">Start Pump Pressure</mat-label>
+                        </div>
+                        <div class="col-3 px-0">
+                            <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                                <input name="" type="number" matInput class="mat-body-2 form-baseline"
+                                    formControlName="StartPumpPressure"
+                                    (focusout)="validate('alarmsAndLimits', 'StartPumpPressure')"
+                                    (input)="validate('alarmsAndLimits', 'StartPumpPressure')">
+                                <mat-hint *ngIf="getError('StartPumpPressure')" align="start" class="mat-error">
+                                    {{getError('StartPumpPressure')}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2 px-0 pt-1">
+                            <mat-label class="gw-form-label">psig</mat-label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                    <div class="row">
+                        <div class="col-7 gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">Stop Pump Pressure</mat-label>
+                        </div>
+                        <div class="col-3 px-0">
+                            <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                                <input name="" type="number" matInput class="mat-body-2 form-baseline"
+                                    formControlName="StopPumpPressure"
+                                    (focusout)="validate('alarmsAndLimits', 'StopPumpPressure')"
+                                    (input)="validate('alarmsAndLimits', 'StopPumpPressure')">
+                                <mat-hint *ngIf="getError('StopPumpPressure')" align="start" class="mat-error">
+                                    {{getError('StopPumpPressure')}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2 px-0 pt-1">
+                            <mat-label class="gw-form-label">psig</mat-label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                    <div class="row">
+                        <div class="col-7 gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">High Pump Pressure</mat-label>
+                        </div>
+                        <div class="col-3 px-0">
+                            <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                                <input name="" type="number" matInput class="mat-body-2 form-baseline"
+                                    formControlName="HighPumpPressure"
+                                    (focusout)="validate('alarmsAndLimits', 'HighPumpPressure')"
+                                    (input)="validate('alarmsAndLimits', 'HighPumpPressure')">
+                                <mat-hint *ngIf="getError('HighPumpPressure')" align="start" class="mat-error">
+                                    {{getError('HighPumpPressure')}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2 px-0 pt-1">
+                            <mat-label class="gw-form-label">psig</mat-label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                    <div class="row">
+                        <div class="col-7 gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">High Output Pressure</mat-label>
+                        </div>
+                        <div class="col-3 px-0">
+                            <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                                <input name="" type="number" matInput class="mat-body-2 form-baseline"
+                                    formControlName="HighOutputXPressure"
+                                    (focusout)="validate('alarmsAndLimits', 'HighOutputXPressure')"
+                                    (input)="validate('alarmsAndLimits', 'HighOutputXPressure')">
+                                <mat-hint *ngIf="getError('HighOutputXPressure')" align="start" class="mat-error">
+                                    {{getError('HighOutputXPressure')}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2 px-0 pt-1">
+                            <mat-label class="gw-form-label">psig</mat-label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                    <div class="row">
+                        <div class="col-7 gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">High Supply Pressure</mat-label>
+                        </div>
+                        <div class="col-3 px-0">
+                            <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                                <input name="" type="number" matInput class="mat-body-2 form-baseline"
+                                    formControlName="HighSupplyPressure"
+                                    (focusout)="validate('alarmsAndLimits', 'HighSupplyPressure')"
+                                    (input)="validate('alarmsAndLimits', 'HighSupplyPressure')">
+                                <mat-hint *ngIf="getError('HighSupplyPressure')" align="start" class="mat-error">
+                                    {{getError('HighSupplyPressure')}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2 px-0 pt-1">
+                            <mat-label class="gw-form-label">psig</mat-label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                    <div class="row">
+                        <div class="col-7 gw-unit-system-form-label px-2">
+                            <mat-label class="gw-form-label">Low Reservoir Level</mat-label>
+                        </div>
+                        <div class="col-3 px-0">
+                            <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                                <input name="" type="number" matInput class="mat-body-2 form-baseline"
+                                    formControlName="LowReservoirLevel"
+                                    (focusout)="validate('alarmsAndLimits', 'LowReservoirLevel')"
+                                    (input)="validate('alarmsAndLimits', 'LowReservoirLevel')">
+                                <mat-hint *ngIf="getError('LowReservoirLevel')" align="start" class="mat-error">
+                                    {{getError('LowReservoirLevel')}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-2 px-0 pt-1">
+                            <mat-label class="gw-form-label">%</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+    <ng-container formGroupName="panelDefaults">
+        <div class="row p-b-12">
+            <span class="mat-subtitle-2">Other Timings</span>
+        </div>
+
+        <div class="container-fluid row">
+            <div class="col-sm-12 col-md-12 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-sm-7 col-md-7 col-lg-7 col-xl-6 gw-unit-system-form-label px-2">
+                        <mat-label class="gw-form-label">Delay before measuring Returns</mat-label>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-2 col-xl-2 px-0">
+                        <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                            <input name="" type="number" matInput class="mat-body-2 form-baseline"
+                                formControlName="DelayBeforeMeasuringReturns"
+                                (focusout)="validate('panelDefaults', 'DelayBeforeMeasuringReturns')"
+                                (input)="validate('panelDefaults', 'DelayBeforeMeasuringReturns')" >
+                            <mat-hint *ngIf="getError('DelayBeforeMeasuringReturns')" align="start" class="mat-error">
+                                {{getError('DelayBeforeMeasuringReturns')}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-3 col-xl-4 px-0 pt-1">
+                        <mat-label class="gw-form-label">s</mat-label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="row p-b-12 m-top-16">
+            <span class="mat-subtitle-2">Passive Mode</span>
+        </div>
+
+        <div class="container-fluid row">
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-12 px-0">
+                        <mat-radio-group class="gw-sureflo-radio-group" formControlName="HPUPassiveModeEnabled">
+                            <mat-radio-button class="px-2 pr-4 gw-form-label" color="primary" [value]="true">Enable</mat-radio-button>
+                            <mat-radio-button class="px-2 pl-4 gw-form-label" color="primary" [value]="false">Disable</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-7 gw-unit-system-form-label px-2">
+                        <mat-label class="gw-form-label">Passive Mode Timeout</mat-label>
+                    </div>
+                    <div class="col-3 px-0">
+                        <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                            <input name="" type="number" matInput class="mat-body-2 form-baseline"
+                                formControlName="HPUPassiveModeTimeout"
+                                (focusout)="validate('panelDefaults', 'HPUPassiveModeTimeout')"
+                                (input)="validate('panelDefaults', 'HPUPassiveModeTimeout')" >
+                            <mat-hint *ngIf="getError('HPUPassiveModeTimeout')" align="start" class="mat-error">
+                                {{getError('HPUPassiveModeTimeout')}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-2 px-0 pt-1">
+                        <mat-label class="gw-form-label">min</mat-label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row p-b-12">
+            <span class="mat-subtitle-2">Pre-Pressurization Settings</span>
+        </div>
+
+        <div class="container-fluid row">
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-12 px-0">
+                        <mat-radio-group class="gw-sureflo-radio-group" formControlName="EnableLinePrePressurization">
+                            <mat-radio-button class="px-2 pr-4 gw-form-label" color="primary" [value]="true">Enable</mat-radio-button>
+                            <mat-radio-button class="px-2 pl-4 gw-form-label" color="primary" [value]="false">Disable</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-7 gw-unit-system-form-label px-2">
+                        <mat-label class="gw-form-label">Hold Pressure Time</mat-label>
+                    </div>
+                    <div class="col-3 px-0">
+                        <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                            <input name="" type="number" matInput class="mat-body-2 form-baseline"
+                                formControlName="DurationInSecondsToHoldPressure"
+                                (focusout)="validate('panelDefaults', 'DurationInSecondsToHoldPressure')"
+                                (input)="validate('panelDefaults', 'DurationInSecondsToHoldPressure')" >
+                            <mat-hint *ngIf="getError('DurationInSecondsToHoldPressure')" align="start" class="mat-error">
+                                {{getError('DurationInSecondsToHoldPressure')}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-2 px-0 pt-1">
+                        <mat-label class="gw-form-label">s</mat-label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-sm-7 col-md-7 col-lg-7 col-xl-6 gw-unit-system-form-label px-2">
+                        <mat-label class="gw-form-label">Waiting hours to apply Pressurization again</mat-label>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-2 col-xl-2 px-0">
+                        <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                            <input name="" type="number" matInput class="mat-body-2 form-baseline"
+                                formControlName="TimeIntervalInHoursToApplyPrePressurizationAgain"
+                                (focusout)="validate('panelDefaults', 'TimeIntervalInHoursToApplyPrePressurizationAgain')"
+                                (input)="validate('panelDefaults', 'TimeIntervalInHoursToApplyPrePressurizationAgain')" >
+                            <mat-hint *ngIf="getError('TimeIntervalInHoursToApplyPrePressurizationAgain')" align="start" class="mat-error">
+                                {{getError('TimeIntervalInHoursToApplyPrePressurizationAgain')}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-3 col-xl-4 px-0 pt-1">
+                        <mat-label class="gw-form-label">hr</mat-label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row p-b-12">
+            <span class="mat-subtitle-2">Flowmeter Transmitter</span>
+        </div>
+
+        <div class="container-fluid row">
+            <div class="col-sm-12 col-md-12 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-sm-7 col-md-7 col-lg-7 col-xl-6 gw-unit-system-form-label px-2">
+                        <mat-label class="gw-form-label">Flowmeter Transmitter Type</mat-label>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3 col-xl-2 px-0">
+                        <mat-form-field class="mat-select-small pt-0 w-100" appearance="fill">
+                            <mat-select id="FlowMeterTransmitterType"
+                            (selectionChange)="onFlowmeterChange($event)" formControlName="FlowMeterTransmitterType"
+                            name="FlowMeterTransmitterType">
+                            <mat-option *ngFor="let flowMeter of flowmeterList" [value]="flowMeter?.Id">
+                                {{flowMeter?.FlowMeterTransmitterTypeDesc}}</mat-option>
+                        </mat-select>
+                        
+                        </mat-form-field>
+                    </div>  
+                </div>  
+            </div>
+        </div>
+
+    </ng-container>
+    </form>
+    </div>
+</section>

@@ -1,0 +1,195 @@
+<mat-card class="m-2 gw-config-container" cdkTrapFocus>
+    <mat-card-content id="gw-mat-card-content">
+        <mat-tab-group animationDuration="1ms" [(selectedIndex)]="activeTabIndex"
+            (selectedTabChange)="onTabChanged($event)" class="gw-tab-group">
+            <!-- Well-->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <label class="gw-mat-tab-label" matTooltip="{{wellName}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-tooltip" [matTooltipDisabled]="wellName.length > 20 ? 'false': 'true' ">
+                        {{wellName | gwTruncate:20}}
+                    </label>
+                </ng-template>
+                <ng-template matTabContent>
+                    <section class="m-2">
+                        <form [formGroup]="wellForm" *ngIf="well" autocomplete="off">
+                            <div class="d-flex flex-wrap pt-1 p-b-10">                    
+                                <div class="col-sm-12 col-md-6 gw-inforce-well-name-col pl-0 pr-1">
+                                    <div class="col px-0 p-t-4">
+                                        <label class="gw-form-label">Well Name</label>
+                                    </div>
+                                    <div class="col px-0">
+                                        <mat-form-field *ngIf="well" class="mat-input-small pl-0 pl-lg-2 pl-xl-3 gw-inforce-well-name-input"
+                                            appearance="fill">
+                                            <input name="WellName" formControlName="WellName" matInput class="gw-form-label form-baseline"
+                                                (input)="validateFormControls()" (blur)="validateFormControls()">
+                                            <mat-hint *ngIf="formCtrlErrorMessage?.WellName" class="mat-error">
+                                                {{formCtrlErrorMessage.WellName}}
+                                            </mat-hint>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 gw-inforce-well-arch-col pl-2 pr-1">
+                                    <div class="col px-0 p-t-4">
+                                        <label class="gw-form-label">Well Architecture</label>
+                                    </div>
+                                    <div class="col px-0">
+                                        <mat-form-field class="mat-select-small pl-0 pl-lg-2 pl-xl-3 gw-inforce-well-arch-select"
+                                            appearance="fill"
+                                            [class.w-96]="suresensWellArchSelected">
+                                            <mat-select class="gw-form-label form-baseline" (selectionChange)="onArchSelChange($event)"
+                                                [(value)]="selArchitectId" [disabled]="isWellCreated">
+                                                <mat-option *ngFor="let item of architectureList" [value]="item.Id">
+                                                    {{item.ArchitectureName}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6 gw-inforce-well-output-col pl-2 pr-1" *ngIf="outputSelVisibility">
+                                    <div class="col px-0 p-t-4">
+                                        <label class="gw-form-label">Number of Outputs</label>
+                                    </div>
+                                    <div class="col px-0">
+                                        <mat-form-field class="mat-select-small pl-0 pl-lg-2 pl-xl-3 gw-inforce-well-output-select"
+                                            appearance="fill">
+                                            <mat-select class="gw-form-label form-baseline" (selectionChange)="onOutputSelChange($event)"
+                                                [(value)]="selNumOfOutput" [disabled]="isWellCreated">
+                                                <mat-option *ngFor="let output of outputList" [value]="output">
+                                                    {{output}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="d-flex justify-content-between p-b-10">
+                            <div class="pt-2">
+                                <span class="mat-subtitle-2 mr-2">Zones</span>
+                                <gw-alert [data]="alertDetail" *ngIf="!outputAvailability"></gw-alert>
+                            </div>
+                            <div>
+                                <button mat-button class="mat-button-tertiary-sm mat-button-tertiary-sm__icon"
+                                    (click)="onAddZoneBtnClick()">
+                                    <mat-icon class="mat-icon-left mat-icon">add</mat-icon>Add Zone
+                                </button>
+                            </div>
+                        </div>
+                        <div class="gw-inforce-zone-grid" *ngIf="valveTypeList.length > 0">
+                            <div #tooltipRef="tooltip" igxTooltip class="gw-grid-tooltip">
+                                <ng-container *ngIf="tooltipRef.context">
+                                    {{tooltipRef.context.value}}
+                                </ng-container>
+                            </div>
+                            <igx-grid #zoneGrid igxPreventDocumentScroll [(data)]="zones" [emptyGridMessage]="'No Zones are configured.'"
+                                [primaryKey]="'ZoneId'" width="100%" resizable="true">
+                    
+                                <!--Zone Name-->
+                                <igx-column [headerClasses]="'mat-header-cell'" field="ZoneName" header="Name" [dataType]="'string'">
+                                    <ng-template igxCell let-cell="cell">
+                                        <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell" hideDelay="50"
+                                            class="gw-grid-row-tooltip">
+                                            {{cell.value}}
+                                        </span>
+                                    </ng-template>
+                                </igx-column>
+                    
+                                <!--Valve Type-->
+                                <igx-column [headerClasses]="'mat-header-cell'" field="ValveType" header="Valve Type" [dataType]="'string'"
+                                    [hidden]="suresensWellArchSelected">
+                                    <ng-template igxCell let-value>
+                                        {{ value | gwValveTypeName:valveTypeList }}
+                                    </ng-template>
+                                </igx-column>
+                    
+                                <!--Number of Positions-->
+                                <igx-column width="145px" [headerClasses]="'mat-header-cell'" field="NumberOfPositions"
+                                    header="No. of Positions" [dataType]="'string'" [hidden]="suresensWellArchSelected">
+                                    <ng-template igxCell let-value>
+                                        {{ value > 0 ? value : 'N/A'}}
+                                    </ng-template>
+                                </igx-column>
+                    
+                                <!--Measured Depth-->
+                                <igx-column width="170px" [headerClasses]="'mat-header-cell'" field="MeasuredDepth"
+                                    header="Measured Depth (ft)" [dataType]="'string'"></igx-column>
+                    
+                                <igx-column width="100px" [filterable]="false">
+                                    <ng-template igxCell let-cell="cell">
+                                        <a href="javascript:void(0);" class="gw-icon-btn p-r-10" (click)="onEditZone(cell.row.rowID)">
+                                            <mat-icon class="mat-icon--sml">edit</mat-icon>
+                                        </a>
+                                        <a href="javascript:void(0);" class="gw-icon-btn"
+                                            (click)="onDeleteZone(cell.row.index, cell.row.rowID)">
+                                            <mat-icon class="mat-icon--sml">delete</mat-icon>
+                                        </a>
+                                    </ng-template>
+                                </igx-column>
+                    
+                            </igx-grid>
+                        </div>
+                        <div class="d-flex justify-content-end mt-2">
+                            <button *ngIf="shiftBtnVisibility" mat-button class="mat-button-tertiary-sm"
+                                (click)="onShiftSettingsBtnClick()">
+                                Shift Settings
+                            </button>
+                        </div>
+                    </section>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Output Mapping"  *ngIf="isWellCreated && !suresensWellArchSelected">
+                <ng-template matTabContent>
+                    <gw-inforce-output-mapping [wellArchitecture]="selArchitectId" [wellEnity]="wellEnity" [well]="well"
+                        [hydraulicOutput]="hydraulicOutput" [outputCount]="selNumOfOutput"
+                        (panelToLineMappingChange)="onPanelToLineMappingsChange($event)"
+                        (outputMappingValidEvent)="onOutputMappingValidEvent($event)"></gw-inforce-output-mapping>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Zone Mapping"  *ngIf="isWellCreated && !suresensWellArchSelected">
+                <ng-template matTabContent>
+                    <gw-inforce-zone-mapping [wellArchitecture]="selArchitectId" [well]="well"  [zoneMappings]="well.LineToZoneMapping" 
+                        [lineMappings]="well.PanelToLineMappings" [valveTypes]="valveTypeList"
+                        (lineToZoneMappingChange)="onLineToZoneMappingsChanged($event)"
+                        (isZoneMappingValid)="onLineToZoneMappingValidateEvent($event)">
+                    </gw-inforce-zone-mapping>
+                </ng-template>  
+            </mat-tab>
+            <!-- Zones Details -->
+            <ng-container *ngIf="isWellCreated">
+                <mat-tab *ngFor="let zone of well.Zones; trackBy: trackByFn">
+                    <ng-template mat-tab-label>
+                        <label class="gw-mat-tab-label" matTooltip="{{zone.ZoneName}}" matTooltipPosition="below"
+                            matTooltipClass="gw-mat-tooltip" [matTooltipDisabled]="zone.ZoneName.length > 20 ? 'false': 'true' ">
+                            {{zone.ZoneName | gwTruncate:20}}
+                        </label>
+                    </ng-template>
+                    <ng-template matTabContent>
+                        <gw-inforce-zone-detail [zone]="zone" [valveTypes]="valveTypeList" (zoneDetailFormChangeEvent)="onZoneDetailFormChangeEvent($event)"
+                            (zoneDetailFormValidEvent)="onZoneDetailFormValidEvent($event)" [well]="well" [isFlowmeterTransmitterNone]="isFlowmeterTransmitterNone">
+                        </gw-inforce-zone-detail>
+                    </ng-template>
+                </mat-tab>
+            </ng-container>
+        </mat-tab-group>
+    </mat-card-content>
+    <mat-card-actions>
+        <mat-divider></mat-divider>
+        <div class="d-flex justify-content-between gw-mt-12 gw-card-actions">
+            <div>
+                <button mat-button *ngIf="delBtnVisibility" class="mat-button-tertiary-sm__icon gw-tertiary-delete-btn"
+                    (click)="onDeleteBtnClick()">
+                    <mat-icon class="mat-icon-left mat-icon--sml">delete</mat-icon>Delete
+                </button>
+            </div>
+            <div class="d-flex">
+                <button *ngIf="backBtnVisibility" mat-button class="mat-button-tertiary-sm" (click)="onBackBtnClick()">Back</button>
+                <button type="submit" mat-button class="mat-button-primary-sm mr-0" (click)="onSaveorNextBtnClick()"
+                    [disabled]="!outputAvailability || actionBtnDisabled || wellForm.invalid 
+                                || !isOutputMappingValid || isInValidZoneMapping || !zoneDetailsFormValid">
+                    {{actionBtnTxt}}
+                </button>
+            </div>
+        </div>
+    </mat-card-actions>
+</mat-card>

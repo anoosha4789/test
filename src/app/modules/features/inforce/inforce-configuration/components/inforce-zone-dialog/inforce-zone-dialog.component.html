@@ -1,0 +1,102 @@
+<section class="p-x-24">
+    <div class="row p-b-20 m-l-0">
+        <mat-label class="mat-subtitle-2">Zone Details</mat-label>
+    </div>
+    <form [formGroup]="zoneForm" autocomplete="off">
+       
+        <!--Zone Name-->
+        <div class="row p-l-30 p-r-30">
+            <div class="col-lg-6 col-md-12 col-sm-12 p-t-10">
+                <span class="gw-form-label">Name</span>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <mat-form-field class="mat-input-small" appearance="fill">
+                    <input name="ZoneName" matInput class="gw-form-label form-baseline" formControlName="ZoneName"
+                        (input)="validateFormControls()" (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.ZoneName" class="mat-error">
+                            {{formCtrlErrorMessage.ZoneName}}
+                        </mat-hint>
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <ng-container *ngIf="!suresensWellArchSelected">
+
+            <!--Valve Type-->
+            <div class="row p-l-30 p-r-30">
+                <div class="col-lg-6 col-md-12 col-sm-12 p-t-10">
+                    <span class="gw-form-label">Valve Type</span>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <mat-form-field class="mat-select-small" appearance="fill">
+                        <mat-select class="gw-form-label form-baseline" (selectionChange)="onValveTypeSelChange($event)"
+                            formControlName="ValveType">
+                            <mat-option *ngFor="let valveType of valveTypeList" [value]="valveType.Id">
+                                {{valveType.ValveName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <!--Number of Positions-->
+            <div class="row p-l-30 p-r-30">
+                <div class="col-lg-6 col-md-12 col-sm-12 p-t-10">
+                    <span class="gw-form-label">No. of Positions</span>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12">
+                    <ng-container *ngIf="showPositions">
+                        <mat-form-field class="mat-select-small" appearance="fill">
+                            <mat-select class="gw-form-label form-baseline" (selectionChange)="onOutputSelChange($event)"
+                                formControlName="NumberOfPositions">
+                                <mat-option *ngFor="let position of numOfPosList" [value]="position">
+                                    {{position}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </ng-container>
+                    <ng-container *ngIf="!showPositions">
+                        <mat-form-field class="mat-input-small gw-numofpos-input" appearance="fill">
+                            <input *ngIf="isHCMP_S_Valve === false" matInput class="gw-form-label form-baseline" 
+                                [value]="zoneForm.get('NumberOfPositions').value > 0 ? zoneForm.get('NumberOfPositions').value : 'N/A'" [disabled]="true">
+                            <input *ngIf="isHCMP_S_Valve" matInput class="gw-form-label form-baseline" name="NumberOfPositions" formControlName="NumberOfPositions">
+                        </mat-form-field>
+                    </ng-container>
+                </div>
+            </div>
+
+        </ng-container>
+
+        <!--Measured Depth-->
+        <div class="row p-l-30 p-r-30">
+            <div class="col-lg-6 col-md-12 col-sm-12 p-t-10">
+                <span class="gw-form-label">Measured Depth (ft)</span>
+            </div>
+            <div class="col-lg-6 col-md-12 col-sm-12">
+                <mat-form-field class="mat-input-small" appearance="fill">
+                    <input type="text" matInput class="gw-form-label form-baseline" name="MeasuredDepth" formControlName="MeasuredDepth" 
+                        gw-number-input (input)="validateFormControls()" (blur)="validateFormControls()">
+                        <mat-hint *ngIf="formCtrlErrorMessage?.MeasuredDepth" class="mat-error">
+                            {{formCtrlErrorMessage.MeasuredDepth}}
+                        </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+
+    <!--Error Message-->
+    <div class="row pt-2 pb-0 m-l-0">
+        <mat-hint *ngIf="zoneErrorMsg" class="mat-error gw-mat-dialog-error-msg">
+            {{zoneErrorMsg}}
+        </mat-hint>
+    </div>
+
+</section>
+<!-- <mat-divider></mat-divider> -->
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnCancel()">Cancel</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnSubmit()" [disabled]=" this.zoneDialogData.modalEditMode ? !zoneForm.valid || !zoneForm.dirty :  !zoneForm.valid || zoneErrorMsg">
+        {{ this.zoneDialogData.modalEditMode ? 'Apply' : 'Add'}}
+    </button>
+</div>

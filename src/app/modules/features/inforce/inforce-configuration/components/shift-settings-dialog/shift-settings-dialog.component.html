@@ -1,0 +1,138 @@
+<section class="p-x-24 shift-settings shift-settings-dlg" [class.shift-settings-dlg-large]="showHCMSSleeveSettings">
+    <div class="container-fluid row p-b-24">
+        <div class="col-sm-12 col-md-6 gw-unit-system-row p-0">
+            <mat-button-toggle-group name="favoriteColor" [(ngModel)]="selectedShift" (change)="onToggleChange()" aria-label="Favorite Color">
+                <mat-button-toggle value="initial">{{this.shiftSettingsDialogData.defaultShiftSettingsTitle}}</mat-button-toggle>
+                <mat-button-toggle value="custom">{{this.shiftSettingsDialogData.customShiftSettingsTitle}}</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+    </div>
+
+    <ng-container *ngIf="selectedShift === 'initial'">
+        <div *ngIf="isShiftMethodReadOnly" class="container-fluid row p-b-24">
+            <div class="col-sm-12 col-md-6 gw-unit-system-row p-0">
+                <div class="row">
+                    <div class="col-6 gw-unit-system-form-label">
+                        <span class="mat-subtitle-2">Shift Method</span>
+                    </div>
+                    <div class="col-3 px-0">
+                        <span class="readOnlyMethod">                            
+                            {{parentShiftDefaultData.ShiftMethod === 'ReturnsBased' ? 'Returns Based' : 'Time Based'}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isShiftMethodReadOnly" class="container-fluid row p-b-24">
+            <div class="col-sm-12 col-md-6 gw-unit-system-row p-0">
+                <div class="row">
+                    <div class="col-6 gw-unit-system-form-label">
+                        <span class="mat-subtitle-2">Shift Method</span>
+                    </div>
+                    <div class="col-3 px-0">
+                        <mat-radio-group class="gw-sureflo-radio-group" [value]="parentShiftDefaultData.ShiftMethod"
+                            [disabled]="true">
+                            <mat-radio-button class="px-2 gw-form-label" color="primary" value="ReturnsBased"
+                                [disabled]="true"
+                                (change)="radioChange($event)">Returns Based</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-3">
+                        <mat-radio-group class="gw-sureflo-radio-group" [value]="parentShiftDefaultData.ShiftMethod"
+                            [disabled]="true">
+                            <mat-radio-button class="px-2 gw-form-label" color="primary" value="TimeBased"
+                                [disabled]="true"
+                                (change)="radioChange($event)">Time Based</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-container *ngIf="parentShiftDefaultData && parentShiftDefaultData.ShiftMethod === shiftMethods[0]">
+            <gw-inforce-returns-based [shiftDefaultData]="parentShiftDefaultData"
+                (isReturnFormValidEvent)="returnBasedFormValidEvent($event)"
+                [readOnly]="true"
+                [showHCMSSleeveSettings]="showHCMSSleeveSettings">
+            </gw-inforce-returns-based>
+        </ng-container>
+    
+        <ng-container *ngIf="parentShiftDefaultData && parentShiftDefaultData.ShiftMethod === shiftMethods[1]">
+            <gw-inforce-time-based [shiftDefaultData]="parentShiftDefaultData"
+                (isTimebasedFormValidEvent)="timeBasedFormValidEvent($event)"
+                [readOnly]="true"
+                [showHCMSSleeveSettings]="showHCMSSleeveSettings">
+            </gw-inforce-time-based>
+        </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="selectedShift === 'custom'">
+        <div *ngIf="isShiftMethodReadOnly" class="container-fluid row p-b-24">
+            <div class="col-sm-12 col-md-6 gw-unit-system-row p-0">
+                <div class="row">
+                    <div class="col-6 gw-unit-system-form-label">
+                        <span class="mat-subtitle-2">Shift Method</span>
+                    </div>
+                    <div class="col-3 px-0 ">
+                        <span class="readOnlyMethod">
+                            {{selectedShiftMethod === 'ReturnsBased' ? 'Returns Based' : 'Time Based'}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!isShiftMethodReadOnly" class="container-fluid row p-b-24">
+            <div class="col-sm-12 col-md-6 gw-unit-system-row p-0">
+                <div class="row">
+                    <div class="col-6 gw-unit-system-form-label">
+                        <span class="mat-subtitle-2">Shift Method</span>
+                    </div>
+                    <div class="col-3 px-0">
+                        <mat-radio-group class="gw-sureflo-radio-group" [(ngModel)]="selectedShiftMethod">
+                            <mat-radio-button class="px-2 gw-form-label" color="primary" value="ReturnsBased"
+                               [disabled]="isFlowmeterTransmitterNone" (change)="radioChange($event)">Returns Based</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                <div class="row">
+                    <div class="col-3">
+                        <mat-radio-group class="gw-sureflo-radio-group" [(ngModel)]="selectedShiftMethod">
+                            <mat-radio-button class="px-2 gw-form-label" color="primary" value="TimeBased"
+                                (change)="radioChange($event)">Time Based</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ng-container *ngIf="shiftDefaultData && selectedShiftMethod === shiftMethods[0]">
+            <gw-inforce-returns-based [shiftDefaultData]="shiftDefaultData"
+                (isReturnFormValidEvent)="returnBasedFormValidEvent($event)"
+                (onFormChangeEvent)="updateShiftDefault($event)"
+                [showHCMSSleeveSettings]="showHCMSSleeveSettings">
+            </gw-inforce-returns-based>
+        </ng-container>
+    
+        <ng-container *ngIf="shiftDefaultData && selectedShiftMethod === shiftMethods[1]">
+            <gw-inforce-time-based [shiftDefaultData]="shiftDefaultData"
+                (isTimebasedFormValidEvent)="timeBasedFormValidEvent($event)"
+                (onFormChangeEvent)="updateShiftDefault($event)"
+                [showHCMSSleeveSettings]="showHCMSSleeveSettings">
+            </gw-inforce-time-based>
+        </ng-container>
+    </ng-container>
+
+</section>
+<!-- <mat-divider></mat-divider> -->
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions shift-settings-btns">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnCancel()">Cancel</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnSubmit()" [disabled]="!hasChanges || !isShiftDefaultsValid">
+        {{ this.shiftSettingsDialogData.applyButtonText }}
+    </button>
+</div>

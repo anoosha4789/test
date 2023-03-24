@@ -1,0 +1,201 @@
+@import 'base.scss';
+
+table {
+    width: 100%;
+  }
+  .gw-inforce-zone-container {
+    height: calc(100vh - 395px);
+    max-width: 100%;
+    overflow: auto;
+    border-radius: 0px;
+    border-bottom-style: none;
+    box-shadow: 0 0 0 1px $gw-mat-table-box-shadow-color !important;
+    .mat-header-cell  {
+      padding-right: 24px;
+    }
+    table{
+      th {
+          border-bottom: 2px solid $gw-secondary-color-500;
+      }
+    }
+  }
+
+  .gw-inforce-return-input, .gw-inforce-user-sel {
+    width: 90px;
+  }
+
+  .mat-column-FromPosition {
+    flex: 0 0 10% !important;
+    width: 10% !important;
+  }
+
+  .mat-column-ToPosition {
+    flex: 0 0 10% !important;
+    width: 10% !important;
+  }
+
+  .mat-column-Id {
+    flex: 0 0 10% !important;
+    width: 10% !important;
+  }
+
+  .mat-column-Description {
+    flex: 0 0 40% !important;
+    width: 40% !important;
+  }
+
+  .mat-column-ReturnVolume {
+    flex: 0 0 15% !important;
+    width: 15% !important;
+  }
+
+  .mat-column-UserSelectable {
+    flex: 0 0 15% !important;
+    width: 15% !important;
+  }
+
+  .mat-column-FromPosition .mat-form-field-appearance-fill ,
+  .mat-column-ToPosition .mat-form-field-appearance-fill ,
+  .mat-column-Id .mat-form-field-appearance-fill ,
+  .mat-column-Description .mat-form-field-appearance-fill , 
+  .mat-column-ReturnVolume .mat-form-field-appearance-fill ,
+  .mat-column-UserSelectable .mat-form-field-appearance-fill {
+    padding: 0px;
+  }
+
+
+  .gw-inforce-zone-title {
+    width: calc(100% - 205px);
+  }
+  
+  :host::ng-deep .mat-column-Description .mat-form-field-wrapper,
+  :host::ng-deep .mat-column-ReturnVolume .mat-form-field-wrapper,
+  :host::ng-deep .mat-column-UserSelectable .mat-form-field-wrapper {
+    margin-bottom: -1.25em;
+  }
+
+  .gw-inforce-pos-input {
+    width: 100%;
+  }
+
+  .gw-grid-alert-container {
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    display: block;
+  }
+
+
+  // HDMI 1280*1024
+  @media only screen and (min-width: 1025px) and (max-width: 1280px) {
+    
+    .mat-column-FromPosition {
+      flex: 0 0 14% !important;
+      width: 14% !important;
+    }
+  
+    .mat-column-ToPosition {
+      flex: 0 0 11% !important;
+      width: 11% !important;
+    }
+  
+    .mat-column-Id {
+      flex: 0 0 9% !important;
+      width: 9% !important;
+    }
+  
+    .mat-column-Description {
+      flex: 0 0 37% !important;
+      width: 37% !important;
+    }
+  
+    .mat-column-ReturnVolume {
+      flex: 0 0 16% !important;
+      width: 16% !important;
+      .gw-inforce-return-input {
+        width: 126px;
+      }
+    }
+  
+    .mat-column-UserSelectable {
+      flex: 0 0 13% !important;
+      width: 13% !important;
+    }
+    }
+
+
+  // Large tablets and desktops max width 1440px
+  @media only screen and (min-width: 1281px) and (max-width: 1440px) {
+    
+    .mat-column-FromPosition {
+      flex: 0 0 12% !important;
+      width: 12% !important;
+    }
+  
+    .mat-column-ToPosition {
+      flex: 0 0 12% !important;
+      width: 12% !important;
+    }
+  
+    .mat-column-Id {
+      flex: 0 0 5% !important;
+      width: 5% !important;
+    }
+  
+    .mat-column-Description {
+      flex: 0 0 47% !important;
+      width: 47% !important;
+    }
+  
+    .mat-column-ReturnVolume {
+      flex: 0 0 12% !important;
+      width: 12% !important;
+      .gw-inforce-return-input {
+        width: 126px;
+      }
+    }
+  
+    .mat-column-UserSelectable {
+      flex: 0 0 12% !important;
+      width: 12% !important;
+    }
+    }
+
+
+  // Large tablets and desktops min width 1281px
+  @media only screen and (min-width: 1281px) {
+    
+    .mat-column-FromPosition {
+      flex: 0 0 13% !important;
+      width: 13% !important;
+    }
+  
+    .mat-column-ToPosition {
+      flex: 0 0 11% !important;
+      width: 11% !important;
+    }
+  
+    .mat-column-Id {
+      flex: 0 0 8% !important;
+      width: 8% !important;
+    }
+  
+    .mat-column-Description {
+      flex: 0 0 44% !important;
+      width: 44% !important;
+    }
+  
+    .mat-column-ReturnVolume {
+      flex: 0 0 12% !important;
+      width: 12% !important;
+      .gw-inforce-return-input {
+        width: 130px;
+      }
+    }
+  
+    .mat-column-UserSelectable {
+      flex: 0 0 12% !important;
+      width: 12% !important;
+    }
+    }
+  

@@ -1,0 +1,66 @@
+<section class="m-2">
+    <div class="container-fluid">
+        <div class="row d-flex justify-content-between p-b-18">
+            <span class="mat-subtitle-2">Line to Zone Mapping</span>
+        </div>
+        <div class="row gw-zonemapping-grid">
+            <div #tooltipRef="tooltip" igxTooltip class="gw-grid-tooltip">
+                <ng-container *ngIf="tooltipRef.context">
+                    {{tooltipRef.context.value}}
+                </ng-container>
+            </div>
+            <igx-grid #gridLineToZone igxPreventDocumentScroll
+              [data]="zoneMappings" [emptyGridMessage]="'No Zone Mappings.'" [primaryKey]="'Id'" width="100%">
+                <igx-column [headerClasses]="'mat-header-cell'" field="ZoneName" header="Zone" [dataType]="'string'" width="30%">
+                    <ng-template igxCell let-cell="cell">
+                        <span [igxTooltipTarget]="tooltipRef" (onTooltipShow)="tooltipRef.context=cell"
+                            hideDelay="50" class="gw-grid-row-tooltip">
+                            {{cell.value}}
+                        </span>
+                    </ng-template>
+                </igx-column>
+                <igx-column [headerClasses]="'mat-header-cell'" field="OpenLine" header="Open Line" [dataType]="'string'" width="25%">
+                    <ng-template igxCell let-cell="cell">
+                        <mat-form-field *ngIf="cell.rowData.ValveType != 0; else monitoringZone" 
+                            class="mat-select-small cus-select pl-0" [class.mat-form-field-invalid]="openLineErrors.get(cell.row.rowID)" appearance="fill">
+                            <mat-select class="mat-body-2 gw-form-label form-baseline" [class.ng-invalid]="openLineErrors.get(cell.row.rowID)" [value]="cell.value" 
+                                (selectionChange)="onDownHoleOpenLineChanged(cell.row.rowID, $event)">
+                                <mat-option *ngFor="let mapping of downHoleMappings" [value]="mapping">{{mapping}}</mat-option>
+                            </mat-select>
+                            <mat-hint *ngIf="openLineErrors.get(cell.row.rowID)" class="mat-error zoneMapping-error">
+                                {{openLineErrors.get(cell.row.rowID)}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </ng-template>
+                </igx-column>
+                <igx-column [headerClasses]="'mat-header-cell'" field="CloseLine" header="Close Line" [dataType]="'string'" width="25%">
+                    <ng-template igxCell let-cell="cell">
+                        <mat-form-field *ngIf="cell.rowData.ValveType != 0; else monitoringZone" 
+                            class="mat-select-small cus-select pl-0" [class.mat-form-field-invalid]="closeLineErrors.get(cell.row.rowID)" appearance="fill">
+                            <mat-select class="mat-body-2 gw-form-label form-baseline" [class.ng-invalid]="closeLineErrors.get(cell.row.rowID)" [value]="cell.value" 
+                                (selectionChange)="onDownHoleCloseLineChanged(cell.row.rowID, $event)">
+                                <mat-option *ngFor="let mapping of downHoleMappings" [value]="mapping">{{mapping}}</mat-option>
+                            </mat-select>
+                            <mat-hint *ngIf="closeLineErrors.get(cell.row.rowID)" class="mat-error zoneMapping-error">
+                                {{closeLineErrors.get(cell.row.rowID)}}
+                            </mat-hint>
+                        </mat-form-field>
+                    </ng-template>
+                </igx-column>
+                <igx-column [headerClasses]="'mat-header-cell'" field="ValveType" header="Valve Type" [dataType]="'string'" width="20%">
+                    <ng-template igxCell let-cell="cell">
+                        <span class="gw-grid-row-tooltip">
+                            {{valveTypes[cell.value].ValveName}}
+                        </span>
+                    </ng-template>
+                </igx-column>
+            </igx-grid>
+
+            <ng-template #monitoringZone>
+                <span class="gw-grid-row-tooltip">
+                    N/A
+                </span>
+            </ng-template>
+        </div>
+    </div>
+</section>

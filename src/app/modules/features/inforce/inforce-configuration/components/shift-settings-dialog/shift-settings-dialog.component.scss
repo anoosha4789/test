@@ -1,0 +1,56 @@
+@import 'base.scss';
+
+.w-100 {
+  width: 100%;
+}
+
+@media only screen and (min-device-width: 1280px) and (max-device-width: 1285px) and (-webkit-min-device-pixel-ratio: 1) {
+  .cus-panel {
+    max-width: 10%
+  }
+}
+
+.shift-settings-dlg {
+  min-height: 460px;
+}
+
+.shift-settings-dlg-large {
+  min-height: 522px;
+}
+
+.readOnlyMethod {
+  font-family: "Noto Sans";
+  font-weight: 400;
+  letter-spacing: 0.1px;
+  font-size: 0.875rem;
+  line-height: 1.25em;
+  color: $gw-secondary-color-600;
+}
+
+:host ::ng-deep .shift-settings {
+  .mat-button-toggle-group-appearance-standard {
+    border: 1px solid $gw-secondary-color-500;    
+  }
+
+  .mat-button-toggle-appearance-standard {
+    .mat-button-toggle-button .mat-button-toggle-label-content {
+      color: $gw-secondary-color-1000;
+    }
+  }
+
+  .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+    background-color: $gw-primary-color-500 !important;
+  
+    .mat-button-toggle-button .mat-button-toggle-label-content {
+      color: $gw-text-white;
+    }
+  }
+
+}
+
+.shift-settings-btns {
+  .mat-button-wrapper {
+    text-transform: uppercase;
+  }
+}
+
