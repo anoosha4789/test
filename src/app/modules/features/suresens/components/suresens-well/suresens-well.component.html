@@ -1,0 +1,102 @@
+<mat-card class="m-2 gw-config-container" cdkTrapFocus>
+    <mat-card-content *ngIf="well" id="gw-mat-card-content">
+        <mat-tab-group animationDuration="1ms" [(selectedIndex)]="activeTabIndex"
+            (selectedTabChange)="onTabChanged($event);" class="gw-tab-group">
+            <!-- Well-->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <label class="gw-mat-tab-label" matTooltip="{{wellName}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-tooltip" [matTooltipDisabled]="wellName.length > 20 ? 'false': 'true' ">
+                        {{wellName | gwTruncate:20}}
+                    </label>
+                </ng-template>
+                <ng-template matTabContent>
+                    <form [formGroup]="wellForm" autocomplete="off" *ngIf="well">
+                        <div class="d-flex flex-wrap py-3">
+                            <div class="col-sm-12 col-md-5 px-0">
+                                <div class="col gw-well-form-label pl-2 pt-0">
+                                    <label class="gw-form-label">Well Type</label>
+                                </div>
+                                <div class="col">
+                                    <mat-form-field class="mat-select-small gw-card-input-field gw-select-160"
+                                        appearance="fill">
+                                        <input matInput class="gw-form-label form-baseline" [disabled]="true" value="SureSENS">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 px-2">
+                                <div class="col gw-well-form-label pl-0 pt-0">
+                                    <label class="gw-form-label">Well Name</label>
+                                </div>
+                                <div class="col p-r-0">
+                                    <mat-form-field *ngIf="well" class="mat-input-small gw-card-cardName-field" appearance="fill">
+                                        <input id="WellName" matInput class="gw-form-label form-baseline"
+                                            (input)="validateWellName($event)" (blur)="validateWellName($event)"
+                                            formControlName="WellName" [(ngModel)]="well.WellName" name="WellName"
+                                            [matTooltip]="well.WellName" matTooltipPosition="below"
+                                            matTooltipClass="gw-mat-tooltip"
+                                            [matTooltipDisabled]="well?.WellName?.length > 24 ? 'false': 'true' ">
+                                        <mat-hint *ngIf="invalidWellNameErorMsg != null" align="start"
+                                            class="mat-error">
+                                            {{invalidWellNameErorMsg}}
+                                        </mat-hint>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </ng-template>
+            </mat-tab>
+
+              <!-- FlowMeters -->
+              <mat-tab *ngFor="let flowMeter of surefloFlowMeterList, let i = index">
+                <ng-template mat-tab-label>
+                    <label class="gw-mat-tab-label" matTooltip="{{flowMeter.DeviceName}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-tooltip" [matTooltipDisabled]="flowMeter.DeviceName.length > 20 ? 'false': 'true' ">
+                        {{flowMeter.DeviceName | gwTruncate:20}}
+                    </label>
+                </ng-template>
+                <ng-template matTabContent>
+                    <sureflo-stepper [flowMeterData]="flowMeter" [selectedIndex]="stepperIndex" (onStepperSelChange)="stepperSelChangeEvent($event)"
+                    (onFlowMeterDataChange)="flowMeterDataChangedEvent($event)" (isFormValidEvent)="isFormValidEvent($event)">
+                    </sureflo-stepper>
+                </ng-template>
+            </mat-tab>
+            
+            <!--Add New Flowmeter-->
+            <mat-tab label="{{tabAddFlowmeterLabel}}" *ngIf="isConfigSaved">
+                <ng-template matTabContent>
+                    <sureflo-stepper [flowMeterData]="newFlowMeter" [selectedIndex]="stepperIndex" (onStepperSelChange)="stepperSelChangeEvent($event)"
+                    (onFlowMeterDataChange)="onNewFlowMeterDataChangeEvent($event)" (isFormValidEvent)="isFormValidEvent($event)"></sureflo-stepper>
+                </ng-template>
+            </mat-tab>
+
+        </mat-tab-group>
+    </mat-card-content>
+    <mat-card-actions>
+        <mat-divider></mat-divider>
+        <div class="d-flex justify-content-between gw-mt-12 gw-card-actions">
+            <div>
+                <button *ngIf="bShowDeleteButton || enableFlowMeterDelBtn" mat-button class="mat-button-tertiary-sm__icon gw-tertiary-delete-btn"
+                    (click)="bShowDeleteButton ? onDeleteBtnClick() : onDeleteFlowMeterBtnClick()">
+                    <mat-icon class="mat-icon-left mat-icon--sml">delete</mat-icon>Delete
+                </button>
+            </div>
+            <div class="d-flex">                
+                <button *ngIf="backBtnVisibility || activeTabIndex !== 0" mat-button class="mat-button-tertiary-sm"
+                    (click)="onBackBtnClick()">Back
+                </button>
+                <button  *ngIf="activeTabIndex === 0"  type="submit" mat-button class="mat-button-primary-sm mr-0" [disabled]="wellForm.invalid"
+                    (click)="onSaveBtnClick()">
+                    {{actionBtnTxt}}
+                </button>
+                <button *ngIf="activeTabIndex !== 0" type="submit" mat-button class="mat-button-primary-sm mr-0" [disabled]="!isFlowMeterFormValid"
+                    (click)="newFlowMeter ? onCreateFlowMeterBtnClick() :  onFlowMeterNextBtnClick()">
+                    {{flowMeterActionBtnText}}
+                </button>
+
+            </div>
+        </div>
+    </mat-card-actions>
+</mat-card>

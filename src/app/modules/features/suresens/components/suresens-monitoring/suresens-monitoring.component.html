@@ -1,0 +1,32 @@
+<section class="gw-breadcrumb">
+    <p class="gw-text-link-breadcrumb">Monitoring > {{selectedWell}}</p>
+</section>
+
+<mat-divider class="gw-monitoring-divider"></mat-divider>
+
+<section class="gw-monitoring-container p-l-10 p-r-10 px-md-3 p-t-10">
+    <mat-card class="gw-monitoring-mat-card-container" cdkTrapFocus>
+        <mat-card-content class="gw-mat-tab-group gw-monitoring-mat-card-content">
+            <mat-tab-group class="gw-monitoring-tab-group" animationDuration="0ms" [dynamicHeight]='false'
+                (animationDone)="onTabAnimationDone()" [(selectedIndex)]="selectedTabIndex"
+                (selectedTabChange)="onTabChanged($event);" [@.disabled]="true">
+                <mat-tab *ngFor="let well of wells; let i = index; trackBy:trackByWellId">
+                    <ng-template mat-tab-label>
+                        <label class="gw-mat-tab-label" matTooltip="{{well.WellName}}" matTooltipPosition="below"
+                            matTooltipClass="gw-mat-tooltip"
+                            [matTooltipDisabled]="well.WellName.length > 20 ? 'false': 'true' ">
+                            {{well.WellName | gwTruncate:20}}
+                        </label>
+                    </ng-template>
+                    <ng-template matTabContent>
+                        <div class="tab-container">
+                            <suresens-monitoring-card [wellId]="well.WellId" [showTabAnimation]="showTabAnimation"
+                                [animationStepDuration]="animationStepDuration" (animateTab)="animateTab()">
+                            </suresens-monitoring-card>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
+</section>

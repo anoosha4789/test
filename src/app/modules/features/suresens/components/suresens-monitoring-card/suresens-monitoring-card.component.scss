@@ -1,0 +1,180 @@
+@import 'base.scss';
+
+.gw-suresens-monitoring-card {
+    cursor: pointer;
+}
+
+.gw-suresens-monitoring-card:last-child {
+    margin-bottom: 0px;
+}
+
+
+.gw-suresens-monitoring-pagination {
+    // position: fixed;
+    // bottom: 64px;
+    // right: 16px;
+
+    @media (max-width: 540px) {
+        bottom: 100px;
+    }
+}
+
+.gw-sureflo-monitoring-card-unit {
+    width: 30%;
+}
+
+::ng-deep .gw-suresens-monitoring-card-header .mat-card-header-text {
+    width: 100%;
+    margin: 0px !important;
+    padding: 0px 16px !important;
+}
+
+
+.gw-suresens-monitoring-card-content {
+    height: 92px;
+    text-align: center;
+}
+
+.gw-suresens-monitoring-pagination>div {
+    margin: 0 4px;
+    cursor: pointer;
+}
+
+
+%gw-suresens-pagination {
+    width: 28px;
+    height: 28px;
+    line-height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gw-suresens-pagination-icon {
+    @extend %gw-suresens-pagination;
+    border: 1px solid $gw-secondary-color-500;
+    background-color: $gw-secondary-color-200;
+    color: $gw-secondary-color-600;
+    cursor: pointer;
+}
+
+.gw-suresens-pagination-icon-selected {
+    @extend %gw-suresens-pagination;
+    border: 1px solid $gw-secondary-color-500;
+    background-color: $gw-primary-color-100;
+}
+
+.gw-suresens-pagination-icon-content {
+    font-family: 'Poppins semibold';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+
+.gw-suresens-sptv-card-xl {
+    width: calc((100%/3) - 16px);
+}
+
+.gw-suresens-qpt-card-xl {
+    width: calc((100%/6) - 16px);
+}
+
+.gw-suresens-sptv-card-lg {
+    width: calc((100%/2.5) - 16px);
+}
+
+.gw-suresens-qpt-card-lg {
+    width: calc((100%/5) - 16px);
+}
+
+.gw-suresens-sptv-card-md {
+    width: calc((100%/2) - 16px);
+
+}
+
+.gw-suresens-qpt-card-md {
+    width: calc((100%/4) - 16px);
+}
+
+.gw-suresens-sptv-card-sm {
+    width: calc((100%/1.5) - 16px);
+}
+
+.gw-suresens-qpt-card-sm {
+    width: calc((100%/3) - 16px);
+}
+
+.gw-suresens-sptv-card-xs {
+    width: calc(100% - 16px);
+}
+
+.gw-suresens-qpt-card-xs {
+    width: calc((100%/2) - 16px);
+}
+
+
+.gw-suresens-monitoring-table {
+    width: 100%;
+}
+
+.gw-suresens-monitoring-mobile-view {
+    height: calc(100% - 4px);
+}
+
+.gw-suresens-monitoring-table-container {
+    height: 100%;
+    overflow: auto;
+}
+
+.gw-sureflo-delta {
+    position: absolute;
+    left: 2px;
+    font-weight: 600;
+    color: $gw-secondary-color-600;
+
+    @media (min-width: 1200px) and (-webkit-min-device-pixel-ratio: 1) {
+        left: -8px;
+    }
+}
+
+.gw-suresens-monitoring-wrapper {
+    @media only screen and (min-width: 768px) {
+        height: calc(100vh - 320px);
+    }
+    @media only screen and (min-width: 768px) and (min-height: 1024px) {
+        height: calc(100vh - 320px);
+    }    
+
+    @media only screen and (min-width: 1024px) and (min-height: 768px) {
+        height: calc(100vh - 295px);
+    }
+
+    @media only screen and (min-width: 1024px) and (min-height: 768px) and (-webkit-min-device-pixel-ratio: 1.5) {
+        height: calc(100vh - 285px);
+    }
+
+    @media only screen and (min-width: 1180px) and (min-height: 820px) {
+        height: calc(100vh - 295px);
+    }
+
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5) {
+    .gw-suresens-monitoring-pagination {
+        position: unset;
+    }
+
+    .gw-monitoring-container-scaling {
+        display: flex;
+        flex-direction: column;
+        // height: calc(100vh - 256px)
+    }
+
+    .gw-suresens-monitoring {
+        flex: 1;
+        align-content: flex-start;
+    }
+}

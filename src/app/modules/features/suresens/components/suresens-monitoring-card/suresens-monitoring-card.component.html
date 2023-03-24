@@ -1,0 +1,471 @@
+<ng-container *ngIf="allMonitoringTools && allMonitoringTools.length > 0">
+    <div class="gw-monitoring-container-scaling">
+        <div class="gw-suresens-monitoring-wrapper">
+            <!-- Desktop / Tablet Mode -->
+            <section class="d-flex flex-wrap gw-suresens-monitoring mx-3 my-1"
+                *ngIf="!isMobileView && isViewLoaded; else toolboxMobileView">
+                <ng-container *ngFor="let row of (groupedMonitoringTools | paginate: config)">
+                    <ng-container *ngFor="let data of row">
+                        <ng-container *ngIf="data.floMeterName === undefined">
+                            <!--Tools-->
+                            <ng-container *ngTemplateOutlet="toolCardTemplate; context: {$implicit: data}">
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="data.floMeterName !== undefined">
+                            <!--sure flo-->
+                            <ng-container *ngTemplateOutlet="sureFloCardTemplate; context: {$implicit: data}">
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </section>
+        </div>
+
+        <!-- Tool Card Template -->
+        <ng-template #toolCardTemplate let-data>
+            <mat-card class="mx-2 mb-3 p-0" *ngIf="data && data.tool.Id > 0"
+                [ngClass]="['gw-suresens-monitoring-card', data.isTemplateSPTV ? 'gw-suresens-sptv-card-'+ cardSize : 'gw-suresens-qpt-card-' + cardSize,  
+                    data.diagnosticsDevice.RawValue === 0 && data.commStatus.RawValue !== 0 ? 'gw-suresens-monitoring-card-valid': 
+                    getToolStatusCode(data.diagnosticsDevice.RawValue) === 1 && data.commStatus.RawValue !== 0 ? 'gw-suresens-monitoring-card-warning' : 'gw-suresens-monitoring-card-critical']"
+                (click)="navigateTool(data.tool.DeviceId)">
+                <mat-card-header class="gw-suresens-monitoring-card-header pt-2">
+                    <mat-card-title class="d-flex">
+                        <div class="flex-fill gw-suresens-monitoring-card-title" matTooltip="{{data.tool.DeviceName}}"
+                            matTooltipPosition="below" matTooltipClass="gw-mat-card-tooltip" [matTooltipDisabled]="data.isTemplateSPTV ? 
+                            data.tool.DeviceName.length > 30 ? 'false': 'true' : 
+                            data.tool.DeviceName.length > 10 ? 'false': 'true'">
+                            {{data.tool.DeviceName}}
+                        </div>
+                        <ng-container *ngIf="data.diagnosticsDevice.RawValue !== 0 || data.commStatus.RawValue === 0">
+                            <mat-icon class="gw-suresens-tool-status-icon" matTooltip="{{ data.commStatus.RawValue === 0 ||  data.commStatus.RawValue === -999 ? cardStatus :
+                                data | gwToolStatus:2 }} " matTooltipPosition="below"
+                                matTooltipClass="gw-tool-icon-tooltip">
+                                {{getToolStatusCode(data.diagnosticsDevice.RawValue) === 1 && data.commStatus.RawValue
+                                !== 0
+                                ? 'warning' : 'info'}}
+                            </mat-icon>
+                        </ng-container>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="d-flex col-lg-12 col-xl-11 mx-auto gw-suresens-monitoring-card-content">
+
+                    <!--QPT or ESP P/T -->
+                    <ng-container *ngIf="!data.isTemplateSPTV && data.gaugeType !== 1">
+                        <ng-container *ngTemplateOutlet="qptTemplate; context: {$implicit: data}"></ng-container>
+                    </ng-container>
+
+                    <!--ESP Inline Vibe -->
+                    <ng-container *ngIf="!data.isTemplateSPTV && data.gaugeType === 1">
+                        <ng-container *ngTemplateOutlet="espInlineTemplate; context: {$implicit: data}"></ng-container>
+                    </ng-container>
+
+                    <!-- SPTV -->
+                    <ng-container *ngIf="data.isTemplateSPTV && data.gaugeType !== 1">
+                        <ng-container *ngTemplateOutlet="sptvTemplate; context: {$implicit: data}"></ng-container>
+                    </ng-container>
+
+                    <!-- ESP MGA Vibe -->
+                    <ng-container *ngIf="data.isTemplateSPTV && data.gaugeType === 1">
+                        <ng-container *ngTemplateOutlet="espTemplate; context: {$implicit: data}"></ng-container>
+                    </ng-container>
+
+                </mat-card-content>
+            </mat-card>
+        </ng-template>
+
+        <!--SureFLO Flow Meters Template-->
+        <ng-template #sureFloCardTemplate let-data>
+            <mat-card class="mx-2 mb-3 p-0" *ngIf="data"
+                [ngClass]="['gw-suresens-monitoring-card', 'gw-suresens-qpt-card-' + cardSize, data.activeDevice.RawValue === 1 ? 'gw-suresens-monitoring-card-valid' : 'gw-suresens-monitoring-card-critical']"
+                (click)="navigateSureFLOTool(data.deviceId)">
+                <mat-card-header class="gw-suresens-monitoring-card-header pt-2">
+                    <mat-card-title class="d-flex">
+                        <div class="flex-fill gw-suresens-monitoring-card-title" matTooltip="{{data.floMeterName}}"
+                            matTooltipPosition="below" matTooltipClass="gw-mat-card-tooltip"
+                            [matTooltipDisabled]="data.floMeterName.length > 10 ? 'false': 'true'">
+                            {{data.floMeterName}}
+                        </div>
+                        <ng-container *ngIf="data.activeDevice.RawValue != 1">
+                            <mat-icon class="gw-suresens-tool-status-icon">
+                                info
+                            </mat-icon>
+                        </ng-container>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="d-flex col-lg-12 col-xl-11 mx-auto gw-suresens-monitoring-card-content">
+                    <div class="col mx-auto px-0">
+                        <p class="my-1">
+                            <mat-label class="mat-subtitle-1 gw-suresens-sureflo-card-subtitle-1"
+                                matTooltip="{{data.totalFlowRateDevice.RawValue}}" matTooltipPosition="below"
+                                matTooltipClass="gw-mat-card-tooltip"
+                                [matTooltipDisabled]="(data.totalFlowRateDevice.RawValue | number: '1.2-2' )?.toString().length >=10 ? 'false': 'true'">
+                                <ng-container *ngIf="data.totalFlowRateDevice.RawValue !== -999; else defBadDataValue">
+                                    {{data.totalFlowRateDevice.RawValue | number: '1.2-2' | gwTruncate:10}}
+                                </ng-container>
+                            </mat-label>
+                            <mat-label
+                                class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2 gw-sureflo-monitoring-card-unit">
+                                {{data.totalFlowRateDevice.UnitSymbol}}
+                            </mat-label>
+                        </p>
+                        <p class="my-1">
+                            <mat-label class="mat-body-1 gw-suresens-monitoring-card-subtitle-2 gw-sureflo-delta">
+                                ΔP
+                            </mat-label>
+                            <mat-label class="mat-subtitle-1 gw-suresens-sureflo-delta-card-subtitle-1"
+                                matTooltip="{{data.deltaPDevice.RawValue}}" matTooltipPosition="below"
+                                matTooltipClass="gw-mat-card-tooltip"
+                                [matTooltipDisabled]="(data.deltaPDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                                <ng-container *ngIf="data.deltaPDevice.RawValue !== -999; else defBadDataValue">
+                                    {{data.deltaPDevice.RawValue | number: '1.2-2' | gwTruncate:10}}
+                                </ng-container>
+                            </mat-label>
+                            <mat-label
+                                class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2 gw-sureflo-monitoring-card-unit">
+                                {{data.deltaPDevice.UnitSymbol}}
+                            </mat-label>
+                        </p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </ng-template>
+
+        <!--QPT Template-->
+        <ng-template #qptTemplate let-qptTool>
+            <div class="col mx-auto px-0">
+                <p class="my-1">
+                    <mat-label class="mat-subtitle-1 gw-suresens-qpt-card-subtitle-1"
+                        matTooltip="{{qptTool.pressureDevice.RawValue}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(qptTool.pressureDevice.RawValue | number: '1.2-2' )?.toString().length > 10 ? 'false': 'true'">
+
+                        <ng-container *ngIf="qptTool.pressureDevice.RawValue !== -999; else defBadDataValue">
+                            {{qptTool.pressureDevice.RawValue | number: '1.2-2' | gwTruncate:10}}
+                        </ng-container>
+
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{qptTool.pressureDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+                <p class="my-1">
+                    <mat-label class="mat-subtitle-1 gw-suresens-qpt-card-subtitle-1"
+                        matTooltip="{{qptTool.temperatureDevice.RawValue}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(qptTool.temperatureDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                        <ng-container *ngIf="qptTool.temperatureDevice.RawValue !== -999; else defBadDataValue">
+                            {{qptTool.temperatureDevice.RawValue | number: '1.2-2' | gwTruncate:10}}
+                        </ng-container>
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{qptTool.temperatureDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+
+            </div>
+        </ng-template>
+
+        <!--SPTV Template-->
+        <ng-template #sptvTemplate let-sptvTool>
+            <div class="col mx-auto px-0">
+                <p class="my-1">
+                    <mat-label class="mat-subtitle-1 gw-suresens-qpt-card-subtitle-1"
+                        matTooltip="{{sptvTool.pressureDevice.RawValue | number: '1.2-2'}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(sptvTool.pressureDevice.RawValue | number: '1.2-2' )?.toString().length > 10 ? 'false': 'true'">
+
+                        <ng-container *ngIf="sptvTool.pressureDevice.RawValue !== -999; else defBadDataValue">
+                            {{sptvTool.pressureDevice.RawValue | number: '1.2-2' | gwTruncate:10}}
+                        </ng-container>
+
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{sptvTool.pressureDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+                <p class="my-1">
+                    <mat-label class="mat-subtitle-1 gw-suresens-qpt-card-subtitle-1"
+                        matTooltip="{{sptvTool.temperatureDevice.RawValue}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(sptvTool.temperatureDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                        <ng-container *ngIf="sptvTool.temperatureDevice.RawValue !== -999; else defBadDataValue">
+                            {{sptvTool.temperatureDevice.RawValue | number: '1.2-2' | gwTruncate:10}}
+                        </ng-container>
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{sptvTool.temperatureDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+
+            </div>
+            <div class="col mx-auto pb-2">
+                <p class="my-1">
+                    <mat-label class="mat-body-1 mr-2 gw-suresens-sptv-card-subtitle-2">X</mat-label>
+                    <mat-label class="mat-subtitle-1 gw-suresens-sptv-card-subtitle-1"
+                        matTooltip="{{sptvTool.peakVibrationXDevice.RawValue}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(sptvTool.peakVibrationXDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                        <ng-container *ngIf="sptvTool.peakVibrationXDevice.RawValue !== -999; else defBadDataValue">
+                            {{sptvTool.peakVibrationXDevice.RawValue | number: '1.2-2'}}
+                        </ng-container>
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{sptvTool.peakVibrationXDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+                <p class="my-1">
+                    <mat-label class="mat-body-1 mr-2 gw-suresens-sptv-card-subtitle-2">Y</mat-label>
+                    <mat-label class="mat-subtitle-1 gw-suresens-sptv-card-subtitle-1"
+                        matTooltip="{{sptvTool.peakVibrationYDevice.RawValue}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(sptvTool.peakVibrationYDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                        <ng-container *ngIf="sptvTool.peakVibrationYDevice.RawValue !== -999; else defBadDataValue">
+                            {{sptvTool.peakVibrationYDevice.RawValue | number: '1.2-2'}}
+                        </ng-container>
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{sptvTool.peakVibrationYDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+                <p class="my-1">
+                    <mat-label class="mat-body-1 mr-2 gw-suresens-sptv-card-subtitle-2">Z</mat-label>
+                    <mat-label class="mat-subtitle-1 gw-suresens-sptv-card-subtitle-1"
+                        matTooltip="{{sptvTool.peakVibrationZDevice.RawValue}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(sptvTool.peakVibrationZDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                        <ng-container *ngIf="sptvTool.peakVibrationZDevice.RawValue !== -999; else defBadDataValue">
+                            {{sptvTool.peakVibrationZDevice.RawValue | number: '1.2-2'}}
+                        </ng-container>
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{sptvTool.peakVibrationZDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+            </div>
+
+        </ng-template>
+
+        <!--ESP Template-->
+        <ng-template #espTemplate let-espTool>
+            <div class="col mx-auto px-0">
+                <p class="my-1">
+                    <mat-label class="mat-subtitle-1 gw-suresens-esp-card-subtitle-1"
+                        matTooltip="{{espTool.motorWindingTempDevice.RawValue}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(espTool.motorWindingTempDevice.RawValue | number: '1.2-2' )?.toString().length > 10 ? 'false': 'true'">
+                        <span class="mat-body-1 mx-1 gw-suresens-monitoring-card-subtitle-2">MWT</span>
+                        <ng-container *ngIf="espTool.motorWindingTempDevice.RawValue !== -999; else defBadDataValue">
+                            {{espTool.motorWindingTempDevice.RawValue | number: '1.2-2'}}
+                        </ng-container>
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{espTool.motorWindingTempDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+            </div>
+            <div class="col mx-auto pb-2">
+                <p class="my-1">
+                    <mat-label class="mat-body-1 mr-2 gw-suresens-sptv-card-subtitle-2">X</mat-label>
+                    <mat-label class="mat-subtitle-1 gw-suresens-sptv-card-subtitle-1"
+                        matTooltip="{{espTool.peakVibrationXDevice.RawValue}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(espTool.peakVibrationXDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                        <ng-container *ngIf="espTool.peakVibrationXDevice.RawValue !== -999; else defBadDataValue">
+                            {{espTool.peakVibrationXDevice.RawValue | number: '1.2-2'}}
+                        </ng-container>
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{espTool.peakVibrationXDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+                <p class="my-1">
+                    <mat-label class="mat-body-1 mr-2 gw-suresens-sptv-card-subtitle-2">Y</mat-label>
+                    <mat-label class="mat-subtitle-1 gw-suresens-sptv-card-subtitle-1"
+                        matTooltip="{{espTool.peakVibrationYDevice.RawValue}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(espTool.peakVibrationYDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                        <ng-container *ngIf="espTool.peakVibrationYDevice.RawValue !== -999; else defBadDataValue">
+                            {{espTool.peakVibrationYDevice.RawValue | number: '1.2-2'}}
+                        </ng-container>
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{espTool.peakVibrationYDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+                <p class="my-1">
+                    <mat-label class="mat-body-1 mr-2 gw-suresens-sptv-card-subtitle-2">Z</mat-label>
+                    <mat-label class="mat-subtitle-1 gw-suresens-sptv-card-subtitle-1"
+                        matTooltip="{{espTool.peakVibrationZDevice.RawValue}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(espTool.peakVibrationZDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                        <ng-container *ngIf="espTool.peakVibrationZDevice.RawValue !== -999; else defBadDataValue">
+                            {{espTool.peakVibrationZDevice.RawValue | number: '1.2-2'}}
+                        </ng-container>
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{espTool.peakVibrationZDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+            </div>
+        </ng-template>
+
+        <ng-template #espInlineTemplate let-espInlineTool>
+
+            <div class="col mx-auto px-0 pb-2">
+                <p class="my-1">
+                    <mat-label class="mat-body-1 mr-2 gw-suresens-sptv-card-subtitle-2">X</mat-label>
+                    <mat-label class="mat-subtitle-1 gw-suresens-sptv-card-subtitle-1"
+                        matTooltip="{{espInlineTool.peakVibrationXDevice.RawValue}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(espInlineTool.peakVibrationXDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                        <ng-container
+                            *ngIf="espInlineTool.peakVibrationXDevice.RawValue !== -999; else defBadDataValue">
+                            {{espInlineTool.peakVibrationXDevice.RawValue | number: '1.2-2'}}
+                        </ng-container>
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{espInlineTool.peakVibrationXDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+                <p class="my-1">
+                    <mat-label class="mat-body-1 mr-2 gw-suresens-sptv-card-subtitle-2">Y</mat-label>
+                    <mat-label class="mat-subtitle-1 gw-suresens-sptv-card-subtitle-1"
+                        matTooltip="{{espInlineTool.peakVibrationYDevice.RawValue}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(espInlineTool.peakVibrationYDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                        <ng-container
+                            *ngIf="espInlineTool.peakVibrationYDevice.RawValue !== -999; else defBadDataValue">
+                            {{espInlineTool.peakVibrationYDevice.RawValue | number: '1.2-2'}}
+                        </ng-container>
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{espInlineTool.peakVibrationYDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+                <p class="my-1">
+                    <mat-label class="mat-body-1 mr-2 gw-suresens-sptv-card-subtitle-2">Z</mat-label>
+                    <mat-label class="mat-subtitle-1 gw-suresens-sptv-card-subtitle-1"
+                        matTooltip="{{espInlineTool.peakVibrationZDevice.RawValue}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-card-tooltip"
+                        [matTooltipDisabled]="(espInlineTool.peakVibrationZDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                        <ng-container
+                            *ngIf="espInlineTool.peakVibrationZDevice.RawValue !== -999; else defBadDataValue">
+                            {{espInlineTool.peakVibrationZDevice.RawValue | number: '1.2-2'}}
+                        </ng-container>
+                    </mat-label>
+                    <mat-label class="mat-body-1 ml-2 gw-suresens-monitoring-card-subtitle-2">
+                        {{espInlineTool.peakVibrationZDevice.UnitSymbol}}
+                    </mat-label>
+                </p>
+            </div>
+        </ng-template>
+
+        <!-- Pagination -->
+        <div *ngIf="!isMobileView && groupedMonitoringTools.length > config.itemsPerPage">
+            <pagination-template #p="paginationApi" [id]="config.id" (pageChange)="config.currentPage = $event">
+
+                <div class="d-flex justify-content-center mx-3 gw-suresens-monitoring-pagination">
+
+                    <div *ngFor="let page of p.pages" (click)="p.setCurrent(page.value)"
+                        [ngClass]="[ p.getCurrent() === page.value ? 'gw-suresens-pagination-icon-selected' : 'gw-suresens-pagination-icon']">
+                        <div *ngIf="p.getCurrent() !== page.value">
+                            <span class="gw-suresens-pagination-icon-content">{{ page.label }}</span>
+                        </div>
+                        <div *ngIf="p.getCurrent() === page.value">
+                            <span class="gw-suresens-pagination-icon-content">{{ page.label }}</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </pagination-template>
+
+        </div>
+        <!-- Pagination End -->
+
+        <!-- Desktop / Tablet Mode End-->
+
+
+        <!-- Mobile Mode -->
+        <ng-template #toolboxMobileView>
+            <section class="gw-suresens-monitoring-mobile-view mx-2 p-t-2" *ngIf="isViewLoaded">
+
+                <div class="gw-suresens-monitoring-table-container mat-elevation-z2">
+                    <table mat-table [dataSource]="allMonitoringTools" class="gw-suresens-monitoring-table">
+
+                        <ng-container matColumnDef="tool">
+                            <th mat-header-cell *matHeaderCellDef class="px-2 gw-text-align-center"> Tool Name</th>
+                            <td mat-cell *matCellDef="let suresenTool" class="px-2 gw-text-align-center">
+                                <a *ngIf="suresenTool.floMeterName === undefined"
+                                    (click)="navigateTool(suresenTool.tool.DeviceId)"
+                                    [ngClass]="[ suresenTool.diagnosticsDevice.RawValue === 0 && suresenTool.commStatus.RawValue !== 0 ? 'gw-monitoring-table-link': 
+                                getToolStatusCode(suresenTool.diagnosticsDevice.RawValue) === 1 && suresenTool.commStatus.RawValue !== 0 ? 'gw-monitoring-table-link-warning' : 'gw-monitoring-table-link-critical']">
+                                    {{suresenTool.tool.DeviceName | gwTruncate:10 }}
+                                </a>
+                                <a *ngIf="suresenTool.floMeterName !== undefined"
+                                    (click)="navigateSureFLOTool(suresenTool.deviceId)"
+                                    class="gw-monitoring-table-link">
+                                    {{suresenTool.floMeterName | gwTruncate:10 }}
+                                </a>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="pressureDevice">
+                            <th mat-header-cell *matHeaderCellDef class="gw-moitoring-table-header px-2">
+                                Pressure
+                                <p class="my-0">
+                                    ({{allMonitoringTools[0]?.pressureDevice.UnitSymbol}})
+                                </p>
+                            </th>
+                            <td mat-cell *matCellDef="let suresenTool" class="gw-text-align-center px-2">
+                                <p class="my-0">
+                                    <ng-container
+                                        *ngIf="suresenTool.floMeterName === undefined &&
+                                    (suresenTool.gaugeType !== 1 || (suresenTool.espGaugeType !== 1 && suresenTool.espGaugeType !== 0))">
+                                        <ng-container
+                                            *ngIf="suresenTool.pressureDevice.RawValue !== -999; else defBadDataValue">
+                                            {{suresenTool.pressureDevice.RawValue | number: '1.2-2' | gwTruncate:10}}
+                                        </ng-container>
+                                    </ng-container>
+                                </p>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="temperatureDevice">
+                            <th mat-header-cell *matHeaderCellDef class="gw-moitoring-table-header px-2"> Temperature
+                                <p class="my-0">({{allMonitoringTools[0]?.temperatureDevice.UnitSymbol}})</p>
+                            </th>
+
+                            <td mat-cell *matCellDef="let suresenTool" class="px-2">
+                                <p class="my-0">
+                                    <ng-container
+                                        *ngIf="suresenTool.floMeterName === undefined &&
+                                    (suresenTool.gaugeType !== 1 || (suresenTool.espGaugeType !== 1 && suresenTool.espGaugeType !== 0))">
+                                        <ng-container
+                                            *ngIf="suresenTool.temperatureDevice.RawValue !== -999; else defBadDataValue">
+                                            {{suresenTool.temperatureDevice.RawValue | number: '1.2-2' | gwTruncate:10}}
+                                        </ng-container>
+                                    </ng-container>
+                                </p>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </section>
+        </ng-template>
+        <!-- Mobile Mode End-->
+
+        <!--Default Bad Data-->
+        <ng-template #defBadDataValue>
+            <!-- {{errorHandlingSettings?.BadDataValue | number: '1.2-2'}} -->
+            <!-- <ng-container *ngIf="!isMobileView"></ng-container> -->
+            <mat-label class="" matTooltip="{{errorHandlingSettings?.BadDataValue}}" matTooltipPosition="below"
+                matTooltipClass="gw-mat-card-tooltip"
+                [matTooltipDisabled]="(errorHandlingSettings?.BadDataValue | number: '1.2-2' )?.toString().length >=10 ? 'false': 'true'">
+                {{errorHandlingSettings?.BadDataValue | number: '1.2-2' | gwTruncate:10}}
+            </mat-label>
+        </ng-template>
+    </div>
+</ng-container>
