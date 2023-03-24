@@ -1,0 +1,80 @@
+<section class="m-4 gw-end-of-shift-dialog-container">
+    <div class="mat-subtitle-2 mb-3">
+        {{wellInShift?.wellName}}
+    </div>
+    <div class="bh-table default mat-elevation-z8 gw-end-of-shift-container">
+        <table mat-table [dataSource]="endOfShiftData.data" class="gw-mat-table">
+            <!-- Zone Name -->
+            <ng-container matColumnDef="zoneName">
+                <th mat-header-cell *matHeaderCellDef> Zone </th>
+                <td mat-cell *matCellDef="let zone">
+                    <mat-label
+                        matTooltip="{{zone.zoneName}}" matTooltipPosition="below" matTooltipClass="gw-label-mat-tooltip"
+                        [matTooltipDisabled]="!isEllipsisActive(zoneName)">
+                        <span #zoneName class="label-two-lines-ellipsis">{{zone.zoneName}}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+
+            <!-- Previous Position -->
+            <ng-container matColumnDef="previousPosition">
+                <th mat-header-cell *matHeaderCellDef> Previous Position </th>
+                <td mat-cell *matCellDef="let zone">
+                    <mat-label
+                        matTooltip="{{zone.previousPosition}}" matTooltipPosition="below" matTooltipClass="gw-label-mat-tooltip"
+                        [matTooltipDisabled]="!isEllipsisActive(previousPosition)">
+                        <span #previousPosition class="label-two-lines-ellipsis">{{zone.previousPosition}}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+
+            <!-- Expected Position -->
+            <ng-container matColumnDef="expectedPosition">
+                <th mat-header-cell *matHeaderCellDef> Expected Position </th>
+                <td mat-cell *matCellDef="let zone">
+                    <mat-label
+                        matTooltip="{{zone.expectedPosition}}" matTooltipPosition="below" matTooltipClass="gw-label-mat-tooltip"
+                        [matTooltipDisabled]="!isEllipsisActive(expectedPosition)">
+                        <span #expectedPosition class="label-two-lines-ellipsis">{{zone.expectedPosition}}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+            <!-- Currrent Position -->
+            <ng-container matColumnDef="currentPosition">
+                <th mat-header-cell *matHeaderCellDef> Current Position </th>
+                <td mat-cell *matCellDef="let zone">                    
+                    <mat-label
+                        matTooltip="{{(zone.currentPositionUnknownFlag == '0' ? zone.currentPosition : 'Unknown')}}" matTooltipPosition="below" matTooltipClass="gw-label-mat-tooltip"
+                        [matTooltipDisabled]="!isEllipsisActive(currentPosition)">
+                        <span #currentPosition class="label-two-lines-ellipsis">{{zone.currentPositionUnknownFlag == '0' ? zone.currentPosition : 'Unknown'}}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+            <!-- Status -->
+            <ng-container matColumnDef="shiftStatus">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let zone"
+                    [ngClass]="{'gw-no-shift': zone.shiftStatus == noShiftPlanned, 'gw-shift-failed': zone.shiftStatus == shiftFailed}">
+                    <mat-label
+                        matTooltip="{{zone.shiftStatus}}" matTooltipPosition="below" matTooltipClass="gw-label-mat-tooltip"
+                        [matTooltipDisabled]="!isEllipsisActive(shiftStatus)">
+                        <span #shiftStatus class="label-two-lines-ellipsis">
+                            <mat-icon *ngIf="zone.shiftStatus==shiftSuccessMessage" class="gw-status-icon">
+                                check_circle
+                            </mat-icon>
+                            <mat-icon *ngIf="zone.shiftStatus==shiftFailed" class="gw-status-icon gw-error-icon">
+                                cancel
+                            </mat-icon>{{zone.shiftStatus}}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</section>
+<mat-divider></mat-divider>
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="onClose()">OK</button>
+</div>

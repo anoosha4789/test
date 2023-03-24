@@ -1,0 +1,67 @@
+<section class="gw-inforce-shift-modal-container m-4">
+    <div class="mat-subtitle-2">
+        {{well.WellName}}
+    </div>
+    <div class="mx-2 my-3">
+        <ng-container *ngIf="isWellType2N">
+            <span class="mat-body-2 mr-4">Close All Sleeves</span>
+            <mat-checkbox [color]="checkbox.color" (change)="onSleeveToggle($event)" [checked]="closeAllSleeveStatus"></mat-checkbox>
+        </ng-container>
+    </div>
+    <!-- Shift Table-->
+    <div class="bh-table default mat-elevation-z8 gw-inforce-shift-container">
+        <table mat-table [dataSource]="zoneList" class="gw-mat-table">
+            <!-- Zone Name -->
+            <ng-container matColumnDef="ZoneName">
+                <th mat-header-cell class="zone" *matHeaderCellDef> Zone </th>
+                <td mat-cell class="zone" [ngClass]="{'zone-reset': zone.IsResetOrVent === true}" *matCellDef="let zone">
+                    <mat-label
+                        matTooltip="{{zone.ZoneName}}" matTooltipPosition="below" matTooltipClass="gw-label-mat-tooltip"
+                        [matTooltipDisabled]="!isEllipsisActive(zoneName)">
+                        <span #zoneName class="label-two-lines-ellipsis">{{zone.ZoneName}}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+
+            <!-- From Position -->
+            <ng-container matColumnDef="CurrentPosition">
+                <th mat-header-cell *matHeaderCellDef> Current Valve Position </th>
+                <td mat-cell [ngClass]="{'zone-reset': zone.IsResetOrVent === true}" *matCellDef="let zone">
+                    <mat-label
+                        matTooltip="{{zone.CurrentPositionRawValue === 0 ? zone.CurrentTargetPosition.Description : 'Unknown' }}" matTooltipPosition="below" matTooltipClass="gw-label-mat-tooltip"
+                        [matTooltipDisabled]="!isEllipsisActive(description)">
+                        <span #description class="label-two-lines-ellipsis">{{(zone.CurrentPositionRawValue === 0 ? zone.CurrentTargetPosition.Description : 'Unknown')}}</span>
+                    </mat-label>
+                </td>
+            </ng-container>
+
+            <!-- Target Valve Position -->
+            <ng-container matColumnDef="NumberOfPositions">
+                <th mat-header-cell class="target-value" *matHeaderCellDef> Target Valve Position </th>
+                <td mat-cell class="target-value" [ngClass]="{'zone-reset': zone.IsResetOrVent === true}" *matCellDef="let zone">
+                    <mat-form-field *ngIf="zone.IsResetOrVent === false" class="mat-select-small gw-valve-position-select gw-target-dropdown" appearance="fill"                        
+                        [ngClass]="{'gw-target-valve-position': zone.CurrentTargetPosition.Description !== zone.SelectedTargetPosition.Description}">
+                        <mat-select class="gw-form-label form-baseline" [(value)]="zone.SelectedTargetPosition.Description"
+                            (selectionChange)="onValvePositionChange($event, zone.ZoneId)" [disabled]="zone.CurrentPositionRawValue !== 0 || zone.isPositionInvalid">
+                            <mat-option  class="gw-target-option" *ngIf="zone.isPositionInvalid" [value]="zone.SelectedTargetPosition.Description">{{zone.SelectedTargetPosition.Description}}</mat-option>
+                            <mat-option class="gw-target-option" *ngFor="let valvePostion of zone.TargetValvePositionDd"
+                                [value]="valvePostion.Description">
+                                {{valvePostion.Description}} 
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <span class="p-l-8" *ngIf="zone.IsResetOrVent === true">{{zone.ProgressText}} - {{zone.ResetTime | gwMinuteSeconds}} mins</span>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</section>
+<!-- <mat-divider></mat-divider> -->
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnCancel()">Cancel</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" 
+        [disabled]="!shiftBtnVisiblity" (click)="OnSubmit()">Confirm Shift</button>
+</div>

@@ -1,0 +1,181 @@
+<gw-maintenance-mode-indicator></gw-maintenance-mode-indicator>
+<section class="gw-manual-mode-container">
+    <section class="gw-breadcrumb px-4 py-0">
+        <a class="gw-text-link-breadcrumb gw-breadcrumb-link" [routerLink]="toolboxRoute">Toolbox</a>
+        <span class="gw-text-link-breadcrumb p-l-12">></span>
+        <span class="gw-text-link-breadcrumb p-l-12">Manual Mode</span>
+    </section>
+
+    <div class="row ml-4 mr-4 mt-0 mb-0 p-t-16 p-b-16 align-items-center">
+        <div class="mat-subtitle-1">Manual Mode</div>
+        <div class="col p-0">
+            <div class="row m-0">
+                <div class="col text-right mat-body-1">Manual Mode</div>
+                <div class="text-right p-0">
+                    <mat-slide-toggle color={{toggleConfig.color}} [checked]="isPanelinManualMode"
+                        (change)="toggleManualMode($event)" [disabled]="isCommStatusFailed || isOperationExecutionInProgress">
+                        {{manualModeText}}
+                    </mat-slide-toggle>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ml-4 mr-4 mt-0 mb-4 p-b-14 gw-manual-mode-card-container">
+        <div class="col-lg-5 col-xl-5 p-l-0 p-r-0 gw-manual-mode-card-wrapper">
+            <mat-card class="gw-manual-mode-card">
+                <mat-card-header>
+                    <mat-card-title class="mat-subtitle-2">
+                        Hydraulic Power Unit (HPU)
+                    </mat-card-title>
+                    <span class="mat-button gw-btn-view-graph" (click)="viewGraphClick()">VIEW GRAPHS</span>
+                </mat-card-header>
+                <mat-divider></mat-divider>
+                <mat-card-content class="gw-manual-mat-card-content">
+                    <cdk-virtual-scroll-viewport itemSize="160px" class="gw-manual-mode-scrollbar">
+                        <!-- Pump Control -->
+                        <ng-container *ngIf="pumpPressure">
+                            <div class="gw-manual-control-section m-b-8">
+                                <div class="mat-subtitle-2 p-b-4">Pump Control</div>
+                                <div class="gw-manual-control-item">
+                                    <label class="mat-caption">Pump Pressure
+                                        {{getFormattedUnit(pumpPressure.hpuDataPoint?.unit)}}</label>
+                                    <span class="mat-caption gw-manual-control-value">{{pumpPressure.hpuDataPoint?.value
+                                        |
+                                        number: '1.1-1' }}</span>
+                                </div>
+                                <div class="gw-manual-control-actions" (click)="pumpControlActionClick()">
+                                    <button class="mat-button-toggle mat-button-primary-sm gw-manual-btn-left"
+                                        [disabled]="!isPanelinManualMode"
+                                        [ngClass]="(pumpPressure.actionDataPoint && pumpPressure.actionDataPoint?.value==0) ? 'gw-manual-btn-left-sel':'gw-manual-btn-left-nor'">STOP</button>
+                                    <button class="mat-button-toggle gw-manual-btn-right"
+                                        [disabled]="!isPanelinManualMode"
+                                        [ngClass]="(pumpPressure.actionDataPoint && pumpPressure.actionDataPoint?.value==1) ? 'gw-manual-btn-right-sel':'gw-manual-btn-right-nor'">START</button>
+                                </div>
+                                <button class="mat-button gw-manual-btn-control"
+                                    [disabled]="!isPanelinManualMode || pumpPressure.actionDataPoint?.value==1"
+                                    (click)="setPressurePointClick()">CHANGE PUMP PRESSURE SET POINT</button>
+                            </div>
+                        </ng-container>
+
+                        <!-- Supply / Recirculate -->
+                        <ng-container *ngIf="supplyRecirculate">
+                            <div class="gw-manual-control-section m-b-8">
+                                <div class="mat-subtitle-2 p-b-4">Supply / Recirculate</div>
+                                <div class="gw-manual-control-item">
+                                    <label class="mat-caption">Supply Pressure
+                                        {{getFormattedUnit(supplyRecirculate.hpuDataPoint?.unit)}}</label>
+                                    <span
+                                        class="mat-caption gw-manual-control-value">{{supplyRecirculate.hpuDataPoint?.value
+                                        | number: '1.1-1' }}</span>
+                                </div>
+                                <div class="gw-manual-control-actions" (click)="supplyRecirculateActionClick()">
+                                    <button class="mat-button-toggle gw-manual-btn-left"
+                                        [disabled]="!isPanelinManualMode"
+                                        [ngClass]="(supplyRecirculate.actionDataPoint && supplyRecirculate.actionDataPoint?.value==0) ? 'gw-manual-btn-left-sel':'gw-manual-btn-left-nor'">SUPPLY</button>
+                                    <button class="mat-button-toggle gw-manual-btn-right"
+                                        [disabled]="!isPanelinManualMode"
+                                        [ngClass]="(supplyRecirculate.actionDataPoint && supplyRecirculate.actionDataPoint?.value==1) ? 'gw-manual-btn-right-sel':'gw-manual-btn-right-nor'">RECIRCULATE</button>
+                                </div>
+                            </div>
+                        </ng-container>
+
+                        <!-- Return Flow Meter -->
+                        <ng-container *ngIf="returnFlowMeter">
+                            <div class="gw-manual-control-section m-b-8">
+                                <div class="mat-subtitle-2 p-b-4">Return Flow Meter</div>
+                                <div class="gw-manual-control-item">
+                                    <label class="mat-caption">Return Flow Meter Total
+                                        {{getFormattedUnit(returnFlowMeter.hpuDataPoint?.unit)}}</label>
+                                    <span
+                                        class="mat-caption gw-manual-control-value">{{returnFlowMeter.hpuDataPoint?.value
+                                        | number: '1.1-1' }}</span>
+                                </div>
+                                <div class="gw-manual-control-item">
+                                    <label class="mat-caption">Return Flowrate
+                                        {{getFormattedUnit(returnFlowMeter.hpuSubDataPoint?.unit)}}</label>
+                                    <span
+                                        class="mat-caption gw-manual-control-value">{{returnFlowMeter.hpuSubDataPoint?.value
+                                        | number: '1.1-1' }}</span>
+                                </div>
+                                <div class="gw-manual-control-actions" (click)="flowMeterActionClick()">
+                                    <button class="mat-button-toggle gw-manual-btn-left"
+                                        [disabled]="!isPanelinManualMode"
+                                        [ngClass]="(returnFlowMeter.actionDataPoint && returnFlowMeter.actionDataPoint?.value==0) ? 'gw-manual-btn-left-sel':'gw-manual-btn-left-nor'">DIVERT</button>
+                                    <button class="mat-button-toggle gw-manual-btn-right"
+                                        [disabled]="!isPanelinManualMode"
+                                        [ngClass]="(returnFlowMeter.actionDataPoint && returnFlowMeter.actionDataPoint?.value==1) ? 'gw-manual-btn-right-sel':'gw-manual-btn-right-nor'">MEASURE</button>
+                                </div>
+                                <button class="mat-button gw-manual-btn-control" [disabled]="!isPanelinManualMode"
+                                    (click)="ResetFlowMeter()">RESET
+                                    FLOW METER</button>
+                            </div>
+                        </ng-container>
+
+                        <!-- Reservoir Tank Level -->
+                        <ng-container *ngIf="reservoirLevel">
+                            <div class="gw-manual-control-section">
+                                <div class="mat-subtitle-2 p-b-4">Reservoir Tank Level</div>
+                                <div class="gw-manual-control-item p-0">
+                                    <label class="mat-caption">Reservoir
+                                        {{getFormattedUnit(reservoirLevel.hpuDataPoint?.unit)}}</label>
+                                    <span
+                                        class="mat-caption gw-manual-control-value">{{reservoirLevel.hpuDataPoint?.value
+                                        |
+                                        number: '1.1-1' }}</span>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </cdk-virtual-scroll-viewport>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-lg-7 col-xl-7 p-l-0 p-r-0 gw-manual-well-section">
+            <mat-card class="gw-manual-mode-well-card">
+                <mat-tab-group animationDuration="0ms" class="gw-manual-mode-well-tab-group"
+                    [(selectedIndex)]="activeTabIndex" (selectedTabChange)="onTabChanged($event)">
+                    <!-- Well Setting-->
+                    <mat-tab *ngFor="let well of wellOutputDataPoints" [label]="well.WellName">
+                        <mat-card-content class="gw-manual-well-card-content mb-0">
+                            <cdk-virtual-scroll-viewport itemSize="48px"
+                                class="gw-manual-mode-scrollbar gw-manual-mode-well-scrollbar">
+                                <ng-container *ngIf="well && well.outputPosition">
+                                    <div *ngFor="let panelToLineMapping of well.outputPosition"
+                                        class="gw-manual-control-section m-b-12 gw-manual-well-control-section">
+                                        <div class="mat-subtitle-2 p-b-4">{{panelToLineMapping.PanelConnection}} -
+                                            {{panelToLineMapping.DownholeLine}}</div>
+                                        <div class="gw-manual-control-item">
+                                            <label class="mat-caption">Output
+                                                {{getFormattedUnit(panelToLineMapping.outputDataPoint?.unit)}}</label>
+                                            <span
+                                                class="mat-caption gw-manual-control-value">{{panelToLineMapping.outputDataPoint?.value
+                                                | number: '1.1-1' }}</span>
+                                        </div>
+                                        <div class="gw-manual-control-item" *ngIf="!panelToLineMapping.isCommonClose">
+                                            <label class="mat-caption">Current Valve Position</label>
+                                            <span
+                                                class="mat-caption gw-manual-control-value">{{panelToLineMapping.currentPositionUnknownDataPoint?.value==0?panelToLineMapping.currentPositionName:"Unknown"}}</span>
+                                        </div>
+                                        <div class="gw-manual-control-actions"
+                                            (click)="ventSupplyActionClick(panelToLineMapping)">
+                                            <button class="mat-button-toggle gw-manual-btn-left"
+                                                [disabled]="!isPanelinManualMode"
+                                                [ngClass]="(panelToLineMapping.actionDataPoint?.value==0) ? 'gw-manual-btn-left-sel':'gw-manual-btn-left-nor'">VENT</button>
+                                            <button class="mat-button-toggle gw-manual-btn-right"
+                                                [disabled]="!isPanelinManualMode"
+                                                [ngClass]="(panelToLineMapping.actionDataPoint?.value==1) ? 'gw-manual-btn-right-sel':'gw-manual-btn-right-nor'">SUPPLY</button>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </cdk-virtual-scroll-viewport>
+                        </mat-card-content>
+                    </mat-tab>
+                </mat-tab-group>
+                <mat-card-footer class="m-0">
+                    <button class="mat-button gw-btn-view-graph gw-manual-btn-downhole"
+                        (click)="setDownholeValvePositionClick()" [disabled]="!isPanelinManualMode">SET DOWNHOLE
+                        VALVE POSITIONS</button>
+                </mat-card-footer>
+            </mat-card>
+        </div>
+    </div>
+</section>

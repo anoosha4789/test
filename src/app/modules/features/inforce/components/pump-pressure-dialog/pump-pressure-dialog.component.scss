@@ -1,0 +1,31 @@
+@import 'base.scss';
+
+.pump-pressure-dialog-container{
+  padding: 20px 20px 54px 20px;
+  .mat-caption{
+    color: $gw-secondary-color-1000;
+    font-weight: 600;
+  }
+  .gw-align-items-center{
+    display: flex;
+    align-items: center;
+  }
+  .gw-align-items-baseline{
+    display: flex;
+    align-items: baseline;
+  }
+  .gw-pump-pressure-row{
+    height: 35px;
+    .gw-pump-pressure-value{
+      color: $gw-secondary-color-600;
+    }
+  }
+}
+::ng-deep .gw-pump-pressure-dialog{
+  .mat-dialog-header .mat-dialog-title, .gw-adv-mat-dialog-actions .mat-button-wrapper{
+    @include gw-poppins-font();
+  }
+  .gw-adv-mat-dialog-actions .mat-button-tertiary-sm{
+    color: $gw-tertiary-color-1000;
+  }
+}

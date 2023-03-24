@@ -1,0 +1,204 @@
+<gw-maintenance-mode-indicator></gw-maintenance-mode-indicator>
+<section class="gw-breadcrumb flex-wrap gw-breadcrumb-section">
+    <div class="col-md-12 py-0 px-2">
+        <div class="flex-wrap d-flex">
+            <div>
+                <a *ngIf="well" class="gw-text-link-breadcrumb gw-breadcrumb-link gw-breadcrumb-shift-labels">{{well.WellName}}&nbsp;</a>    
+            </div>
+            <div>
+                <a *ngIf="activeZone && currentPosition" class="gw-text-link-breadcrumb gw-breadcrumb-link gw-breadcrumb-shift-labels">> {{activeZone.zoneName}}&nbsp;</a>
+            </div>
+            <div>
+                <a *ngIf="activeZone && currentPosition" class="gw-text-link-breadcrumb gw-breadcrumb-link gw-breadcrumb-shift-labels">> {{currentPosition}} &#x2192;&nbsp;</a>
+            </div>
+            <div>
+                <a *ngIf="activeZone && currentPosition" class="gw-text-link-breadcrumb gw-breadcrumb-link gw-breadcrumb-shift-labels">{{targetPosition}}</a>            
+            </div>
+        </div> 
+    </div>
+</section>
+<section class="gw-breadcrumb d-flex flex-wrap gw-breadcrumb-section">
+    <div class="col-md-6 d-flex flex-wrap py-0 px-2">
+        <div>
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-shift-progress">Shift Progress:</span>
+            <span class="p-l-12 p-t-10 gw-float-right">
+                <mat-progress-bar class="gw-inforce-shift-progress" mode="determinate" [value]="progress">
+                </mat-progress-bar>
+            </span>        
+        </div>
+    </div>
+    <div class="col-md-6 px-2">
+        <div class="d-flex flex-wrap">
+            <div class="col-6 gw-text-align-right t-left px-0">
+                <span class="gw-text-link-breadcrumb gw-breadcrumb-shift-time">
+                    Maximum Shift Time: 
+                    <span>{{hpuDevice?.TotalTimeRequiredInSeconds?.RawValue | gwMinuteSeconds}}</span>
+                </span>
+            </div>
+        
+            <div class="col-6 gw-text-align-right px-0">
+                <span class="gw-text-link-breadcrumb gw-breadcrumb-shift-time p-l-10 p-r-10">
+                    Remaining Time: 
+                    <span>{{hpuDevice?.TotalTimeRemainingInSeconds?.RawValue | gwMinuteSeconds}}</span>
+                </span>
+            </div>        
+        </div>
+    </div>
+    
+</section>
+
+<section class="row m-2 m-md-3 gw-inforce-view-shift-container">
+
+    <!--Shift Progress Container-->
+    <div class="col-lg-3 px-sm-0 pl-md-0 pr-md-0 pr-lg-3">
+        <mat-card class="gw-inforce-monitoring-card mb-3">
+            <mat-card-header class="gw-inforce-monitoring-card-header">
+                <mat-card-title class="mat-subtitle-2 gw-inforce-monitoring-title">
+                   Shift Progress
+                </mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content>               
+                <div class="pt-3 pb-3">
+                    <ng-container *ngIf="wellInShift">
+                        <gw-inforce-shift-hierarchy [well]="wellInShift" (updateActiveZone)='updateActiveZone($event)' (updateCurrentValvePosition)='updateCurrentValvePosition($event)'
+                        [hpuId]="this.panelDetail?.HPUID"></gw-inforce-shift-hierarchy>
+                    </ng-container>
+                    <div class="d-flex justify-content-center mx-2">
+                        <button mat-button class="mat-button-warn-sm gw-abort-seq-btn" (click)="abortShiftProcess()"
+                            [disabled]="hpuDevice?.OperationAbortingInProgress?.RawValue === 1">
+                            <mat-icon class="mat-icon-left mat-icon--sml">error_outline</mat-icon>
+                            Abort Sequence
+                        </button>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>       
+    </div>
+
+    <!--Shift Progress Container-->
+    <div class="col-lg-6 px-sm-0 pl-md-0 pr-md-0 pr-lg-3">
+        <mat-card class="gw-inforce-monitoring-card mb-3">
+            <mat-card-header class="gw-inforce-monitoring-card-header">
+                <mat-card-title class="mat-subtitle-2 gw-inforce-monitoring-title">
+                    Key Indicators 
+                </mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+                <div class="d-flex flex-wrap justify-content-md-around justify-content-xl-around mx-md-2 mx-2">
+                    <div class="mx-2 mx-xl-3">
+                        <p class="gw-inforce-gauge-title mb-0">Supply Pressure</p>
+                        <ngx-gauge [type]="supplyPressure?.options.type" 
+                            [thick]="supplyPressure?.options.thick" [size]="supplyPressure?.options.size" 
+                            [backgroundColor]="supplyPressure?.options.backgroundColor" 
+                            [foregroundColor]="supplyPressure?.options.foregroundColor"
+                            [thresholds]="supplyPressure?.options.threshold" 
+                            [value]="hpuDevice.SupplyPressure?.RawValue" [min]="supplyPressure?.options.min" [max]="supplyPressure?.options.max"
+                            *ngIf="supplyPressure">
+                            <ngx-gauge-value class="gw-inforce-panel-gauge-container">
+                                {{hpuDevice.SupplyPressure?.RawValue | gwGaugeLabelFormatter:selectedUnitSystem.SelectedUnitSymbol}}
+                                <div class="d-flex flex-fill m-0 p-0">
+                                    <div class="gw-inforce-gauge-min-label">{{supplyPressure?.options.min}}</div>
+                                    <div class="gw-inforce-gauge-unit">{{selectedUnitSystem?.SelectedDisplayUnitSymbol}}</div>
+                                    <div class="gw-inforce-gauge-max-label">{{supplyPressure?.options.max | gwGaugeLabelFormatter:selectedUnitSystem?.SelectedUnitSymbol}}</div>
+                                </div>
+                            </ngx-gauge-value>
+                        </ngx-gauge>
+                    </div>
+                    <div class="mx-2 mx-xl-3">
+                        <p class="gw-inforce-gauge-title mb-0">{{commonCloseSensor?.SensorName}}</p>
+                        <ngx-gauge [type]="commonClose.options.type" 
+                            [thick]="commonClose.options.thick" [size]="commonClose.options.size"
+                            [backgroundColor]="commonClose.options.backgroundColor" 
+                            [foregroundColor]="commonClose.options.foregroundColor"
+                            [thresholds]="commonClose.options.threshold" 
+                            [value]="commonClose.device?.RawValue" [min]="commonClose.options.min" [max]="commonClose.options.max"
+                            *ngIf="commonClose">
+                            <ngx-gauge-value class="gw-inforce-panel-gauge-container">
+                                {{commonClose.device?.RawValue | gwGaugeLabelFormatter:selectedUnitSystem?.SelectedUnitSymbol}}
+                                <div class="d-flex flex-fill m-0 p-0">
+                                    <div class="gw-inforce-gauge-min-label">{{commonClose.options.min}}</div>
+                                    <div class="gw-inforce-gauge-unit">{{selectedUnitSystem?.SelectedDisplayUnitSymbol}}</div>
+                                    <div class="gw-inforce-gauge-max-label">{{commonClose.options.max | gwGaugeLabelFormatter:selectedUnitSystem?.SelectedUnitSymbol}}</div>
+                                </div>
+                            </ngx-gauge-value>
+                        </ngx-gauge>                         
+                    </div>
+                    <div class="mx-2 mx-xl-3 gw-inforce-gauge-block">
+                        <p class="gw-inforce-gauge-title gw-min-width-20 mb-0">{{openLineSensor?.SensorName}}</p>
+                        <ngx-gauge [type]="openLine.options.type" 
+                            [thick]="openLine.options.thick" [size]="openLine.options.size"
+                            [backgroundColor]="openLine.options.backgroundColor" 
+                            [foregroundColor]="openLine.options.foregroundColor"
+                            [thresholds]="openLine.options.threshold" 
+                            [value]="openLine.device?.RawValue" [min]="openLine.options.min" [max]="openLine.options.max"
+                            *ngIf="openLine">
+                            <ngx-gauge-value class="gw-inforce-panel-gauge-container">
+                                {{openLine.device?.RawValue | gwGaugeLabelFormatter:selectedUnitSystem?.SelectedUnitSymbol}}
+                                <div class="d-flex flex-fill m-0 p-0">
+                                    <div class="gw-inforce-gauge-min-label">{{openLine.options.min}}</div>
+                                    <div class="gw-inforce-gauge-unit">{{selectedUnitSystem?.SelectedDisplayUnitSymbol}}</div>
+                                    <div class="gw-inforce-gauge-max-label">{{openLine.options.max | gwGaugeLabelFormatter:selectedUnitSystem?.SelectedUnitSymbol}}</div>
+                                </div>
+                            </ngx-gauge-value>
+                        </ngx-gauge>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>    
+        
+        <!--Return Volume Container-->
+        <mat-card class="gw-inforce-monitoring-card gw-view-shift-chart-card">
+            <mat-card-header class="gw-inforce-monitoring-card-header">
+                <mat-card-title class="mat-subtitle-2 gw-inforce-monitoring-title">
+                    Return Volume vs Time
+                </mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content class="mt-1 gw-view-shift-chart-container">
+                <div class="gw-inforce-shift-chart-view" *ngIf="showChart && isShiftInProgress && well">
+                    <gateway-multiaxis-chart [chartId]="chartId" [MinReturns]="minReturns" [MaxReturns]="maxReturns" [chartOptions]="multi_axis_series" [Height]="478"></gateway-multiaxis-chart>
+                </div>
+            </mat-card-content>
+        </mat-card>  
+    </div>
+
+    <!--Parameter Container-->
+    <div class="col-lg-3 px-md-0 gw-inforce-param-container">
+        <mat-card class="gw-inforce-monitoring-card">
+            <mat-card-header class="gw-inforce-monitoring-card-header">
+                <mat-card-title class="gw-inforce-monitoring-title">
+                    <div class="gw-inforce-parm-block-title">
+                        <div>Parameter</div>
+                        <div>Current Value</div>
+                    </div>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content class="gw-inforce-parm-block">
+                <ng-container *ngFor="let parameter of parameterList">                    
+                <div class="gw-inforce-parm-block-row px-2">
+                    <div>{{parameter.key}}</div>
+                    <ng-container *ngIf="parameter && parameter.value">
+                        <div *ngIf="parameter.value.DataPointIndex === 69">{{parameter.value.RawValue | gwInforceShift}}</div>
+                        <div *ngIf="parameter.value.DataPointIndex === 75">{{parameter.value.RawValue | gwMinuteSeconds}}</div>
+                        <ng-container *ngIf="parameter.value.DataPointIndex !== 69 && parameter.value.DataPointIndex !== 75">
+                            <div *ngIf="parameter?.showDigit">
+                                {{parameter.value.RawValue | number: '1.0-2'}}
+                            </div>
+                            <div *ngIf="!parameter?.showDigit ">
+                                {{parameter.value.RawValue | number: '1.0-0'}}
+                            </div>
+                        </ng-container>         
+                    </ng-container>                    
+                </div>
+                </ng-container>
+            </mat-card-content>
+        </mat-card>
+        
+    </div>
+
+</section>
+
+<ngx-loading [show]="!isShiftInProgress || shiftAbortInProgress" [config]="loadconfig"></ngx-loading>

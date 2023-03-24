@@ -1,0 +1,19 @@
+@import 'base.scss';
+
+.mat-dialog-header {
+  padding: $space-md;
+  // background: mat-color($grey, 100);
+}
+.mat-dialog-title {
+  color: mat-color($teal, 950);
+  margin: 0;
+}
+
+.gw-modal-container {
+    margin: 0;
+    padding: 0;
+    width: 655px; 
+    //height: 320px;  
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,10 @@
+<section class="m-0 gw-manual-mode-graph-dialog-container">
+    <div *ngIf="showChart" class="col-12 gw-manual-mode-graph p-t-18 p-b-20">
+        <gateway-multiaxis-chart [chartId]="chartId" [chartOptions]="dataPointChartOptions" [Height]="400"></gateway-multiaxis-chart>
+    </div>
+
+    <!-- <mat-divider></mat-divider> -->
+    <div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+        <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnClose()">CLOSE</button>
+    </div>
+</section>

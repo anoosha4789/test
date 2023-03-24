@@ -1,0 +1,21 @@
+<section class="gw-inforce-shift-modal-container m-4">
+    <ng-container *ngFor="let zone of zoneToShiftList">
+        <div class="col-12 px-0">
+            <div class="mat-subtitle-2">{{zone.ZoneName}}</div>
+            <div class="mat-body-2 pt-2 pb-4">
+                <span>{{zone.CurrentTargetPosition.Description}}</span>
+                <span class="mx-2 gw-inforce-shift-icon">
+                    <mat-icon>arrow_right_alt</mat-icon>
+                </span>
+                <span class="gw-target-valve-position">
+                    {{ zone.isFullShift ? fullShiftCycleText : zone.SelectedTargetPosition.Description}}
+                </span>
+            </div>
+        </div>
+    </ng-container>
+</section>
+<!-- <mat-divider></mat-divider> -->
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnCancel()">Cancel</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnShiftBtnClick()">Begin Shift</button>
+</div>

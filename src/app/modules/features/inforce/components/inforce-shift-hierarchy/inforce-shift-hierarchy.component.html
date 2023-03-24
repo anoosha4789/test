@@ -1,0 +1,30 @@
+<ul class="gw-inforce-shift-progress-list mt-0 pr-1">
+    <li *ngFor="let zone of zoneNodeList">
+        <ng-container>
+            <mat-icon class="status-icon mr-2" 
+                [ngClass]="{'status-success': zone?.shiftStatusDataPoint?.RawValue === inforceShiftStatus.Successfull,
+                            'status-progress': zone?.shiftStatusDataPoint?.RawValue === inforceShiftStatus.InProgress,
+                            'status-failed': zone?.shiftStatusDataPoint?.RawValue === inforceShiftStatus.Failed,
+                            'status-aborted': zone?.shiftStatusDataPoint?.RawValue === inforceShiftStatus.Aborting}">
+                {{ zone?.shiftStatusDataPoint?.RawValue === inforceShiftStatus.Successfull ? 'check_circle': 
+                   (zone?.shiftStatusDataPoint?.RawValue === inforceShiftStatus.Failed ||  zone?.shiftStatusDataPoint?.RawValue === inforceShiftStatus.Aborting) ?  'close' : 'panorama_fish_eye' }}
+            </mat-icon>
+            <span>{{zone.name}}</span> 
+        </ng-container>
+        <ng-container *ngIf="zone.expand">
+            <ul class="gw-inforce-shift-progress-list">
+                <li *ngFor="let position of zone.valvePositionNodeList">
+                    <mat-icon class="status-icon mr-2" [ngClass]="{'status-success': position.shiftStatus === inforceShiftStatus.Successfull,
+                    'status-progress': position.shiftStatus === inforceShiftStatus.InProgress}">
+                        {{ position.shiftStatus === inforceShiftStatus.Successfull ? 'check': 'panorama_fish_eye' }}
+                    </mat-icon>
+                    <span>{{position.current}}</span>
+                    <span>
+                        <mat-icon class="arrow-icon mx-2">arrow_right_alt</mat-icon>
+                    </span>
+                    <span>{{position.target}}</span>
+                </li>
+            </ul>
+        </ng-container>
+    </li>
+</ul>

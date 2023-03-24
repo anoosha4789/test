@@ -1,0 +1,153 @@
+<gw-maintenance-mode-indicator (showMaintenenceModeEvent)="onshowMaintenenceModeEvent($event)"></gw-maintenance-mode-indicator>
+<section class="gw-recirculate-outer-section">
+    <div class="gw-breadcrumb row">
+        <div *ngIf="showMaintenenceMode" class="progress-bar-recirculate-mr col-md-4 gw-breadcrump-paddingmob col-sm-4 px-4 py-0">
+            <a class="gw-text-link-breadcrumb gw-breadcrumb-link gw-breadcrumb-text" [routerLink]="toolboxRoute">Toolbox</a>
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-text p-l-12">></span>
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-text p-l-12">Recirculate</span>
+        </div>
+        <div *ngIf="!showMaintenenceMode" class="col-md-4 gw-breadcrump-paddingmob col-sm-4 px-4 py-0">
+            <a class="gw-text-link-breadcrumb gw-breadcrumb-link gw-breadcrumb-text" [routerLink]="toolboxRoute">Toolbox</a>
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-text p-l-12">></span>
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-text p-l-12">Recirculate</span>
+        </div>
+        <div *ngIf="showMaintenenceMode" class="progress-bar-recirculate-mr col-md-4 col-sm-4 px-4 py-0">
+            <section *ngIf="disableStartButton()">
+                <span class="gw-text-link-breadcrumb gw-breadcrumb-link gw-progress-relative gw-breadcrumb-text">Progress:
+                    <span *ngIf="selectedRecirculateMethod =='VolumeBased'" class="gw-progress-absolute p-l-12 p-t-10">
+                        <mat-progress-bar class="gw-recirculate-progress" mode="determinate"
+                            [value]="getVolumeRecirculateProgress()"></mat-progress-bar>
+                    </span>
+                    <span *ngIf="selectedRecirculateMethod !='VolumeBased'" class="gw-progress-absolute p-l-12 p-t-10">
+                        <mat-progress-bar class="gw-recirculate-progress" mode="determinate"
+                            [value]="getTimebasedRecirculateProgress()"></mat-progress-bar>
+                    </span>
+                </span>
+            </section>
+
+        </div>
+        <div *ngIf="!showMaintenenceMode" class="col-md-4 col-sm-4 px-4">
+            <section *ngIf="disableStartButton()">
+                <span class="gw-text-link-breadcrumb gw-breadcrumb-link gw-progress-relative gw-breadcrumb-text">Progress:
+                    <span *ngIf="selectedRecirculateMethod =='VolumeBased'" class="gw-progress-absolute p-l-12 p-t-10">
+                        <mat-progress-bar class="gw-recirculate-progress" mode="determinate"
+                            [value]="getVolumeRecirculateProgress()"></mat-progress-bar>
+                    </span>
+                    <span *ngIf="selectedRecirculateMethod !='VolumeBased'" class="gw-progress-absolute p-l-12 p-t-10">
+                        <mat-progress-bar class="gw-recirculate-progress" mode="determinate"
+                            [value]="getTimebasedRecirculateProgress()"></mat-progress-bar>
+                    </span>
+                </span>
+            </section>
+
+        </div>
+        <div *ngIf="selectedRecirculateMethod =='VolumeBased' && showMaintenenceMode" class="progress-bar-recirculate-mr col-md-4 col-sm-4 gw-text-right">
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-link gw-breadcrumb-text p-l-10">Volume Remaining:</span>
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-link-bold gw-breadcrumb-text p-l-2">{{VolumeRemainingForRecirculation() |
+                number: '1.1-1'}} tank volume </span>
+        </div>
+        <div *ngIf="selectedRecirculateMethod =='VolumeBased' && !showMaintenenceMode" class="col-md-4 col-sm-4 gw-text-right">
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-link gw-breadcrumb-text p-l-10">Volume Remaining:</span>
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-link-bold gw-breadcrumb-text p-l-2">{{VolumeRemainingForRecirculation() |
+                number: '1.1-1'}} tank volume </span>
+        </div>
+        <div *ngIf="selectedRecirculateMethod !='VolumeBased' && showMaintenenceMode" class="progress-bar-recirculate-mr col-md-4 col-sm-4 gw-text-right">
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-link gw-breadcrumb-text p-l-12">Time remaining:</span>
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-link-bold gw-breadcrumb-text p-l-2">{{ TimeRemainingForRecirculation() |
+                gwMinuteSeconds}} </span>
+        </div>
+        <div *ngIf="selectedRecirculateMethod !='VolumeBased' && !showMaintenenceMode" class="col-md-4 col-sm-4 gw-text-right">
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-link gw-breadcrumb-text p-l-12">Time remaining:</span>
+            <span class="gw-text-link-breadcrumb gw-breadcrumb-link-bold gw-breadcrumb-text p-l-2">{{ TimeRemainingForRecirculation() |
+                gwMinuteSeconds}} </span>
+        </div>
+    </div>
+    <section class="gw-section-widthmob">
+        <div id="titleDiv" class="d-flex flex-wrap justify-content-between pb-2">
+            <div>
+                <h6 class="mat-subtitle-1 px-0 pt-1 pl-1">Recirculate</h6>
+            </div>
+        </div>
+
+        <div class="gw-inforce-reciruclate-table">
+            <mat-nav-list class="pt-0">
+                <mat-list-item class="gw-matlist-border gw-matlist">
+                    <div class="container-fluid row">
+                        <div class="col-sm-12 col-md-6 p-0">
+                            <div class="row">
+                                <div class="p-t-12 p-l-30">
+                                    <span class="gw-recirculate-header">Recirculation Method</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6 col-6">
+                                    <mat-radio-group [disabled]="disableStartButton()" class="gw-sureflo-radio-group"
+                                        [(ngModel)]="selectedRecirculateMethod">
+                                        <mat-radio-button class="px-1 gw-form-label gw-matradio-label" color="primary"
+                                            value="VolumeBased">
+                                            Volume Based</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                                <div class="col-sm-6 col-md-6 col-6">
+                                    <mat-radio-group [disabled]="disableStartButton()" class="gw-sureflo-radio-group"
+                                        [(ngModel)]="selectedRecirculateMethod">
+                                        <mat-radio-button class="px-2 gw-form-label gw-matradio-label" color="primary"
+                                            value="TimeBased">Time
+                                            Based</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mat-list-item>
+            </mat-nav-list>
+            <mat-nav-list class="gw-matList-Padding" *ngIf="selectedRecirculateMethod =='VolumeBased'">
+                <mat-list-item class="gw-matlist-border gw-matlist gw-matlist-border-last" *ngFor="let link of volumeBasedData">
+                    <div class="container-fluid row">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                            <p class="gw-text-style">{{ link.label }}</p>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                            <p class="gw-text-style">{{ link.value }}</p>
+                        </div>
+                        <div *ngIf="link.actions"
+                            class="gw-button-right col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 p-t-12 p-b-10">
+                            <button class="mat-button-tertiary-sm gw-xs-button gw-matbutton-color-mob"
+                                (click)="onClickSettings(link)" [disabled]="disableStartButton()" mat-button>SET</button>
+                        </div>
+                    </div>
+                </mat-list-item>
+            </mat-nav-list>
+            <mat-nav-list class="gw-matList-Padding" *ngIf="selectedRecirculateMethod =='TimeBased'">
+                <mat-list-item class="gw-matlist-border gw-matlist gw-matlist-border-last" *ngFor="let link of timeBasedData">
+                    <div class="container-fluid row">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                            <p class="gw-text-style">{{ link.label }}</p>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4">
+                            <p class="gw-text-style">{{ link.value }}</p>
+                        </div>
+                        <div *ngIf="link.actions" class="text-right col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 p-t-12 p-b-10">
+                            <button class="mat-button-tertiary-sm gw-xs-button gw-matbutton-color-mob"
+                                (click)="onClickSettings(link)" [disabled]="disableStartButton()" mat-button>SET</button>
+                        </div>
+                    </div>
+                </mat-list-item>
+            </mat-nav-list>
+        </div>
+
+        <div class="p-t-12 gw-matbutton-position">
+            <button type="submit" [disabled]="disableAbortButton()" mat-button class="mat-button-warn-sm gw-matbutton-margin-recirculate"
+                (click)="ABORTRecirculation()">
+                Abort Recirculation
+            </button>
+            <button type="submit" [disabled]="disableStartButton()" mat-button class="mat-button-primary-sm gw-matbutton-margin-recirculate"
+                (click)="BEGINRecirculation()">
+                Start Recirculation
+            </button>
+        </div>
+
+    </section>
+</section>

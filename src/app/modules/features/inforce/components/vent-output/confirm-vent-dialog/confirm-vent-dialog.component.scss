@@ -1,0 +1,35 @@
+@import 'base.scss';
+
+::ng-deep .mat-dialog-title{
+    font-family: "Poppins semibold" !important;
+}
+    
+.confirm-vent-dlg{
+    font-family: "Noto Sans";
+    .wellname {
+        font-weight: 600;
+        font-size: 1rem;
+        color: $gw-tertiary-color-1000;
+    }
+    .subtitle {
+        color: $gw-secondary-color-600;
+        font-size: 14px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .wells-container {
+        height: 140px;
+        overflow: auto;
+        .wells {
+            display: flex;
+            // gap: 15px;
+            padding: 5px 10px;
+            color: $gw-tertiary-color-1000;
+            font-size: 14px;
+            .panelLine{
+                margin-right: 15px;
+                width: 65px;
+            }
+        }
+    }
+}

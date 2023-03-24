@@ -1,0 +1,229 @@
+@import 'base.scss';
+@mixin gw-btn-control($bgColor, $textColor, $borderColor) {
+  border: 1px solid $borderColor;
+  color: $textColor;
+  background: $bgColor;
+}
+@mixin gw-disabled(){
+  opacity: 0.5;
+  cursor: unset;
+}
+
+$layout-padding: 10px 12px;
+
+.gw-manual-mode-container{     
+  height: calc(100% - 70px);   
+  .gw-manual-mode-card{
+    height: calc(100% - 35px);
+  }
+  .gw-manual-mat-card-content{
+    height: calc(100% - 43px);
+  }
+  .gw-manual-mode-scrollbar{
+    height: 100%;
+  }
+  .gw-manual-mode-card-wrapper{
+    padding-right: 15px;
+  }
+  
+  .mat-subtitle-1{
+    @include gw-poppins-font();
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+  .mat-body-1{
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+        
+  .gw-manual-mode-card-container{       
+    height: calc(100% - 43px);  
+    .mat-subtitle-2{
+      @include gw-poppins-font();
+      font-size: 0.875rem;
+      color: $gw-tertiary-color-1000;
+    }
+    .mat-card.mat-focus-indicator{
+      padding: 0px;
+      border: 1px solid $gw-secondary-color-600;
+    }   
+   
+    .mat-card-header .mat-card-title{
+      margin-bottom: 0px;
+    } 
+    .mat-card-header{
+      padding: 5px 12px;
+      align-items: center;
+    }
+    .mat-card-footer{
+      padding: $layout-padding;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      border-top: 1px solid $gw-secondary-color-600;
+    }
+   .gw-btn-view-graph{
+      @include gw-btn-control($gw-primary-color-500, $gw-text-white, $gw-primary-color-500); 
+      @include gw-poppins-font();         
+      line-height: 0;
+      padding: 15px 10px;
+      font-size: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }   
+    .mat-card-content{
+      padding: 14px 0px 10px 12px;
+    } 
+    .gw-manual-control-section{
+      // background: $gw-secondary-color-050;
+      // border: 1px solid $gw-secondary-color-500;
+      background: $gw-bg-white;
+      box-sizing: border-box;
+      border-radius: 8px;
+      padding: $layout-padding;      
+      display: flex;
+      flex-direction: column;     
+      .gw-manual-control-item{
+        display: flex;
+        flex: 1;
+        padding-bottom: 5px;
+        justify-content: space-between;
+        label{
+          // flex: 1;
+          // flex-basis: 10%;
+          color: $text1;
+          font-weight: bold;
+        }
+        .gw-manual-control-value{
+          // flex: 1;
+          color: $gw-tertiary-color-1000;
+          font-weight: bold;
+          text-align: right;
+        }
+      }
+      .gw-manual-control-actions{
+        display: flex;
+        padding-top: 5px;
+        button{
+          flex: 1;
+          padding: 5px;
+          cursor: pointer;
+          &:disabled{
+            @include gw-disabled();
+          }
+        }
+        .gw-manual-btn-left{
+          @include gw-btn-control(transparent, $gw-tertiary-color-1000, $gw-secondary-color-500);
+          @include gw-poppins-font();
+          border-radius: 4px 0px 0px 4px;
+        }
+        .gw-manual-btn-left-nor{
+          @include gw-btn-control(transparent, $gw-tertiary-color-1000, $gw-secondary-color-500);
+        }
+        .gw-manual-btn-left-sel{
+          @include gw-btn-control($gw-primary-color-500, $gw-text-white, $gw-primary-color-500);
+        }
+        .gw-manual-btn-right{
+          @include gw-btn-control(transparent, $gw-tertiary-color-1000, $gw-secondary-color-500);
+          @include gw-poppins-font();
+          border-radius: 0px 4px 4px 0px;
+        }
+        .gw-manual-btn-right-nor{
+          @include gw-btn-control(transparent, $gw-tertiary-color-1000, $gw-secondary-color-500);
+          @include gw-poppins-font();
+          border-radius: 0px 4px 4px 0px;
+        }
+        .gw-manual-btn-right-sel{
+          @include gw-btn-control($gw-primary-color-500, $gw-text-white, $gw-primary-color-500);
+        }
+      }
+      .gw-manual-btn-control{
+        @include gw-btn-control($gw-secondary-color-900, $gw-text-white, $gw-secondary-color-700);
+        @include gw-poppins-font();
+        padding: 5px;
+        width: 100%;
+        margin-top: 10px;
+        font-size: 0.75rem;
+        &:disabled{
+          @include gw-disabled();
+        }
+      }
+    }  
+    .gw-manual-btn-downhole{
+      &:disabled{
+        @include gw-disabled();
+      }
+    }
+    .gw-manual-well-section{    
+      .gw-manual-mode-well-card{
+        height: calc(100% - 35px);
+        display: flex;
+        flex-direction: column;
+        .gw-manual-mode-well-tab-group{
+          flex: 1;
+        }
+      }  
+      .gw-manual-well-card-content{
+        height: 100%;
+        .gw-manual-mode-well-scrollbar{                 
+          .gw-manual-well-control-section{
+            width: 49%;
+          }
+        }
+      }
+      .mat-card-content>:last-child:not(.mat-card-footer){
+        margin-bottom: 12px;
+      }
+    }      
+  }
+}
+:host ::ng-deep .gw-manual-mode-card-container .gw-manual-well-section .mat-tab-header {
+  margin-bottom: 0px !important;
+  // border-bottom: 1px solid $gw-secondary-color-600;
+  // border-radius: 4px 0 0 0;
+}
+:host ::ng-deep .gw-manual-mode-card-container .mat-card-header-text {
+  margin: 0px !important;
+  flex: 1 !important;
+}
+:host ::ng-deep .gw-manual-mode-card-container .gw-manual-mode-well-tab-group .mat-tab-body-wrapper {
+  height: 100%;
+}
+:host ::ng-deep .gw-manual-mode-card-container .gw-manual-mode-well-tab-group .gw-manual-mode-well-scrollbar .cdk-virtual-scroll-content-wrapper {  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;        
+}
+:host ::ng-deep .gw-manual-mode-card-container .cdk-virtual-scroll-content-wrapper {  
+  padding-right: 15px;
+}
+
+:host ::ng-deep .gw-manual-mode-container .mat-slide-toggle-content {
+  margin-left: -20px;
+}
+
+@media only screen and (max-width: 1023px) {
+  .gw-manual-mode-container{  
+    .gw-manual-mode-card{
+      height: calc(100% - 15px);
+    }
+    .gw-manual-mode-card-wrapper{
+      padding-right: 0px;
+    }
+   .gw-manual-mode-card-container{    
+      height: calc(100% - 70px);
+      overflow: auto;
+      .gw-manual-mode-card-wrapper{
+        height: 100%;
+      }
+
+      .gw-manual-well-section{  
+        height: 100%;
+        .gw-manual-mode-well-card{
+          height: 100%;
+        }
+      }
+    }
+  }
+}

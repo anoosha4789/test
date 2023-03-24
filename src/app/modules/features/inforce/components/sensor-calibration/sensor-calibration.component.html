@@ -1,0 +1,325 @@
+<gw-maintenance-mode-indicator></gw-maintenance-mode-indicator>
+<div class="mb-2 sensor-calibration">
+    <div class="gw-breadcrumb px-4 py-0">
+        <a class="gw-text-link-breadcrumb gw-breadcrumb-link" [routerLink]="toolboxRoute">Toolbox</a>
+        <span class="gw-text-link-breadcrumb p-l-12">></span>
+        <span class="gw-text-link-breadcrumb p-l-12">Sensor Calibration</span>
+       <!-- <a class="pl-4 title" [routerLink]="'/inforce/toolbox'">Toolbox</a>
+        <mat-icon class="c-right">chevron_right</mat-icon>
+        <a><span class="sensor-text">Sensor Calibration</span></a>-->
+    </div>
+<section class="my-2 mx-3">
+    <!--Page Title and Action buttons-->
+    <div class="d-flex flex-wrap justify-content-between gw-dashboard-header-container">
+        <div>
+            <h6 class="mat-subheader px-0 pt-1 pl-1 pb-2">Sensor Calibration</h6>
+        </div>
+        <div>
+            <button mat-button
+                [disabled]="isDataChanged || !isHydraulicTableValid || !isOutputTableValid || !isReturnFlowmeterValid"
+                class="mat-button-tertiary-sm mat-button-tertiary-sm__icon gw-dasboard-btn mr-3 h-24" (click)="BackupSensorCalibration()">
+                <mat-icon>cloud_upload</mat-icon> BACKUP
+            </button>
+            <button mat-button
+                class="mat-button-tertiary-sm mat-button-tertiary-sm__icon gw-dasboard-btn h-24" (click)="RestoreSensorCalibration()">
+                <mat-icon>restore</mat-icon> RESTORE
+            </button>
+        </div>
+    </div>
+
+    <div class="row my-1 mx-0">
+        <div class="col-lg-6 col-xl-6 pl-0 pr-0 gw-sensor-calibration-container">
+            <mat-card class="gw-inforce-monitoring-card gw-inforce-panel-gauge-card gw-height-454">
+                <mat-card-header class="gw-inforce-monitoring-card-header">
+                    <mat-card-title class="mat-subtitle-2 gw-inforce-monitoring-title">
+                        Hydraulic Power Unit (HPU)
+                    </mat-card-title>
+                </mat-card-header>
+                <div class="gw-grid-alert-container">
+                    <div class="gw-alert" *ngIf="!isHydraulicTableValid">
+                        <mat-icon class="gw-alert-icon">error</mat-icon>
+                        <span class="pl-2">Required field.</span>
+                    </div>                    
+                </div>
+                <mat-divider></mat-divider>
+                <mat-card-content class="gw-inforce-monitoring-card-content">
+                    <div class="bh-table default mat-elevation-z8 hydraulic-options-table">
+                        <table mat-table [dataSource]="hydraulicPressureList" class="">
+                            <!-- SensorName Column -->
+                            <ng-container matColumnDef="SensorName">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell sensor-name-header-cell sensor-name">Name</th>
+                                <td mat-cell *matCellDef="let element; let i = index" class="sensor-name-cell sensor-name">
+                                    <ng-container *ngIf="element.SensorName === 'Reservoir Tank Level'; else NonReservoir">
+                                        {{element.SensorName}} (%)
+                                    </ng-container>
+                                    <ng-template #NonReservoir>
+                                        {{element.SensorName}} (psig)
+                                    </ng-template>
+                                </td>
+                            </ng-container>
+
+                            <!-- RawValue Column -->
+                            <ng-container matColumnDef="RawValue">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell text-right calc-val-header-cell">Raw Value</th>
+                                <td mat-cell *matCellDef="let element; let i = index" class="text-right calc-val-cell">
+                                    {{getRawValue(element.item) | number: '1.3-3'}}
+                                </td>
+                            </ng-container>
+
+                            <!-- RawValuePoint1 Column -->
+                            <ng-container matColumnDef="RawValuePoint1">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell text-right gw-min-width-45">Raw₀</th>
+                                <td mat-cell *matCellDef="let element; let i = index"
+                                    [class.mat-form-field-invalid]="hydraulicErrorMessages[i]?.RawValuePoint1" class="gw-min-width-45">
+                                    <mat-form-field class="mat-input-small custom-select p-l-24 text-right"
+                                        [class.mat-form-field-invalid]="hydraulicErrorMessages[i]?.RawValuePoint1" appearance="fill">
+                                        <input matInput type="number" class="gw-form-label form-baseline" [value]="element.RawValuePoint1"
+                                            [class.ng-invalid]="hydraulicErrorMessages[i]?.RawValuePoint1" (focus)="onFocus()" (blur)="onLeave()"
+                                            (input)="onHydraulicValueChange(i, 'RawValuePoint1', $event)" autocomplete="off">
+                                        <!-- <mat-hint *ngIf="hydraulicErrorMessages[i]?.RawValuePoint1" class="mat-error">
+                                            {{hydraulicErrorMessages[i].RawValuePoint1}}
+                                        </mat-hint> -->
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+
+                            <!-- RawValuePoint2 Column -->
+                            <ng-container matColumnDef="RawValuePoint2">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell text-right gw-min-width-45">Raw₁</th>
+                                <td mat-cell *matCellDef="let element; let i = index"
+                                    [class.mat-form-field-invalid]="hydraulicErrorMessages[i]?.RawValuePoint2" class="gw-min-width-45">
+                                    <mat-form-field class="mat-input-small custom-select p-l-24 text-right"
+                                        [class.mat-form-field-invalid]="hydraulicErrorMessages[i]?.RawValuePoint2" appearance="fill">
+                                        <input matInput type="number" class="gw-form-label form-baseline" [value]="element.RawValuePoint2"
+                                            [class.ng-invalid]="hydraulicErrorMessages[i]?.RawValuePoint2" (focus)="onFocus()" (blur)="onLeave()"
+                                            (input)="onHydraulicValueChange(i, 'RawValuePoint2', $event)" autocomplete="off">
+                                        <!-- <mat-hint *ngIf="hydraulicErrorMessages[i]?.RawValuePoint2" class="mat-error">
+                                            {{hydraulicErrorMessages[i].RawValuePoint2}}
+                                        </mat-hint> -->
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+
+                            <!-- ScaledValuePoint1 Column -->
+                            <ng-container matColumnDef="ScaledValuePoint1">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell text-right gw-min-width-45">Scaled₀</th>
+                                <td mat-cell *matCellDef="let element; let i = index"
+                                    [class.mat-form-field-invalid]="hydraulicErrorMessages[i]?.ScaledValuePoint1" class="gw-min-width-45">
+                                    <mat-form-field class="mat-input-small custom-select p-l-24 text-right"
+                                        [class.mat-form-field-invalid]="hydraulicErrorMessages[i]?.ScaledValuePoint1" appearance="fill">
+                                        <input matInput type="number" class="gw-form-label form-baseline" [value]="element.ScaledValuePoint1"
+                                            [class.ng-invalid]="hydraulicErrorMessages[i]?.ScaledValuePoint1" (focus)="onFocus()" (blur)="onLeave()"
+                                            (input)="onHydraulicValueChange(i, 'ScaledValuePoint1', $event)" autocomplete="off">
+                                        <!-- <mat-hint *ngIf="hydraulicErrorMessages[i]?.ScaledValuePoint1" class="mat-error">
+                                            {{hydraulicErrorMessages[i].ScaledValuePoint1}}
+                                        </mat-hint> -->
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+
+                            <!-- ScaledValuePoint2 Column -->
+                            <ng-container matColumnDef="ScaledValuePoint2">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell text-right gw-custom-header-cell">Scaled₁</th>
+                                <td mat-cell *matCellDef="let element; let i = index"
+                                    [class.mat-form-field-invalid]="hydraulicErrorMessages[i]?.ScaledValuePoint2" class="scaled-point-2 gw-custom-header-cell">
+                                    <mat-form-field class="mat-input-small custom-select p-l-24 text-right"
+                                        [class.mat-form-field-invalid]="hydraulicErrorMessages[i]?.ScaledValuePoint2" appearance="fill">
+                                        <input matInput type="number" class="gw-form-label form-baseline" [value]="element.ScaledValuePoint2"
+                                            [class.ng-invalid]="hydraulicErrorMessages[i]?.ScaledValuePoint2" (focus)="onFocus()" (blur)="onLeave()"
+                                            (input)="onHydraulicValueChange(i, 'ScaledValuePoint2', $event)" autocomplete="off">
+                                        <!-- <mat-hint *ngIf="hydraulicErrorMessages[i]?.ScaledValuePoint2" class="mat-error">
+                                            {{hydraulicErrorMessages[i].ScaledValuePoint2}}
+                                        </mat-hint> -->
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+
+                            <!-- ScaledValue Column -->
+                            <ng-container matColumnDef="ScaledValue">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell text-right calc-val-header-cell gw-min-width-80">Scaled Value</th>
+                                <td mat-cell *matCellDef="let element; let i = index" class="text-right calc-val-cell gw-min-width-80">
+                                    {{getCalulatedScaledValue(element.item) | number: '1.3-3'}}
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </div>
+                    <div class="bh-table default mat-elevation-z8 hydraulic-options-table">
+                        <div class="gw-grid-alert-container">
+                            <div class="gw-alert" *ngIf="!isReturnFlowmeterValid">
+                                <mat-icon class="gw-alert-icon">error</mat-icon>
+                                <span class="pl-2">{{returnFlowmeterErrorMessages[0].KFactor}}</span>
+                            </div>                    
+                        </div>
+                        <table *ngIf="ShowKFactor" mat-table [dataSource]="returnFlowmeterList">
+                            <!-- SensorName Column -->
+                            <ng-container matColumnDef="Name">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell sensor-name-header-cell return-flow">Name</th>
+                                <td mat-cell *matCellDef="let element; let i = index" class="sensor-name-cell return-flow">
+                                    {{element.Name}}
+                                </td>
+                            </ng-container>
+                            
+                            <!-- KFactor Column -->
+                            <ng-container matColumnDef="KFactor">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell kfactor-label pr-0 p-l-30">K-Factor</th>
+                                <td mat-cell *matCellDef="let element; let i = index"
+                                    [class.mat-form-field-invalid]="returnFlowmeterErrorMessages[i]?.KFactor" class="kfactor-val">
+                                    <mat-form-field class="mat-input-small text-right"
+                                        [class.mat-form-field-invalid]="returnFlowmeterErrorMessages[i]?.KFactor" appearance="fill">
+                                        <input matInput type="number" class="gw-form-label form-baseline" [value]="element.KFactor"
+                                            [class.ng-invalid]="returnFlowmeterErrorMessages[i]?.KFactor" (focus)="onFocus()" (blur)="onLeave()"
+                                            (input)="onReturnFlowValueChange(i, 'KFactor', $event)" autocomplete="off">
+                                        <!-- <mat-hint *ngIf="returnFlowmeterErrorMessages[i]?.KFactor" class="mat-error">
+                                            {{returnFlowmeterErrorMessages[i].KFactor}}
+                                        </mat-hint> -->
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="returnFlowDisplayColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: returnFlowDisplayColumns;"></tr>
+                        </table>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-lg-6 col-xl-6 pl-0 pr-0 gw-sensor-calibration-container gw-sensor-output-card-wrapper">
+            <mat-card class="gw-inforce-monitoring-card gw-inforce-panel-gauge-card gw-height-454">
+                <mat-card-header class="gw-inforce-monitoring-card-header">
+                    <mat-card-title class="mat-subtitle-2 gw-inforce-monitoring-title">
+                        Output Pressures
+                    </mat-card-title>
+                </mat-card-header>                
+                <div class="gw-grid-alert-container">
+                    <div class="gw-alert" *ngIf="!isOutputTableValid">
+                        <mat-icon class="gw-alert-icon">error</mat-icon>
+                        <span class="pl-2">Required field.</span>
+                    </div>                    
+                </div>
+                <mat-divider></mat-divider>
+                <mat-card-content class="gw-inforce-monitoring-card-content">
+                    <div class="bh-table default mat-elevation-z8 hydraulic-options-table output-table">
+                        <table mat-table [dataSource]="outputPressureList" class="">
+                            <!-- SensorName Column -->
+                            <ng-container matColumnDef="SensorName">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell sensor-name-header-cell sensor-name">Name</th>
+                                <td mat-cell *matCellDef="let element; let i = index" class="sensor-name-cell sensor-name">
+                                    {{element.SensorName}} (psig)
+                                </td>
+                            </ng-container>
+
+                            <!-- RawValue Column -->
+                            <ng-container matColumnDef="RawValue">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell text-right calc-val-header-cell">Raw Value</th>
+                                <td mat-cell *matCellDef="let element; let i = index" class="text-right calc-val-cell">
+                                    {{getRawValue(element.item) | number: '1.3-3'}}
+                                </td>
+                            </ng-container>
+
+                            <!-- RawValuePoint1 Column -->
+                            <ng-container matColumnDef="RawValuePoint1">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell text-right gw-min-width-45">Raw₀</th>
+                                <td mat-cell *matCellDef="let element; let i = index"
+                                    [class.mat-form-field-invalid]="outputErrorMessages[i]?.RawValuePoint1" class="gw-min-width-45">
+                                    <mat-form-field class="mat-input-small custom-select p-l-24 text-right"
+                                        [class.mat-form-field-invalid]="outputErrorMessages[i]?.RawValuePoint1" appearance="fill">
+                                        <input matInput type="number" class="gw-form-label form-baseline" [value]="element.RawValuePoint1"
+                                            [class.ng-invalid]="outputErrorMessages[i]?.RawValuePoint1" (focus)="onFocus()" (blur)="onLeave()"
+                                            (input)="onOutputValueChange(i, 'RawValuePoint1', $event)" autocomplete="off">
+                                        <!-- <mat-hint *ngIf="outputErrorMessages[i]?.RawValuePoint1" class="mat-error">
+                                            {{outputErrorMessages[i].RawValuePoint1}}
+                                        </mat-hint> -->
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+
+                            <!-- RawValuePoint2 Column -->
+                            <ng-container matColumnDef="RawValuePoint2">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell text-right gw-min-width-45">Raw₁</th>
+                                <td mat-cell *matCellDef="let element; let i = index"
+                                    [class.mat-form-field-invalid]="outputErrorMessages[i]?.RawValuePoint2" class="gw-min-width-45">
+                                    <mat-form-field class="mat-input-small custom-select p-l-24 text-right"
+                                        [class.mat-form-field-invalid]="outputErrorMessages[i]?.RawValuePoint2" appearance="fill">
+                                        <input matInput type="number" class="gw-form-label form-baseline" [value]="element.RawValuePoint2"
+                                            [class.ng-invalid]="outputErrorMessages[i]?.RawValuePoint2" (focus)="onFocus()" (blur)="onLeave()"
+                                            (input)="onOutputValueChange(i, 'RawValuePoint2', $event)" autocomplete="off">
+                                        <!-- <mat-hint *ngIf="outputErrorMessages[i]?.RawValuePoint2" class="mat-error">
+                                            {{outputErrorMessages[i].RawValuePoint2}}
+                                        </mat-hint> -->
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+
+                            <!-- ScaledValuePoint1 Column -->
+                            <ng-container matColumnDef="ScaledValuePoint1">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell text-right gw-min-width-45">Scaled₀</th>
+                                <td mat-cell *matCellDef="let element; let i = index"
+                                    [class.mat-form-field-invalid]="outputErrorMessages[i]?.ScaledValuePoint1" class="gw-min-width-45">
+                                    <mat-form-field class="mat-input-small custom-select p-l-24 text-right"
+                                        [class.mat-form-field-invalid]="outputErrorMessages[i]?.ScaledValuePoint1" appearance="fill">
+                                        <input matInput type="number" class="gw-form-label form-baseline" [value]="element.ScaledValuePoint1"
+                                            [class.ng-invalid]="outputErrorMessages[i]?.ScaledValuePoint1" (focus)="onFocus()" (blur)="onLeave()"
+                                            (input)="onOutputValueChange(i, 'ScaledValuePoint1', $event)" autocomplete="off">
+                                        <!-- <mat-hint *ngIf="outputErrorMessages[i]?.ScaledValuePoint1" class="mat-error">
+                                            {{outputErrorMessages[i].ScaledValuePoint1}}
+                                        </mat-hint> -->
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+
+                            <!-- ScaledValuePoint2 Column -->
+                            <ng-container matColumnDef="ScaledValuePoint2">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell text-right gw-custom-header-cell">Scaled₁</th>
+                                <td mat-cell *matCellDef="let element; let i = index"
+                                    [class.mat-form-field-invalid]="outputErrorMessages[i]?.ScaledValuePoint2" class="scaled-point-2 gw-custom-header-cell">
+                                    <mat-form-field class="mat-input-small custom-select p-l-24 text-right"
+                                        [class.mat-form-field-invalid]="outputErrorMessages[i]?.ScaledValuePoint2" appearance="fill">
+                                        <input matInput type="number" class="gw-form-label form-baseline" [value]="element.ScaledValuePoint2"
+                                            [class.ng-invalid]="outputErrorMessages[i]?.ScaledValuePoint2" (focus)="onFocus()" (blur)="onLeave()"
+                                            (input)="onOutputValueChange(i, 'ScaledValuePoint2', $event)" autocomplete="off">
+                                        <!-- <mat-hint *ngIf="outputErrorMessages[i]?.ScaledValuePoint2" class="mat-error">
+                                            {{outputErrorMessages[i].ScaledValuePoint2}}
+                                        </mat-hint> -->
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
+
+                            <!-- ScaledValue Column -->
+                            <ng-container matColumnDef="ScaledValue">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell text-right calc-val-header-cell gw-min-width-80">Scaled Value</th>
+                                <td mat-cell *matCellDef="let element; let i = index" class="text-right calc-val-cell gw-min-width-80">
+                                    {{getCalulatedScaledValue(element.item) | number: '1.3-3'}}
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap justify-content-between mt-3 mb-3 action-btns">
+        <div></div>
+        <div>
+            <button mat-button
+                class="mat-button-warn-sm mat-button-warn-sm__icon gw-dasboard-btn mr-3 h-24"
+                [disabled]="!isDataChanged"
+                (click)="discardChanges()">
+                DISCARD CHANGES
+            </button>
+            <button mat-button
+                class="mat-button-primary-sm mat-button-primary-sm__icon gw-dasboard-btn h-24"
+                [disabled]="!isDataChanged || !isHydraulicTableValid || !isOutputTableValid || !isReturnFlowmeterValid"
+                (click)="acceptChanges()">
+                SAVE CHANGES
+            </button>
+        </div>
+    </div>
+</section>
+</div>

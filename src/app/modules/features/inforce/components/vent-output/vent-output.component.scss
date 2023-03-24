@@ -1,0 +1,203 @@
+@import 'base.scss';
+
+@mixin gw-btn-control($bgColor, $textColor, $borderColor) {
+    border: 1px solid $borderColor;
+    color: $textColor;
+    background: $bgColor;
+}
+@mixin gw-disabled(){
+    opacity: 0.5;
+    cursor: unset;
+}
+
+// Width and Height 
+$max: 500;
+$offset: 2;
+$unit: '%';
+@mixin gw-vent-field-width($className, $styleName) {
+  $i: 0;
+  @while $i <= $max {
+    #{$className + $i} { 
+      #{$styleName}: #{$i + $unit};
+    }
+    $i: $i + $offset;
+  }
+}
+
+@include gw-vent-field-width('.gw-vent-input-width-', 'width');
+
+$layout-padding: 10px 12px;
+.gw-vent-outputs-container{
+    height: calc(100% - 70px);
+    .gw-vent-outputs-header {
+        background-color: $gw-bg-white;
+        .m-h-30{
+            @media screen and (max-width: 968px){
+                min-height: 30px;
+            }
+        }
+        .progress{
+            display: flex;
+            // gap: 15px;
+            .progress-title{
+                font-size: 14px;
+                color: $gw-secondary-color-600;
+                margin-right: 15px;
+            }
+            .progress-bar{
+                width: 100%;
+                @media screen and (min-width: 421px){
+                    max-width: 200px;
+                }
+                ::ng-deep .mat-progress-bar {
+                    height: 8px;
+                    border-radius: 0;
+                }
+            }
+        }
+        .remaining-time{
+            color: $gw-secondary-color-600;
+            font-size: 14px;
+        }
+        .remaining-sec{
+            color: $gw-tertiary-color-1000;
+            font-weight: bold;
+        }
+    }
+    .progress-bar-vent-mr{
+        margin-top: 15px
+    }
+    .mat-subtitle-1{
+        @include gw-poppins-font();
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    } 
+    .gw-vent-output-card-container{       
+        height: calc(100% - 43px);
+        @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait) {
+            height: calc(100% - 62px);
+        }
+        .gw-vent-output-well-card{
+            height: calc(100% - 35px);
+        }
+        .mat-card.mat-focus-indicator{
+            padding: 0px;
+            // border: 1px solid $gw-tertiary-color-200;
+        }
+        .mat-card-footer{
+            padding: $layout-padding;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+           // border-top: 1px solid $gw-tertiary-color-200;
+        }
+    }
+    .gw-vent-output-section{   
+        height: 100%; 
+        .gw-vent-output-well-card{
+          height: calc(100% - 45px);
+          display: flex;
+          flex-direction: column;
+          .gw-vent-output-well-tab-group{
+            flex: 1;
+            height: calc(100% - 60px);
+            .gw-vent-output-well-card-content{
+                height: calc(100% - 15px);
+                .vent-table{
+                    height: 100%;
+                    overflow: auto; 
+                    box-shadow: 0 0 0 1px $gw-secondary-color-500;
+                    border-radius: 0px;
+                    .mat-table {
+                        width: 100%;
+                        .mat-header-cell{
+                            background-color: $gw-secondary-color-200;
+                        }
+                        .pressurized {
+                            color: $gw-error-color-500;
+                        }
+                    }
+                }
+            }
+          }
+        } 
+        .mat-card-content>:last-child:not(.mat-card-footer){
+          margin-bottom: 12px;
+        }
+    } 
+}
+
+
+:host ::ng-deep .gw-vent-output-card-container .gw-vent-output-well-tab-group .mat-tab-body-wrapper {
+    height: 100%;
+}
+
+:host ::ng-deep .gw-vent-output-card-container .gw-vent-output-well-tab-group .mat-tab-header {
+    margin-bottom: 0;
+}
+
+:host ::ng-deep .gw-vent-output-card-container .mat-card-footer .mat-button-wrapper {
+    text-transform: uppercase;
+}
+
+:host {
+  ::ng-deep .mat-button.mat-button-base.mat-button-tertiary-sm:disabled{
+    border: 1px solid $gw-tertiary-color-100 !important;
+  }
+  ::ng-deep .mat-button.mat-button-base.mat-button-primary-sm:disabled{
+      color: $gw-tertiary-color-100 !important;
+      background-color: $gw-tertiary-color-050 !important;
+  }
+}
+
+.mat-column-panelLine{
+    font-size: 14px;
+    width: 25%;
+    @media screen and (max-width: 420px){
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        font-size: 12px;
+    }
+    @media screen and (min-width: 421px){
+        padding-left: 10px !important;
+    }
+}
+.mat-column-downholeLine{
+    padding-left: 5px !important;
+}
+
+.mat-column-downholeLine,
+.mat-column-state{
+    width: 25%;
+    font-size: 14px;
+    @media screen and (max-width: 420px){
+        font-size: 12px;
+        padding-right: 5px !important;
+    }
+}
+
+.mat-column-pressure{
+    font-size: 14px;
+    width: 25%;
+    @media screen and (max-width: 420px){
+        padding-right: 5px !important;
+        font-size: 12px;
+    }
+    @media screen and (min-width: 421px){
+        padding-right: 10px !important;
+    }
+}
+
+td.mat-column-pressure{
+    @media screen and (max-width: 420px){
+        padding-left: 10px;
+    }
+}
+
+
+.label-line-ellipsis{
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

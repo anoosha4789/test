@@ -1,0 +1,199 @@
+@import 'base.scss';
+
+:host{
+    .breadcrumd{
+        background-color: $gw-bg-white;
+        font-family: "Noto Sans";
+        .title{
+            font-family: Noto Sans;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 20px;
+            color: $gw-secondary-color-600;
+        }
+    }
+
+    .gw-inforce-reciruclate-table{
+        ::ng-deep .mat-list-base .mat-list-item{
+            background-color: white !important;
+        }
+    }
+ 
+.gw-recirculate-outer-section{
+    overflow:hidden;
+
+    .mat-subtitle-1{
+        @include gw-poppins-font();
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+    }
+      
+    @media (max-width: 768px){
+        padding-bottom: 75px;   
+    }
+    @media (max-width: 540px){
+        padding-bottom: 90px;
+    }
+    @media (min-width: 769px){
+        padding-bottom: 60px;   
+    }
+}  
+  
+.gw-sureflo-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+}
+.gw-matlist-border {
+    border: 1px solid $gw-secondary-color-500;
+    border-bottom: none;
+    // @media (max-width: 600px) {
+    //    height: 80px;
+    //}
+}
+
+.gw-matlist-border-last:last-child {
+    border-bottom: 1px solid $gw-secondary-color-500;
+}
+
+.gw-text-right{
+    text-align: right;
+    @media (max-width: 600px) {
+        text-align: left;
+    }
+}
+
+.gw-button-right{
+    text-align: right;
+    @media (max-width: 600px) {
+        text-align: left;
+    }
+}
+.button-border{
+    border: 1px solid $gw-secondary-color-600;
+    }
+.gw-progress-relative{
+    position: relative;
+}
+.gw-progress-absolute{
+    position: absolute;
+}
+.gw-recirculate-progress {
+ 
+    width: 215px !important;
+    height: 7px !important;
+
+    @media(min-width: 1024px) {
+        width: calc(100vw - 735px);
+    }
+
+    @media (min-width: 1200px) {
+        width: calc(100vw - 815px);
+    }
+    @media (max-width: 768px) {
+        width: 124px !important;
+    }
+}
+.gw-text-style{
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.05px;
+    color: $gw-tertiary-color-1000;
+     @media (max-width: 768px){
+        font-size: 10px !important;
+    }
+
+}
+.gw-recirculate-header{
+    font-family: "Poppins semibold";
+    font-style: SemiBold;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: $gw-tertiary-color-1000;
+    @media (max-width: 768px){
+        font-size: 10px !important;
+    }
+}
+.gw-matList-Padding{
+    padding: 0px;
+}
+
+.gw-matlist{
+    height: auto !important;
+    ::ng-deep .mat-list-item-content{
+        padding: 0 20px 0 0;
+    }
+}
+.gw-matbutton-color-mob {
+    @media (max-width: 540px) {
+        color:black !important;
+    }
+}
+.gw-matbutton-position{
+    text-align: right;
+    @media (max-width: 540px) {
+       text-align: center;
+    }
+    .mat-button-primary-sm{
+        @media (min-width: 541px){
+            margin-right: 0;
+        }
+    }
+    .gw-matbutton-margin-recirculate {
+        margin: 10px;
+        @media screen and (max-width: 376px) {
+            margin: 0px 5px 15px 5px !important;
+        }
+    }
+}
+.gw-matbutton-width{
+    @media (max-width: 540px) {
+       width: 115px;
+    }
+}
+.gw-section-widthmob{
+    margin: 16px;
+    @media (max-width: 540px){
+        margin: 6px;
+    }
+}
+// .gw-matbutton-margin-recirculate{
+//  margin: 10px;
+// }
+.gw-breadcrump-paddingmob{
+    @media (max-width: 540px) {
+    padding-left: 26px;
+}
+}
+
+.gw-breadcrumb-text{
+    @media (max-width: 768px){
+        font-size: 10px !important;
+    }
+} 
+
+.progress-bar-recirculate-mr{
+    margin-top: 15px;
+    @media (max-width: 767px) {
+        margin-top: unset;
+    }
+}
+
+@media screen and (max-width: 768px){
+::ng-deep .gw-matradio-label .mat-radio-label{    
+        font-size: 12px !important;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    #titleDiv {
+      display: none !important;
+    }
+  }
+}

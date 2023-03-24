@@ -1,0 +1,92 @@
+<section class="m-0 pump-pressure-dialog-container">
+    <div class="container-fluid m-0 p-0">
+        <form [formGroup]="pressurePointForm" autocomplete="off" novalidate>
+            <div class="container-fluid row m-0 p-0">
+                <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                    <div class="row p-b-20">
+                        <span class="mat-caption">Current Pressure</span>
+                    </div>
+                    <div class="row gw-pump-pressure-row gw-align-items-center p-b-0">
+                        <div class="col-5 p-0">
+                            <mat-label class="gw-form-label">To Start Pump</mat-label>
+                        </div>
+                        <div class="col-3 px-0">
+                            <mat-label class="gw-form-label gw-pump-pressure-value">
+                                {{currentStartPump }}</mat-label>
+                        </div>
+                        <div class="col-4 p-l-0 p-r-0 pt-0">
+                            <mat-label class="gw-form-label">
+                                {{getFormattedUnit(data.changePumpPressure.hpuDataPoint?.unit)}}</mat-label>
+                        </div>
+                    </div>
+                    <div class="row m-t-20 gw-pump-pressure-row gw-align-items-center p-b-0">
+                        <div class="col-5 p-0">
+                            <mat-label class="gw-form-label">To Stop Pump</mat-label>
+                        </div>
+                        <div class="col-3 px-0">
+                            <mat-label class="gw-form-label gw-pump-pressure-value">
+                                {{currentStopPump}}</mat-label>
+                        </div>
+                        <div class="col-4 p-l-0 p-r-0 pt-0">
+                            <mat-label class="gw-form-label">
+                                {{getFormattedUnit(data.changePumpPressure.hpuSubDataPoint?.unit)}}</mat-label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 gw-unit-system-row">
+                    <div class="row p-b-20">
+                        <span class="mat-caption">New Pressure</span>
+                    </div>
+                    <div class="row gw-pump-pressure-row gw-align-items-baseline">
+                        <div class="col-5 p-0">
+                            <mat-label class="gw-form-label">To Start Pump</mat-label>
+                        </div>
+                        <div class="col-4 px-0">
+                            <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                                <input type="number" matInput class="mat-body-2 form-baseline"
+                                    formControlName="StartPumpPressure" name="StartPumpPressure"
+                                    (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.StartPumpPressure" align="start"
+                                    class="mat-error">
+                                    {{formCtrlErrorMessage.StartPumpPressure}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-3 p-l-20 p-r-0 pt-0">
+                            <mat-label class="gw-form-label">
+                                {{getFormattedUnit(data.changePumpPressure.hpuDataPoint?.unit)}}</mat-label>
+                        </div>
+                    </div>
+                    <div class="row m-t-20 gw-pump-pressure-row gw-align-items-baseline">
+                        <div class="col-5 p-0">
+                            <mat-label class="gw-form-label">To Stop Pump</mat-label>
+                        </div>
+                        <div class="col-4 px-0">
+                            <mat-form-field class="mat-input-small pt-0 w-100" appearance="fill">
+                                <input type="number" matInput class="mat-body-2 form-baseline"
+                                    formControlName="StopPumpPressure" name="StopPumpPressure"
+                                    (input)="validateFormControls()" (blur)="validateFormControls()">
+                                <mat-hint *ngIf="formCtrlErrorMessage?.StopPumpPressure" align="start"
+                                    class="mat-error">
+                                    {{formCtrlErrorMessage.StopPumpPressure}}
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-3 p-l-20 p-r-0 pt-0">
+                            <mat-label class="gw-form-label">
+                                {{getFormattedUnit(data.changePumpPressure.hpuSubDataPoint?.unit)}}</mat-label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<!-- <mat-divider></mat-divider> -->
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnCancel()">CANCEL</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnSubmit()" [disabled]="!isFormValid">
+        UPDATE
+    </button>
+</div>

@@ -1,0 +1,23 @@
+@import 'base.scss';
+.gw-downhole-position-dialog-container{
+    margin: 15px 22px 15px 18px !important;
+    height: 255px;
+    overflow: auto;
+    .gw-mat-table{
+        width: 100%;     
+    }   
+}
+:host ::ng-deep .gw-downhole-position-dialog-container .mat-form-field-wrapper{
+    margin-bottom: -1.25em;
+}
+:host ::ng-deep .gw-downhole-position-dialog-container .mat-form-field-appearance-fill{
+    padding-top: 0.2em;
+}
+::ng-deep .gw-downhole-position-dialog{
+    .mat-dialog-header .mat-dialog-title, .gw-adv-mat-dialog-actions .mat-button-wrapper{
+        @include gw-poppins-font();
+    }
+    .gw-adv-mat-dialog-actions .mat-button-tertiary-sm{
+        color: $gw-tertiary-color-1000;
+    }
+}

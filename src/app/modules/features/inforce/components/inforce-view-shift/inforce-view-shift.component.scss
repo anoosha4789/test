@@ -1,0 +1,212 @@
+@import 'base.scss';
+@import 'modules/inforce.module.scss';
+
+.gw-breadcrumb-shift-progress {
+    color: $gw-primary-color-950;
+    @media screen and (max-width: 390px) {
+        font-size: 12.5px;
+        span{
+            font-size: 12.5px;
+        }
+    }
+    @media screen and (max-width: 768px){
+        font-size: 13px;
+        span{
+            font-size: 13px;
+        }
+    }
+}
+
+.gw-breadcrumb-section {
+    min-height: 0px !important;
+    @media screen and (min-width: 768px){
+        .px-2{
+            padding: 0 !important;
+        }
+    }
+}
+
+.gw-breadcrumb-shift-labels {
+    color: $gw-primary-color-950;
+    @media screen and (max-width: 390px) {
+        font-size: 12.5px;
+        span{
+            font-size: 12.5px;
+        }
+    }
+    @media screen and (max-width: 768px){
+        font-size: 13px;
+        span{
+            font-size: 13px;
+        }
+    }
+}
+
+.gw-breadcrumb-shift-time {
+    color: $gw-tertiary-color-1000;
+    span {
+        font-weight: bold;
+    }
+    @media screen and (max-width: 390px) {
+        font-size: 12.5px;
+        span{
+            font-size: 12.5px;
+        }
+    }
+    @media screen and (max-width: 768px){
+        font-size: 13px;
+        span{
+            font-size: 13px;
+        }
+    }
+}
+
+.gw-inforce-view-shift-container {
+
+    .mat-card.mat-focus-indicator {
+        padding: 0px;        
+        border: 1px solid $gw-secondary-color-600;
+    }
+}
+
+.gw-abort-seq-btn {
+    width: 98%;
+}
+
+:host ::ng-deep .reading-block {
+    font-size: 20px !important;
+    top: -10px;
+}
+
+.gw-inforce-panel-gauge-container {
+
+    .gw-inforce-gauge-min-label {
+        font-size: 10px;
+        left: -5px;
+    }
+
+    .gw-inforce-gauge-max-label {
+        font-size: 10px;
+        right: -5px;
+        @media screen and (max-width: 390px) {
+            right: -1px;
+        }
+    }
+}
+
+.gw-inforce-gauge-block {
+    @media screen and (min-width: 376px) and (max-width: 386px) {
+        margin-right: 0em !important;
+    }
+}
+
+.gw-view-shift-chart-card {
+    height: calc(100% - 194px);
+}
+
+.gw-inforce-parm-block-title {
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: $gw-tertiary-color-1000;
+}
+
+.gw-inforce-param-container {
+    height: 100%;
+    @include mq-md() {
+        margin-bottom: 6rem;
+    }
+
+    .gw-inforce-monitoring-card {
+        max-height: 100%;
+        overflow: hidden;
+
+        .gw-inforce-parm-block {
+            height: calc(100% - 40px);
+            overflow: auto;
+            color: $gw-tertiary-color-1000;
+        }
+    }
+}
+
+.gw-inforce-parm-block {
+   
+    .gw-inforce-parm-block-row {    
+        margin: 1px 0px;
+        height: 32px;
+        display: flex;
+        justify-content: space-between;   
+        align-items: center; 
+        font-size: 12px;
+        color: $gw-tertiary-color-1000;
+    }
+
+   > :nth-child(odd) {
+        background: $gw-secondary-color-100;
+    }
+   > :nth-child(even) {
+        background: $gw-secondary-color-050;
+    }
+    :last-child {
+        border-bottom-left-radius: 6px;
+        border-bottom-right-radius: 6px;
+    }
+}
+
+.gw-inforce-shift-progress {
+    width: 210px;
+    @media (max-width: 399px){
+        width: 140px;
+    }
+    @media (min-width: 400px) and (max-width: 768px) {
+        width: 160px;
+    }
+    height: 7px;
+}
+
+.gw-inforce-shift-chart-view {
+    @media (max-width: 950px) {
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-bottom: 10px;
+    }
+
+    @media (min-width: 951px) {
+        height: 100%;
+    }
+}
+
+.t-left{
+    @media (max-width: 768px) {
+        text-align: left !important;
+    } 
+}
+
+:host ::ng-deep .gw-inforce-shift-chart-view #toolChart {
+    border: none;
+}
+
+:host ::ng-deep .gw-inforce-shift-chart-view .noData-container {
+    height: 100%;
+}
+
+:host ::ng-deep .gw-inforce-shift-chart-view .legend-title {
+    padding: 0px 8px;
+    min-width: 75px;
+}
+
+:host ::ng-deep .gw-inforce-monitoring-card-header .mat-card-header-text {
+    margin: 0px !important;
+    width: 100%;
+}
+
+
+@media screen and (max-width: 821px) {
+    .gw-view-shift-chart-card  {
+        height: fit-content;
+        margin-bottom: 1rem;
+    }
+    
+}

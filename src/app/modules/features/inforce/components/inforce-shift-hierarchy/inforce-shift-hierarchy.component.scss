@@ -1,0 +1,43 @@
+@import 'base.scss';
+
+.gw-inforce-shift-progress-list {
+    padding: 0px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    li {
+        list-style: none;
+        font-size: 12px;
+        min-height: 32px;
+        line-height: 32px;
+        width: 100%;
+        .status-icon {
+            font-size: 18px;
+            width: 18px;
+            height: 20px;
+            transform: rotate(1deg);
+            vertical-align: middle;
+        }
+
+        .status-success, .status-progress {
+            color: $gw-primary-color-500;
+        }
+
+        .status-aborted , .status-failed {
+            color: $gw-secondary-color-500;
+        }
+
+        .arrow-icon {
+            font-size: 18px;
+            width: 18px;
+            height: 18px;
+            color: $gw-tertiary-color-1000;
+            transform: rotate(1deg);
+            vertical-align: middle;
+        }
+
+        .active {
+            color: $gw-tertiary-color-1000;
+        }
+    }
+}

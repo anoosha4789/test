@@ -1,0 +1,170 @@
+<mat-card class="gw-inforce-monitoring-card gw-inforce-valve-position-card">
+    <mat-card-header class="gw-inforce-monitoring-card-header">
+        <mat-card-title class="mat-subtitle-2 gw-inforce-monitoring-title d-flex justify-content-between">
+            <div>
+                Valve Positions               
+            </div>
+            <div class="mr-2">               
+                <a class="gw-inforce-monitoring-link" (click)="accordion.openAll();onPanelToggleAll(true)" *ngIf="expandLinkVisibility">
+                    Expand All
+                </a>
+                <a class="gw-inforce-monitoring-link" (click)="accordion.closeAll();onPanelToggleAll(false)" *ngIf="!expandLinkVisibility">
+                    Collapse All
+                </a>
+            </div>
+            
+        </mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content class="gw-inforce-monitoring-card-content m-tb-2 pr-1">
+        <mat-accordion [togglePosition]="'before'" [multi]="true" #accordion="matAccordion">
+            <cdk-virtual-scroll-viewport itemSize="48px" class="gw-inforce-monitoring-valve-scrollbar">
+                <mat-expansion-panel class="gw-inforce-expansion-panel"
+                    (opened)="onPanelOpened(well.WellName)" (closed)="onPanelClosed(well.WellName)" [expanded]="well.Expanded"
+                    *ngFor="let well of monitoringWellList;">
+                    <mat-expansion-panel-header expandedHeight="52px">
+                        <mat-panel-title class="mr-1 gw-inforce-monitoring-subtitle">
+                            <mat-label class="mat-subtitle-2 gw-inforce-monitoring-subtitle-2"
+                                matTooltip="{{well?.WellName}}" matTooltipPosition="below" matTooltipClass="gw-label-mat-tooltip"
+                                [matTooltipDisabled]="!isEllipsisActive(wellname)"
+                            >
+                                <span #wellname class="label-single-line-ellipsis">{{well?.WellName}}</span>
+                                <span class="pl-1 gw-inforce-gauge-title gw-min-width-100" *ngIf="currentShiftWell && currentShiftWell.WellId === well.WellId && hpuDevice.ShiftStatus.RawValue === 1">
+                                    {{ ': '+(hpuDevice?.ControlReciepeType.RawValue | gwInforceShift)}} 
+                                </span>
+                            </mat-label>   
+                        </mat-panel-title>
+                        <mat-panel-description class="mr-2" *ngIf="well && !well.IsSuresensWell">
+                            <button type="submit" mat-button class="mat-button-primary-sm mr-0" (click)="onPerformShiftBtnClick($event, well.WellId)" 
+                                [disabled]="alarmStatusInValid || isConfigSaveInProgress || hpuDevice.Connected.RawValue === 0"
+                                *ngIf="well.Expanded && hpuDevice.ShiftStatus.RawValue !== 1 && hpuDevice.ShiftStatus.RawValue === 0">
+                                Perform Shift
+                            </button> 
+                            <button type="submit" mat-button class="mat-button-primary-sm  ml-2"
+                                (click)="onViewShiftBtnClick($event, currentShiftWell.WellId)"
+                                *ngIf="currentShiftWell && currentShiftWell.WellId === well.WellId  && (hpuDevice.ShiftStatus.RawValue === 1)">
+                                View Shift 
+                            </button>
+                           
+                        </mat-panel-description>
+                        <div class="d-flex">
+    
+                        </div>
+                    </mat-expansion-panel-header>
+                    <!--Zone Details-->
+                    <section class="ml-4 mr-2 mb-1" *ngFor="let zone of well?.Zones">
+                        <div class="gw-inforce-monitoring-zone-title">
+                            <mat-label class="mx-2"
+                                matTooltip="{{zone.zoneName}}" matTooltipPosition="below" matTooltipClass="gw-label-mat-tooltip"
+                                [matTooltipDisabled]="!isEllipsisActive(zoneName)">
+                                <span #zoneName class="label-single-line-ellipsis">{{zone.zoneName}}</span>
+                            </mat-label>
+                        </div>
+                        
+                        <!--Sleeve Info-->
+                        <div class="gw-inforce-monitoring-zone-row px-2" *ngIf="!well.IsSuresensWell && zone.valveType !== monitoringValveType">
+                            <div class="col-3 px-0">
+                                <span class="gw-inforce-monitoring-label"></span>
+                                Sleeve 
+                            </div>
+                            <div class="col px-0">
+                                <div class="d-flex py-1">
+                                    <div class="col-md-5 col-4">
+                                        <mat-label class="gw-inforce-sleeve-label">Valve Position:</mat-label>
+                                    </div>
+                                    <div class="col">{{zone.currentPositionDescription}}</div>
+                                </div>
+                                <div class="d-flex py-1">
+                                    <div class="col-md-5 col-4">
+                                        <mat-label class="gw-inforce-sleeve-label">Last Shift: </mat-label>
+                                    </div>
+                                    <div class="col">{{zone?.sleeve?.lastShiftDate}}</div>
+                                </div>
+                                <div class="d-flex py-1">
+                                    <div class="col-md-5 col-4">
+                                        <mat-label class="gw-inforce-sleeve-label">Last Shift Status: </mat-label>
+                                    </div>
+                                    <div class="col">{{zone?.sleeve?.lastShiftStatusDescription}}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Tools-->
+                        <ng-container *ngFor="let data of zone.toolList">
+                            <div class="gw-inforce-monitoring-zone-row px-2">
+                                <div class="col-3 px-0 gw-icon-text-container">
+                                    <span class="gw-inforce-monitoring-label">
+                                        <mat-icon *ngIf="data.diagnosticsDevice && data.toolStatusCode === 2" 
+                                            class="gw-icon-info"
+                                            matTooltip="{{ data.diagnosticsDevice.RawValue | gwToolStatus:0 }}"
+                                            matTooltipPosition="below" matTooltipClass="gw-tool-icon-tooltip">
+                                            info
+                                        </mat-icon>
+                                        <mat-icon *ngIf="data.diagnosticsDevice && data.toolStatusCode === 1" 
+                                            class="gw-icon-warning"
+                                            matTooltip="{{ data.diagnosticsDevice.RawValue | gwToolStatus:0 }}"
+                                            matTooltipPosition="below" matTooltipClass="gw-tool-icon-tooltip">
+                                            warning
+                                        </mat-icon>
+                                    </span>
+                                    <a (click)="onToolLinkClick(data.tool.DeviceId)" class="gw-inforce-monitoring-tool-link">
+                                        <mat-label
+                                            matTooltip="{{data.tool.DeviceName}}" matTooltipPosition="below" matTooltipClass="gw-label-mat-tooltip"
+                                            [matTooltipDisabled]="!isEllipsisActive(deviceName)">
+                                            <span #deviceName class="label-two-lines-ellipsis">{{data.tool.DeviceName}}</span>
+                                        </mat-label>
+                                    </a>
+                                </div>
+                                <div class="col px-0" *ngIf="data.floMeterName === undefined &&
+                                    (data.gaugeType !== 1 || (data.espGaugeType !== 1 && data.espGaugeType !== 0))">
+                                    <div class="d-flex py-1">
+                                        <div class="col-md-5 col-4">
+                                            <mat-label class="gw-inforce-sleeve-label">Pressure ({{data.pressureDevice.UnitSymbol}}):</mat-label>
+                                        </div>
+                                        <div class="col p-l-r-5">
+                                            <span matTooltip="{{data.pressureDevice.RawValue | number: '1.2-2'}}" matTooltipPosition="below"
+                                                matTooltipClass="gw-tool-grid-row-tooltip"
+                                                [matTooltipDisabled]="(data.pressureDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                                                <ng-container *ngIf="data.pressureDevice.RawValue !== -999; else defBadDataValue">
+                                                    {{data.pressureDevice.RawValue | number: '1.2-2' | gwTruncate:10}}
+                                                </ng-container>
+                                            </span> 
+                                        </div>
+                                    </div>
+                                    <div class="d-flex py-1">
+                                        <div class="col-md-5 col-4">
+                                            <mat-label class="gw-inforce-sleeve-label">Temperature ({{data.temperatureDevice.UnitSymbol}}):</mat-label>
+                                        </div>
+                                        <div class="col p-l-r-5">
+                                            <span matTooltip="{{data.temperatureDevice.RawValue | number: '1.2-2'}}" matTooltipPosition="below"
+                                                matTooltipClass="gw-tool-grid-row-tooltip"
+                                                [matTooltipDisabled]="(data.temperatureDevice.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                                                <ng-container *ngIf="data.temperatureDevice.RawValue !== -999; else defBadDataValue">
+                                                    {{data.temperatureDevice.RawValue | number: '1.2-2' | gwTruncate:10}}
+                                                </ng-container>
+                                            </span>   
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+        
+                    </section>
+    
+    
+                </mat-expansion-panel>
+            </cdk-virtual-scroll-viewport>
+        </mat-accordion>
+    </mat-card-content>
+</mat-card>
+
+ <!--Default Bad Data-->
+ <ng-template #defBadDataValue>
+    <!-- {{errorHandlingData?.BadDataValue | number: '1.2-2'}} -->
+    <span
+        matTooltip="{{errorHandlingData?.BadDataValue}}" matTooltipPosition="below"
+        matTooltipClass="gw-mat-card-tooltip"
+        [matTooltipDisabled]="(errorHandlingData?.BadDataValue | number: '1.2-2' )?.toString().length >=10 ? 'false': 'true'">
+            {{errorHandlingData?.BadDataValue | number: '1.2-2' | gwTruncate:10}}
+    </span>
+</ng-template>

@@ -1,0 +1,116 @@
+@import 'base.scss';
+
+.gw-end-of-shift-dialog-container{
+    .mat-subtitle-2{
+        @include gw-poppins-font();
+        color: $gw-tertiary-color-1000;
+    }
+    .gw-end-of-shift-container {    
+        border-radius: 0px;
+        box-shadow: 0 0 0 1px $gw-mat-table-box-shadow-color !important;
+        overflow: auto;  
+        height: 300px;
+    }
+    .gw-mat-table {
+        width: 100%;
+        tbody tr:last-child td:last-child {
+            border-bottom-color: transparent;
+        }  
+        ::ng-deep .mat-cell  {
+            @media screen and (max-width: 420px) {
+                padding-right: 5px !important;
+            }
+        }
+    }
+    .gw-status-icon{
+        color: $gw-primary-color-500;
+        width: 18px;
+        height: 18px;
+        vertical-align: middle;
+        font-size: 16px;
+    }
+    .gw-error-icon{
+        color: $gw-error-color-500 !important;
+    }    
+}
+
+.label-two-lines-ellipsis{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mat-column-zoneName{
+    width: 20%;
+    @media screen and (max-width: 420px) {
+        width: 22%;
+        padding-left: 5px !important;
+        font-size: 10px;
+    }
+    font-size: 12px;
+    @media screen and (min-width: 421px){
+        padding-left: 10px !important;
+    }
+}
+.mat-column-shiftStatus{
+    width: 20%;
+    @media screen and (max-width: 420px) {
+        width: 21%;
+        font-size: 10px;
+        padding-right: 5px !important;
+    }
+    font-size: 12px;
+    @media screen and (min-width: 421px){
+        padding-right: 10px !important;
+    }
+}
+
+.mat-column-previousPosition,
+.mat-column-expectedPosition,
+.mat-column-currentPosition{
+    width: 20%;
+    @media screen and (max-width: 420px) {
+        width: 19%;
+        font-size: 10px;
+    }
+    font-size: 12px;
+}
+
+::ng-deep .gw-end-of-shift-dialog{
+    .mat-dialog-header .mat-dialog-title, .gw-adv-mat-dialog-actions .mat-button-wrapper{
+        @include gw-poppins-font();        
+    }    
+    .gw-adv-mat-dialog-actions .mat-button-wrapper{
+        font-size: 0.875rem !important;
+    }
+    td.gw-no-shift{
+        color: $gw-secondary-color-600 !important;
+    }
+    td.gw-shift-failed{
+        color: $gw-error-color-500 !important;
+    }
+    @media screen and (max-width: 480px){
+        width: 100vw !important;
+        .mat-dialog-container {
+            border: none;
+            border-radius: 0 !important;
+        }
+        .gw-advance-dialog{
+            height: 82vh;
+            .body-content{
+                height: 100%;
+                .gw-end-of-shift-dialog-container{
+                    height: calc(100% - 170px);
+                }
+                .gw-end-of-shift-container{
+                    height: calc(100% - 50px);
+                }
+            }
+        }
+    }
+    @media screen and (min-width: 481px) and (max-width: 750px){
+        width: 92vw !important;
+    }
+}

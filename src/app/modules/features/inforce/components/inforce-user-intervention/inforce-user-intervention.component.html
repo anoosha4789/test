@@ -1,0 +1,18 @@
+<section>
+    <div mat-dialog-content class="d-flex row mx-0 py-4 p-l-26">
+        <div class="col-12 p-l-0">
+            <span class="mat-subtitle-1">{{data.interventionMessageType}}</span>
+        </div>
+        <div class="col-12 p-t-18 p-l-0">
+            <span class="mat-body-2"><div [innerHTML]="data.interventionMessage"></div></span>
+        </div>
+        <div class="col-12 p-t-18 p-b-6 p-l-0">
+            <span class="mat-body-2">{{data.actionTobeTaken}}</span>
+        </div>
+    </div>
+
+    <div mat-dialog-actions class="d-flex justify-content-end gw-mat-dialog-actions gw-adv-mat-dialog-actions">
+        <button *ngIf="data.showNextSequenceBtn" type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnUserIntervention(2)">Move To Next Valve</button>
+        <button type="submit" mat-button class="mat-button-warn-sm" (click)="OnUserIntervention(1)">Abort Sequence</button>
+    </div>
+</section>

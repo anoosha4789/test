@@ -1,0 +1,15 @@
+<section class="m-3 confirm-vent-dlg">
+    <div class="wellname">{{confirmVentDialogData.currentWell?.wellName || 'All wells'}}</div>
+    <div class="subtitle">Outputs to be vented</div>
+    <div class="wells-container">
+        <div class="wells" *ngFor="let record of confirmVentDialogData.recordsToVent">
+            <div class="panelLine">{{record.panelLine}}</div>
+            <div>{{record.downholeLine}}</div>
+        </div>
+    </div>
+</section>
+<!-- <mat-divider></mat-divider> -->
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions shift-settings-btns">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-2" (click)="OnCancel()">Cancel</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnSubmit()">Confirm</button>
+</div>

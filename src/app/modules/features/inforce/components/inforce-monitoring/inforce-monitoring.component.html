@@ -1,0 +1,164 @@
+<gw-maintenance-mode-indicator></gw-maintenance-mode-indicator>
+<section class="row m-2 m-md-4 gw-inforce-monitoring-container">
+
+    <div class="col-lg-7 col-xl-8 pl-0 pr-1 pb-3">
+        <mat-card class="gw-inforce-monitoring-card gw-inforce-panel-gauge-card" [ngStyle]="{'height': bIsMobileView ? 'auto' : '175px'}">
+            <mat-card-header class="gw-inforce-monitoring-card-header">
+                <mat-card-title class="mat-subtitle-2 gw-inforce-monitoring-title">
+                    Panel Gauges
+                </mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content class="gw-inforce-monitoring-card-content my-2">
+                <ng-container *ngIf="!bIsMobileView">
+                    <div class="d-flex justify-lg-content-between flex-wrap align-items-xl-start mx-md-2 mx-4">
+                        <div class="mx-3 mx-xl-4">
+                            <p class="gw-inforce-gauge-title mb-0">Pump Pressure</p>
+                            <ngx-gauge [type]="pumpPressure.options.type" 
+                                [thick]="pumpPressure.options.thick" [size]="pumpPressure.options.size" 
+                                [backgroundColor]="pumpPressure.options.backgroundColor" 
+                                [foregroundColor]="pumpPressure.options.foregroundColor"
+                                [thresholds]="pumpPressure.options.threshold" 
+                                [value]="pumpPressure.device?.RawValue" [min]="pumpPressure.options.min" [max]="pumpPressure.options.max"
+                                *ngIf="pumpPressure">
+                                <ngx-gauge-value class="gw-inforce-panel-gauge-container">
+                                    <ng-container *ngIf="pumpPressure.device.RawValue !== -999; else defBadDataValue">
+                                        {{pumpPressure.device?.RawValue }}
+                                    </ng-container>
+                                    <div class="d-flex flex-fill m-0 p-0">
+                                        <div class="gw-inforce-gauge-min-label">{{pumpPressure.options.min}}</div>
+                                        <div class="gw-inforce-gauge-unit">{{pumpPressure.device.UnitSymbol}}</div>
+                                        <div class="gw-inforce-gauge-max-label">{{pumpPressure.options.max | gwGaugeLabelFormatter:selectedUnitSystem.SelectedUnitSymbol}}</div>
+                                    </div>
+                                </ngx-gauge-value>
+                            </ngx-gauge>
+                        </div>
+                        <div class="mx-3 mx-xl-4">
+                            <p class="gw-inforce-gauge-title mb-0">Reservoir Level</p>
+                            <gw-liquid-box [value]="reserviorLevel?.RawValue" [unit]="reserviorLevel.UnitSymbol" 
+                                [options]="reserviorBoxConfig" [badDataValue]="errorHandlingSettings?.BadDataValue"
+                                *ngIf="reserviorLevel?.RawValue && errorHandlingSettings?.BadDataValue"></gw-liquid-box>                           
+                        </div>
+                        <div class="mx-3 mx-xl-4">
+                            <p class="gw-inforce-gauge-title mb-0">Supply Pressure</p>
+                            <ngx-gauge [type]="supplyPressure.options.type" 
+                                [thick]="supplyPressure.options.thick" [size]="supplyPressure.options.size"
+                                [backgroundColor]="supplyPressure.options.backgroundColor" 
+                                [foregroundColor]="supplyPressure.options.foregroundColor"
+                                [thresholds]="supplyPressure.options.threshold" 
+                                [value]="supplyPressure.device?.RawValue" [min]="supplyPressure.options.min" [max]="supplyPressure.options.max"
+                                *ngIf="supplyPressure">
+                                <ngx-gauge-value class="gw-inforce-panel-gauge-container">
+                                    <ng-container *ngIf="supplyPressure.device.RawValue !== -999; else defBadDataValue">
+                                        {{supplyPressure.device?.RawValue | gwGaugeLabelFormatter:selectedUnitSystem.SelectedUnitSymbol}}
+                                    </ng-container>
+                                    <div class="d-flex flex-fill m-0 p-0">
+                                        <div class="gw-inforce-gauge-min-label">{{supplyPressure.options.min}}</div>
+                                        <div class="gw-inforce-gauge-unit">{{supplyPressure.device.UnitSymbol}}</div>
+                                        <div class="gw-inforce-gauge-max-label">{{supplyPressure.options.max | gwGaugeLabelFormatter:selectedUnitSystem.SelectedUnitSymbol}}</div>
+                                    </div>
+                                </ngx-gauge-value>
+                            </ngx-gauge>
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="bIsMobileView">
+                    <div class="row gw-inforce-monitoring-row mx-0 py-2">
+                        <div class="col-6">Pump Pressure <ng-container *ngIf="pumpPressure && pumpPressure.device">({{pumpPressure.device.UnitSymbol}})</ng-container></div>
+                        <div class="col-4 text-right break-word pl-0" *ngIf="pumpPressure"> 
+                            <ng-container *ngIf="pumpPressure.device.RawValue !== -999; else defBadDataValue">
+                                {{pumpPressure.device?.RawValue | gwGaugeLabelFormatter:selectedUnitSystem.SelectedUnitSymbol}}
+                            </ng-container>                            
+                        </div>
+                    </div>
+                    <div class="row gw-inforce-monitoring-row mx-0 py-2">
+                        <div class="col-6">Reservoir Level <ng-container *ngIf="reserviorLevel">({{reserviorLevel.UnitSymbol}})</ng-container></div>
+                        <div class="col-4 text-right break-word pl-0" *ngIf="reserviorLevel">  
+                            <ng-container *ngIf="reserviorLevel.RawValue !== -999; else defBadDataValue">                          
+                                {{reserviorLevel.RawValue | number: '1.0-0'}}
+                            </ng-container>                            
+                        </div>
+                    </div>
+                    <div class="row gw-inforce-monitoring-row mx-0 py-2">
+                        <div class="col-6">Supply Pressure <ng-container *ngIf="supplyPressure && supplyPressure.device">({{supplyPressure.device.UnitSymbol}})</ng-container></div>
+                        <div class="col-4 text-right break-word pl-0" *ngIf="supplyPressure">
+                            <ng-container *ngIf="supplyPressure.device.RawValue !== -999; else defBadDataValue">
+                                {{supplyPressure.device?.RawValue | gwGaugeLabelFormatter:selectedUnitSystem.SelectedUnitSymbol}}
+                            </ng-container>                            
+                        </div>
+                    </div>
+                </ng-container>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card class="gw-inforce-monitoring-card gw-inforce-panel-output-card mt-3 panel-output" [ngStyle]="{'height': bIsMobileView ? 'auto' : 'calc(100% - 191px)'}">
+            <mat-card-header class="gw-inforce-monitoring-card-header">
+                <mat-card-title class="mat-subtitle-2 gw-inforce-monitoring-title">Panel Outputs</mat-card-title>
+            </mat-card-header>
+            <mat-divider></mat-divider>
+            <mat-card-content class="gw-inforce-monitoring-card-content my-2">
+
+                <!--Desktop Mode-->
+                <ng-container *ngIf="!bIsMobileView">
+                <cdk-virtual-scroll-viewport itemSize="160px" class="gw-inforce-monitoring-scrollbar">
+                    <div class="d-flex flex-wrap mx-1">
+                        <div class="gw-inforce-gauge mx-3" *ngFor="let gauge of gaugeList">
+                            <p class="gw-inforce-gauge-title mb-0">{{gauge.name}}</p>
+                            <ngx-gauge [type]="panelOutputOption.type" 
+                                [thick]="panelOutputOption.thick" [size]="panelOutputOption.size" 
+                                [backgroundColor]="panelOutputOption.backgroundColor"
+                                [foregroundColor]="panelOutputOption.foregroundColor"
+                                [thresholds]="gauge.threshold" 
+                                [value]="gauge.device?.RawValue" [min]="gauge.min" [max]="gauge.max">
+                                <ngx-gauge-append>
+                                    <!-- custom append text or HTML goes here -->
+                                </ngx-gauge-append>
+                                <ngx-gauge-label>
+                                </ngx-gauge-label>
+                                <ngx-gauge-prepend>
+                                    <!-- custom prepend text or HTML goes here -->
+                                </ngx-gauge-prepend>
+                                <ngx-gauge-value class="gw-inforce-gauge-value">
+                                    <ng-container *ngIf="gauge.device?.RawValue !== -999; else defBadDataValue">
+                                        {{gauge.device?.RawValue | gwGaugeLabelFormatter:selectedUnitSystem.SelectedUnitSymbol}}
+                                    </ng-container>
+                                    <div class="d-flex flex-fill m-0 p-0">
+                                        <div class="gw-inforce-gauge-min-label">{{gauge.min}}</div>
+                                        <div class="gw-inforce-gauge-unit">{{gauge.device.UnitSymbol}}</div>
+                                        <div class="gw-inforce-gauge-max-label">{{gauge.max | gwGaugeLabelFormatter:selectedUnitSystem.SelectedUnitSymbol}}</div>
+                                    </div>
+                                </ngx-gauge-value>
+                            </ngx-gauge>
+                        </div>
+                    </div>
+                </cdk-virtual-scroll-viewport>
+                </ng-container>
+
+                <!--Mobile View-->
+                <ng-container *ngIf="bIsMobileView">
+                    <div class="row gw-inforce-monitoring-row mx-0 py-2" *ngFor="let gauge of gaugeList">
+                        <div class="col-6 break-word">{{gauge.name}} <ng-container *ngIf="gauge.device">({{gauge.device.UnitSymbol}})</ng-container></div>
+                        <div class="col-4 text-right break-word pl-0"> 
+                            <ng-container *ngIf="gauge.device?.RawValue !== -999; else defBadDataValue">
+                                {{gauge.device?.RawValue | gwGaugeLabelFormatter:selectedUnitSystem.SelectedUnitSymbol}}
+                            </ng-container>                            
+                        </div>
+                    </div>
+                </ng-container>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div class="col-lg-5 col-xl-4 pt-sm-3 pt-lg-0 pr-1 pr-md-0 pl-0  pb-3 gw-inforce-device-details"  [ngClass]="{'gw-inforce-valve-position-mobile': bIsMobileView}">
+        <ng-container *ngIf="deviceDetail">            
+            <gw-inforce-valve-position [deviceData]="deviceDetail" [errorHandlingData]="errorHandlingSettings"></gw-inforce-valve-position>
+        </ng-container>
+    </div>
+
+</section>
+
+ <!--Default Bad Data-->
+ <ng-template #defBadDataValue>
+    {{errorHandlingSettings?.BadDataValue | number: '1.2-2'}}
+</ng-template>
