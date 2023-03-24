@@ -1,0 +1,116 @@
+@import 'base.scss';
+
+::ng-deep .gw-historian-stepper {
+    background-color: transparent !important;
+
+    .mat-horizontal-content-container {
+        padding: 0 !important;
+    }
+
+    .mat-horizontal-stepper-header {
+        pointer-events: none !important;
+    }
+}
+
+.gw-historian-selection-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 0;
+    width: 620px;
+}
+
+.gw-historian-browse {
+    width: 335px;
+}
+
+.gw-time-picker-wrapper {
+    column-gap: 50px;
+    flex-direction: column;
+}
+
+.body-label-value {
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: $gw-label-primary-color;
+    letter-spacing: 0.25px;
+}
+
+.gw-customMap-btn {
+    width: 95px;
+}
+
+.gw-addtoMap-btn {
+    position: absolute;
+    bottom: 2px;
+    width: 92%;
+    border-radius: 0px;
+
+    @media (max-width: 1170px) and (-webkit-min-device-pixel-ratio: 1) {
+        width: 90%;
+    }
+}
+
+.gw-customMap-divider {
+    border-left: 1px solid $gw-secondary-color-400;
+    padding-bottom: 10px;
+}
+
+.gw_customMap-hiddenField {
+    height: 0px;
+    width: 0px;
+}
+
+.gw-tree-view-scrollbar {
+    height: 100%;
+
+    @media (max-height: 870px) and (-webkit-min-device-pixel-ratio: 1) {
+        height: 92%;
+    }
+
+    @media (min-height: 871px) and (-webkit-min-device-pixel-ratio: 1) {
+        height: 95%;
+    }
+}
+
+.gw-tree-view-scrollbar-full {
+    height: 100%;
+
+    @media (max-height: 870px) and (-webkit-min-device-pixel-ratio: 1) {
+        height: 98%;
+    }
+
+    @media (min-height: 871px) and (-webkit-min-device-pixel-ratio: 1) {
+        height: 100%;
+    }
+}
+
+.gw-historian-time-title {
+    margin-left: auto;
+    margin-right: 0px;
+    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    font-family: Noto Sans;
+}
+
+.gw-historian-time-title-normal {
+    font-weight: 400;
+}
+
+.gw-adv-mat-dialog-actions button {
+    min-width: 80px;
+}
+
+.gw-section-disabled {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+.gw-historian-datapoint-selection-container {
+    width: 980px;
+}
+
+.gw-historian-subtitle {
+    color: $gw-label-primary-color;
+}

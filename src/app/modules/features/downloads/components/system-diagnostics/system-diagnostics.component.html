@@ -1,0 +1,15 @@
+<section class="d-flex flex-column" *ngIf="!isDownloadInProgress">
+    <div>
+        <p class="gw-data-files-title mt-1 mat-subtitle-2">Download System Diagnostics Files</p>
+        <div *ngIf="validationMessage" class="gw-warning-block">{{validationMessage}}</div>
+    </div>
+    <div class="mt-3">
+        <button mat-button class="mat-button-primary-sm" (click)="onDownloadBtnClick()">Start Download</button>
+    </div>
+</section>
+
+<ng-container *ngIf="isDownloadInProgress">
+    <app-download-progress-bar [fileList]="fileList" (successDownloadEvent)='onDownloadSuccessEvent($event)'
+        (stopDownloadEvent)='onDownloadCancelEvent($event)' [isDownloadInProgress]="isDownloadInProgress">
+    </app-download-progress-bar>
+</ng-container>

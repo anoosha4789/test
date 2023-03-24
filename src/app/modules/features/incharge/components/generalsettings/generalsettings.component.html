@@ -1,0 +1,47 @@
+<mat-card class="m-2 gw-config-container" cdkTrapFocus>
+    <mat-card-content id="gw-mat-card-content">
+        <!-- Make sure the tab order defined here matches enum GeneralContentTabOrder -->
+        <mat-tab-group animationDuration="0ms" [selectedIndex]="selectedTabIndex" (selectedIndexChange)="onTabChanged($event)"
+            class="gw-tab-group">
+            <!--General Setting-->
+            <mat-tab label="General">
+                <!-- <div class="gw-mat-tab-content-box"> -->
+                    <app-generalsettings [selectedTab]="selectedTabIndex" [panelConfiguration]="panelConfigurationCommon" [panelSchema]="panelSchema"
+                        (isFormValidEvent)="isFormValidEvent($event)" (hasFormChangedEvent)="hasPanelChangedEvent($event)"
+                        (generalSettingInvalidEvent)="generalSettingInvalidEvent($event)">
+                    </app-generalsettings>
+                <!-- </div> -->
+            </mat-tab>
+            <!--Error Handling-->
+            <mat-tab label="Error Handling">
+                <!-- <div class="gw-mat-tab-content-box"> -->
+                    <app-error-handling-settings [selectedTab]="selectedTabIndex" (isFormValidEvent)="isFormValidEvent($event)"
+                        (errorHandlingSettingUpdatedEmmiter)="errorHandlingStateChange($event)"
+                        (errorHandlingInvalidEvent)="errorHandlingInvalidEvent($event)">
+                    </app-error-handling-settings>
+                <!-- </div> -->
+            </mat-tab>
+            <!--Unit System-->
+            <mat-tab label="Unit Systems">
+                <!-- <div class="gw-mat-tab-content-box"> -->
+                    <app-unit-system (unitSystemStateEmmiter)="unitSystemStateChange($event)"></app-unit-system>
+                <!-- </div> -->
+            </mat-tab>
+            <!--User Account-->
+            <mat-tab label="User Accounts">
+                <!-- <div class="gw-mat-tab-content-box"> -->
+                    <app-useraccounts [clearUsers]="clearUsers"></app-useraccounts>
+                <!-- </div> -->
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card-content>
+    <mat-card-actions>
+        <mat-divider></mat-divider>
+        <div class="d-flex justify-content-end gw-mt-12">
+            <button *ngIf="selectedTabIndex > 0" mat-button class="mat-button-tertiary-sm"
+                (click)="onBackBtnClick()">Back</button>
+            <button type="submit" [disabled]="!isFormValid" mat-button class="mat-button-primary-sm mr-0"
+                (click)="onSubmit()">{{btnNextText}}</button>
+        </div>
+    </mat-card-actions>
+</mat-card>

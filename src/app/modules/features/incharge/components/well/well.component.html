@@ -1,0 +1,83 @@
+<mat-card class="m-2 gw-config-container" cdkTrapFocus *ngIf="well">
+    <mat-card-content id="gw-mat-card-content">
+        <mat-tab-group animationDuration="1ms" [(selectedIndex)]="activeTabIndex"
+            (selectedTabChange)="onTabChanged($event)" class="gw-tab-group">
+            <!-- Well-->
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <label class="gw-mat-tab-label" 
+                        matTooltip="{{wellName}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-tooltip"
+                        [matTooltipDisabled]="wellName.length > 20 ? 'false': 'true' ">
+                        {{wellName | gwTruncate:20}}
+                    </label>
+                </ng-template>
+                <ng-template matTabContent>
+                    <app-well-details [well]="well" [wellSchema]="wellSchema"
+                        (isFormValidEvent)="isFormValidEvent($event)"
+                        (wellFormInvalidEvent)="wellFormInvalidEvent($event)"
+                        (onZoneChangeEvent)="onZoneChangeEvent($event)" *ngIf="well"></app-well-details>
+                </ng-template>
+            </mat-tab>
+
+            <!-- Zones -->
+            <mat-tab *ngFor="let zone of well.Zones, let i = index">
+                <ng-template mat-tab-label>
+                    <label class="gw-mat-tab-label"
+                        matTooltip="{{zone.ZoneName}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-tooltip"
+                        [matTooltipDisabled]="zone.ZoneName.length > 20 ? 'false': 'true' ">
+                        {{zone.ZoneName | gwTruncate:20}}
+                    </label>
+                </ng-template>
+                <ng-template matTabContent>
+                    <app-zone-details [zone]="zone"></app-zone-details>
+                </ng-template>
+            </mat-tab>
+
+            <!-- FlowMeters -->
+            <mat-tab *ngFor="let flowMeter of surefloFlowMeterList, let i = index">
+                <ng-template mat-tab-label>
+                    <label class="gw-mat-tab-label" matTooltip="{{flowMeter.DeviceName}}" matTooltipPosition="below"
+                        matTooltipClass="gw-mat-tooltip" [matTooltipDisabled]="flowMeter.DeviceName.length > 20 ? 'false': 'true' ">
+                        {{flowMeter.DeviceName | gwTruncate:20}}
+                    </label>
+                </ng-template>
+                <ng-template matTabContent>
+                    <sureflo-stepper [flowMeterData]="flowMeter" [selectedIndex]="stepperIndex" (onStepperSelChange)="stepperSelChangeEvent($event)"
+                        (isFormValidEvent)="isFlowMeterFormValidEvent($event)" (onFlowMeterDataChange)="flowMeterDataChangedEvent($event)">
+                    </sureflo-stepper>
+                </ng-template>
+            </mat-tab>
+            
+            <!--Add New Flowmeter-->
+            <mat-tab label="{{tabAddFlowmeterLabel}}" *ngIf="isConfigSaved">
+                <ng-template matTabContent>
+                    <sureflo-stepper [(flowMeterData)]="newFlowMeter" [selectedIndex]="stepperIndex" (onStepperSelChange)="stepperSelChangeEvent($event)"
+                        (isFormValidEvent)="isFlowMeterFormValidEvent($event)" (onFlowMeterDataChange)="onNewFlowMeterDataChangeEvent($event)">
+                    </sureflo-stepper>
+                </ng-template>
+            </mat-tab>
+
+
+        </mat-tab-group>
+    </mat-card-content>
+    <mat-card-actions>
+        <mat-divider></mat-divider>
+        <div class="d-flex justify-content-between gw-mt-12 gw-card-actions">
+            <div>
+                <button *ngIf="bShowDeleteButton ||  showFlowMeterDelBtn" mat-button class="mat-button-tertiary-sm__icon gw-tertiary-delete-btn"
+                    (click)="bShowDeleteButton ? onDeleteBtnClick() : onDeleteFlowMeterBtnClick()">
+                    <mat-icon class="mat-icon-left mat-icon--sml">delete</mat-icon>Delete
+                </button>
+            </div>
+            <div class="d-flex">
+                <button *ngIf="backBtnVisibility || activeTabIndex != 0" mat-button class="mat-button-tertiary-sm"
+                    (click)="onBackBtnClick()">Back</button>
+                <button type="submit" mat-button class="mat-button-primary-sm mr-0"
+                    [disabled]="!isFormValid || well && well.Zones && well.Zones.length === 0"
+                    (click)="newFlowMeter ? onCreateFlowMeterBtnClick() : ( flowMeterTabActive ? onFlowMeterNextBtnClick(): onNextOrDoneClick())">{{actionBtnTxt}}</button>
+            </div>
+        </div>
+    </mat-card-actions>
+</mat-card>

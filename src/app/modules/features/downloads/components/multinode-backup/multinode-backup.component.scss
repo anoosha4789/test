@@ -1,0 +1,19 @@
+::ng-deep .gw-multinode-backup-container {
+
+    .mat-card-content,
+    .mat-tab-group.mat-tab-group {
+        height: 100%;
+    }
+
+    .mat-tab-body-wrapper {
+        height: 100% !important;
+    }
+
+    .mat-card.mat-focus-indicator {
+        padding-top: 0 !important;
+    }
+}
+
+.mat-form-field-appearance-fill {
+    padding: 0;
+}

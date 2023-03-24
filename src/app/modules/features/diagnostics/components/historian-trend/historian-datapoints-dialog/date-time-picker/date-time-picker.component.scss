@@ -1,0 +1,45 @@
+@import 'base.scss';
+
+::ng-deep .gw-historian-time-picker-container {
+    width: 105px;
+    flex: 6;
+
+    .mat-form-field-infix {
+        border: 0px !important;
+    }
+
+    .mat-form-field-flex {
+        border-radius: 4px 4px 0 0;
+        padding-top: 0;
+        padding-right: 6px;
+        box-shadow: none;
+        border: 1px solid $gw-secondary-color-500;
+        background-color: $gw-secondary-color-200;
+    }
+
+    .mat-datepicker-toggle-default-icon {
+        width: 1.5rem !important;
+    }
+
+    .mat-form-field-appearance-legacy .mat-form-field-underline {
+        height: 0px;
+    }
+
+    .mat-hint {
+        color: $gw-error-color-500 !important;
+    }
+}
+
+.gw-date-picker-label {
+    flex: 1;
+}
+
+::ng-deep .ngx-mat-timepicker {
+    .mat-form-field-infix {
+        border: 0px !important;
+    }
+
+    .mat-form-field .mat-input-element {
+        padding-left: 0px !important;
+    }
+}

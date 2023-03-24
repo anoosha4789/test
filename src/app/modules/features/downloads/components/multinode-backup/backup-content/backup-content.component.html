@@ -1,0 +1,31 @@
+<section class="gw-backup-content-container pt-2" *ngIf="backupData">
+    <form [formGroup]="backupForm" autocomplete="off">
+        <div class="mat-subtitle-2">
+            {{backupData.MainContentText}}
+        </div>
+        <div class="mat-subtitle-2 pt-2" *ngIf="backupData.SubContentText">
+            {{backupData.SubContentText}}
+        </div>
+        <div class="d-flex flex-wrap mat-body-2 m-3 pt-3">
+            <div class="col-sm-12 col-md-3 col-lg-3 col-xl-2 px-0 py-1 pt-2 gw-form-label">{{backupData.InputLabel}}
+            </div>
+            <div class="col px-sm-0">
+                <mat-form-field class="mat-input-small pt-0 gw-backup-input" appearance="fill">
+                    <input type="text" name="PackageName" formControlName="PackageName" matInput
+                        class="mat-body-2 form-baseline" (input)="validateFormControls()"
+                        (blur)="validateFormControls()">
+                    <mat-hint *ngIf="formCtrlErrorMessage?.PackageName" align="start" class="mat-error">
+                        {{formCtrlErrorMessage?.PackageName}}
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="mt-3">
+            <button mat-button class="mat-button-primary-sm" *ngIf="backupData.primaryBtnText"
+                (click)="onPrimaryBtnClick()"
+                [disabled]="backupData.isEditable && !backupForm?.valid">{{backupData.primaryBtnText}}</button>
+            <button mat-button class="mat-button-primary-sm ml-3" *ngIf="backupData.secondaryBtnText"
+                (click)="onSecondaryBtnClick()">{{backupData.secondaryBtnText}}</button>
+        </div>
+    </form>
+</section>

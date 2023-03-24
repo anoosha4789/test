@@ -1,0 +1,178 @@
+@import 'base.scss';
+
+@media (min-width: 768px) and (max-width: 950px) {
+    .col-md-6 {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+
+.gw-shift-magin {
+    margin: -5px 0px;
+}
+
+.gw-shift-breadcrumb-row {
+    margin-top:-12px; 
+    margin-bottom: 12px;
+}
+
+.gw-divider {
+    margin-left: -24px; 
+    margin-right:-24px;
+    padding-top: 10px;
+}
+
+.gw-shift-ctrl {
+    width: 92px;
+    padding: 0px 0px 0px 8px;
+
+    @media (min-width: 1200px) {
+        width: 120px;
+    }
+}
+
+.gw-shift-progress {
+    width: 290px;
+    height: 10px;
+
+    @media(min-width: 1025px) {
+        width: calc(100vw - 735px);
+    }
+
+    @media (min-width: 1200px) {
+        width: calc(100vw - 815px);
+    }
+}
+
+.gw-shift-volume-label {
+    font-family: Noto Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    color: $gw-primary-color-700;
+}
+
+.gw-shift-height {
+    height: calc(100% - 230px);
+}
+
+@media (min-width: 470px) {
+    .gw-incharge-row {
+        margin-left: -8px; 
+        margin-right: -8px;
+    }
+}
+
+.gw-shift-param {
+    margin-top: -5px;
+    margin-bottom: -10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.gw-shift-ChartView {
+    @media (max-width: 950px) {
+        padding-left: 0px;
+        padding-right: 0px;
+        padding-bottom: 10px;
+    }
+
+    @media (min-width: 951px) {
+        height: 100%;
+    }
+}
+
+.gw-shift-ValueView {
+    height: 75vh;
+    overflow: auto;
+}
+
+.gw-shift-table {
+    width: 100%;
+    border-spacing: 0px;
+}
+
+.gw-shift-thRow {
+    background-color: $gw-secondary-color-300 !important;
+    color: $gw-tertiary-color-700;
+    font-size: 12px;
+    height: 32px;
+}
+
+.gw-shift-th-param {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.gw-shift-th-value {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.gw-shift-tr {
+    height: 32px;
+}
+
+.gw-shift-td-param {
+    text-align: left;
+    padding-left: 10px;
+    font-size: 12px;
+    color:$gw-tertiary-color-1000;
+}
+
+.gw-shift-td-value {
+    text-align: right;
+    padding-right: 10px;
+    font-size: 12px;
+    color: $gw-tertiary-color-1000;
+}
+
+.gw-shift-stop-btn {
+    background-color: $gw-error-bg-color !important;
+}
+
+.gw-calibration-stop-btn {
+    background-color: $gw-error-bg-color !important;
+    color: $gw-text-white;
+}
+
+.gw-shift-power {
+    @include body (2,2);
+    display:flex; 
+    flex: 1; 
+    justify-content: flex-end; 
+    color: $gw-primary-color-700;
+ }
+
+ .gw-shift-power-icon {
+    height: 16px;
+    margin-top: -10px;
+ }
+
+ .gw-motor-icon {
+    vertical-align: middle;
+    color: $gw-primary-color-700;
+ }
+
+tr:nth-child(odd) {background-color: $gw-secondary-color-100;}
+
+/*------- motor status button css --------- */
+@keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.5; }
+    to { opacity: 1.0; }
+}                                                                                                                                                                                                                                  
+
+@-webkit-keyframes fade {
+    from { opacity: 1.0; }
+    50% { opacity: 0.5; }
+    to { opacity: 1.0; }
+}
+
+.blink {
+  animation:fade 1000ms infinite;
+  -webkit-animation:fade 1000ms infinite;
+}

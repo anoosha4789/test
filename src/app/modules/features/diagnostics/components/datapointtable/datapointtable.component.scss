@@ -1,0 +1,78 @@
+@import 'components.scss';
+
+.mat-column-select {
+  flex: 0 0 10%;
+}
+
+// .mat-column-DeviceId {
+//   flex: 0 0 8%;
+// }
+
+// .mat-column-DataPointIndex {
+//   flex: 0 0 10%;
+// }
+
+// .mat-column-DataType {
+//   flex: 0 0 12%;
+// }
+
+.mat-column-ReadOnly {
+  flex: 0 0 15%;
+}
+
+.mat-column-RawValue {
+  flex: 0 0 20%;
+}
+
+.mat-column-UnitSymbol {
+  flex: 0 0 30%;
+  justify-content: center;
+}
+
+.mat-column-TagName {
+  flex: 0 0 50%;
+}
+
+// .mat-column-UnitQuantityType {
+//   flex: 0 0 0%;
+// }
+
+.example-form-field {
+  width: 100px;
+  margin-left: 10px;
+}
+
+.example-button-row {
+  margin: 8px 8px 8px 0;
+}
+
+.gw-data-point-table {
+  max-height: 95%;
+  // overflow: auto;
+  border: 1px solid darkgrey;
+  margin-left: 18px;
+  margin-right: 18px;
+}
+
+.form-overflow {
+  overflow: auto;
+  position: relative;
+  // height: 83%;
+}
+
+.gw-datapoint-default-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: calc(100vh - 250px);
+  color: $gw-secondary-color-600;
+}
+
+.gw-point-viewer-table-container {
+  height: calc(100vh - 155px);
+}
+
+.gw-breadcrumb-point-viewer {
+  height: 56px;
+}

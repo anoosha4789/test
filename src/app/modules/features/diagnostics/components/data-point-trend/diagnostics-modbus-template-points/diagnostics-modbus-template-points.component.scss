@@ -1,0 +1,43 @@
+
+@import 'base.scss';
+
+.gw-maptemplate-grid-height {
+    margin-bottom: 0px !important;
+    height: calc(100vh - 350px);
+}
+
+.button-toggle {
+    width: 100px;
+    border: 1px solid;
+}
+
+.button-toggle-inner {
+    border-radius: 0;
+}
+
+.button-toggle-outer-left {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.button-toggle-outer-right {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.mat-button-toggle-checked {
+    border-top: 1px;
+    border-bottom: 1px;
+}
+
+.table-type-toggle-group {
+    .mat-button-toggle-group-appearance-standard .mat-button-toggle + .mat-button-toggle.mat-button-toggle-checked,
+    .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+        background-color: $gw-primary-color-500;
+        color: $gw-text-white;
+    }
+}
+
+.mat-delete-icon {
+    margin-left: -15px;
+}

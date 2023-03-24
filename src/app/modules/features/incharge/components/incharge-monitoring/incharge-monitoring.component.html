@@ -1,0 +1,28 @@
+<section class="gw-breadcrumb">
+    <p class="gw-text-link-breadcrumb">Monitoring  >  {{selectedWell}}</p>
+</section>
+
+<mat-divider class="gw-monitoring-divider"></mat-divider>
+
+<section class="gw-monitoring-container gw-incharge-monitoring-container p-l-10 p-r-10 px-md-3 p-t-10">
+    <mat-card class="gw-monitoring-mat-card-container" cdkTrapFocus>
+        <mat-card-content class="gw-mat-tab-group gw-monitoring-mat-card-content">
+           <mat-tab-group class="gw-monitoring-tab-group" animationDuration="0ms" [dynamicHeight]='false' [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="onTabChanged($event);">
+                <mat-tab *ngFor="let well of wells, let i = index">
+                    <ng-template mat-tab-label>
+                        <label class="gw-mat-tab-label" 
+                            matTooltip="{{well.WellName}}" 
+                            matTooltipPosition="below"
+                            matTooltipClass="gw-mat-tooltip" 
+                            [matTooltipDisabled]="well.WellName.length > 20 ? 'false': 'true' ">
+                            {{well.WellName | gwTruncate:20}}
+                        </label>
+                    </ng-template>
+                    <ng-template matTabContent>
+                        <incharge-monitoring-well [wellId]="well.WellId" [wellZones]="well.Zones"></incharge-monitoring-well>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group> 
+        </mat-card-content>
+    </mat-card>
+</section>

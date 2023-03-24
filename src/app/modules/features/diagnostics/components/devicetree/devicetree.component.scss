@@ -1,0 +1,21 @@
+@import 'base.scss';
+
+.tree-invisible {
+  display: none;
+}
+.device-tree {margin: 0;}
+.device-tree ul,
+.device-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 5px;
+  list-style-type: none;
+}
+.mat-tree-node:hover {
+  background-color: $gw-secondary-color-050 !important;
+}
+.background-highlight{
+  background-color: $gw-primary-color-050 !important;
+}
+
+.mat-tree-node { margin-left: 0px;}

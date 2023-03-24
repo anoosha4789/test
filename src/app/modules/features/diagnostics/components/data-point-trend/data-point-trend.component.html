@@ -1,0 +1,42 @@
+<section>
+    <div class="d-flex gw-border-bottom px-3">
+        <p class="gw-text-link-breadcrumb d-flex align-items-center">Point Trend</p>
+        <button mat-button
+            class="mat-button-tertiary-sm mat-button-tertiary-sm__icon gw-diagnostic-add-datapoint p-0 pl-1 pr-2"
+            (click)="showAddDataPointDialog()" [disabled]="pointTrendCharts?.length>2">
+            <mat-icon class="mat-icon-left mat-icon">add</mat-icon>
+            <span>ADD CHART</span>
+        </button>
+    </div>
+    <!-- <mat-divider class="gw-tool-divider"></mat-divider> -->
+    <section class="gw-pointtrend-container pt-2 px-3" *ngIf="showChart">
+        <mat-card class="gw-pointtrend-mat-card-container" cdkTrapFocus>
+            <mat-card-content class="gw-mat-tab-group gw-pointtrend-mat-card-content">
+                <mat-tab-group class="gw-pointtrend-tab-group" animationDuration="0ms" [dynamicHeight]='false'
+                    [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="onTabChanged($event);">
+                    <mat-tab *ngFor="let chart of pointTrendCharts; let i = index">
+                        <ng-template mat-tab-label>
+                            <label class="gw-mat-tab-label">
+                                {{'Chart '+ chart?.id}}
+                            </label>
+                        </ng-template>
+                        <ng-template matTabContent>
+                            <div class="tab-container gw-pointtrend-chart">
+                                <gateway-multiaxis-chart [chartId]="chart?.chartId" [chartOptions]="chart?.chartOptions" [id]="chart?.id"  (isDeleteChartEmitEvent)="receivedMessageHandler($event)"
+                                (isEditChartEmitEvent) = "EditChartEventReceiver($event)"
+                                    [displayChartSettingsOptions]="chart?.chartId" [selectedChartDataPoints] = "chart?.customDataLoggerDataPoints"
+                                    [Height]="360"></gateway-multiaxis-chart>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card-content>
+        </mat-card>
+    </section>
+
+    <div *ngIf="!showChart" class="gw-diagnostics-default-screen">
+        <img src="./assets/images/EmptyBox.png" />
+        <p class="mat-body-2 pt-2">Click on the Add Chart button to create a Point Trend chart.</p>
+    </div>
+
+</section>

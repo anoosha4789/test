@@ -1,0 +1,144 @@
+<section class="m-4">
+    <div class="row gw-incharge-row gw-shift-breadcrumb-row">
+        <a class="gw-text-link-breadcrumb" [routerLink]="'/incharge/monitoring'">Monitoring</a>
+        <a class="gw-text-link-breadcrumb p-l-2" [routerLink]="'/incharge/monitoring'" [queryParams]="{ well: wellId}">{{toolTitle}}</a>
+        <div class="gw-shift-power">
+            <button mat-button class="mat-button-primary-sm gw-xs-button gw-shift-magin" [disabled]="shiftStatusDevice && shiftStatusDevice.RawValue == 1 ? true : false"
+                [ngClass]="{'mat-button-warn-sm' : motorControlStatusDevice && motorControlStatusDevice.RawValue != 1, 'blink': loadingMotorStatus}"  
+                (click)="updateMotorControlStatus()">
+                {{ motorControlStatusDevice && motorControlStatusDevice.RawValue === 1 ? 'ON' : 'OFF' }}
+                <mat-icon class="gw-shift-power-icon p-l-6">{{ motorControlStatusDevice && motorControlStatusDevice.RawValue === 1 ? 'power' : 'power_off' }}</mat-icon>
+            </button>
+            
+        </div>
+    </div>
+    <mat-divider class="gw-divider"></mat-divider>
+    <div class="row gw-incharge-row gw-shift-param">
+        <div *ngIf="inChargeCoffiecients" class="p-r-30 py-2">
+            <span class="gw-form-label">Valve Current Opening (%)</span>
+            <mat-form-field *ngIf="currentOpeningPercentgeDevice" class="mat-input-small mat-form-field-width gw-shift-ctrl" appearance="fill">
+                <input id="CurrentOpeningPercentage" type="number" matInput class="gw-form-label form-baseline" readonly
+                    name="CurrentOpeningPercentage" [ngModel]="currentOpeningPercentgeDevice.RawValue | number: '1.2-2'">
+            </mat-form-field>
+        </div>
+
+        <div class="p-r-30 py-2">
+            <span class="gw-form-label">Valve Target Opening (%)</span>
+            <mat-form-field *ngIf="targetOpeningPercentageDevice && inChargeCoffiecients" class="mat-input-small mat-form-field-width gw-shift-ctrl">
+                <input id="TargetOpeningPercentage" type="number" matInput class="gw-form-label form-baseline"
+                    [disabled]="shiftStatusDevice && shiftStatusDevice.RawValue == 1 ? true : false"
+                    name="TargetOpeningPercentage" [ngModel]="targetOpeningPercentageDevice.RawValue | number: '1.2-2'" 
+                    [matAutocomplete]="auto" (blur)="setValve_TargetOpenPercentage($event)" (input)="filterOptions($event)">
+                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="openPercentageChanged($event.option)">
+                    <mat-option *ngFor="let position of filterOpenPercentages" [value]="position | number: '1.2-2'">
+                        {{position | number: '1.2-2' }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+
+        <div class="p-r-30  py-2">
+            <button type="submit" mat-button class="mat-button-primary-sm mr-0"
+                [ngClass]="{'gw-shift-stop-btn': shiftStatusDevice && shiftStatusDevice.RawValue == 1}" 
+                (click)="startStopShift()"
+                [disabled]="isInValidVolumePercentage || loadingMotorStatus
+                    || (diagnosticCard.RawValue === 0 || diagnosticCard.RawValue === -999) 
+                    || (motorControlStatusDevice && motorControlStatusDevice.RawValue === 0)">
+                {{shiftStatus}}
+            </button>
+        </div>
+
+        <div *ngIf="shiftStatusDevice && shiftStatusDevice.RawValue == 1" class="py-2">
+            <span class="gw-shift-volume-label">Volume Pumped (mL): 
+                <span *ngIf="pumpedVolumeDevice && targetPumpVolumeDevice">
+                    {{pumpedVolumeDevice.RawValue | number: '1.2-2'}} of {{targetPumpVolumeDevice.RawValue | number: '1.2-2'}}
+                </span>
+            </span>
+            <mat-progress-bar class="gw-shift-progress" mode="determinate" value="{{pumpProgress}}"></mat-progress-bar>
+        </div>
+    </div>
+    <div class="row gw-incharge-row gw-shift-height">
+        <div *ngIf="multi_axis_series" class="col-xl-9 col-lg-8 col-md-6 col-sm-12 col-xs-12 p-l-0 gw-shift-ChartView">
+            <gateway-multiaxis-chart [chartId]="chartId" [chartOptions]="multi_axis_series" [Height]="276"></gateway-multiaxis-chart>
+        </div>
+
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-xs-12 m-0 gw-shift-ValueView">
+            <div class="row p-b-10" *ngFor="let item of inchargeMonitoringTool; let inx = index">
+                <mat-accordion class="gw-full-width">
+                    <mat-expansion-panel #diagnosticPanel [disabled]="motorControlStatusDevice.RawValue === 0 && inx <= 2" [expanded]="expandPanels[inx]">
+                      <mat-expansion-panel-header [collapsedHeight]="'40px'" [expandedHeight]="'40px'" (click)="togglePanel(inx)">
+                        <mat-panel-title class="gw-mat-expansion-panel-header-title">
+                          {{item.name}}
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <div>
+                        <table class="gw-shift-table">
+                            <tr class="gw-shift-thRow">
+                                <th class="gw-shift-th-param">Parameter</th>
+                                <th class="gw-shift-th-value">Current Value</th>
+                                <th></th>
+                            </tr>
+
+                            <tr class="gw-shift-tr" *ngFor="let points of item.dataPoints">
+                                <td class="mat-caption gw-shift-td-param">
+                                    {{points.point.Description}} <span *ngIf="points.deviceDataPoint.UnitSymbol">({{points.deviceDataPoint.UnitSymbol}})</span>
+                                </td>
+                                <td *ngIf="points.isFloat" [attr.colspan]="points.point.ReadOnly == false ? '1': '2'" class="mat-body-2 gw-shift-td-value">
+                                    <span *ngIf="points.isDate" matTooltip="{{ getCalibrationDate(points.deviceDataPoint.RawValue) | date:'MMM dd, yyyy HH:mm' }}" 
+                                        matTooltipPosition="below" 
+                                        matTooltipClass="gw-tool-grid-row-tooltip"
+                                        [matTooltipDisabled]="(getCalibrationDate(points.deviceDataPoint.RawValue) | date:'MMM dd, yyyy HH:mm')?.toString().length > 10 ? 'false': 'true'">
+                                        {{ getCalibrationDate(points.deviceDataPoint.RawValue) | date:'MMM dd, yyyy HH:mm' }}
+                                    </span>
+
+                                    <span *ngIf="!points.isDate" matTooltip="{{points.deviceDataPoint.RawValue | number: '1.2-2'}}" 
+                                        matTooltipPosition="below" 
+                                        matTooltipClass="gw-tool-grid-row-tooltip"
+                                        [matTooltipDisabled]="(points.deviceDataPoint.RawValue | number: '1.2-2')?.toString().length > 10 ? 'false': 'true'">
+                                        {{points.deviceDataPoint.RawValue | number: '1.2-2' | gwTruncate:10}}
+                                    </span>
+                                </td>
+                                <td *ngIf="!points.isFloat" [attr.colspan]="points.point.ReadOnly == false ? '1': '2'" class="mat-body-2 gw-shift-td-value">
+                                    <span *ngIf="points.isSpecialCase">
+                                        {{getSpecialPointValue(points.deviceDataPoint.DataPointIndex, points.deviceDataPoint.RawValue)}}
+                                    </span>
+                                    <span *ngIf="!points.isSpecialCase" matTooltip="{{points.deviceDataPoint.RawValue}}" 
+                                        matTooltipPosition="below" 
+                                        matTooltipClass="gw-tool-grid-row-tooltip"
+                                        [matTooltipDisabled]="points.deviceDataPoint.RawValue?.toString().length > 10 ? 'false': 'true'">
+                                        {{points.deviceDataPoint.RawValue | gwTruncate:10}}
+                                    </span>
+                                    <mat-icon *ngIf="points.hasToolTip" class="mat-icon--sml gw-motor-icon"
+                                        matTooltip="{{getSpecialPointValue(points.deviceDataPoint.DataPointIndex, points.deviceDataPoint.RawValue, true)}}" 
+                                        matTooltipPosition="below" 
+                                        matTooltipClass="gw-tool-grid-row-tooltip-line">
+                                        info
+                                    </mat-icon>
+                                </td>
+                                <td *ngIf="points.point.ReadOnly == false" class="mat-body-2 gw-shift-td-value">
+                                    <button mat-button class="mat-button-tertiary-sm gw-xs-button"
+                                         (click)="setServerValue(points)" [disabled]="diagnosticCard.RawValue === 0 || diagnosticCard.RawValue === -999">Set</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <div *ngIf="item.name === 'Surface Power Supply Unit Settings'" class="row p-x-6 d-flex justify-content-center">
+                            <button mat-button class="mat-button-tertiary-sm" 
+                                (click)="resetPSU()" [disabled]="diagnosticCard.RawValue === 0 || diagnosticCard.RawValue === -999">
+                                Reset PSU
+                            </button>
+                        </div>
+                        <div *ngIf="item.name === 'Full Shift Volume Calibration'" class="row p-x-6 d-flex justify-content-center">
+                            <button mat-button class="mat-button-tertiary-sm" 
+                                [ngClass]="{'gw-calibration-stop-btn': calibrationStatusDevice && calibrationStatusDevice.RawValue == 1}" 
+                                (click)="startStopPumpCalibration()" 
+                                [disabled]="diagnosticCard.RawValue === 0 || diagnosticCard.RawValue === -999 || (motorControlStatusDevice && motorControlStatusDevice.RawValue === 0)">
+                                {{calibrationStaus}}
+                            </button>
+                        </div>
+                      </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </div>
+</section>

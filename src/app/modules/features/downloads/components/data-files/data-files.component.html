@@ -1,0 +1,28 @@
+<mat-card class="m-2 gw-data-files-container" cdkTrapFocus>
+    <mat-card-content>
+        <mat-tab-group animationDuration="1ms" [(selectedIndex)]="activeTabIndex"
+            (selectedTabChange)="onTabChanged($event);" class="gw-tab-group">
+            <!-- Tool Data Files-->
+            <mat-tab label="Tool Data Files" *ngIf="toolTabVisibility">
+                <ng-template matTabContent>
+                  <app-tool-data-files *ngIf="cardPortList" [cardPortList]="cardPortList"></app-tool-data-files>
+                </ng-template>
+            </mat-tab>
+
+            <!-- System Diagnostics -->
+            <mat-tab label="System Diagnostics">
+                <ng-template matTabContent>
+                    <app-system-diagnostics></app-system-diagnostics>
+                </ng-template>
+            </mat-tab>
+
+             <!-- Browse Log Files -->
+             <mat-tab label="Browse Log Files">
+                <ng-template matTabContent>
+                    <app-log-files></app-log-files>
+                </ng-template>
+            </mat-tab>
+
+        </mat-tab-group>
+    </mat-card-content>
+</mat-card>

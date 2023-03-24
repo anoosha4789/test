@@ -1,0 +1,56 @@
+@import 'base.scss';
+@import 'components.scss';
+
+.gw-diagnostic-add-datapoint {
+    margin-left: auto;
+    margin-right: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: block;
+    min-width: 36px !important;
+    line-height: 0 !important;
+}
+
+.gw-diagnostics-default-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: calc(100vh - 250px);
+    color: $gw-secondary-color-600;
+}
+
+.gw-historian-time-title {
+    margin-left: auto;
+    margin-right: 0px;
+    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    font-family: Noto Sans;
+}
+
+.gw-historian-time-title-normal {
+    font-weight: 400;
+}
+
+.gw-historian-chart {
+    height: calc(100vh - 175px);
+
+    gateway-multiaxis-chart {
+        width: 100%;
+    }
+}
+:host ::ng-deep {
+    .gw-historian-chart #toolChart {
+        border: 0;
+        margin: 0;
+        padding-bottom: 10px;
+    }
+}
+
+.gw-historian-mat-card-container{
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid black !important;
+}

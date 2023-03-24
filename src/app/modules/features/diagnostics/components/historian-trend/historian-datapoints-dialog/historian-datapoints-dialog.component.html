@@ -1,0 +1,96 @@
+<div mat-dialog-actions class="d-flex justify-content-start gw-adv-mat-dialog-actions py-2">  
+    <label class="mat-subtitle-2 gw-historian-subtitle">{{selectedIndex === 1 ? 'Select Data Points' : 'Select Range or File'}}</label>
+    <label class="mat-subtitle-1 gw-historian-time-title" *ngIf="selectedIndex === 1">
+        <div *ngIf="!isByFile">
+            <span class="gw-historian-time-title-normal">From</span>
+            <span class="pl-1">{{fromTime}}</span>
+            <span class="gw-historian-time-title-normal px-1">to</span>
+            <span class="">{{toTime}}</span>
+        </div>
+        <div *ngIf="isByFile">
+            <span class="gw-historian-time-title-normal">File:</span>
+            <span class="pl-1">{{data.SelectedFileName}}</span>
+            <span class="gw-historian-time-title-normal">, Date:</span>
+            <span class="pl-1">{{data?.Day | date: 'MMM dd yyyy'}}</span>
+        </div>
+    </label>
+</div>
+
+<ng-container *ngIf="selectedIndex === 0">
+    <div class="gw-historian-selection-container">
+        <mat-radio-group class="gw-sureflo-radio-group">
+            <mat-radio-button class="px-2 gw-form-label" color="primary" value="Range" (change)="radioChange($event)"
+                [checked]="!isByFile">By
+                Range</mat-radio-button>
+            <section class="ml-3 pl-5 pt-2" [ngClass]="{'gw-section-disabled': isByFile}">                
+                <div class="d-flex gw-time-picker-wrapper">
+                    <app-date-time-picker [labelText]="'From'" [date]="fromDate"
+                        (timeSelectedEvent)="onFromTimeSelected($event)"></app-date-time-picker>
+                    <app-date-time-picker [labelText]="'To'" [date]="toDate" [errorMessage]="errorMessage"
+                        (timeSelectedEvent)="onToTimeSelected($event)"></app-date-time-picker>
+                </div>
+            </section>
+            <mat-radio-button class="px-2 gw-form-label" color="primary" value="File" (change)="radioChange($event)"
+                [checked]="isByFile">File</mat-radio-button>
+            <div mat-dialog-content class="d-flex ml-3 pl-5 tooltip-wrapper"
+                [ngClass]="{'gw-section-disabled': !isByFile}">
+                <span class="mat-body-2 pr-2 pt-4">Browse</span>
+                <form class="gw-browse-form" #browseForm="ngForm" [formGroup]="browseDialogForm">
+                    <mat-form-field class="gw-form-label mat-input-small mt-2 gw-historian-browse" appearance="fill">
+
+                        <input matInput class="gw-form-label" [ngModel]="data.SelectedFileName"
+                            matTooltip="{{data.SelectedFileName}}" matTooltipClass="gw-mat-tooltip"
+                            (ngModelChange)="data.SelectedFileName=$event" formControlName="FileName"
+                            (click)="BrowseFile()" autocomplete="off" readonly={{!isByFile}} [disabled]="!isByFile">
+
+                        <input type="file" id="selectFile" name="selectFile" multiple="false"
+                            accept="{{data.FileExtensions}}" class="gw-input-hidden" autocomplete="off"
+                            readonly={{!isByFile}} [disabled]="!isByFile" />
+
+                        <!-- <div *ngIf="validationMssg != null" class="mat-caption mat-error p-l-2">{{validationMssg}}</div> -->
+                        <mat-hint *ngIf="validationMssg != null" align="start" class="mat-error">
+                            {{validationMssg}}
+                        </mat-hint>
+                    </mat-form-field>
+
+                    <button mat-button class="mat-button mat-button-primary__icon-only" (click)="BrowseFile()"
+                        [disabled]="!isByFile">
+                        <mat-icon class="mat-icon gw-primary-icon">note_add</mat-icon>
+                    </button>
+                </form>
+            </div>
+        </mat-radio-group>
+
+    </div>
+</ng-container>
+
+<ng-container *ngIf="selectedIndex === 1">
+    <div class="row m-r-0 m-l-0 gw-diagnostics-data-point-dialog-container gw-historian-datapoint-selection-container">
+        <div class="col-lg-4 p-r-0 p-l-20 p-t-6 gw-diagnostics-data-points-wrapper">
+            <div *ngIf="bNoDataPointsAvalbale" class="body-label-value p-x-6">No data points available.</div>
+            <cdk-virtual-scroll-viewport
+                [ngClass]="selectedTreeNodes.length != 0 ? 'gw-tree-view-scrollbar' : 'gw-tree-view-scrollbar-full'"
+                class="gw-dynamic-card-scrollbar gw-checked-treeview-scroll-viewport" itemSize="40">
+                <gateway-checked-treeview [treeNodes]="dataLoggerNode" [existingDataPoints]="existingDataPoints"
+                    [clearNodes]="clearSelectedNodes" (selectedTreeNodes)="dataPointsSelected($event)">
+                </gateway-checked-treeview>
+            </cdk-virtual-scroll-viewport>
+            <button *ngIf="selectedTreeNodes.length != 0" type="submit" mat-button
+                class="mat-button-primary-sm gw-addtoMap-btn m-r-10" (click)="OnAddDataPoints()">
+                Add <mat-icon class="mat-icon-left gw-addtoMap-icon mat-icon">input</mat-icon>
+            </button>
+        </div>
+        <div class="col-lg-8 p-l-6 p-t-0 gw-customMap-divider">
+            <gw-diagnostics-modbus-template-points [selectedDataPoints]="currentChart?.customDataLoggerDataPoints"
+                (dataPointDeletedEvent)="onDataPointDeleted($event)"></gw-diagnostics-modbus-template-points>
+        </div>
+
+    </div>
+</ng-container>
+
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button mat-button class="mat-button-tertiary-sm mr-3" (click)="OnCancel()">Cancel</button>
+    <button mat-button class="mat-button-tertiary-sm mr-3" *ngIf="selectedIndex === 1" (click)="OnPrev()">Back</button>
+    <button mat-button class="mat-button-primary-sm" (click)="OnSubmit()" [disabled]="!isValid">{{selectedIndex === 1
+        ?"Apply":"Next"}}</button>
+</div>

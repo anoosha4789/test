@@ -1,0 +1,26 @@
+<div class="row m-r-0 m-l-0 gw-diagnostics-data-point-dialog-container">
+    <div class="col-lg-4 p-r-0 p-l-20 p-t-6 gw-diagnostics-data-points-wrapper">
+        <div *ngIf="bNoDataPointsAvalbale" class="body-label-value p-x-6">No data points available.</div>
+        <cdk-virtual-scroll-viewport
+            [ngClass]="selectedTreeNodes.length != 0 ? 'gw-tree-view-scrollbar' : 'gw-tree-view-scrollbar-full'"
+            class="gw-dynamic-card-scrollbar gw-checked-treeview-scroll-viewport" itemSize="40">
+            <gateway-checked-treeview [treeNodes]="dataLoggerNode" [existingDataPoints]="existingDataPoints"
+                [clearNodes]="clearSelectedNodes" (selectedTreeNodes)="dataPointsSelected($event)">
+            </gateway-checked-treeview>
+        </cdk-virtual-scroll-viewport>
+        <button *ngIf="selectedTreeNodes.length != 0" type="submit" mat-button
+            class="mat-button-primary-sm gw-addtoMap-btn m-r-10" (click)="OnAddDataPoints()">
+            Add <mat-icon class="mat-icon-left gw-addtoMap-icon mat-icon">input</mat-icon>
+        </button>
+    </div>
+    <div class="col-lg-8 p-l-6 p-t-0 gw-customMap-divider">
+        <gw-diagnostics-modbus-template-points [selectedDataPoints]="currentChart.customDataLoggerDataPoints"
+            (dataPointDeletedEvent)="onDataPointDeleted($event)"></gw-diagnostics-modbus-template-points>
+    </div>
+
+</div>
+<div mat-dialog-actions class="d-flex justify-content-end gw-adv-mat-dialog-actions">
+    <button type="submit" mat-button class="mat-button-tertiary-sm mr-3" (click)="OnCancel()">Cancel</button>
+    <button type="submit" mat-button class="mat-button-primary-sm" (click)="OnSubmit()"
+        [disabled]="!hasChanges">Apply</button>
+</div>

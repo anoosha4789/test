@@ -1,0 +1,41 @@
+<section class="px-3 pb-0 gw-border-bottom overflow-hidden">
+    <div class="d-flex">
+        <p class="gw-text-link-breadcrumb d-flex align-items-center">Historian Trend</p>
+        <label class="mat-subtitle-1 gw-historian-time-title" *ngIf="showChart" (click)="!historianData?.isByFile && onDateRangeClicked()">
+            <div *ngIf="!historianData?.isByFile">
+                <span class="gw-historian-time-title-normal">From</span>
+                <span class="pl-1">{{fromTime}}</span>
+                <span class="gw-historian-time-title-normal px-1">to</span>
+                <span class="">{{toTime}}</span>
+            </div>
+            <div *ngIf="historianData?.isByFile">
+                <span class="gw-historian-time-title-normal">File:</span>
+                <span class="pl-1">{{historianData?.SelectedFileName}}</span>
+                <span class="gw-historian-time-title-normal">, Date:</span>
+                <span class="pl-1">{{historianData?.Day | date: 'MMM dd yyyy'}}</span>
+            </div>
+        </label>
+        <button mat-button *ngIf="!showChart"
+            class="mat-button-tertiary-sm mat-button-tertiary-sm__icon gw-diagnostic-add-datapoint p-0 pl-1 pr-2"
+            (click)="showAddDataPointDialog()">
+            <mat-icon class="mat-icon-left mat-icon">add</mat-icon>
+            <span>ADD CHART</span>
+        </button>
+    </div>
+</section>
+
+<div *ngIf="!showChart" class="gw-diagnostics-default-screen">
+    <img src="./assets/images/EmptyBox.png" />
+    <p class="mat-body-2 pt-2">Click on the Add Chart button to create a Historian Trend chart.</p>
+</div>
+
+<div *ngIf="showChart" class="gw-historian-chart px-2 pt-2">
+    <mat-card class="gw-historian-mat-card-container p-0" cdkTrapFocus>
+        <mat-card-content>
+            <gateway-multiaxis-chart [chartId]="chartId" (isEditChartEmitEvent) = "HistorianEditChartEventReceiver($event)" [enableRealTime]="false" [isFileHistorian]="historianData?.isByFile" [chartOptions]="historianData?.chartOptions"
+            [displayChartSettingsOptions]="chartId"
+            [selectedChartDataPoints]="historianData?.customDataLoggerDataPoints" [Height]="315"
+            [timeRange]="timeRange"></gateway-multiaxis-chart>
+        </mat-card-content>
+    </mat-card>
+</div>

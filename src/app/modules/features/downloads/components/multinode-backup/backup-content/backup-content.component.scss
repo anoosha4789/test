@@ -1,0 +1,11 @@
+@import 'base.scss';
+
+.gw-backup-content-container {
+    .gw-backup-input {
+        width: 320px;
+
+        @include mq-sm() {
+            width: 100%;
+        }
+    }
+}

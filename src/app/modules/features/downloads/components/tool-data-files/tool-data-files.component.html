@@ -1,0 +1,49 @@
+<section *ngIf="!isDownloadInProgress">
+    <div>
+        <p class="gw-data-files-title mt-1 mat-subtitle-2">Download Tool Data Files</p>
+        <div *ngIf="validationMessage" class="gw-warning-block">{{validationMessage}}</div>
+    </div>
+    <!-- Select Data-->
+    <div class="d-flex flex-wrap mat-body-2 m-3">
+        <div class="col-sm-12 col-md-2 px-0 py-1 gw-form-label"> Select Data</div>
+        <div class="col px-sm-0">
+            <mat-form-field class="mat-select-small gw-data-files-select" appearance="fill">
+                <mat-select id="selData" class="gw-form-label form-baseline" [(value)]="selectedReportType" 
+                    [matTooltip]="selectedReportType" matTooltipPosition="below"
+                    matTooltipClass="gw-mat-tooltip" [matTooltipDisabled]="selectedReportType?.length > 40 ? 'false': 'true' "
+                    (selectionChange)="onDataSelChange($event)">
+                    <mat-option *ngFor="let cardPort of cardPortList" [value]="cardPort" 
+                        [matTooltip]="cardPort" 
+                        matTooltipPosition="below" matTooltipClass="gw-mat-option-tooltip" 
+                        [matTooltipDisabled]="cardPort?.length > 44 ? 'false': 'true' ">
+                        {{cardPort}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <!-- Time Frames-->
+    <div class="d-flex flex-wrap mat-body-2 m-3">
+        <div class="col-sm-12 col-md-2 px-0 py-1 gw-form-label">Timeframe</div>
+        <div class="col px-sm-0">
+            <mat-form-field class="mat-select-small gw-data-files-select" appearance="fill">
+                <mat-select id="selData" class="gw-form-label form-baseline" [(value)]="selectedTimeFrame"  (selectionChange)="onTimeFrameSelChange($event)">
+                    <mat-option *ngFor="let timeFrame of timeFrames" [value]="timeFrame">{{timeFrame}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <!-- Download Button-->
+    <div class="mt-3">
+        <button mat-button class="mat-button-primary-sm" (click)="onDownloadBtnClick()">Start Download</button>
+    </div>
+</section>
+
+
+<ng-container *ngIf="isDownloadInProgress">
+    <app-download-progress-bar [fileList]="fileList" (successDownloadEvent)='onDownloadSuccessEvent($event)'
+        (stopDownloadEvent)='onDownloadCancelEvent($event)' [isDownloadInProgress]="isDownloadInProgress">
+    </app-download-progress-bar>
+</ng-container>

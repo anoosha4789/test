@@ -1,0 +1,120 @@
+<section class="gw-breadcrumb gw-border-bottom gw-breadcrumb-point-viewer px-3">
+  <p class="gw-text-link-breadcrumb">Point Viewer > {{SelectedDevice}}</p>
+</section>
+
+
+<div class="m-t-10 gw-point-viewer-table-container">
+  <mat-table *ngIf="selectedDeviceDataPointSource.length > 0" [dataSource]="selectedDeviceDataPointSource"  
+      class="gw-data-point-table form-overflow">
+
+    <!-- Checkbox Column -->
+    <!-- <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                      [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)"
+                      [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </mat-cell>
+
+    </ng-container> -->
+
+    <!-- DeviceId Column -->
+    <!-- <ng-container matColumnDef="DeviceId">
+      <mat-header-cell *matHeaderCellDef> DeviceId </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.DeviceId}} </mat-cell>
+    </ng-container> -->
+
+    <!-- DataPointIndex Column -->
+    <!-- <ng-container matColumnDef="DataPointIndex">
+      <mat-header-cell *matHeaderCellDef> PointIndex </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.DataPointIndex}} </mat-cell>
+    </ng-container> -->
+
+    <!-- TagName Column -->
+    <ng-container matColumnDef="TagName">
+      <mat-header-cell *matHeaderCellDef> Tag Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> 
+        <mat-label matTooltip="{{element.TagName}}" matTooltipPosition="below" matTooltipClass="gw-label-mat-tooltip">
+        {{element.TagName  | gwTruncate:30}} 
+        </mat-label>
+      </mat-cell>
+    </ng-container>
+
+    <!-- UnitQuantityType Column -->
+    <!-- <ng-container matColumnDef="UnitQuantityType">
+      <mat-header-cell *matHeaderCellDef> UnitQuantityType </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.UnitQuantityType}} </mat-cell>
+    </ng-container> -->
+
+    <!-- UnitSymbol Column -->
+    <ng-container matColumnDef="UnitSymbol">
+      <mat-header-cell *matHeaderCellDef> Unit Symbol </mat-header-cell>
+      <!-- <mat-cell *matCellDef="let element"> {{getCustomUnitSymbol(element.UnitQuantityType)}} </mat-cell>     -->
+      <mat-cell *matCellDef="let element"> {{element.UnitSymbol}} </mat-cell>
+    </ng-container>
+
+    <!-- DataType Column -->
+    <!-- <ng-container matColumnDef="DataType">
+      <mat-header-cell *matHeaderCellDef> DataType </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{GetDataPointValueDataType(element.DataType)}} </mat-cell>
+    </ng-container> -->
+
+    <!-- ReadOnly Column -->
+    <!-- <ng-container matColumnDef="ReadOnly">
+      <mat-header-cell *matHeaderCellDef> ReadOnly </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div *ngIf="IsBooleanDataPoint(element)">
+          <ng-template *ngIf="element.RawValue > 0; then ONButton; else OFFButton"></ng-template>
+          <ng-template #ONButton>
+            <button [disabled]="element.ReadOnly" (click)="WriteDataPoint(element)">ON</button>
+          </ng-template>      
+          <ng-template #OFFButton>
+            <button [disabled]="element.ReadOnly" (click)="WriteDataPoint(element)">OFF</button>
+          </ng-template>
+          </div>
+          <div *ngIf="!IsBooleanDataPoint(element) && !element.ReadOnly"  >
+            <button satPopoverAnchor #anchor="satPopoverAnchor" (click)="p.toggle()">Set...</button>
+            <sat-popover (afterOpen) = "InitSetPoint(element)"
+              #p
+              [anchor]="anchor"
+              hasBackdrop
+              horizontalAlign="after"
+              [autoFocus]="autoFocus"
+              [restoreFocus]="restoreFocus"
+            >
+            <mat-form-field class="gw-dp-table-input">
+              <mat-label>Hit 'Enter' to Set Value</mat-label>
+              <input matInput type="number" [(ngModel)]="setpoint" (keydown)="closeOnEnter($event, element)">
+            </mat-form-field>
+          </sat-popover>
+          </div>
+          <div *ngIf="!IsBooleanDataPoint(element) && element.ReadOnly">
+            {{element.ReadOnly}}
+          </div>
+      </mat-cell>
+    </ng-container> -->
+
+    <!-- RawValue Column -->
+    <ng-container matColumnDef="RawValue">
+      <mat-header-cell *matHeaderCellDef> Raw Value </mat-header-cell>
+      <mat-cell *matCellDef="let element" >
+        {{formatRawValue(element)}}
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <div *ngIf="selectedDeviceDataPointSource.length <=  0" class="gw-datapoint-default-screen">
+    <img src="./assets/images/EmptyBox.png" />
+    <p class="mat-body-2 pt-2">No data points available.</p>
+</div>
+</div>
