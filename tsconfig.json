@@ -1,0 +1,38 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    // Added to use abvsolute path instead of relative path like ../../.../
+    "paths": {
+      "@env/*": ["src/environments/*"],  
+      "@comp/*": ["src/app/components/*"], 
+      "@core/*": ["src/app/modules/core/*"],  
+      "@features/*": ["src/app/modules/features/*"],
+      "@shared/*": ["src/app/modules/shared/*"],
+      "@store/*": ["src/app/store/*"],
+      "@assets/*": ["src/assets/*"],
+       "jszip": ["node_modules/jszip/dist/jszip.min.js"],
+       "igniteui-angular": ["./node_modules/@infragistics/igniteui-angular"]
+    },
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ]
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}
