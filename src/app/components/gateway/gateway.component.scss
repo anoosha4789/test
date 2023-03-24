@@ -1,0 +1,34 @@
+ @import 'base.scss';
+
+.gw-wel-sec-title {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+    color: $text1;
+    @media (min-height: 850px) and (-webkit-min-device-pixel-ratio: 1) {
+      margin-top: 3rem !important;
+      margin-bottom: 3rem !important;
+    }
+  }
+
+  .welcome-article {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+
+    @media (min-height: 850px) and (-webkit-min-device-pixel-ratio: 1) {
+      margin-top: 3rem !important;
+      margin-bottom: 3rem !important;
+    }
+  }
+
+  mat-card-header{
+    justify-content: center;
+  }
+
+  .gw-welcome-container {   
+    .mat-body-2 {
+      color: $text1;
+    }
+  
+  }
+ 
+  .gw-welcome-card-btn { width: 116px;}

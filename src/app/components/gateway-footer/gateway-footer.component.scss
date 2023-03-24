@@ -1,0 +1,173 @@
+@import 'base.scss';
+
+.fixed-bottom { z-index: 99;}
+
+.gw-fixed-bottom .footer-link {
+    display: inline-flex;
+}
+
+.footer-row {
+  width: 100%;
+}
+
+.footer-padding {
+  padding-top: 5px;
+  @include mq-sm(){
+    padding-top: 3px
+  }
+}
+
+.footer-content {
+  @include body(2,0);
+  color: $gw-text-white;
+
+  // Container
+  display: flex;
+  background: $gw-primary-color-950;
+
+  // Desktop
+  padding: 11px 15px;
+  flex-direction: row;
+
+  @include mq-md() {
+    padding: $space-sm $space-sm;
+  }
+
+  @include mq-sm() {
+    padding: $space-sm $space-sm;
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .hide-in-mobile{
+      display: none !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mleft-28 {
+    margin-left: 28px;
+  }
+  .footer-left-part{
+    margin-bottom: 5px;
+  }
+}
+
+.custom-footer-contents{
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (min-width: 769px) {
+  .footer-row{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .flex-start{
+    justify-content: flex-start;
+  }
+  .flex-end{
+    justify-content: flex-end;
+  }
+}
+
+@mixin footer-link {
+  text-decoration: none;
+  @include body(2,0);
+  color: $gw-text-white;
+}
+
+:host ::ng-deep .footer-link {
+  padding-left: 10px;
+  @include footer-link();
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+:host ::ng-deep .footer-link-first {
+  padding-left: 0;
+  @include footer-link();
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.status-icon {
+    font-size: 17px; 
+    height: 15px; 
+    margin-right: 0px;
+    vertical-align: bottom;
+    transform: rotate(1deg); // to fix pixelated issue in mobile devices
+    line-height: 0.8;
+}
+
+// .gw-footer-icon-status-connecting {
+//   animation: blink 1s ease-in infinite;
+// }
+
+// .gw-footer-icon-status-warning {
+//   animation: blink 1s ease-in infinite;
+// }
+
+// .gw-footer-icon-status-error {
+//   animation: blink 1s ease-in infinite;
+// }
+
+// .gw-operationMode {
+//   animation: blink 2s infinite;
+// }
+
+.bs-info { 
+  background: $gw-text-white;
+  color: #222;
+  border: 1px solid rgb(248, 248, 248);
+  border-radius: 5px;
+  padding: 1px 4px;  //4px 10px 4px 8px;
+  font-weight: 600;
+}
+
+.bs-fatal { 
+  background: $gw-text-white;
+  color: #222;
+  border: 1px solid rgb(248, 248, 248);
+  border-radius: 5px;
+  padding: 4px;  //4px 10px 4px 8px;
+  font-weight: 600;
+}
+
+.input-required-icon {
+  font-size: 17px; 
+  height: 15px; 
+  margin-right: -8px;
+  vertical-align: bottom;
+  transform: rotate(1deg); // to fix pixelated issue in mobile devices
+  line-height: 0.8;
+}
+
+.input-required-info {
+  background: $gw-text-white;
+  color: $gw-error-color-500;
+  padding: 4px;
+  margin-left: 5px;
+  border: 1px solid $gw-text-white;
+  border-radius: 5px;
+  font-weight: 600;
+}
+
+// @keyframes blink {
+//   50% { opacity: 0.3; }
+// }
+
+// @-webkit-keyframes blink {
+//   50% { opacity: 0.3; }
+// }
+
+// .blink {
+//   animation: blink 1s step-start 0s infinite;
+//   -webkit-animation: blink 1s step-start 0s infinite;
+// }

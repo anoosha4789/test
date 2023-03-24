@@ -1,0 +1,73 @@
+@import 'base.scss';
+
+.main-header{
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  width: 100%;
+  z-index: 1;
+}
+
+.material-icons {
+  position: relative;
+  /* Adjust these values accordingly */
+  top: 6px;
+}
+
+@media screen and(max-width: 1023px) {
+  ::ng-deep .Configuration {
+    display: none;
+  }  
+  ::ng-deep .Diagnostics {
+    display: none;
+  }
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gw-menu-link {
+  @include mq-sm() {
+    display: none;
+  }
+
+  &:hover {
+    transition: width .5s ease, background-color .5s ease;
+  }
+
+  .gw-menu-link-active {
+    color: $gw-text-white;
+    padding-bottom: 0.5rem;
+    border-bottom: 0.25rem solid $gw-primary-color-500;
+  }
+}
+
+.gw-menu-link-icon {
+  cursor: pointer;
+  opacity: 0.7;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+:host ::ng-deep .profile-menu .mat-divider {
+  display: none;
+}
+
+:host ::ng-deep .mat-toolbar-row__mat-icons {
+  display: flex;
+}
+:host ::ng-deep .mat-toolbar-row__hamburger{
+  padding-right: 17px !important;
+}
+:host ::ng-deep .mat-toolbar__app-name {
+  padding-left: 17px !important;
+}
+:host ::ng-deep .mat-toolbar__app-name-text {
+  padding-left: 10px !important;
+}

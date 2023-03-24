@@ -1,0 +1,105 @@
+@import 'base.scss';
+
+.gw-header-bgColor {
+    background-color: $gw-tertiary-color-050;
+}
+
+.gw-systeminfo-header {
+    background-color: $gw-tertiary-color-100;
+    border-bottom: 1px solid $gw-text-white;
+    height: 32px;
+    align-content: center;
+}
+
+.gw-process-container {
+    max-height: 135px;
+    overflow-y: overlay;
+
+    @media all and (device-width: 414px) and (device-height: 896px) and (orientation:portrait) {
+        max-height: 230px;
+    }
+
+    @media all and (device-width: 390px) and (device-height: 844px) and (orientation:portrait) {
+        max-height: 220px;
+    }
+
+    @media all and (device-width: 360px) and (device-height: 740px) and (orientation:portrait) {
+        max-height: 135px;
+    }
+
+    @media all and (device-width: 412px) and (device-height: 915px) and (orientation:portrait) {
+        max-height: 250px;
+    }
+
+    @media all and (device-width: 412px) and (device-height: 915px) and (orientation:portrait) {
+        max-height: 250px;
+    }
+
+    @media all and (device-width: 411px) and (device-height: 823px) and (orientation:portrait) {
+        max-height: 215px;
+    }
+
+    @media all and (device-width: 375px) and (device-height: 667px) and (orientation:portrait) {
+        max-height: 80px;
+    }
+
+    @media all and (device-width: 414px) and (device-height: 736px) and (orientation:portrait) {
+        max-height: 130px;
+    }
+
+    @media all and (device-width: 375px) and (device-height: 812px) and (orientation:portrait) {
+        max-height: 200px;
+    }
+}
+
+.gw-right-col {
+    float: right;
+    margin-right: 25px;
+}
+
+.gw-systeminfo-row {
+    border-bottom: 1px solid $gw-text-white;
+    word-wrap: break-word;
+    min-height: 32px;
+    align-content: center;
+}
+
+.gw-diskutil-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px;
+}
+.gw-right-grid-col {
+    float: right;
+    margin-right: 7px;
+}
+
+.gw-right-diskutil-col {
+    padding: inherit;
+}
+
+
+::ng-deep .gw-system-info-dialog{
+    @media screen and (max-width: 480px){
+        width: 100vw !important;
+        .mat-dialog-container {
+            border: none;
+            border-radius: 0 !important;
+        }
+        .gw-advance-dialog{
+            height: 82vh;
+            overflow: hidden;
+            overflow-y: overlay;
+            .body-content{
+                height: calc(100% - 150px);
+                .system-info{
+                    height:100%
+                }
+            }
+        }
+    }
+    @media screen and (min-width: 481px) and (max-width: 750px){
+        width: 92vw !important;
+    }
+}
+

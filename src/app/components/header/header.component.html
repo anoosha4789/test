@@ -1,0 +1,42 @@
+<div class="main-header">
+  <lib-baker-header [isSideNavigation]="isUserLoggedIn && isSideNav" (toggleNavigation)="toggleSidenav()"
+    (toggleMobileMenu)="toggleMobileMenu()" [isMenuOpen]="isMenuOpen">  <!-- [isSideNavigation]="isUserLoggedIn && isSideNav" -->
+    <div bhlogo>
+      <img alt="Baker Hughes logo" src="./assets/BakerHughesLogo-white.svg">
+    </div>
+    <div appname class="mat-toolbar-row__divider">
+      <a class="mat-toolbar__app-name-text">SureFIELD&trade; Gateway</a>
+    </div>
+
+    
+    <div mat-icons class="gw-menu-link">
+
+      <ng-container *ngFor="let navLink of headerLinks$ | async">
+        <a class="mat-caption mat-toolbar-row__nav-item mr-2 pr-0  {{navLink.displayName}}"
+        [ngClass]="{'gw-menu-link-active': selectedNavItem === navLink.displayName}"
+          (click)="setActiveHeaderLink(navLink.displayName)" [routerLink]='navLink.route'>
+          {{navLink.displayName}}
+        </a>
+      </ng-container>
+    </div>
+      <!--Notification-->
+      <div mat-icons class="gw-menu-link-icon" *ngIf="isConfigSaved" [ngClass]="!isUserLoggedIn? 'mr-3': ''"> 
+        <mat-icon [matBadge]="badgeCounter" matBadgeColor="warn" (click)="onAlarmClick()" class="">notifications_none</mat-icon>
+    </div>
+    <div mat-icons class="gw-menu-link">
+      <a *ngIf="!isUserLoggedIn" class="mat-caption mat-toolbar-row__nav-item pr-0" [routerLink]="['/Login']">Login</a>
+    </div>
+
+    <div profile-menu *ngIf="isUserLoggedIn">
+      <lib-bh-header-profile-menu [profileDetails]="profileDetails">
+      </lib-bh-header-profile-menu>
+    </div>
+  </lib-baker-header>
+</div>
+
+<!-- 
+<lib-bh-mobile-menu *ngIf="isMenuOpen" [mobileMenuData]="mobileMenuData" (navigationSelected)="navigationSelected()">
+</lib-bh-mobile-menu> -->
+
+<gw-mobile-menu *ngIf="isMenuOpen" [mobileMenuData]="mobileMenuData" (navigationSelected)="navigationSelected()">
+</gw-mobile-menu>

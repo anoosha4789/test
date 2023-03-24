@@ -1,0 +1,63 @@
+<footer class="footer fixed-bottom gw-fixed-bottom">
+    <div class="footer-padding"></div>
+    <div class="footer-content">
+      <div class="footer-row mx-0">
+        <div class="footer-left-part">
+           <ng-container *ngIf="!resetDone">
+          <div *ngIf="showPanelStatus" class="custom-footer-contents flex-start">
+            <ng-container *ngFor="let panelStatus of footerPanelStatus">
+              <div *ngIf="panelStatus.statusType === 1" class="mleft-28 p-r-14">
+                  <span class="hide-in-mobile">{{panelStatus.DisplayName}}: </span>
+                  <span [ngClass]="{'gw-operationMode bs-info': !isPanelIdle }">{{panelStatus.Status}}</span>
+              </div>
+              <div *ngIf="!panelStatus.hide && panelStatus.statusType === 2" class="p-r-14">
+                <span>
+                  <span class="hide-in-mobile">{{panelStatus.DisplayName}}: </span>{{panelStatus.Status}}
+                </span>
+              </div>
+              <div *ngIf="!panelStatus.hide && panelStatus.statusType === 3">
+                <span class="gw-operationMode input-required-info" (click)="showViewShift()">
+                  <mat-icon class="input-required-icon gw-footer-icon-status-input">info</mat-icon> {{panelStatus.DisplayName}}
+                </span>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+        </div>
+        <div class="footer-right-part">
+        <div class="custom-footer-contents flex-end">
+          <div class="server-status">
+            <a class="footer-link-first status">
+              <mat-icon class="status-icon" [ngClass]="{
+                      'gw-footer-icon-status-connected': systemStatus == 1,
+                      'gw-footer-icon-status-connecting': systemStatus == 3 || systemStatus == 4,
+                      'gw-footer-icon-status-error': systemStatus == 2,
+                      'gw-footer-icon-status-warning': systemStatus == 5}">{{systemStatusIcon}}
+              </mat-icon>
+              Server Status<span class="hide-in-mobile">: {{systemStatusText}}</span>
+            </a>
+          </div>
+          <div class="linlks">
+            <a class="footer-link hide-in-mobile" href="javascript:void(0)" (click)="showAboutModal()" routerLinkActive="active-link">About</a>
+            <a class="footer-link hide-in-mobile" *ngIf="showHelp" target="_blank" href="/onlineHelp/?fromApp" routerLinkActive="active-link">Help</a>
+            <a *ngIf="bIsValidClock" class="footer-link">{{ systemClockTime | date: 'MMM d y hh:mm:ss a' }}</a>
+          </div>
+        </div>
+      </div>
+        <!-- <div class="col-lg-7 col-md-12 col-sm-12 footer-link-align px-0">
+          <a class="footer-link-first status">
+            <mat-icon class="status-icon" [ngClass]="{
+                    'gw-footer-icon-status-connected': systemStatus == 1,
+                    'gw-footer-icon-status-connecting': systemStatus == 3 || systemStatus == 4,
+                    'gw-footer-icon-status-error': systemStatus == 2,
+                    'gw-footer-icon-status-warning': systemStatus == 5}">{{systemStatusIcon}}
+            </mat-icon>
+            Server Status<span class="hide-in-mobile">: {{systemStatusText}}</span>
+          </a>
+          <a class="footer-link hide-in-mobile" href="javascript:void(0)" (click)="showAboutModal()" routerLinkActive="active-link">About</a>
+          <a class="footer-link hide-in-mobile" target="_blank" href="/onlineHelp/?fromApp" routerLinkActive="active-link">Help</a>
+          <a *ngIf="bIsValidClock" class="footer-link">{{ systemClockTime | date: 'MMM d y hh:mm:ss a' }}</a>
+        </div> -->
+      </div>
+    </div>
+</footer>

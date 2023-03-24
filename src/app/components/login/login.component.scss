@@ -1,0 +1,48 @@
+@import 'base.scss';
+
+.login-background {
+  // background-image: url(../../../assets/images/loginbackground.png);
+ // background-repeat:no-repeat;
+  background-color: #05322B;
+ // background-size: cover;
+  height: 100%;
+}
+
+.card-border-radius {
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.login-container {
+  width: 440px; 
+  height: calc(100% - 40px);  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+:host ::ng-deep .login-container .mat-form-field-infix {
+  border: none !important;
+}
+
+.login-title { color: $gw-text-white; }
+
+@media screen and (max-height: 800px) {  
+  .login-container {    
+    width: 440px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .login-container {
+    width: 95%;
+  }
+}
+
+.mat-form-field{
+  width: 100%;
+}
+
+.gw-login-btn { width: 100%;}
+

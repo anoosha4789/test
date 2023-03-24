@@ -1,0 +1,133 @@
+<section *ngIf="panelTypeId < 0; else loading">
+    <h6 class="mat-title-1 text-center gw-wel-sec-title">Welcome</h6>
+    <article class="d-flex flex-column col-md-10 col-lg-6 mx-auto gw-welcome-container">
+      
+        <mat-card class="d-inline-flex flex-wrap mx-md-0 m-b-12 px-0 pb-sm-3 pb-md-0 pt-2">
+            <mat-card-header class="">
+                <mat-card-title>
+                    <span class="mat-subtitle-2">SureSENS</span>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <span class="mat-body-2">Baker Hughes Data Acquisition System</span>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions class="ml-auto mr-3">
+                <button mat-button class="mat-button-primary-sm gw-welcome-card-btn" (click)="navigate('suresens/general')">Configure</button>
+            </mat-card-actions>
+        </mat-card>
+        
+         <mat-card class="d-inline-flex flex-wrap mx-md-0 m-b-12 px-0 pb-sm-3 pb-md-0 pt-2">
+            <mat-card-header class="">
+                <mat-card-title>
+                    <span class="mat-subtitle-2">InCHARGE</span>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <span class="mat-body-2">Baker Hughes Electric Control System</span>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions class="ml-auto mr-3">
+                <button mat-button class="mat-button-primary-sm gw-welcome-card-btn" (click)="navigate('incharge/general')">Configure</button>
+            </mat-card-actions>
+        </mat-card> 
+
+        <mat-card class="d-inline-flex flex-wrap mx-md-0 m-b-12 px-0 pb-sm-3 pb-md-0 pt-2">
+            <mat-card-header class="">
+                <mat-card-title>
+                    <span class="mat-subtitle-2">InFORCE</span>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <span class="mat-body-2">Baker Hughes Hydraulic Control System</span>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions class="ml-auto mr-3">
+                <button mat-button class="mat-button-primary-sm gw-welcome-card-btn" (click)="navigate('inforce-configuration/general')">Configure</button>
+            </mat-card-actions>
+        </mat-card>
+
+        <mat-card class="d-inline-flex flex-wrap mx-md-0 m-b-12 px-0 pb-sm-3 pb-md-0 pt-2">
+            <mat-card-header class="">
+                <mat-card-title>
+                    <span class="mat-subtitle-2">MultiNode</span>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <span class="mat-body-2">Baker Hughes All-Electric Control System</span>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions class="ml-auto mr-3">
+                <button mat-button class="mat-button-primary-sm gw-welcome-card-btn" (click)="navigate('multinode/general')">Configure</button>
+            </mat-card-actions>
+        </mat-card>
+
+        <mat-card class="d-inline-flex flex-wrap mx-md-0 m-b-12 px-0 pb-sm-3 pb-md-0 pt-2">
+            <mat-card-header class="">
+                <mat-card-title>
+                    <span class="mat-subtitle-2">Previously Configured</span>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <span class="mat-body-2">Import a previously configured system</span>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions class="ml-auto mr-3">
+                <button mat-button class="mat-button-primary-sm gw-welcome-card-btn" [disabled]="bImportDisabled" (click)="ImportConfiguration()">Import</button>
+            </mat-card-actions>
+        </mat-card>
+
+    </article>
+
+    <!-- <article class="d-flex flex-wrap justify-content-center align-items-center mx-4 mx-sm-2">
+      
+        <mat-card class="gw-home-card mb-sm-2 mx-md-3">
+            <mat-card-header class="gw-box-card-header mt-4">
+                <mat-card-title class="gw-text-center">
+                    <span class="mat-subtitle-1">SureSENS</span>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="gw-box-card-content gw-align-h-center">
+                <p class="mat-body-2 px-2">Baker Hughes Surface Data Acquisition System</p>
+            </mat-card-content>
+            <mat-card-actions class="d-flex justify-content-center my-4">
+                <button mat-button class="mat-button-primary-sm" (click)="navigate('suresens/general')">Configure</button>
+            </mat-card-actions>
+        </mat-card>
+        
+        <mat-card class="gw-home-card mb-sm-2 mx-md-3">
+            <mat-card-header class="gw-box-card-header mt-4">
+                <mat-card-title class="gw-text-center">
+                    <span class="mat-subtitle-1">InCHARGE</span>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="gw-box-card-content gw-align-h-center">
+                <p class="mat-body-2 px-2">Baker Hughes All-Electric System</p>
+            </mat-card-content>
+            <mat-card-actions class="d-flex justify-content-center my-4">
+                <button mat-button class="mat-button-primary-sm" (click)="navigate('incharge/general')">Configure</button>
+            </mat-card-actions>
+        </mat-card>
+
+    </article>
+
+    <article class="d-flex flex-wrap justify-content-center align-items-center welcome-article mx-4 mx-sm-2">
+        <mat-card class="gw-home-card mb-sm-2 mx-md-3">
+            <mat-card-header class="gw-box-card-header mt-4">
+                <mat-card-title class="gw-text-center">
+                    <span class="mat-subtitle-1">Previously Configured</span>
+                </mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="gw-box-card-content gw-align-h-center">
+                <p class="mat-body-2 px-2">Import a previously configured system</p>
+            </mat-card-content>
+            <mat-card-actions class="d-flex justify-content-center my-4">
+                <button mat-button class="mat-button-primary-sm" [disabled]="bImportDisabled" (click)="ImportConfiguration()">Import</button>
+            </mat-card-actions>
+        </mat-card>
+    </article> -->
+</section>
+
+<ng-template #loading>
+    <!-- <section *ngIf="panelTypeId > 0" class="gw-loading-message">
+        <h1>Loading...</h1>
+    </section> -->
+
+    <ngx-loading [show]="isLoading" [config]="config">
+    </ngx-loading>
+</ng-template>

@@ -1,0 +1,44 @@
+<section class="d-flex flex-wrap justify-content-center login-background">
+  <!-- <div class="col-lg-12 col-md12 col-sm-12 col-xs-12">
+    <div bhlogo>
+      <img alt="Baker Hughes logo" src="./assets/BakerHughesLogo-white.svg">
+    </div>
+  </div> -->
+
+  <div class="login-container" cdkTrapFocus cdkTrapFocusAutoCapture>
+    <h4 class="mat-h4 mb-1 login-title">SureFIELD&trade; Gateway</h4>
+    <span class="mat-body-1 login-title">Please enter your credentials to sign in.</span>
+    <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmitBtnClick()" #loginForm="ngForm" autocomplete="off">
+      <mat-card class="card-border-radius">
+        <mat-card-content>
+          <div>
+          <mat-form-field appearance="standard">	
+            <mat-label>Username</mat-label>
+            <input id= "Name" [type]="'text'" class="mat-body-2" formControlName="Name" matInput  
+              (input)="validate($event)" (blur)="validate($event)" cdkFocusInitial>
+            <mat-hint *ngIf="userNameErrMssg" align="start" class="mat-error m-l-0">
+                {{userNameErrMssg}}
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="standard">	
+            <mat-label>Password</mat-label>
+            <input id= "Password" [type]="hide ? 'password' : 'text'" class="mat-body-2" formControlName="Password" matInput 
+              (input)="validate($event)" (blur)="validate($event)">
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-hint *ngIf="passwordErrMssg" align="start" class="mat-error m-l-0">
+              {{passwordErrMssg}}
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="mt-2 pl-2 pb-5">
+            <button type="submit" mat-button class="mat-button-primary gw-login-btn">Sign In</button>
+          </div>
+      </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+</section>
